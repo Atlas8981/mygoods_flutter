@@ -13,25 +13,42 @@ class HomepageCell extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Card(
-      // height: 50,
-      color: Colors.amber,
-      child: SizedBox(
-        width: 100,
-        child: Column(
+    return Container(
+      // width: 150,
+      child: Card(
+        child: Wrap(
+          direction: Axis.vertical,
           children: [
             Image.network(
               product.image,
-              width: double.infinity,
-              height: 85,
+              width: 125,
+              height: 125,
               fit: BoxFit.cover,
             ),
-            Align(
-                alignment: Alignment.topLeft,
-                child: Text("${product.title}",))
+            Text("${product.title}"),
+            Text("USD ${product.price}"),
           ],
         ),
-      )
+      ),
     );
+    // return Card(
+    //   child: Column(
+    //     // mainAxisSize: MainAxisSize.max,
+    //     children: [
+    //       SizedBox(
+    //         child: Image.network(
+    //           product.image,
+    //           width: 125,
+    //           height: 125,
+    //           fit: BoxFit.cover,
+    //         ),
+    //       ),
+    //       Text("${product.title}",),
+    //       Text("USD \$ ${product.price}",),
+    //       // Text("USD \$ ${product.price}",),
+    //
+    //     ],
+    //   ),
+    // );
   }
 }
