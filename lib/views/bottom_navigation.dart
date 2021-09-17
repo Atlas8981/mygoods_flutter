@@ -17,12 +17,11 @@ class PageWithBottomNavigation extends StatefulWidget {
 }
 
 class _PageWithBottomNavigationState extends State<PageWithBottomNavigation> {
-  int _selectedIndex = 0;
+
   final TextStyle unselectedLabelStyle = TextStyle(
       color: Colors.white.withOpacity(0.5),
       fontWeight: FontWeight.w500,
       fontSize: 12);
-
   final TextStyle selectedLabelStyle = TextStyle(color: Colors.white, fontWeight: FontWeight.w500, fontSize: 12);
   final bottomNavigationController = Get.put(LandingPageController());
   buildBottomNavigationMenu(context, landingPageController) {
@@ -62,11 +61,12 @@ class _PageWithBottomNavigationState extends State<PageWithBottomNavigation> {
               ),
             )));
   }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: const Text('BottomNavigationBar Sample'),
+        title: Text('MyGoods Flutter'),
       ),
       body: Obx(() => IndexedStack(
         index: bottomNavigationController.tabIndex.value,

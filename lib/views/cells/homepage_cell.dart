@@ -16,18 +16,21 @@ class HomepageCell extends StatelessWidget {
     return Container(
       // width: 150,
       child: Card(
-        child: Wrap(
-          direction: Axis.vertical,
-          children: [
-            Image.network(
-              product.image,
-              width: 125,
-              height: 125,
-              fit: BoxFit.cover,
-            ),
-            Text("${product.title}"),
-            Text("USD ${product.price}"),
-          ],
+        child: InkWell(
+          onTap: () => {},
+          child: Wrap(
+            direction: Axis.vertical,
+            children: [
+              Image.network(
+                product.image,
+                width: 125,
+                height: 125,
+                fit: BoxFit.cover,
+              ),
+              Text("${product.title}"),
+              Text("USD ${product.price}"),
+            ],
+          ),
         ),
       ),
     );
