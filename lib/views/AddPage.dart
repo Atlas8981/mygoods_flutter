@@ -12,7 +12,16 @@ class AddPage extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Container(
-      child: Center(child: Text("Add Page")),
+      width: double.infinity,
+      height: double.infinity,
+      // color: Colors.cyanAccent,
+      child: Column(
+        mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+        crossAxisAlignment: CrossAxisAlignment.stretch,
+        children: [
+
+        ],
+      ),
     );
   }
 }

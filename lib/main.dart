@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-import 'package:mygoods_flutter/views/bottom_navigation.dart';
-import 'package:mygoods_flutter/views/homepage.dart';
+import 'package:mygoods_flutter/views/MainActivity.dart';
+import 'package:mygoods_flutter/views/HomePage.dart';
 
 void main() {
   runApp(MyApp());

@@ -1,5 +1,4 @@
 import 'package:get/get.dart';
-import 'package:mygoods_flutter/models/product.dart';
 import 'package:mygoods_flutter/services/remote_services.dart';
 
 class ProductController extends GetxController {
