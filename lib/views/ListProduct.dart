@@ -34,10 +34,6 @@ class _ListProductState extends State<ListProduct> {
 
     DatabaseService databaseService = DatabaseService();
 
-    // print(Get.arguments[0]);
-    // print(Get.arguments[1]);
-    // print(Get.arguments);
-
     return Scaffold(
       appBar: AppBar(
         title: Text(Get.arguments[1]),
