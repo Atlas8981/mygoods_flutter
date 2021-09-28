@@ -15,13 +15,7 @@ class AddPage extends StatelessWidget {
       width: double.infinity,
       height: double.infinity,
       // color: Colors.cyanAccent,
-      child: Column(
-        mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-        crossAxisAlignment: CrossAxisAlignment.stretch,
-        children: [
-
-        ],
-      ),
+      child: Center(child: Text("AddPage"),),
     );
   }
 }

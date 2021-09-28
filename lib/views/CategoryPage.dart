@@ -96,7 +96,7 @@ class CategoryPage extends StatelessWidget {
                     itemBuilder: (context, index) {
                       return InkWell(
                           onTap: () {
-                            Get.to(SubCategoryPage(),
+                            Get.to(()=>SubCategoryPage(),
                                 arguments: categoryNames[index].name);
                           },
                           child: CategoryItemRow(categoryNames[index]));

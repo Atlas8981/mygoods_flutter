@@ -5,6 +5,7 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:mygoods_flutter/models/category.dart';
 import 'package:mygoods_flutter/views/ListCategoryPage.dart';
+import 'package:mygoods_flutter/views/ListProduct.dart';
 import 'package:mygoods_flutter/views/cells/category_item_row.dart';
 
 class SubCategoryPage extends StatelessWidget {
@@ -66,7 +67,10 @@ class SubCategoryPage extends StatelessWidget {
                 itemBuilder: (context, index) {
                   return InkWell(
                       onTap: (){
-                        Get.to(ListCategoryPage(),arguments: decideSubCategory()[index].name);
+                        Get.to(ListProduct(),arguments: [
+                          Get.arguments,
+                          decideSubCategory()[index].name,
+                        ]);
                       },
                       child: CategoryItemRow(decideSubCategory()[index]));
                 },

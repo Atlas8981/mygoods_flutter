@@ -1,6 +1,3 @@
-// To parse this JSON data, do
-//
-//     final product = productFromJson(jsonString);
 
 import 'package:meta/meta.dart';
 import 'dart:convert';
