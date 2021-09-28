@@ -23,7 +23,7 @@ class SubCategoryPage extends StatelessWidget {
   List<Category> carSubCategory = [
     Category(name: "Cars", image: "${imageDir}car.png"),
     Category(name: "Motorbikes", image: "${imageDir}moto.png"),
-    Category(name: "Bicycles", image: "${imageDir}bike.png"),
+    Category(name: "Bicycle", image: "${imageDir}bike.png"),
     Category(name: "Other", image: "${imageDir}other.png"),
 
   ];

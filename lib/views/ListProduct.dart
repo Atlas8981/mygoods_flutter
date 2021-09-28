@@ -52,11 +52,14 @@ class _ListProductState extends State<ListProduct> {
               );
             } else if (snapshot.hasData) {
               if(snapshot.data != null) {
-                return ListView.builder(
-                  itemCount: snapshot.data!.length,
-                  itemBuilder: (context, index) {
-                    return ListItemRow(item: snapshot.data![index]);
-                  },
+                return Container(
+                  padding: const EdgeInsets.all(10),
+                  child: ListView.builder(
+                    itemCount: snapshot.data!.length,
+                    itemBuilder: (context, index) {
+                      return ListItemRow(item: snapshot.data![index]);
+                    },
+                  ),
                 );
               }return Text("n error has occurred");
 

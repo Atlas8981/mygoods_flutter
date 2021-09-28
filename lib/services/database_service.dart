@@ -13,6 +13,7 @@ class DatabaseService {
           .limit(10)
           .where("mainCategory", isEqualTo: mainCat)
           .where("subCategory",isEqualTo: subCat)
+          .orderBy("date",descending: true)
           .get()
           .then((value) => {
         value.docs.forEach((element) {
