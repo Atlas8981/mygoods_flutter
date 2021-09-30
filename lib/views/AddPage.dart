@@ -3,6 +3,7 @@ import 'dart:io';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_staggered_grid_view/flutter_staggered_grid_view.dart';
+import 'package:fluttertoast/fluttertoast.dart';
 import 'package:get/get.dart';
 import 'package:image_picker/image_picker.dart';
 import 'package:mygoods_flutter/controllers/addImagesController.dart';
@@ -22,14 +23,33 @@ class _AddPageState extends State<AddPage> {
   ImagePicker _imagePicker = ImagePicker();
 
   void _imageFromGallery(index) async {
-    var picture = await _imagePicker.pickImage(source: ImageSource.gallery);
-    setState(() {
-      if (picture != null) {
+    // var picture = await _imagePicker.pick(source: ImageSource.gallery);
+
+    var pictures = await _imagePicker.pickMultiImage();
+    if (pictures != null && pictures.length<=5) {
+      setState(() {
         // image = picture;
         // key.currentState!.insertItem(index+1);
-        addImageController.rawImages.add(picture);
-      }
-    });
+        pictures.forEach((picture) {
+          addImageController.rawImages.add(picture);
+        });
+      });
+    }else{
+      Fluttertoast.showToast(
+          msg: "Select Less than 5 Images",
+          toastLength: Toast.LENGTH_SHORT,
+          gravity: ToastGravity.BOTTOM,
+          timeInSecForIosWeb: 1,
+          backgroundColor: Colors.black,
+          textColor: Colors.white,
+          fontSize: 16.0
+      );
+      // Get.snackbar(
+      //     "Lers Image", "Select Less than 5 Images",
+      //   backgroundColor: Colors.white,
+      //   snackPosition: SnackPosition.BOTTOM
+      // );
+    }
   }
 
   buildAddImageRow(context, index){
@@ -119,10 +139,12 @@ class _AddPageState extends State<AddPage> {
             ),
             Align(
               alignment: Alignment.centerRight,
-              child: Text(
-                "(0/5)",
-                style: TextStyle(fontSize: 16),
-              ),
+              child: Obx((){
+                return Text(
+                  "(${addImageController.rawImages.length}/5)",
+                  style: TextStyle(fontSize: 16),
+                );
+              }),
             ),
             Container(
                 height: 120,
