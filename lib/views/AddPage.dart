@@ -2,13 +2,10 @@ import 'dart:io';
 
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter_staggered_grid_view/flutter_staggered_grid_view.dart';
 import 'package:fluttertoast/fluttertoast.dart';
 import 'package:get/get.dart';
 import 'package:image_picker/image_picker.dart';
 import 'package:mygoods_flutter/controllers/addImagesController.dart';
-import 'package:mygoods_flutter/controllers/productController.dart';
-import 'package:mygoods_flutter/views/cells/product_tile.dart';
 
 class AddPage extends StatefulWidget {
   @override

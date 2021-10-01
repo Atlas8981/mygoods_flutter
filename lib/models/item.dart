@@ -3,7 +3,6 @@
 //     final item = itemFromJson(jsonString);
 
 import 'package:cloud_firestore/cloud_firestore.dart';
-import 'package:meta/meta.dart';
 import 'dart:convert';
 
 import 'package:mygoods_flutter/models/image.dart';

@@ -1,12 +1,7 @@
-import 'dart:ffi';
 
 import 'package:flutter/material.dart';
-import 'package:flutter_staggered_grid_view/flutter_staggered_grid_view.dart';
-import 'package:get/get.dart';
-import 'package:mygoods_flutter/controllers/productController.dart';
 import 'package:mygoods_flutter/models/product.dart';
 import 'package:mygoods_flutter/views/cells/homepage_cell.dart';
-import 'package:mygoods_flutter/views/cells/product_tile.dart';
 
 class HomePage extends StatelessWidget {
   final productList = [

@@ -1,8 +1,6 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'package:get/get.dart';
 import 'package:mygoods_flutter/models/category.dart';
-import 'package:mygoods_flutter/views/SubCategoryPage.dart';
 
 class CategoryItemRow extends StatelessWidget {
   final Category category;
