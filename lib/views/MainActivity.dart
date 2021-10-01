@@ -6,7 +6,7 @@ import 'package:mygoods_flutter/views/AccountPage.dart';
 import 'package:mygoods_flutter/views/AddPage.dart';
 import 'package:mygoods_flutter/views/CategoryPage.dart';
 import 'package:mygoods_flutter/views/select_language_page.dart';
-import 'package:flutter_gen/gen_l10n/app_localizations.dart';
+// import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 
 import 'HomePage.dart';
 
@@ -80,13 +80,13 @@ class _MainActivityState extends State<MainActivity> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: Text(AppLocalizations.of(context).helloWorld) /*Obx(
+        title:  Obx(
           () {
             return Text(
               appTitle(bottomNavigationController),
             );
           },
-        )*/,
+        ),
         actions: [
           IconButton(
             icon: Icon(Icons.settings),
