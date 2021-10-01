@@ -12,13 +12,13 @@ class CategoryPage extends StatelessWidget {
 
   static final String imageDir = "assets/images/";
 
-  List<Category> categoryNames = [
+  final List<Category> categoryNames = [
     Category(name: "Electronic", image: "${imageDir}electronic.png"),
     Category(name: "Car & Vehicle", image: "${imageDir}car.png"),
     Category(name: "Furniture & Decors", image: "${imageDir}furniture.png"),
   ];
 
-  List<Category> popularCategory = [
+  final List<Category> popularCategory = [
     Category(name: "Phone", image: "${imageDir}phonepicture.jpg"),
     Category(name: "Bicycle", image: "${imageDir}bikepicture.jpg"),
     Category(name: "Cars", image: "${imageDir}carpic.png"),
