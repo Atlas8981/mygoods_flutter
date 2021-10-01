@@ -21,7 +21,7 @@ class MyApp extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return GetMaterialApp(
-      title: 'MyGoods Flutter From Window',
+      title: 'MyGoods Flutter From Window @.20',
       theme: ThemeData(
         primarySwatch: Colors.blue,
       ),
