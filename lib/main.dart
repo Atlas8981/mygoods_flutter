@@ -22,9 +22,9 @@ class MyApp extends StatelessWidget {
   Widget build(BuildContext context) {
     return GetMaterialApp(
       title: 'MyGoods Flutter From Window @.20',
-      theme: ThemeData(
-        primarySwatch: Colors.blue,
-      ),
+      // theme: ThemeData(
+      //   primarySwatch: Colors.blue,
+      // ),
       home: MainActivity(),
       localizationsDelegates: [
         // AppLocalizations.delegate,
@@ -36,6 +36,20 @@ class MyApp extends StatelessWidget {
         Locale('en', ''),
         Locale('km', ''),
       ],
+      themeMode: ThemeMode.light,
+      theme: ThemeData.light().copyWith(
+        primaryColor: Colors.blue,
+        iconTheme: IconTheme.of(context).copyWith(
+          color: Colors.black,
+        ),
+      ),
+      darkTheme: ThemeData.dark(),
+      // darkTheme: ThemeData.dark().copyWith(
+      //
+      //   iconTheme: IconTheme.of(context).copyWith(
+      //       color: Colors.white
+      //   ),
+      // ),
 
       // localizationsDelegates: AppLocalizations.localizationsDelegates,
       // supportedLocales: AppLocalizations.supportedLocales,

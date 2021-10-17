@@ -43,7 +43,9 @@ class _MainActivityState extends State<MainActivity> {
             selectedLabelStyle: selectedLabelStyle,
             items: [
               BottomNavigationBarItem(
-                icon: Icon(Icons.home),
+                icon: Icon(
+                    Icons.home,
+                ),
                 label: 'Home',
               ),
               BottomNavigationBarItem(

@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:mygoods_flutter/controllers/productController.dart';
 import 'package:mygoods_flutter/models/category.dart';
+import 'package:mygoods_flutter/utils/constant.dart';
 import 'package:mygoods_flutter/views/cells/category_item_row.dart';
 import 'package:mygoods_flutter/views/cells/popular_category_item.dart';
 
@@ -9,14 +10,6 @@ import 'SubCategoryPage.dart';
 
 class CategoryPage extends StatelessWidget {
   final productController = Get.put(ProductController());
-
-  static final String imageDir = "assets/images/";
-
-  final List<Category> categoryNames = [
-    Category(name: "Electronic", image: "${imageDir}electronic.png"),
-    Category(name: "Car & Vehicle", image: "${imageDir}car.png"),
-    Category(name: "Furniture & Decors", image: "${imageDir}furniture.png"),
-  ];
 
   final List<Category> popularCategory = [
     Category(name: "Phone", image: "${imageDir}phonepicture.jpg"),
@@ -92,14 +85,14 @@ class CategoryPage extends StatelessWidget {
                     physics: ScrollPhysics(),
                     shrinkWrap: true,
                     primary: true,
-                    itemCount: categoryNames.length,
+                    itemCount: mainCategories.length,
                     itemBuilder: (context, index) {
                       return InkWell(
                           onTap: () {
                             Get.to(()=>SubCategoryPage(),
-                                arguments: categoryNames[index].name);
+                                arguments: mainCategories[index].name);
                           },
-                          child: CategoryItemRow(categoryNames[index]));
+                          child: CategoryItemRow(mainCategories[index]));
                     },
                   )
                   //  Put Column

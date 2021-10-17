@@ -59,6 +59,8 @@ class HomePage extends StatelessWidget {
                 height: 175,
                 child: ListView.builder(
                   scrollDirection: Axis.horizontal,
+                  // shrinkWrap: true,
+                  // physics: NeverScrollableScrollPhysics(),
                   itemCount: productList.length,
                   itemBuilder: (BuildContext context, int index) {
                     // return ProductTile(productList[index]);

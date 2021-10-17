@@ -4,42 +4,20 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:mygoods_flutter/models/category.dart';
+import 'package:mygoods_flutter/utils/constant.dart';
 import 'package:mygoods_flutter/views/ListProduct.dart';
 import 'package:mygoods_flutter/views/cells/category_item_row.dart';
 
 class SubCategoryPage extends StatelessWidget {
 
-  static final String imageDir = "assets/images/";
-
-  final List<Category> electronicSubCategory = [
-    Category(name: "Phone", image: "${imageDir}phone.png"),
-    Category(name: "Desktop", image: "${imageDir}electronic.png"),
-    Category(name: "Laptop", image: "${imageDir}laptop.png"),
-    Category(name: "Parts & Accessories", image: "${imageDir}accessory.png"),
-    Category(name: "Other", image: "${imageDir}other.png"),
-  ];
-
-  final List<Category> carSubCategory = [
-    Category(name: "Cars", image: "${imageDir}car.png"),
-    Category(name: "Motorbikes", image: "${imageDir}moto.png"),
-    Category(name: "Bicycle", image: "${imageDir}bike.png"),
-    Category(name: "Other", image: "${imageDir}other.png"),
-
-  ];
-  final List<Category> furnitureSubCategory = [
-    Category(name: "Table & Desk", image: "${imageDir}table.png"),
-    Category(name: "Chair & Sofa", image: "${imageDir}sofa.png"),
-    Category(name: "Household Item", image: "${imageDir}household.png"),
-    Category(name: "Other", image: "${imageDir}other.png"),
-  ];
 
   List<Category> decideSubCategory() {
     if(Get.arguments == "Electronic"){
-      return electronicSubCategory;
+      return electronicSubCategories;
     }else if(Get.arguments == "Car & Vehicle"){
-      return carSubCategory;
+      return carSubCategories;
     }else{
-      return furnitureSubCategory;
+      return furnitureSubCategories;
     }
   }
 
