@@ -1,5 +1,6 @@
 import 'dart:io';
 
+import 'package:firebase_storage/firebase_storage.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:fluttertoast/fluttertoast.dart';
@@ -125,114 +126,143 @@ class _AddPageState extends State<AddPage> {
     }
   }
 
+  FirebaseStorage storage = FirebaseStorage.instance;
+
+  Future<void> uploadFile(String filePath) async {
+    // File file = File(filePath);
+    File file = File(addImageController.rawImages[0].path);
+    try {
+      await storage
+          .ref('flutter/')
+          .child("${DateTime.now()}")
+          .putFile(file)
+      ;
+    } on FirebaseException catch (e) {
+      print(e);
+      // e.g, e.code == 'canceled'
+    }
+  }
   @override
   Widget build(BuildContext context) {
-    return Container(
-      width: double.infinity,
-      height: double.infinity,
-      padding: const EdgeInsets.all(10),
-      // color: Colors.cyanAccent,
-      child: SingleChildScrollView(
-        child: Column(
-          crossAxisAlignment: CrossAxisAlignment.start,
-          mainAxisSize: MainAxisSize.max,
-          children: [
-            Text(
-              "Upload Photos",
-              style: TextStyle(
-                fontSize: 18,
-                fontWeight: FontWeight.bold,
+    return Scaffold(
+      appBar: AppBar(
+        title: Text("Add Page"),
+        actions: [
+          IconButton(
+              onPressed: () {
+                // uploadFile("filePath");
+              },
+              icon: Icon(Icons.check)
+          )
+        ],
+      ),
+      body: Container(
+        width: double.infinity,
+        height: double.infinity,
+        padding: const EdgeInsets.all(10),
+        // color: Colors.cyanAccent,
+        child: SingleChildScrollView(
+          child: Column(
+            crossAxisAlignment: CrossAxisAlignment.start,
+            mainAxisSize: MainAxisSize.max,
+            children: [
+              Text(
+                "Upload Photos",
+                style: TextStyle(
+                  fontSize: 18,
+                  fontWeight: FontWeight.bold,
+                ),
               ),
-            ),
-            Align(
-              alignment: Alignment.centerRight,
-              child: Obx(() {
-                return Text(
-                  "(${addImageController.rawImages.length}/5)",
-                  style: TextStyle(fontSize: 16),
-                );
-              }),
-            ),
-            //Horizontal Image View
-            Container(
-              height: 120,
-              child: Obx(() {
-                return ListView.builder(
-                  scrollDirection: Axis.horizontal,
-                  itemCount: (addImageController.rawImages.length == 5)
-                      ? 5
-                      : addImageController.rawImages.length + 1,
-                  shrinkWrap: true,
-                  itemBuilder: (context, index) {
-                    return buildAddImageRow(context, index);
-                  },
-                );
-                // return AnimatedList(
-                //   key: key,
-                //   scrollDirection: Axis.horizontal,
-                //   initialItemCount: addImageController.rawImages.length + 1,
-                //   shrinkWrap: true,
-                //   itemBuilder: (context, index,controller) {
-                //     return buildAddImageRow(context, index);
-                //   },
-                // );
-              }),
-            ),
-            SizedBox(
-              height: 10,
-            ),
-            Row(
-              mainAxisSize: MainAxisSize.max,
-              // mainAxisAlignment: MainAxisAlignment,
-              children: [
-                Expanded(
-                  child: TypeTextField(
-                    labelText: "Item Name",
-                    controller: nameCon,
-                  ),
-                ),
-                SizedBox(
-                  width: 5,
-                ),
-                Expanded(
-                  child: TypeTextField(
-                    labelText: "Price",
-                    controller: priceCon,
-                    suffixIcon:
-                        Icon(Icons.attach_money, color: context.iconColor
-                            // color: Colors.black,
-                            ),
-                  ),
-                ),
-              ],
-            ),
-            SizedBox(
-              height: 10,
-            ),
-            ClickableTextField(
-              labelText: "Category",
-              controller: categoryCon,
-              suffixIcon: Icon(
-                Icons.arrow_forward_ios,
-                color: context.iconColor,
+              Align(
+                alignment: Alignment.centerRight,
+                child: Obx(() {
+                  return Text(
+                    "(${addImageController.rawImages.length}/5)",
+                    style: TextStyle(fontSize: 16),
+                  );
+                }),
               ),
-              onTap: () {
-                FocusScope.of(context).requestFocus(FocusNode());
-                Get.defaultDialog(
-                  title: "Select Category",
-                  content: Container(
-                    // color: Colors.red,
-                    width: double.infinity,
-                    child: CategoryDropdownMenu(
-                      onConfirm: (main, sub) {
-                        categoryCon.text = "$main , $sub";
-                      },
+              //Horizontal Image View
+              Container(
+                height: 120,
+                child: Obx(() {
+                  return ListView.builder(
+                    scrollDirection: Axis.horizontal,
+                    itemCount: (addImageController.rawImages.length == 5)
+                        ? 5
+                        : addImageController.rawImages.length + 1,
+                    shrinkWrap: true,
+                    itemBuilder: (context, index) {
+                      return buildAddImageRow(context, index);
+                    },
+                  );
+                  // return AnimatedList(
+                  //   key: key,
+                  //   scrollDirection: Axis.horizontal,
+                  //   initialItemCount: addImageController.rawImages.length + 1,
+                  //   shrinkWrap: true,
+                  //   itemBuilder: (context, index,controller) {
+                  //     return buildAddImageRow(context, index);
+                  //   },
+                  // );
+                }),
+              ),
+              SizedBox(
+                height: 10,
+              ),
+              Row(
+                mainAxisSize: MainAxisSize.max,
+                // mainAxisAlignment: MainAxisAlignment,
+                children: [
+                  Expanded(
+                    child: TypeTextField(
+                      labelText: "Item Name",
+                      controller: nameCon,
                     ),
                   ),
-                );
-              },
-            )
-          ],
+                  SizedBox(
+                    width: 5,
+                  ),
+                  Expanded(
+                    child: TypeTextField(
+                      labelText: "Price",
+                      controller: priceCon,
+                      suffixIcon:
+                          Icon(Icons.attach_money, color: context.iconColor
+                              // color: Colors.black,
+                              ),
+                    ),
+                  ),
+                ],
+              ),
+              SizedBox(
+                height: 10,
+              ),
+              ClickableTextField(
+                labelText: "Category",
+                controller: categoryCon,
+                suffixIcon: Icon(
+                  Icons.arrow_forward_ios,
+                  color: context.iconColor,
+                ),
+                onTap: () {
+                  FocusScope.of(context).requestFocus(FocusNode());
+                  Get.defaultDialog(
+                    title: "Select Category",
+                    content: Container(
+                      // color: Colors.red,
+                      width: double.infinity,
+                      child: CategoryDropdownMenu(
+                        onConfirm: (main, sub) {
+                          categoryCon.text = "$main , $sub";
+                        },
+                      ),
+                    ),
+                  );
+                },
+              )
+            ],
+          ),
         ),
       ),
     );

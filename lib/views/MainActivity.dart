@@ -44,7 +44,7 @@ class _MainActivityState extends State<MainActivity> {
             items: [
               BottomNavigationBarItem(
                 icon: Icon(
-                    Icons.home,
+                  Icons.home,
                 ),
                 label: 'Home',
               ),
@@ -81,23 +81,35 @@ class _MainActivityState extends State<MainActivity> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(
-        title:  Obx(
-          () {
-            return Text(
-              appTitle(bottomNavigationController),
-            );
-          },
-        ),
-        actions: [
-          IconButton(
-            icon: Icon(Icons.settings),
-            onPressed: () {
-              Get.to(() => SelectLanguagePage());
-            },
-          )
-        ],
-      ),
+      // appBar: AppBar(
+      //   title: Obx(
+      //     () {
+      //       return Text(
+      //         appTitle(bottomNavigationController),
+      //       );
+      //     },
+      //   ),
+      //   actions: <Widget>[
+      //     IconButton(
+      //       icon: Icon(Icons.settings),
+      //       onPressed: () {
+      //         Get.to(() => SelectLanguagePage());
+      //       },
+      //     ),
+      //     Obx(() {
+      //       if(bottomNavigationController.tabIndex.value ==2){
+      //         return IconButton(
+      //           icon: Icon(Icons.check),
+      //           onPressed: () {
+      //
+      //           },
+      //         );
+      //       }else{
+      //         return Container();
+      //       }
+      //     })
+      //   ],
+      // ),
       body: Obx(() => IndexedStack(
             index: bottomNavigationController.tabIndex.value,
             children: [
