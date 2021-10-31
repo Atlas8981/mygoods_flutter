@@ -30,8 +30,7 @@ class _AddPageState extends State<AddPage> {
       addressCon = TextEditingController(),
       phoneCon = TextEditingController(),
       descriptionCon = TextEditingController(),
-      categoryCon = TextEditingController()
-  ;
+      categoryCon = TextEditingController();
 
   void _imageFromGallery(index) async {
     // var picture = await _imagePicker.pick(source: ImageSource.gallery);
@@ -160,7 +159,9 @@ class _AddPageState extends State<AddPage> {
               child: Obx(() {
                 return ListView.builder(
                   scrollDirection: Axis.horizontal,
-                  itemCount: addImageController.rawImages.length + 1,
+                  itemCount: (addImageController.rawImages.length == 5)
+                      ? 5
+                      : addImageController.rawImages.length + 1,
                   shrinkWrap: true,
                   itemBuilder: (context, index) {
                     return buildAddImageRow(context, index);
