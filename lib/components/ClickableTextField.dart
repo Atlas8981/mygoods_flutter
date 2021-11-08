@@ -45,14 +45,14 @@ class _ClickableTextFieldState extends State<ClickableTextField> {
             fontSize: 16,
           ),
           labelText: widget.labelText,
-          prefixText: widget.prefix == null ? null : widget.prefix,
+          prefixText: widget.prefix,
           border: OutlineInputBorder(),
           // enabledBorder: OutlineInputBorder(
-          //   borderSide: BorderSide(color: CompanyColors.blue, width: 1.0),
+          //   borderSide: BorderSide(color: Colors.black, width: 1.5),
           // ),
           prefixIcon: widget.prefixIcon,
           suffixIcon: widget.suffixIcon,
-          counterStyle: TextStyle(fontSize: 12, height: 1)
+          counterStyle: TextStyle(fontSize: 12, height: 1),
       ),
     );
   }

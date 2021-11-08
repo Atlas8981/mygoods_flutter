@@ -17,4 +17,9 @@ class Image {
     "imageName": imageName,
     "imageURL": imageUrl,
   };
+
+  @override
+  String toString() {
+    return 'Image{imageName: $imageName, imageUrl: $imageUrl}';
+  }
 }

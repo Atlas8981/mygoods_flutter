@@ -1,6 +1,5 @@
 
 import 'package:flutter/material.dart';
-import 'package:mygoods_flutter/components/DropdownTextField.dart';
 
 
 class TypeTextField extends StatefulWidget {
@@ -32,7 +31,7 @@ class _TypeTextFieldState extends State<TypeTextField> {
   Widget build(BuildContext context) {
     return TextField(
       controller: widget.controller,
-      maxLength: (widget.maxLength != null) ? widget.maxLength : null,
+      maxLength: widget.maxLength,
       style: TextStyle(
         fontSize: 16,
         color: Colors.black,
@@ -47,7 +46,7 @@ class _TypeTextFieldState extends State<TypeTextField> {
           prefixText: widget.prefix == null ? null : widget.prefix,
           border: OutlineInputBorder(),
           // enabledBorder: OutlineInputBorder(
-          //   borderSide: BorderSide(color: CompanyColors.blue, width: 1.0),
+          //   borderSide: BorderSide(color: Colors.black, width: 1.5),
           // ),
           prefixIcon: widget.prefixIcon,
           suffixIcon: widget.suffixIcon,

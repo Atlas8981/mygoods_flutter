@@ -1,8 +1,10 @@
 import 'dart:io';
 
+import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_storage/firebase_storage.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter/widgets.dart';
 import 'package:fluttertoast/fluttertoast.dart';
 import 'package:get/get.dart';
 import 'package:image_picker/image_picker.dart';
@@ -10,6 +12,8 @@ import 'package:mygoods_flutter/components/ClickableTextField.dart';
 import 'package:mygoods_flutter/components/TypeTextField.dart';
 import 'package:mygoods_flutter/controllers/addImagesController.dart';
 import 'package:mygoods_flutter/models/category.dart';
+import 'package:mygoods_flutter/models/image.dart' as myImageClass;
+import 'package:mygoods_flutter/models/item.dart';
 import 'package:mygoods_flutter/utils/constant.dart';
 
 class AddPage extends StatefulWidget {
@@ -18,20 +22,23 @@ class AddPage extends StatefulWidget {
 }
 
 class _AddPageState extends State<AddPage> {
+  final FirebaseStorage storage = FirebaseStorage.instance;
+  final FirebaseFirestore firestore = FirebaseFirestore.instance;
   final addImageController = Get.put(AddImageController());
   final key = GlobalKey<AnimatedListState>();
 
-  // XFile? image;
+  final conditions = ["New", "Used"];
 
-  ImagePicker _imagePicker = ImagePicker();
+  final ImagePicker _imagePicker = ImagePicker();
 
   String subCat = "", mainCat = "", condition = "";
-  TextEditingController nameCon = TextEditingController(),
+  final TextEditingController nameCon = TextEditingController(),
       priceCon = TextEditingController(),
       addressCon = TextEditingController(),
       phoneCon = TextEditingController(),
       descriptionCon = TextEditingController(),
-      categoryCon = TextEditingController();
+      categoryCon = TextEditingController(),
+      conditionCon = TextEditingController();
 
   void _imageFromGallery(index) async {
     // var picture = await _imagePicker.pick(source: ImageSource.gallery);
@@ -74,13 +81,17 @@ class _AddPageState extends State<AddPage> {
               onTap: () {
                 print('I click on Image');
               },
-              child: ClipRRect(
-                borderRadius: BorderRadius.circular(5),
-                child: Image.file(
-                  File(addImageController.rawImages[index].path),
-                  width: 120,
-                  height: 120,
-                  fit: BoxFit.cover,
+              child: Card(
+                margin: EdgeInsets.all(0),
+                elevation: 5,
+                child: ClipRRect(
+                  borderRadius: BorderRadius.circular(5),
+                  child: Image.file(
+                    File(addImageController.rawImages[index].path),
+                    width: 120,
+                    height: 120,
+                    fit: BoxFit.cover,
+                  ),
                 ),
               ),
             ),
@@ -126,22 +137,74 @@ class _AddPageState extends State<AddPage> {
     }
   }
 
-  FirebaseStorage storage = FirebaseStorage.instance;
-
-  Future<void> uploadFile(String filePath) async {
-    // File file = File(filePath);
-    File file = File(addImageController.rawImages[0].path);
-    try {
-      await storage
-          .ref('flutter/')
-          .child("${DateTime.now()}")
-          .putFile(file)
-      ;
-    } on FirebaseException catch (e) {
-      print(e);
-      // e.g, e.code == 'canceled'
-    }
+  Future<List<myImageClass.Image>> uploadFiles(List<File> _images) async {
+    var images = await Future.wait(_images.map((_image) => uploadFile(_image)));
+    // print(images);
+    return images;
   }
+
+  Future<myImageClass.Image> uploadFile(File _image) async {
+    final imageName = "${DateTime.now()}";
+    Reference storageReference = storage.ref('flutter/').child("$imageName");
+    await storageReference.putFile(_image);
+    final imageUrl = await storageReference.getDownloadURL();
+    final image = myImageClass.Image(imageName: imageName, imageUrl: imageUrl);
+    return image;
+  }
+
+  // Future<TaskSnapshot?> uploadImage(String filePath) async {
+  //   File file = File(filePath);
+  //   // File file = File(addImageController.rawImages[0].path);
+  //   try {
+  //     final response = await storage
+  //         .ref('flutter/')
+  //         .child("${DateTime.now()}")
+  //         .putFile(file);
+  //     return response;
+  //   } on FirebaseException catch (e) {
+  //     print(e);
+  //     // e.g, e.code == 'canceled'
+  //   }
+  // }
+
+  final String collectionName = "flutterItems";
+
+  void uploadData(List<myImageClass.Image> imageUrls) {
+    final CollectionReference reference =
+        FirebaseFirestore.instance.collection("$collectionName");
+
+    final String id =
+        reference.doc().path.toString().replaceAll("$collectionName/", "");
+
+    final Item item = Item(
+        date: Timestamp.now(),
+        subCategory: subCat,
+        images: imageUrls,
+        amount: 0,
+        address: addressCon.text,
+        description: descriptionCon.text,
+        userid: "auth.uid",
+        itemid: id,
+        viewers: [],
+        phone: phoneCon.text,
+        price: double.parse(priceCon.text),
+        name: nameCon.text,
+        mainCategory: mainCat,
+        views: 0);
+
+    reference.doc(id).set(item.toJson()).then((value) {
+      print("success");
+    }).catchError((error) {
+      print("Failed with error: $error");
+    });
+  }
+
+  Future<void> uploadItemInformation() async {
+    uploadFiles(addImageController.getRawImageInFile()).then((images) {
+      uploadData(images);
+    });
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -151,9 +214,9 @@ class _AddPageState extends State<AddPage> {
           IconButton(
               onPressed: () {
                 // uploadFile("filePath");
+                uploadItemInformation();
               },
-              icon: Icon(Icons.check)
-          )
+              icon: Icon(Icons.check))
         ],
       ),
       body: Container(
@@ -166,21 +229,28 @@ class _AddPageState extends State<AddPage> {
             crossAxisAlignment: CrossAxisAlignment.start,
             mainAxisSize: MainAxisSize.max,
             children: [
-              Text(
-                "Upload Photos",
-                style: TextStyle(
-                  fontSize: 18,
-                  fontWeight: FontWeight.bold,
-                ),
-              ),
-              Align(
-                alignment: Alignment.centerRight,
-                child: Obx(() {
-                  return Text(
-                    "(${addImageController.rawImages.length}/5)",
-                    style: TextStyle(fontSize: 16),
-                  );
-                }),
+              //Top Text in Horizontal Imageview
+              Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                mainAxisSize: MainAxisSize.max,
+                children: [
+                  Text(
+                    "Upload Photos",
+                    style: TextStyle(
+                      fontSize: 18,
+                      fontWeight: FontWeight.bold,
+                    ),
+                  ),
+                  Align(
+                    alignment: Alignment.centerRight,
+                    child: Obx(() {
+                      return Text(
+                        "(${addImageController.rawImages.length}/5)",
+                        style: TextStyle(fontSize: 16),
+                      );
+                    }),
+                  ),
+                ],
               ),
               //Horizontal Image View
               Container(
@@ -210,60 +280,180 @@ class _AddPageState extends State<AddPage> {
               SizedBox(
                 height: 10,
               ),
-              Row(
-                mainAxisSize: MainAxisSize.max,
-                // mainAxisAlignment: MainAxisAlignment,
+
+              //Forms
+              Column(
                 children: [
-                  Expanded(
-                    child: TypeTextField(
-                      labelText: "Item Name",
-                      controller: nameCon,
-                    ),
+                  Row(
+                    mainAxisSize: MainAxisSize.max,
+                    // mainAxisAlignment: MainAxisAlignment,
+                    children: [
+                      Expanded(
+                        child: TypeTextField(
+                          labelText: "Item Name",
+                          controller: nameCon,
+                        ),
+                      ),
+                      SizedBox(
+                        width: 5,
+                      ),
+                      Expanded(
+                        child: TypeTextField(
+                          labelText: "Price",
+                          controller: priceCon,
+                          inputType: TextInputType.numberWithOptions(
+                              decimal: true, signed: false),
+                          suffixIcon:
+                              Icon(Icons.attach_money, color: context.iconColor
+                                  // color: Colors.black,
+                                  ),
+                        ),
+                      ),
+                    ],
                   ),
                   SizedBox(
-                    width: 5,
+                    height: 10,
                   ),
-                  Expanded(
-                    child: TypeTextField(
-                      labelText: "Price",
-                      controller: priceCon,
-                      suffixIcon:
-                          Icon(Icons.attach_money, color: context.iconColor
-                              // color: Colors.black,
-                              ),
+                  ClickableTextField(
+                    labelText: "Category",
+                    controller: categoryCon,
+                    suffixIcon: Icon(
+                      Icons.arrow_forward_ios,
+                      color: context.iconColor,
                     ),
+                    onTap: () {
+                      FocusScope.of(context).requestFocus(FocusNode());
+                      Get.defaultDialog(
+                        title: "Select Category",
+                        content: Container(
+                          // color: Colors.red,
+                          width: double.infinity,
+                          child: CategoryDropdownMenu(
+                            onConfirm: (main, sub) {
+                              categoryCon.text = "$main , $sub";
+                              mainCat = main;
+                              subCat = sub;
+                            },
+                          ),
+                        ),
+                      );
+                    },
+                  ),
+                  SizedBox(
+                    height: 10,
+                  ),
+                  ClickableTextField(
+                    labelText: "Condition",
+                    controller: conditionCon,
+                    suffixIcon: Icon(
+                      Icons.arrow_forward_ios,
+                      color: context.iconColor,
+                    ),
+                    onTap: () {
+                      FocusScope.of(context).requestFocus(FocusNode());
+                      Get.bottomSheet(
+                          CustomButtonSheet(
+                            items: conditions,
+                            onItemClick: (index) {
+                              print(conditions[index]);
+                              setState(() {
+                                conditionCon.text = conditions[index];
+                              });
+                            },
+                          ),
+                          backgroundColor: Colors.white);
+                    },
+                  ),
+                  SizedBox(
+                    height: 10,
+                  ),
+                  TypeTextField(
+                    labelText: "Address",
+                    controller: addressCon,
+                  ),
+                  SizedBox(
+                    height: 10,
+                  ),
+                  TypeTextField(
+                    labelText: "Phone Number",
+                    controller: phoneCon,
+                    inputType: TextInputType.phone,
+                    prefix: "0",
+                  ),
+                  SizedBox(
+                    height: 10,
+                  ),
+                  TextField(
+                    controller: descriptionCon,
+                    maxLength: 200,
+                    textAlign: TextAlign.start,
+                    style: TextStyle(
+                      fontSize: 16,
+                      color: Colors.black,
+                    ),
+                    keyboardType: TextInputType.multiline,
+                    maxLines: 5,
+                    decoration: InputDecoration(
+                        alignLabelWithHint: true,
+                        contentPadding: EdgeInsets.all(10),
+                        labelStyle: TextStyle(
+                          fontSize: 16,
+                        ),
+                        labelText: "Description",
+                        border: OutlineInputBorder(),
+                        // enabledBorder: OutlineInputBorder(
+                        //   borderSide:
+                        //       BorderSide(color: Colors.black, width: 1.5),
+                        // ),
+                        counterStyle: TextStyle(fontSize: 12, height: 1)),
+                  ),
+                  SizedBox(
+                    height: 10,
                   ),
                 ],
               ),
-              SizedBox(
-                height: 10,
-              ),
-              ClickableTextField(
-                labelText: "Category",
-                controller: categoryCon,
-                suffixIcon: Icon(
-                  Icons.arrow_forward_ios,
-                  color: context.iconColor,
-                ),
-                onTap: () {
-                  FocusScope.of(context).requestFocus(FocusNode());
-                  Get.defaultDialog(
-                    title: "Select Category",
-                    content: Container(
-                      // color: Colors.red,
-                      width: double.infinity,
-                      child: CategoryDropdownMenu(
-                        onConfirm: (main, sub) {
-                          categoryCon.text = "$main , $sub";
-                        },
-                      ),
-                    ),
-                  );
-                },
-              )
             ],
           ),
         ),
+      ),
+    );
+  }
+}
+
+class CustomButtonSheet extends StatefulWidget {
+  const CustomButtonSheet({
+    Key? key,
+    required this.items,
+    required this.onItemClick,
+  }) : super(key: key);
+
+  final List<String> items;
+  final Function(int index) onItemClick;
+
+  @override
+  _CustomButtonSheetState createState() => _CustomButtonSheetState();
+}
+
+class _CustomButtonSheetState extends State<CustomButtonSheet> {
+  @override
+  Widget build(BuildContext context) {
+    return Container(
+      padding: EdgeInsets.all(20),
+      child: ListView.builder(
+        shrinkWrap: true,
+        itemCount: widget.items.length,
+        itemBuilder: (context, index) {
+          return InkWell(
+            onTap: () {
+              widget.onItemClick(index);
+              Get.back();
+            },
+            child: ListTile(
+              contentPadding: EdgeInsets.all(0),
+              title: Text(widget.items[index]),
+            ),
+          );
+        },
       ),
     );
   }

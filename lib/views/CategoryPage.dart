@@ -22,84 +22,86 @@ class CategoryPage extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Container(
-      width: double.infinity,
-      height: double.infinity,
-      // color: Colors.yellow,
-      child: SingleChildScrollView(
-        child: Column(
-          crossAxisAlignment: CrossAxisAlignment.start,
-          children: [
-            Padding(
-              padding: EdgeInsets.all(20),
-              child: Column(
-                crossAxisAlignment: CrossAxisAlignment.start,
-                children: [
-                  Text(
-                    "Popular Category",
-                    style: TextStyle(fontSize: 18, fontWeight: FontWeight.bold),
-                  ),
-                  GridView.count(
-                    scrollDirection: Axis.vertical,
-                    //Very Important Line to make grid view scroll
-                    physics: ScrollPhysics(),
-                    shrinkWrap: true,
-                    primary: true,
-                    crossAxisCount: 3,
-                    //1.0
-                    crossAxisSpacing: 4.0,
-                    children: List.generate(
-                      popularCategory.length,
-                      (index) {
-                        return PopularCategoryRow(popularCategory[index]);
-                      },
+    return SafeArea(
+      child: Container(
+        width: double.infinity,
+        height: double.infinity,
+        // color: Colors.yellow,
+        child: SingleChildScrollView(
+          child: Column(
+            crossAxisAlignment: CrossAxisAlignment.start,
+            children: [
+              Padding(
+                padding: EdgeInsets.all(20),
+                child: Column(
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: [
+                    Text(
+                      "Popular Category",
+                      style: TextStyle(fontSize: 18, fontWeight: FontWeight.bold),
                     ),
-                  ),
-                ],
+                    GridView.count(
+                      scrollDirection: Axis.vertical,
+                      //Very Important Line to make grid view scroll
+                      physics: ScrollPhysics(),
+                      shrinkWrap: true,
+                      primary: true,
+                      crossAxisCount: 3,
+                      //1.0
+                      crossAxisSpacing: 4.0,
+                      children: List.generate(
+                        popularCategory.length,
+                        (index) {
+                          return PopularCategoryRow(popularCategory[index]);
+                        },
+                      ),
+                    ),
+                  ],
+                ),
               ),
-            ),
-            Container(
-              width: double.infinity,
-              height: 10,
-              color: Colors.black,
-            ),
-            Container(
-              width: double.infinity,
-              height: 10,
-            ),
-            Padding(
-              padding: EdgeInsets.all(20),
-              child: Column(
-                crossAxisAlignment: CrossAxisAlignment.stretch,
-                mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                children: [
-                  Text(
-                    "More Categories",
-                    style: TextStyle(fontSize: 18, fontWeight: FontWeight.bold),
-                  ),
-                  Container(
-                    width: double.infinity,
-                    height: 20,
-                  ),
-                  ListView.builder(
-                    physics: ScrollPhysics(),
-                    shrinkWrap: true,
-                    primary: true,
-                    itemCount: mainCategories.length,
-                    itemBuilder: (context, index) {
-                      return InkWell(
-                          onTap: () {
-                            Get.to(()=>SubCategoryPage(),
-                                arguments: mainCategories[index].name);
-                          },
-                          child: CategoryItemRow(mainCategories[index]));
-                    },
-                  )
-                  //  Put Column
-                ],
+              Container(
+                width: double.infinity,
+                height: 10,
+                color: Colors.black,
               ),
-            ),
-          ],
+              Container(
+                width: double.infinity,
+                height: 10,
+              ),
+              Padding(
+                padding: EdgeInsets.all(20),
+                child: Column(
+                  crossAxisAlignment: CrossAxisAlignment.stretch,
+                  mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                  children: [
+                    Text(
+                      "More Categories",
+                      style: TextStyle(fontSize: 18, fontWeight: FontWeight.bold),
+                    ),
+                    Container(
+                      width: double.infinity,
+                      height: 20,
+                    ),
+                    ListView.builder(
+                      physics: ScrollPhysics(),
+                      shrinkWrap: true,
+                      primary: true,
+                      itemCount: mainCategories.length,
+                      itemBuilder: (context, index) {
+                        return InkWell(
+                            onTap: () {
+                              Get.to(()=>SubCategoryPage(),
+                                  arguments: mainCategories[index].name);
+                            },
+                            child: CategoryItemRow(mainCategories[index]));
+                      },
+                    )
+                    //  Put Column
+                  ],
+                ),
+              ),
+            ],
+          ),
         ),
       ),
     );

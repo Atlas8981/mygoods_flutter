@@ -25,113 +25,115 @@ class HomePage extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Container(
-      padding: EdgeInsets.all(10),
-      child: SingleChildScrollView(
-        child: Column(children: [
-          Container(
-            color: Colors.blue,
-            height: 125,
-            width: double.infinity,
-            child: Image.asset(
-                "assets/images/banner1.png",
-              fit: BoxFit.cover,
+    return SafeArea(
+      child: Container(
+        padding: EdgeInsets.all(10),
+        child: SingleChildScrollView(
+          child: Column(children: [
+            Container(
+              color: Colors.blue,
+              height: 125,
+              width: double.infinity,
+              child: Image.asset(
+                  "assets/images/banner1.png",
+                fit: BoxFit.cover,
+              ),
             ),
-          ),
-          Column(
-            children: [
-              Row(
-                mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                children: [
-                  Text(
-                    "Trending",
-                    style:
-                        TextStyle(fontSize: 18, fontWeight: FontWeight.bold),
-                  ),
-                  TextButton(
-                    onPressed: () {},
-                    child: Text("View All"),
-                  ),
-                ],
-              ),
-              SizedBox(
-                // width: double.infinity,
-                height: 175,
-                child: ListView.builder(
-                  scrollDirection: Axis.horizontal,
-                  // shrinkWrap: true,
-                  // physics: NeverScrollableScrollPhysics(),
-                  itemCount: productList.length,
-                  itemBuilder: (BuildContext context, int index) {
-                    // return ProductTile(productList[index]);
-                    return HomepageCell(productList[index]);
-                  },
+            Column(
+              children: [
+                Row(
+                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                  children: [
+                    Text(
+                      "Trending",
+                      style:
+                          TextStyle(fontSize: 18, fontWeight: FontWeight.bold),
+                    ),
+                    TextButton(
+                      onPressed: () {},
+                      child: Text("View All"),
+                    ),
+                  ],
                 ),
-              ),
-            ],
-          ),
-          Column(
-            children: [
-              Row(
-                mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                children: [
-                  Text(
-                    "Recently View",
-                    style:
-                    TextStyle(fontSize: 18, fontWeight: FontWeight.bold),
+                SizedBox(
+                  // width: double.infinity,
+                  height: 175,
+                  child: ListView.builder(
+                    scrollDirection: Axis.horizontal,
+                    // shrinkWrap: true,
+                    // physics: NeverScrollableScrollPhysics(),
+                    itemCount: productList.length,
+                    itemBuilder: (BuildContext context, int index) {
+                      // return ProductTile(productList[index]);
+                      return HomepageCell(productList[index]);
+                    },
                   ),
-                  TextButton(
-                    onPressed: () {},
-                    child: Text("View All"),
-                  ),
-                ],
-              ),
-              SizedBox(
-                // width: double.infinity,
-                height: 175,
-                child: ListView.builder(
-                  scrollDirection: Axis.horizontal,
-                  itemCount: productList.length,
-                  itemBuilder: (BuildContext context, int index) {
-                    // return ProductTile(productList[index]);
-                    return HomepageCell(productList[index]);
-                  },
                 ),
-              ),
-            ],
-          ),
-          Column(
-            children: [
-              Row(
-                mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                children: [
-                  Text(
-                    "You May Like",
-                    style:
-                    TextStyle(fontSize: 18, fontWeight: FontWeight.bold),
-                  ),
-                  TextButton(
-                    onPressed: () {},
-                    child: Text("View All"),
-                  ),
-                ],
-              ),
-              SizedBox(
-                // width: double.infinity,
-                height: 175,
-                child: ListView.builder(
-                  scrollDirection: Axis.horizontal,
-                  itemCount: productList.length,
-                  itemBuilder: (BuildContext context, int index) {
-                    // return ProductTile(productList[index]);
-                    return HomepageCell(productList[index]);
-                  },
+              ],
+            ),
+            Column(
+              children: [
+                Row(
+                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                  children: [
+                    Text(
+                      "Recently View",
+                      style:
+                      TextStyle(fontSize: 18, fontWeight: FontWeight.bold),
+                    ),
+                    TextButton(
+                      onPressed: () {},
+                      child: Text("View All"),
+                    ),
+                  ],
                 ),
-              ),
-            ],
-          ),
+                SizedBox(
+                  // width: double.infinity,
+                  height: 175,
+                  child: ListView.builder(
+                    scrollDirection: Axis.horizontal,
+                    itemCount: productList.length,
+                    itemBuilder: (BuildContext context, int index) {
+                      // return ProductTile(productList[index]);
+                      return HomepageCell(productList[index]);
+                    },
+                  ),
+                ),
+              ],
+            ),
+            Column(
+              children: [
+                Row(
+                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                  children: [
+                    Text(
+                      "You May Like",
+                      style:
+                      TextStyle(fontSize: 18, fontWeight: FontWeight.bold),
+                    ),
+                    TextButton(
+                      onPressed: () {},
+                      child: Text("View All"),
+                    ),
+                  ],
+                ),
+                SizedBox(
+                  // width: double.infinity,
+                  height: 175,
+                  child: ListView.builder(
+                    scrollDirection: Axis.horizontal,
+                    itemCount: productList.length,
+                    itemBuilder: (BuildContext context, int index) {
+                      // return ProductTile(productList[index]);
+                      return HomepageCell(productList[index]);
+                    },
+                  ),
+                ),
+              ],
+            ),
 
-        ]),
+          ]),
+        ),
       ),
     );
   }
