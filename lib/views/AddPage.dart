@@ -194,6 +194,7 @@ class _AddPageState extends State<AddPage> {
 
     reference.doc(id).set(item.toJson()).then((value) {
       print("success");
+      clearData();
     }).catchError((error) {
       print("Failed with error: $error");
     });
@@ -203,6 +204,20 @@ class _AddPageState extends State<AddPage> {
     uploadFiles(addImageController.getRawImageInFile()).then((images) {
       uploadData(images);
     });
+  }
+
+  void clearData() {
+    subCat = "";
+    mainCat = "";
+    categoryCon.text = "";
+    addressCon.text = "";
+    descriptionCon.text = "";
+    phoneCon.text = "";
+    priceCon.text = "";
+    nameCon.text = "";
+    conditionCon.text = "";
+    condition = "";
+    addImageController.clear();
   }
 
   @override

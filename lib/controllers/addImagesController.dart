@@ -19,4 +19,8 @@ class AddImageController extends GetxController{
     }
     return files;
   }
+
+  void clear() {
+    rawImages.value = [];
+  }
 }
