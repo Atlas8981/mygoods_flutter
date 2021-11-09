@@ -7,9 +7,12 @@ class AccountPage extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return SafeArea(
-      child: Container(
-        child: Center(child: Text("Account Page")),
+    return Scaffold(
+      appBar: AppBar(title: Text("Acccount"),),
+      body: SafeArea(
+        child: Container(
+          child: Center(child: Text("Account Page")),
+        ),
       ),
     );
   }

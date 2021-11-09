@@ -55,7 +55,7 @@ class _ListProductState extends State<ListProduct> {
                     },
                   ),
                 );
-              }return Text("n error has occurred");
+              }return Text("an error has occurred");
 
             } else {
               return const Center(

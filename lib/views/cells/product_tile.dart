@@ -4,6 +4,7 @@ import 'package:mygoods_flutter/models/product.dart';
 
 class ProductTile extends StatelessWidget {
   final Product product;
+
   const ProductTile(this.product);
 
   @override
@@ -54,28 +55,27 @@ class ProductTile extends StatelessWidget {
               overflow: TextOverflow.ellipsis,
             ),
             SizedBox(height: 8),
-            if (product.rating != null)
-              Container(
-                decoration: BoxDecoration(
-                  color: Colors.green,
-                  borderRadius: BorderRadius.circular(12),
-                ),
-                padding: const EdgeInsets.symmetric(horizontal: 4, vertical: 2),
-                child: Row(
-                  mainAxisSize: MainAxisSize.min,
-                  children: [
-                    Text(
-                      product.rating.rate.toString(),
-                      style: TextStyle(color: Colors.white),
-                    ),
-                    Icon(
-                      Icons.star,
-                      size: 16,
-                      color: Colors.white,
-                    ),
-                  ],
-                ),
+            Container(
+              decoration: BoxDecoration(
+                color: Colors.green,
+                borderRadius: BorderRadius.circular(12),
               ),
+              padding: const EdgeInsets.symmetric(horizontal: 4, vertical: 2),
+              child: Row(
+                mainAxisSize: MainAxisSize.min,
+                children: [
+                  Text(
+                    product.rating.rate.toString(),
+                    style: TextStyle(color: Colors.white),
+                  ),
+                  Icon(
+                    Icons.star,
+                    size: 16,
+                    color: Colors.white,
+                  ),
+                ],
+              ),
+            ),
             SizedBox(height: 8),
             Text('\$ ${product.price}',
                 style: TextStyle(fontSize: 32, fontFamily: 'avenir')),

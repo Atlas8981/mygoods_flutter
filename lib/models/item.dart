@@ -45,39 +45,41 @@ class Item {
   final int views;
 
   factory Item.fromJson(Map<String, dynamic> json) => Item(
-    date: json["date"],
-    subCategory: json["subCategory"],
-    images: List<Image>.from(json["images"].map((x) => Image.fromJson(x))),
-    amount: json["amount"],
-    address: json["address"],
-    description: json["description"],
-    userid: json["userid"],
-    itemid: json["itemid"],
-    viewers: List<String>.from(json["viewers"].map((x) => x)),
-    phone: json["phone"],
-    price: json["price"].toDouble(),
-    name: json["name"],
-    mainCategory: json["mainCategory"],
-    views: json["views"],
-  );
+        date: json["date"],
+        subCategory: json["subCategory"],
+        images: List<Image>.from(json["images"].map((x) => Image.fromJson(x))),
+        amount: json["amount"],
+        address: json["address"],
+        description: json["description"],
+        userid: json["userid"],
+        itemid: json["itemid"],
+        viewers: List<String>.from(json["viewers"].map((x) => x)),
+        phone: json["phone"],
+        price: json["price"].toDouble(),
+        name: json["name"],
+        mainCategory: json["mainCategory"],
+        views: json["views"],
+      );
 
   Map<String, dynamic> toJson() => {
-    "date": date,
-    "subCategory": subCategory,
-    "images": List<dynamic>.from(images.map((x) => x.toJson())),
-    "amount": amount,
-    "address": address,
-    "description": description,
-    "userid": userid,
-    "itemid": itemid,
-    "viewers": List<dynamic>.from(viewers.map((x) => x)),
-    "phone": phone,
-    "price": price,
-    "name": name,
-    "mainCategory": mainCategory,
-    "views": views,
-  };
+        "date": date,
+        "subCategory": subCategory,
+        "images": List<dynamic>.from(images.map((x) => x.toJson())),
+        "amount": amount,
+        "address": address,
+        "description": description,
+        "userid": userid,
+        "itemid": itemid,
+        "viewers": List<dynamic>.from(viewers.map((x) => x)),
+        "phone": phone,
+        "price": price,
+        "name": name,
+        "mainCategory": mainCategory,
+        "views": views,
+      };
+
+  @override
+  String toString() {
+    return 'Item{date: $date, subCategory: $subCategory, images: $images, amount: $amount, address: $address, description: $description, userid: $userid, itemid: $itemid, viewers: $viewers, phone: $phone, price: $price, name: $name, mainCategory: $mainCategory, views: $views}';
+  }
 }
-
-
-

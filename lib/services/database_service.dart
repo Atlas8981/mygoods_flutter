@@ -9,7 +9,7 @@ class DatabaseService {
   Future<List<Item>> getItems(String mainCat,String subCat) async{
     List<Item> response = [];
     try{
-      await _firestore.collection("items")
+      await _firestore.collection("flutterItems")
           .limit(10)
           .where("mainCategory", isEqualTo: mainCat)
           .where("subCategory",isEqualTo: subCat)
