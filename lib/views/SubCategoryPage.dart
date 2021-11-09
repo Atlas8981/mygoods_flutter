@@ -48,10 +48,13 @@ class SubCategoryPage extends StatelessWidget {
                 itemBuilder: (context, index) {
                   return InkWell(
                       onTap: () {
-                        Get.to(() => ListProduct(), arguments: [
-                          title,
-                          decideSubCategory()[index].name,
-                        ]);
+                        print(decideSubCategory()[index].name);
+                        Get.to(
+                          () => ListProduct(
+                            mainCat: title,
+                            subCat: decideSubCategory()[index].name,
+                          ),
+                        );
                       },
                       child: CategoryItemRow(decideSubCategory()[index]));
                 },

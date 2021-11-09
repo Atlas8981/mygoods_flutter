@@ -1,7 +1,9 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
+import 'package:get/get.dart';
 import 'package:mygoods_flutter/models/item.dart';
 import 'package:mygoods_flutter/services/database_service.dart';
+import 'package:mygoods_flutter/views/ProductDetailPage.dart';
 
 class ListItemRow extends StatefulWidget {
   const ListItemRow({Key? key, this.item}) : super(key: key);
@@ -57,7 +59,9 @@ class _ListItemRowState extends State<ListItemRow> {
       // padding: const EdgeInsets.only(left: 10,right: 10),
       child: Column(children: [
         InkWell(
-          onTap: (){},
+          onTap: (){
+            Get.to(()=>ProductDetailPage(),arguments: item);
+          },
           child: Row(
             children: [
               ClipRRect(
