@@ -338,20 +338,39 @@ class _AddPageState extends State<AddPage> {
                     ),
                     onTap: () {
                       FocusScope.of(context).requestFocus(FocusNode());
-                      Get.defaultDialog(
-                        title: "Select Category",
-                        content: Container(
-                          // color: Colors.red,
-                          width: double.infinity,
-                          child: CategoryDropdownMenu(
-                            onConfirm: (main, sub) {
-                              categoryCon.text = "$main , $sub";
-                              mainCat = main;
-                              subCat = sub;
-                            },
-                          ),
-                        ),
+                      showDialog(
+                        context: context,
+                        builder: (context) {
+                          return AlertDialog(
+                            titlePadding: EdgeInsets.all(10),
+                            contentPadding: EdgeInsets.all(10),
+                            actionsPadding: EdgeInsets.all(10),
+                            title: Text("Select Category"),
+                            content: CategoryDropdownMenu(
+                              onConfirm: (main, sub) {
+                                categoryCon.text = "$main , $sub";
+                                mainCat = main;
+                                subCat = sub;
+                              },
+                            ),
+                          );
+                        },
                       );
+                      // Get.defaultDialog(
+                      //   title: "Select Category",
+                      //   content:
+                      //   Container(
+                      //     // color: Colors.red,
+                      //     width: double.infinity,
+                      //     child: CategoryDropdownMenu(
+                      //       onConfirm: (main, sub) {
+                      //         categoryCon.text = "$main , $sub";
+                      //         mainCat = main;
+                      //         subCat = sub;
+                      //       },
+                      //     ),
+                      //   ),
+                      // );
                     },
                   ),
                   SizedBox(
@@ -463,9 +482,12 @@ class _CustomButtonSheetState extends State<CustomButtonSheet> {
               widget.onItemClick(index);
               Get.back();
             },
-            child: ListTile(
-              contentPadding: EdgeInsets.all(0),
-              title: Text(widget.items[index]),
+            child: Container(
+              padding: EdgeInsets.all(10),
+              child: Text(
+                widget.items[index],
+                style: TextStyle(fontSize: 16, height: 1.5),
+              ),
             ),
           );
         },
@@ -513,6 +535,7 @@ class _CategoryDropdownMenuState extends State<CategoryDropdownMenu> {
     }
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
+      mainAxisSize: MainAxisSize.min,
       children: [
         Text("Main Category"),
         DropdownButton<String>(
