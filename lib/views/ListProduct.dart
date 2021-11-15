@@ -23,13 +23,7 @@ class ListProduct extends StatefulWidget {
 class _ListProductState extends State<ListProduct> {
   // final Future<FirebaseApp> _initialization = Firebase.initializeApp();
 
-  FirebaseFirestore firestore = FirebaseFirestore.instance;
-
-  @override
-  void initState() {
-    super.initState();
-  }
-
+  final FirebaseFirestore firestore = FirebaseFirestore.instance;
   final DatabaseService databaseService = DatabaseService();
 
   @override
@@ -40,8 +34,7 @@ class _ListProductState extends State<ListProduct> {
       ),
       body: SafeArea(
           child: FutureBuilder<List<Item>>(
-        future: databaseService.getItems(
-            widget.mainCat, widget.subCat),
+        future: databaseService.getItems(widget.mainCat, widget.subCat),
         builder: (context, snapshot) {
           if (snapshot.hasError) {
             return const Center(

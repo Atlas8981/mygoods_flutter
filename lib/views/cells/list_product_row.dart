@@ -14,7 +14,7 @@ class ListItemRow extends StatefulWidget {
 }
 
 class _ListItemRowState extends State<ListItemRow> {
-  DatabaseService database = DatabaseService();
+  final DatabaseService database = DatabaseService();
 
   // getItemOwner(String userId);
 
@@ -100,7 +100,7 @@ class _ListItemRowState extends State<ListItemRow> {
                     height: 12,
                   ),
                   FutureBuilder<String>(
-                    future: database.getItemOwner(item.userid),
+                    future: database.getItemOwnerName(item.userid),
                     builder: (context, snapshot) {
                       if (snapshot.hasData) {
                         return Text(
