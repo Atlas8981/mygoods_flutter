@@ -1,4 +1,3 @@
-
 import 'package:flutter/material.dart';
 import 'package:mygoods_flutter/components/DropdownTextField.dart';
 
@@ -29,8 +28,9 @@ class ClickableTextField extends StatefulWidget {
 class _ClickableTextFieldState extends State<ClickableTextField> {
   @override
   Widget build(BuildContext context) {
-    return TextField(
+    return TextFormField(
       enableInteractiveSelection: false,
+      autovalidateMode: AutovalidateMode.onUserInteraction,
       controller: widget.controller,
       maxLength: (widget.maxLength != null) ? widget.maxLength : null,
       style: TextStyle(
@@ -40,20 +40,26 @@ class _ClickableTextFieldState extends State<ClickableTextField> {
       onTap: widget.onTap,
       focusNode: AlwaysDisabledFocusNode(),
       decoration: InputDecoration(
-          contentPadding: EdgeInsets.all(10),
-          labelStyle: TextStyle(
-            fontSize: 16,
-          ),
-          labelText: widget.labelText,
-          prefixText: widget.prefix,
-          border: OutlineInputBorder(),
-          // enabledBorder: OutlineInputBorder(
-          //   borderSide: BorderSide(color: Colors.black, width: 1.5),
-          // ),
-          prefixIcon: widget.prefixIcon,
-          suffixIcon: widget.suffixIcon,
-          counterStyle: TextStyle(fontSize: 12, height: 1),
+        contentPadding: EdgeInsets.all(10),
+        labelStyle: TextStyle(
+          fontSize: 16,
+        ),
+        labelText: widget.labelText,
+        prefixText: widget.prefix,
+        border: OutlineInputBorder(),
+        // enabledBorder: OutlineInputBorder(
+        //   borderSide: BorderSide(color: Colors.black, width: 1.5),
+        // ),
+        prefixIcon: widget.prefixIcon,
+        suffixIcon: widget.suffixIcon,
+        counterStyle: TextStyle(fontSize: 12, height: 1),
       ),
+      validator: (value) {
+        if (value != null && value.isEmpty) {
+          return 'Empty Field';
+        }
+        return null;
+      },
     );
   }
 }

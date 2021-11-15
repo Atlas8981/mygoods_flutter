@@ -14,6 +14,7 @@ import 'package:mygoods_flutter/controllers/addImagesController.dart';
 import 'package:mygoods_flutter/models/category.dart';
 import 'package:mygoods_flutter/models/image.dart' as myImageClass;
 import 'package:mygoods_flutter/models/item.dart';
+import 'package:mygoods_flutter/services/additional_data_service.dart';
 import 'package:mygoods_flutter/utils/constant.dart';
 
 class AddPage extends StatefulWidget {
@@ -24,6 +25,9 @@ class AddPage extends StatefulWidget {
 class _AddPageState extends State<AddPage> {
   final FirebaseStorage storage = FirebaseStorage.instance;
   final FirebaseFirestore firestore = FirebaseFirestore.instance;
+  final AdditionalDataService additionalDataService = AdditionalDataService();
+  GlobalKey<FormState> formKey = GlobalKey<FormState>();
+
   final addImageController = Get.put(AddImageController());
   final key = GlobalKey<AnimatedListState>();
 
@@ -61,11 +65,6 @@ class _AddPageState extends State<AddPage> {
           backgroundColor: Colors.black,
           textColor: Colors.white,
           fontSize: 16.0);
-      // Get.snackbar(
-      //     "Lers Image", "Select Less than 5 Images",
-      //   backgroundColor: Colors.white,
-      //   snackPosition: SnackPosition.BOTTOM
-      // );
     }
   }
 
@@ -152,21 +151,6 @@ class _AddPageState extends State<AddPage> {
     return image;
   }
 
-  // Future<TaskSnapshot?> uploadImage(String filePath) async {
-  //   File file = File(filePath);
-  //   // File file = File(addImageController.rawImages[0].path);
-  //   try {
-  //     final response = await storage
-  //         .ref('flutter/')
-  //         .child("${DateTime.now()}")
-  //         .putFile(file);
-  //     return response;
-  //   } on FirebaseException catch (e) {
-  //     print(e);
-  //     // e.g, e.code == 'canceled'
-  //   }
-  // }
-
   final String collectionName = "flutterItems";
 
   void uploadData(List<myImageClass.Image> imageUrls) {
@@ -207,6 +191,7 @@ class _AddPageState extends State<AddPage> {
   }
 
   void clearData() {
+
     subCat = "";
     mainCat = "";
     categoryCon.text = "";
@@ -217,7 +202,10 @@ class _AddPageState extends State<AddPage> {
     nameCon.text = "";
     conditionCon.text = "";
     condition = "";
-    addImageController.clear();
+
+    setState(() {
+      formKey = GlobalKey<FormState>();
+    });
   }
 
   @override
@@ -228,10 +216,21 @@ class _AddPageState extends State<AddPage> {
         actions: [
           IconButton(
               onPressed: () {
-                // uploadFile("filePath");
-                uploadItemInformation();
+                clearData();
+
               },
-              icon: Icon(Icons.check))
+              tooltip: "Clear Data",
+              icon: Icon(Icons.refresh)),
+          IconButton(
+              onPressed: () {
+                // uploadFile("filePath");
+                if (!formKey.currentState!.validate()) {
+                  // showToast("message");
+                  return;
+                }
+                // uploadItemInformation();
+              },
+              icon: Icon(Icons.check)),
         ],
       ),
       body: Container(
@@ -281,15 +280,6 @@ class _AddPageState extends State<AddPage> {
                       return buildAddImageRow(context, index);
                     },
                   );
-                  // return AnimatedList(
-                  //   key: key,
-                  //   scrollDirection: Axis.horizontal,
-                  //   initialItemCount: addImageController.rawImages.length + 1,
-                  //   shrinkWrap: true,
-                  //   itemBuilder: (context, index,controller) {
-                  //     return buildAddImageRow(context, index);
-                  //   },
-                  // );
                 }),
               ),
               SizedBox(
@@ -297,154 +287,147 @@ class _AddPageState extends State<AddPage> {
               ),
 
               //Forms
-              Column(
-                children: [
-                  Row(
-                    mainAxisSize: MainAxisSize.max,
-                    // mainAxisAlignment: MainAxisAlignment,
-                    children: [
-                      Expanded(
-                        child: TypeTextField(
-                          labelText: "Item Name",
-                          controller: nameCon,
+              Form(
+                key: formKey,
+                child: Column(
+                  children: [
+                    Row(
+                      mainAxisSize: MainAxisSize.max,
+                      // mainAxisAlignment: MainAxisAlignment,
+                      children: [
+                        Expanded(
+                          child: TypeTextField(
+                            labelText: "Item Name",
+                            controller: nameCon,
+                          ),
                         ),
-                      ),
-                      SizedBox(
-                        width: 5,
-                      ),
-                      Expanded(
-                        child: TypeTextField(
-                          labelText: "Price",
-                          controller: priceCon,
-                          inputType: TextInputType.numberWithOptions(
-                              decimal: true, signed: false),
-                          suffixIcon:
-                              Icon(Icons.attach_money, color: context.iconColor
-                                  // color: Colors.black,
-                                  ),
+                        SizedBox(
+                          width: 5,
                         ),
-                      ),
-                    ],
-                  ),
-                  SizedBox(
-                    height: 10,
-                  ),
-                  ClickableTextField(
-                    labelText: "Category",
-                    controller: categoryCon,
-                    suffixIcon: Icon(
-                      Icons.arrow_forward_ios,
-                      color: context.iconColor,
+                        Expanded(
+                          child: TypeTextField(
+                            labelText: "Price",
+                            controller: priceCon,
+                            inputType: TextInputType.numberWithOptions(
+                                decimal: true, signed: false),
+                            suffixIcon: Icon(Icons.attach_money,
+                                color: context.iconColor
+                                // color: Colors.black,
+                                ),
+                          ),
+                        ),
+                      ],
                     ),
-                    onTap: () {
-                      FocusScope.of(context).requestFocus(FocusNode());
-                      showDialog(
-                        context: context,
-                        builder: (context) {
-                          return AlertDialog(
-                            titlePadding: EdgeInsets.all(10),
-                            contentPadding: EdgeInsets.all(10),
-                            actionsPadding: EdgeInsets.all(10),
-                            title: Text("Select Category"),
-                            content: CategoryDropdownMenu(
-                              onConfirm: (main, sub) {
-                                categoryCon.text = "$main , $sub";
-                                mainCat = main;
-                                subCat = sub;
+                    SizedBox(
+                      height: 10,
+                    ),
+                    ClickableTextField(
+                      labelText: "Category",
+                      controller: categoryCon,
+                      suffixIcon: Icon(
+                        Icons.arrow_forward_ios,
+                        color: context.iconColor,
+                      ),
+                      onTap: () {
+                        FocusScope.of(context).requestFocus(FocusNode());
+                        showDialog(
+                          context: context,
+                          builder: (context) {
+                            return AlertDialog(
+                              titlePadding: EdgeInsets.all(10),
+                              contentPadding: EdgeInsets.all(10),
+                              actionsPadding: EdgeInsets.all(10),
+                              title: Text("Select Category"),
+                              content: CategoryDropdownMenu(
+                                onConfirm: (main, sub) {
+                                  categoryCon.text = "$main , $sub";
+                                  mainCat = main;
+                                  subCat = sub;
+                                },
+                              ),
+                            );
+                          },
+                        );
+                      },
+                    ),
+                    SizedBox(
+                      height: 10,
+                    ),
+                    ClickableTextField(
+                      labelText: "Condition",
+                      controller: conditionCon,
+                      suffixIcon: Icon(
+                        Icons.arrow_forward_ios,
+                        color: context.iconColor,
+                      ),
+                      onTap: () {
+                        FocusScope.of(context).requestFocus(FocusNode());
+                        Get.bottomSheet(
+                            CustomButtonSheet(
+                              items: conditions,
+                              onItemClick: (index) {
+                                print(conditions[index]);
+                                setState(() {
+                                  conditionCon.text = conditions[index];
+                                });
                               },
                             ),
-                          );
-                        },
-                      );
-                      // Get.defaultDialog(
-                      //   title: "Select Category",
-                      //   content:
-                      //   Container(
-                      //     // color: Colors.red,
-                      //     width: double.infinity,
-                      //     child: CategoryDropdownMenu(
-                      //       onConfirm: (main, sub) {
-                      //         categoryCon.text = "$main , $sub";
-                      //         mainCat = main;
-                      //         subCat = sub;
-                      //       },
-                      //     ),
-                      //   ),
-                      // );
-                    },
-                  ),
-                  SizedBox(
-                    height: 10,
-                  ),
-                  ClickableTextField(
-                    labelText: "Condition",
-                    controller: conditionCon,
-                    suffixIcon: Icon(
-                      Icons.arrow_forward_ios,
-                      color: context.iconColor,
+                            backgroundColor: Colors.white);
+                      },
                     ),
-                    onTap: () {
-                      FocusScope.of(context).requestFocus(FocusNode());
-                      Get.bottomSheet(
-                          CustomButtonSheet(
-                            items: conditions,
-                            onItemClick: (index) {
-                              print(conditions[index]);
-                              setState(() {
-                                conditionCon.text = conditions[index];
-                              });
-                            },
+                    SizedBox(
+                      height: 10,
+                    ),
+                    TypeTextField(
+                      labelText: "Address",
+                      controller: addressCon,
+                    ),
+                    SizedBox(
+                      height: 10,
+                    ),
+                    TypeTextField(
+                      labelText: "Phone Number",
+                      controller: phoneCon,
+                      inputType: TextInputType.phone,
+                      prefix: "0",
+                      validator: (value) {
+                        if (value == null || value.isEmpty) {
+                          return "Field Empty";
+                        }
+                        if (!GetUtils.isPhoneNumber("0$value")) {
+                          return "Wrong Phone Format";
+                        }
+                        return null;
+                      },
+                    ),
+                    SizedBox(
+                      height: 10,
+                    ),
+                    TextField(
+                      controller: descriptionCon,
+                      maxLength: 200,
+                      textAlign: TextAlign.start,
+                      style: TextStyle(
+                        fontSize: 16,
+                        color: Colors.black,
+                      ),
+                      keyboardType: TextInputType.multiline,
+                      maxLines: 5,
+                      decoration: InputDecoration(
+                          alignLabelWithHint: true,
+                          contentPadding: EdgeInsets.all(10),
+                          labelStyle: TextStyle(
+                            fontSize: 16,
                           ),
-                          backgroundColor: Colors.white);
-                    },
-                  ),
-                  SizedBox(
-                    height: 10,
-                  ),
-                  TypeTextField(
-                    labelText: "Address",
-                    controller: addressCon,
-                  ),
-                  SizedBox(
-                    height: 10,
-                  ),
-                  TypeTextField(
-                    labelText: "Phone Number",
-                    controller: phoneCon,
-                    inputType: TextInputType.phone,
-                    prefix: "0",
-                  ),
-                  SizedBox(
-                    height: 10,
-                  ),
-                  TextField(
-                    controller: descriptionCon,
-                    maxLength: 200,
-                    textAlign: TextAlign.start,
-                    style: TextStyle(
-                      fontSize: 16,
-                      color: Colors.black,
+                          labelText: "Description",
+                          border: OutlineInputBorder(),
+                          counterStyle: TextStyle(fontSize: 12, height: 1)),
                     ),
-                    keyboardType: TextInputType.multiline,
-                    maxLines: 5,
-                    decoration: InputDecoration(
-                        alignLabelWithHint: true,
-                        contentPadding: EdgeInsets.all(10),
-                        labelStyle: TextStyle(
-                          fontSize: 16,
-                        ),
-                        labelText: "Description",
-                        border: OutlineInputBorder(),
-                        // enabledBorder: OutlineInputBorder(
-                        //   borderSide:
-                        //       BorderSide(color: Colors.black, width: 1.5),
-                        // ),
-                        counterStyle: TextStyle(fontSize: 12, height: 1)),
-                  ),
-                  SizedBox(
-                    height: 10,
-                  ),
-                ],
+                    SizedBox(
+                      height: 10,
+                    ),
+                  ],
+                ),
               ),
             ],
           ),

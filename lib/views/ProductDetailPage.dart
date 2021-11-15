@@ -11,6 +11,7 @@ import 'package:mygoods_flutter/models/additionalInfo.dart';
 import 'package:mygoods_flutter/models/image.dart' as image;
 import 'package:mygoods_flutter/models/item.dart';
 import 'package:mygoods_flutter/models/user.dart';
+import 'package:mygoods_flutter/services/additional_data_service.dart';
 import 'package:mygoods_flutter/services/database_service.dart';
 
 class ProductDetailPage extends StatefulWidget {
@@ -316,6 +317,7 @@ class _ProductDetailPageState extends State<ProductDetailPage> {
       ),
     );
   }
+
 
   @override
   Widget build(BuildContext context) {

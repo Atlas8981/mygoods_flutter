@@ -12,6 +12,7 @@ class TypeTextField extends StatefulWidget {
     this.suffixIcon,
     this.prefix,
     this.inputType,
+    this.validator,
   }) : super(key: key);
 
   final inputType;
@@ -21,6 +22,7 @@ class TypeTextField extends StatefulWidget {
   final Icon? prefixIcon;
   final Icon? suffixIcon;
   final TextEditingController? controller;
+  final String? Function(String? value)? validator;
 
   @override
   _TypeTextFieldState createState() => _TypeTextFieldState();
@@ -29,9 +31,10 @@ class TypeTextField extends StatefulWidget {
 class _TypeTextFieldState extends State<TypeTextField> {
   @override
   Widget build(BuildContext context) {
-    return TextField(
+    return TextFormField(
       controller: widget.controller,
       maxLength: widget.maxLength,
+      autovalidateMode: AutovalidateMode.onUserInteraction,
       style: TextStyle(
         fontSize: 16,
         color: Colors.black,
@@ -52,6 +55,13 @@ class _TypeTextFieldState extends State<TypeTextField> {
           suffixIcon: widget.suffixIcon,
           counterStyle: TextStyle(fontSize: 12, height: 1)
       ),
+      validator: widget.validator ??
+              (value) {
+            if (value != null && value.isEmpty) {
+              return 'Empty Field';
+            }
+            return null;
+          },
     );
   }
 }

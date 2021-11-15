@@ -140,26 +140,4 @@ class HomePage extends StatelessWidget {
       ),
     );
   }
-// const HomePage({ Key? key }) : super(key: key);
-
-// final productController = Get.put(ProductController());
-//
-// @override
-// Widget build(BuildContext context) {
-//   return Scaffold(
-//
-//     body: Obx(() => StaggeredGridView.countBuilder(
-//         crossAxisCount: 2,
-//         itemCount: productController.productList.length,
-//         mainAxisSpacing: 16,
-//         crossAxisSpacing: 16,
-//         itemBuilder: (context, index) {
-//           return ProductTile(productController.productList[index]);
-//         },
-//         staggeredTileBuilder: (index) => StaggeredTile.fit(1))),
-//     // body: Obx(() {
-//     //   return Text("Something is herer ${productController.productList.length}");
-//     // }),
-//   );
-// }
 }

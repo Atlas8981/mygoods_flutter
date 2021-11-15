@@ -91,6 +91,14 @@ class Car {
         year: json["year"]);
   }
 
+  factory Car.fromBack4AppJson(Map<String, dynamic> json) {
+    return Car(
+        brand: json["Make"],
+        model: json["Model"],
+        category: json["Category"],
+        year: json["Year"].toString());
+  }
+
   Map<String, dynamic> toJson() {
     return {
       "brand": brand,
