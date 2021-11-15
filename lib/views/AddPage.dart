@@ -11,6 +11,7 @@ import 'package:image_picker/image_picker.dart';
 import 'package:mygoods_flutter/components/ClickableTextField.dart';
 import 'package:mygoods_flutter/components/TypeTextField.dart';
 import 'package:mygoods_flutter/controllers/addImagesController.dart';
+import 'package:mygoods_flutter/models/additionalInfo.dart';
 import 'package:mygoods_flutter/models/category.dart';
 import 'package:mygoods_flutter/models/image.dart' as myImageClass;
 import 'package:mygoods_flutter/models/item.dart';
@@ -28,6 +29,19 @@ class _AddPageState extends State<AddPage> {
   final AdditionalDataService additionalDataService = AdditionalDataService();
   GlobalKey<FormState> formKey = GlobalKey<FormState>();
 
+  // {this.car,
+  // this.phone,
+  // this.motoType,
+  // this.computerParts,
+  // this.condition,
+  // this.bikeType});
+  final List<String> hasAdditionalInfoList = [
+    electronicSubCategories[0].name,
+    electronicSubCategories[3].name,
+    carSubCategories[0].name,
+    carSubCategories[1].name,
+    carSubCategories[2].name,
+  ];
   final addImageController = Get.put(AddImageController());
   final key = GlobalKey<AnimatedListState>();
 
@@ -42,7 +56,176 @@ class _AddPageState extends State<AddPage> {
       phoneCon = TextEditingController(),
       descriptionCon = TextEditingController(),
       categoryCon = TextEditingController(),
+      additionalInfoCon = TextEditingController(),
       conditionCon = TextEditingController();
+
+  List<Car>? carList;
+  // List<Car>? carList;
+  // List<Car>? carList;
+  // List<Car>? carList;
+  // List<Car>? carList;
+
+  bool showAdditionInfoForm() {
+    final hasAdditionInfo = hasAdditionalInfoList.contains(subCat);
+    if (hasAdditionInfo) {
+      additionalDataService.getCarData().then((value) => carList = value);
+    }
+    return hasAdditionInfo;
+  }
+
+  void carProcedure() async {
+    String selectBrand = "";
+    String selectModel = "";
+    String selectType = "";
+    String selectYear = "";
+    await showModalBottomSheet(
+        isScrollControlled: true,
+        context: context,
+        builder: (context) {
+          return CustomBottomSheetWithSearch(
+            items: carList!.map((e) => e.brand).toSet().toList(),
+            onTapItem: (value) {
+              selectBrand = value;
+              Get.back();
+              // setState(() {});
+              // print(value);
+            },
+          );
+        });
+
+    if (selectBrand.isEmpty) {
+      return;
+    }
+    await showModalBottomSheet(
+        isScrollControlled: true,
+        context: context,
+        builder: (context) {
+          return CustomBottomSheetWithSearch(
+            items: carList!
+                .map((e) => (e.brand == selectBrand) ? e.model : "Other")
+                .toSet()
+                .toList(),
+            onTapItem: (value) {
+              selectModel = value;
+              Get.back();
+              setState(() {});
+              // print(value);
+            },
+          );
+        });
+    if (selectModel.isEmpty) {
+      return;
+    }
+    await showModalBottomSheet(
+        isScrollControlled: true,
+        context: context,
+        builder: (context) {
+          return CustomBottomSheetWithSearch(
+            items: carList!
+                .map((e) => (e.brand == selectBrand && e.model == selectModel)
+                ? e.category
+                : "Other")
+                .toSet()
+                .toList(),
+            onTapItem: (value) {
+              selectType = value;
+              Get.back();
+              setState(() {});
+              // print(value);
+            },
+          );
+        });
+    if (selectType.isEmpty) {
+      return;
+    }
+    await showModalBottomSheet(
+        isScrollControlled: true,
+        context: context,
+        builder: (context) {
+          return CustomBottomSheetWithSearch(
+            items: carList!
+                .map((e) => (e.brand == selectBrand &&
+                e.model == selectModel &&
+                e.category == selectType)
+                ? e.year
+                : "Other")
+                .toSet()
+                .toList(),
+            onTapItem: (value) {
+              selectYear = value;
+              additionalInfoCon.text =
+              "$selectBrand, $selectModel, $selectType, $selectYear";
+              Get.back();
+              setState(() {});
+              // print(value);
+            },
+          );
+        });
+  }
+  void phoneProcedure() async {
+    String selectBrand = "";
+    String selectModel = "";
+    await showModalBottomSheet(
+        isScrollControlled: true,
+        context: context,
+        builder: (context) {
+          return CustomBottomSheetWithSearch(
+            items: carList!.map((e) => e.brand).toSet().toList(),
+            onTapItem: (value) {
+              selectBrand = value;
+              Get.back();
+              // setState(() {});
+              // print(value);
+            },
+          );
+        });
+
+    if (selectBrand.isEmpty) {
+      return;
+    }
+    await showModalBottomSheet(
+        isScrollControlled: true,
+        context: context,
+        builder: (context) {
+          return CustomBottomSheetWithSearch(
+            items: carList!
+                .map((e) => (e.brand == selectBrand) ? e.model : "Other")
+                .toSet()
+                .toList(),
+            onTapItem: (value) {
+              selectModel = value;
+              Get.back();
+              setState(() {});
+              // print(value);
+            },
+          );
+        });
+  }
+
+  void processAdditionalInformation() {
+    // electronicSubCategories[0].name,
+    // electronicSubCategories[3].name,
+    // carSubCategories[0].name,
+    // carSubCategories[1].name,
+    // carSubCategories[2].name,
+    if (subCat.capitalize == hasAdditionalInfoList[0]) {
+      // phoneProcedure();
+      showToast("Mok Dol Luv Hz");
+    } else if (subCat.capitalize == hasAdditionalInfoList[1]) {
+      // partAccessoriesComputerProcedure();
+      showToast("Mok Dol Luv Hz");
+    } else if (subCat.capitalize == hasAdditionalInfoList[2]) {
+      carProcedure();
+    } else if (subCat.capitalize == hasAdditionalInfoList[3]) {
+      // motoProcedure();
+      showToast("Mok Dol Luv Hz");
+    } else if (subCat.capitalize == hasAdditionalInfoList[4]) {
+      // bikeProcedure();
+      showToast("Mok Dol Luv Hz");
+    }
+  }
+
+
 
   void _imageFromGallery(index) async {
     // var picture = await _imagePicker.pick(source: ImageSource.gallery);
@@ -190,8 +373,9 @@ class _AddPageState extends State<AddPage> {
     });
   }
 
-  void clearData() {
 
+
+  void clearData() {
     subCat = "";
     mainCat = "";
     categoryCon.text = "";
@@ -217,7 +401,6 @@ class _AddPageState extends State<AddPage> {
           IconButton(
               onPressed: () {
                 clearData();
-
               },
               tooltip: "Clear Data",
               icon: Icon(Icons.refresh)),
@@ -236,9 +419,9 @@ class _AddPageState extends State<AddPage> {
       body: Container(
         width: double.infinity,
         height: double.infinity,
-        padding: const EdgeInsets.all(10),
-        // color: Colors.cyanAccent,
         child: SingleChildScrollView(
+          padding: const EdgeInsets.all(10),
+          physics: BouncingScrollPhysics(),
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.start,
             mainAxisSize: MainAxisSize.max,
@@ -343,6 +526,7 @@ class _AddPageState extends State<AddPage> {
                                   categoryCon.text = "$main , $sub";
                                   mainCat = main;
                                   subCat = sub;
+                                  setState(() {});
                                 },
                               ),
                             );
@@ -352,6 +536,29 @@ class _AddPageState extends State<AddPage> {
                     ),
                     SizedBox(
                       height: 10,
+                    ),
+                    Visibility(
+                      visible: showAdditionInfoForm(),
+                      maintainSize: false,
+                      child: Column(
+                        children: [
+                          ClickableTextField(
+                            labelText: "Enter ${subCat.capitalize} Information",
+                            controller: additionalInfoCon,
+                            suffixIcon: Icon(
+                              Icons.arrow_forward_ios,
+                              color: context.iconColor,
+                            ),
+                            onTap: () async {
+                              FocusScope.of(context).requestFocus(FocusNode());
+                              processAdditionalInformation();
+                            },
+                          ),
+                          SizedBox(
+                            height: 10,
+                          ),
+                        ],
+                      ),
                     ),
                     ClickableTextField(
                       labelText: "Condition",
@@ -434,6 +641,141 @@ class _AddPageState extends State<AddPage> {
         ),
       ),
     );
+  }
+}
+
+class CustomBottomSheetWithSearch extends StatefulWidget {
+  const CustomBottomSheetWithSearch(
+      {Key? key,
+      this.scrollController,
+      this.bottomSheetOffset,
+      required this.onTapItem,
+      required this.items})
+      : super(key: key);
+
+  final ScrollController? scrollController;
+  final double? bottomSheetOffset;
+  final Function(String value) onTapItem;
+  final List<String> items;
+
+  @override
+  _CustomBottomSheetWithSearchState createState() =>
+      _CustomBottomSheetWithSearchState();
+}
+
+class _CustomBottomSheetWithSearchState
+    extends State<CustomBottomSheetWithSearch> {
+  List<String> _tempList = [];
+
+  // List<String> _listOfItems = <String>[
+  //   "Khmer",
+  //   "Chinese",
+  //   "English",
+  //   "French",
+  // ];
+  late List<String> _listOfItems = widget.items;
+  final TextEditingController searchFieldCon = new TextEditingController();
+
+  @override
+  Widget build(BuildContext context) {
+    return DraggableScrollableSheet(
+        expand: false,
+        // initialChildSize: 0.5,
+        maxChildSize: 0.9,
+        // minChildSize: 0.5,
+
+        builder: (BuildContext context, ScrollController scrollController) {
+          return Container(
+            padding: EdgeInsets.all(20),
+            child: Column(children: <Widget>[
+              Row(children: <Widget>[
+                Expanded(
+                    child: TextField(
+                        controller: searchFieldCon,
+                        decoration: InputDecoration(
+                          contentPadding: EdgeInsets.all(8),
+                          border: new OutlineInputBorder(
+                            borderRadius: new BorderRadius.circular(15.0),
+                            borderSide: new BorderSide(),
+                          ),
+                          prefixIcon: Icon(Icons.search),
+                        ),
+                        onChanged: (value) {
+                          //4
+                          setState(() {
+                            _tempList = _buildSearchList(value);
+                          });
+                        })),
+                IconButton(
+                    padding: EdgeInsets.all(0),
+                    icon: Icon(
+                      Icons.close,
+                      size: 28,
+                    ),
+                    // color: Color(0xFF1F91E7),
+                    onPressed: () {
+                      setState(() {
+                        searchFieldCon.clear();
+                        _tempList.clear();
+                      });
+                    }),
+              ]),
+              Expanded(
+                child: Container(
+                  child: ListView.builder(
+                      controller: scrollController,
+                      // physics: const NeverScrollableScrollPhysics(),
+                      //5
+                      shrinkWrap: true,
+                      itemCount: (_tempList.length > 0)
+                          ? _tempList.length
+                          : _listOfItems.length,
+                      // separatorBuilder: (context, int) {
+                      //   return Divider();
+                      // },
+                      itemBuilder: (context, index) {
+                        return InkWell(
+
+                            //6
+                            child: (_tempList.length > 0)
+                                ? _showBottomSheetWithSearch(index, _tempList)
+                                : _showBottomSheetWithSearch(
+                                    index, _listOfItems),
+                            onTap: () {
+                              widget.onTapItem((_tempList.length > 0)
+                                  ? _tempList[index]
+                                  : _listOfItems[index]);
+                            });
+                      }),
+                ),
+              ),
+            ]),
+          );
+        });
+  }
+
+  //8
+  Widget _showBottomSheetWithSearch(int index, List<String> listOfCities) {
+    return Container(
+      padding: EdgeInsets.only(top: 10, bottom: 10),
+      child: Text(listOfCities[index],
+          style: TextStyle(fontSize: 16, fontFamily: 'KhmerOSBattambang'),
+          // style: TextStyle(color: Colors.black, fontSize: 18),
+          textAlign: TextAlign.start),
+    );
+  }
+
+  //9
+  List<String> _buildSearchList(String userSearchTerm) {
+    List<String> _searchList = [];
+
+    for (int i = 0; i < _listOfItems.length; i++) {
+      String name = _listOfItems[i];
+      if (name.toLowerCase().contains(userSearchTerm.toLowerCase())) {
+        _searchList.add(_listOfItems[i]);
+      }
+    }
+    return _searchList;
   }
 }
 
