@@ -34,6 +34,14 @@ final List<Category> furnitureSubCategories = [
   Category(name: "Other", image: "${imageDir}other.png"),
 ];
 
+final List<String> hasAdditionalInfoList = [
+  electronicSubCategories[0].name,
+  electronicSubCategories[3].name,
+  carSubCategories[0].name,
+  carSubCategories[1].name,
+  carSubCategories[2].name,
+];
+
 void showToast(String message) {
   Fluttertoast.showToast(
     msg: "$message",

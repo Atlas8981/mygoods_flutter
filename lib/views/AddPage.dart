@@ -29,19 +29,6 @@ class _AddPageState extends State<AddPage> {
   final AdditionalDataService additionalDataService = AdditionalDataService();
   GlobalKey<FormState> formKey = GlobalKey<FormState>();
 
-  // {this.car,
-  // this.phone,
-  // this.motoType,
-  // this.computerParts,
-  // this.condition,
-  // this.bikeType});
-  final List<String> hasAdditionalInfoList = [
-    electronicSubCategories[0].name,
-    electronicSubCategories[3].name,
-    carSubCategories[0].name,
-    carSubCategories[1].name,
-    carSubCategories[2].name,
-  ];
   final addImageController = Get.put(AddImageController());
   final key = GlobalKey<AnimatedListState>();
 
@@ -59,7 +46,8 @@ class _AddPageState extends State<AddPage> {
       additionalInfoCon = TextEditingController(),
       conditionCon = TextEditingController();
 
-  List<Car>? carList;
+  final List<Car> carList = [];
+
   // List<Car>? carList;
   // List<Car>? carList;
   // List<Car>? carList;
@@ -68,7 +56,14 @@ class _AddPageState extends State<AddPage> {
   bool showAdditionInfoForm() {
     final hasAdditionInfo = hasAdditionalInfoList.contains(subCat);
     if (hasAdditionInfo) {
-      additionalDataService.getCarData().then((value) => carList = value);
+      additionalDataService.getCarData().then((value) {
+        if (value != null) {
+          setState(() {
+            carList.clear();
+            carList.addAll(value);
+          });
+        }
+      });
     }
     return hasAdditionInfo;
   }
@@ -78,17 +73,16 @@ class _AddPageState extends State<AddPage> {
     String selectModel = "";
     String selectType = "";
     String selectYear = "";
+
     await showModalBottomSheet(
         isScrollControlled: true,
         context: context,
         builder: (context) {
           return CustomBottomSheetWithSearch(
-            items: carList!.map((e) => e.brand).toSet().toList(),
+            items: carList.map((e) => e.brand).toSet().toList(),
             onTapItem: (value) {
               selectBrand = value;
               Get.back();
-              // setState(() {});
-              // print(value);
             },
           );
         });
@@ -101,7 +95,7 @@ class _AddPageState extends State<AddPage> {
         context: context,
         builder: (context) {
           return CustomBottomSheetWithSearch(
-            items: carList!
+            items: carList
                 .map((e) => (e.brand == selectBrand) ? e.model : "Other")
                 .toSet()
                 .toList(),
@@ -121,10 +115,10 @@ class _AddPageState extends State<AddPage> {
         context: context,
         builder: (context) {
           return CustomBottomSheetWithSearch(
-            items: carList!
+            items: carList
                 .map((e) => (e.brand == selectBrand && e.model == selectModel)
-                ? e.category
-                : "Other")
+                    ? e.category
+                    : "Other")
                 .toSet()
                 .toList(),
             onTapItem: (value) {
@@ -143,18 +137,18 @@ class _AddPageState extends State<AddPage> {
         context: context,
         builder: (context) {
           return CustomBottomSheetWithSearch(
-            items: carList!
+            items: carList
                 .map((e) => (e.brand == selectBrand &&
-                e.model == selectModel &&
-                e.category == selectType)
-                ? e.year
-                : "Other")
+                        e.model == selectModel &&
+                        e.category == selectType)
+                    ? e.year
+                    : "Other")
                 .toSet()
                 .toList(),
             onTapItem: (value) {
               selectYear = value;
               additionalInfoCon.text =
-              "$selectBrand, $selectModel, $selectType, $selectYear";
+                  "$selectBrand, $selectModel, $selectType, $selectYear";
               Get.back();
               setState(() {});
               // print(value);
@@ -162,6 +156,7 @@ class _AddPageState extends State<AddPage> {
           );
         });
   }
+
   void phoneProcedure() async {
     String selectBrand = "";
     String selectModel = "";
@@ -170,7 +165,7 @@ class _AddPageState extends State<AddPage> {
         context: context,
         builder: (context) {
           return CustomBottomSheetWithSearch(
-            items: carList!.map((e) => e.brand).toSet().toList(),
+            items: carList.map((e) => e.brand).toSet().toList(),
             onTapItem: (value) {
               selectBrand = value;
               Get.back();
@@ -188,7 +183,7 @@ class _AddPageState extends State<AddPage> {
         context: context,
         builder: (context) {
           return CustomBottomSheetWithSearch(
-            items: carList!
+            items: carList
                 .map((e) => (e.brand == selectBrand) ? e.model : "Other")
                 .toSet()
                 .toList(),
@@ -225,11 +220,7 @@ class _AddPageState extends State<AddPage> {
     }
   }
 
-
-
   void _imageFromGallery(index) async {
-    // var picture = await _imagePicker.pick(source: ImageSource.gallery);
-
     var pictures = await _imagePicker.pickMultiImage();
     if (pictures != null && pictures.length <= 5) {
       setState(() {
@@ -334,7 +325,7 @@ class _AddPageState extends State<AddPage> {
     return image;
   }
 
-  final String collectionName = "flutterItems";
+  final String collectionName = "items";
 
   void uploadData(List<myImageClass.Image> imageUrls) {
     final CollectionReference reference =
@@ -361,6 +352,7 @@ class _AddPageState extends State<AddPage> {
 
     reference.doc(id).set(item.toJson()).then((value) {
       print("success");
+      showToast("Success");
       clearData();
     }).catchError((error) {
       print("Failed with error: $error");
@@ -373,8 +365,6 @@ class _AddPageState extends State<AddPage> {
     });
   }
 
-
-
   void clearData() {
     subCat = "";
     mainCat = "";
@@ -386,7 +376,7 @@ class _AddPageState extends State<AddPage> {
     nameCon.text = "";
     conditionCon.text = "";
     condition = "";
-
+    addImageController.rawImages.clear();
     setState(() {
       formKey = GlobalKey<FormState>();
     });
@@ -411,7 +401,7 @@ class _AddPageState extends State<AddPage> {
                   // showToast("message");
                   return;
                 }
-                // uploadItemInformation();
+                uploadItemInformation();
               },
               icon: Icon(Icons.check)),
         ],
@@ -667,12 +657,6 @@ class _CustomBottomSheetWithSearchState
     extends State<CustomBottomSheetWithSearch> {
   List<String> _tempList = [];
 
-  // List<String> _listOfItems = <String>[
-  //   "Khmer",
-  //   "Chinese",
-  //   "English",
-  //   "French",
-  // ];
   late List<String> _listOfItems = widget.items;
   final TextEditingController searchFieldCon = new TextEditingController();
 

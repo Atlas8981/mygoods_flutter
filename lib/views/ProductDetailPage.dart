@@ -13,6 +13,7 @@ import 'package:mygoods_flutter/models/item.dart';
 import 'package:mygoods_flutter/models/user.dart';
 import 'package:mygoods_flutter/services/additional_data_service.dart';
 import 'package:mygoods_flutter/services/database_service.dart';
+import 'package:mygoods_flutter/utils/constant.dart';
 
 class ProductDetailPage extends StatefulWidget {
   ProductDetailPage({Key? key}) : super(key: key);
@@ -104,6 +105,10 @@ class _ProductDetailPageState extends State<ProductDetailPage> {
   }
 
   Widget additionalInfoView() {
+    final hasAdditionInfo = hasAdditionalInfoList.contains(item.subCategory);
+    if(!hasAdditionInfo){
+      return Container();
+    }
     return FutureBuilder<DocumentSnapshot<Map<String, dynamic>>?>(
       future: firestoreService.getAdditionalInfo(Get.arguments),
       builder: (context, snapshot) {
