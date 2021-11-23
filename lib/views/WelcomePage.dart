@@ -76,10 +76,10 @@ class WelcomePage extends StatelessWidget {
   }
 
   void signUpButtonClick() {
-    Get.to(SignUpPage());
+    Get.to(()=>SignUpPage());
   }
 
   void loginButtonClick() {
-    Get.to(LoginPage());
+    Get.to(()=>LoginPage());
   }
 }

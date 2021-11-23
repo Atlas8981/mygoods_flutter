@@ -22,11 +22,11 @@ class UserController extends GetxController {
         return;
       }
       user = value.obs;
+      update();
     });
   }
 
   void changeProfilePicture(XFile image) {
-
     userService.updateUserImage(File(image.path)).then((value) {
       user!.value.image = value;
       update();

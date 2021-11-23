@@ -100,17 +100,10 @@ class AccountPage extends StatelessWidget {
     );
   }
 
-  final auth = FirebaseAuth.instance;
-
   centerProfile() {
     return Center(
       child: GetBuilder<UserController>(
         builder: (controller) {
-          if (auth.currentUser == null) {
-            return const Center(
-              child: Text("You not logged in"),
-            );
-          }
           if (controller.user == null) {
             return const Center(
               child: CircularProgressIndicator(),
@@ -222,6 +215,7 @@ class AccountPage extends StatelessWidget {
   void onSignOutButtonClick() {
     userService.signOut().then((value) {
       if (value) {
+        showToast("Sign Out Successfully");
         Get.find<LandingPageController>().changeTabIndex(0);
       } else {
         showToast("Sign Out Unsuccessfully");

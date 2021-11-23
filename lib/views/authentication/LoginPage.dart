@@ -1,8 +1,10 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:mygoods_flutter/components/TypeTextField.dart';
+import 'package:mygoods_flutter/controllers/userController.dart';
 import 'package:mygoods_flutter/services/user_service.dart';
 import 'package:mygoods_flutter/utils/constant.dart';
+import 'package:mygoods_flutter/views/MainActivity.dart';
 
 class LoginPage extends StatefulWidget {
   LoginPage({Key? key}) : super(key: key);
@@ -53,6 +55,7 @@ class _LoginPageState extends State<LoginPage> {
                           labelText: "Email",
                           controller: emailCon,
                           prefixIcon: Icon(Icons.email_outlined),
+                          inputType: TextInputType.emailAddress,
                           autoFillHints: [AutofillHints.email],
                         ),
                         SizedBox(
@@ -121,9 +124,10 @@ class _LoginPageState extends State<LoginPage> {
         return;
       }
       showToast("Welcome: $value");
-      // Get.back();
+      Get.offAll(()=>MainActivity());
     });
   }
 
   void forgotPasswordButtonClick() {}
 }
+//jack_atlas59@yahoo.com
