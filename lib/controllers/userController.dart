@@ -9,7 +9,6 @@ class UserController extends GetxController {
   Rx<User>? user;
 
   final userService = UserService();
-
   @override
   void onInit() {
     super.onInit();
@@ -18,7 +17,11 @@ class UserController extends GetxController {
 
   void getUserInfo() {
     userService.getOwnerInfo().then((value) {
-      user = value!.obs;
+      if(value == null){
+        user = null;
+        return;
+      }
+      user = value.obs;
     });
   }
 

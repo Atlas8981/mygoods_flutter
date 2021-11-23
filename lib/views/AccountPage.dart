@@ -1,12 +1,14 @@
 import 'package:cached_network_image/cached_network_image.dart';
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:image_picker/image_picker.dart';
+import 'package:mygoods_flutter/controllers/bottomNavigationViewController.dart';
 import 'package:mygoods_flutter/controllers/userController.dart';
 import 'package:mygoods_flutter/models/category.dart';
 import 'package:mygoods_flutter/models/image.dart' as myImage;
-import 'package:mygoods_flutter/models/user.dart';
+import 'package:mygoods_flutter/models/user.dart' as myUser;
 import 'package:mygoods_flutter/services/user_service.dart';
 import 'package:mygoods_flutter/utils/constant.dart';
 import 'package:mygoods_flutter/views/EditProfilePage.dart';
@@ -15,7 +17,7 @@ import 'package:mygoods_flutter/views/cells/category_item_row.dart';
 import 'package:mygoods_flutter/views/other/big_image.dart';
 
 class AccountPage extends StatelessWidget {
-  final userDatabaseService = UserService();
+  final userService = UserService();
 
   late final List<Category> bottomListItems = [
     Category(name: "My Item", image: "${imageDir}myitem.png"),
@@ -80,7 +82,7 @@ class AccountPage extends StatelessWidget {
                     width: double.infinity,
                     height: 50,
                     child: ElevatedButton(
-                      onPressed: () {},
+                      onPressed: onSignOutButtonClick,
                       child: Text(
                         "Sign Out".toUpperCase(),
                         style: TextStyle(letterSpacing: 1.1),
@@ -98,17 +100,24 @@ class AccountPage extends StatelessWidget {
     );
   }
 
+  final auth = FirebaseAuth.instance;
+
   centerProfile() {
     return Center(
       child: GetBuilder<UserController>(
         builder: (controller) {
+          if (auth.currentUser == null) {
+            return const Center(
+              child: Text("You not logged in"),
+            );
+          }
           if (controller.user == null) {
             return const Center(
               child: CircularProgressIndicator(),
             );
           }
-          final User user = controller.user!.value;
-          print(User);
+
+          final myUser.User user = controller.user!.value;
           // final User user = User(
           //     userId: "userId",
           //     username: "username",
@@ -208,6 +217,16 @@ class AccountPage extends StatelessWidget {
   Future<XFile?> pickImage() async {
     XFile? picture = await imagePicker.pickImage(source: ImageSource.gallery);
     return picture;
+  }
+
+  void onSignOutButtonClick() {
+    userService.signOut().then((value) {
+      if (value) {
+        Get.find<LandingPageController>().changeTabIndex(0);
+      } else {
+        showToast("Sign Out Unsuccessfully");
+      }
+    });
   }
 }
 

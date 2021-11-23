@@ -1,6 +1,7 @@
 import 'dart:io';
 
 import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:firebase_storage/firebase_storage.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
@@ -17,6 +18,7 @@ import 'package:mygoods_flutter/models/image.dart' as myImageClass;
 import 'package:mygoods_flutter/models/item.dart';
 import 'package:mygoods_flutter/services/additional_data_service.dart';
 import 'package:mygoods_flutter/utils/constant.dart';
+import 'package:mygoods_flutter/views/WelcomePage.dart';
 
 class AddPage extends StatefulWidget {
   @override
@@ -47,11 +49,6 @@ class _AddPageState extends State<AddPage> {
       conditionCon = TextEditingController();
 
   final List<Car> carList = [];
-
-  // List<Car>? carList;
-  // List<Car>? carList;
-  // List<Car>? carList;
-  // List<Car>? carList;
 
   bool showAdditionInfoForm() {
     final hasAdditionInfo = hasAdditionalInfoList.contains(subCat);
