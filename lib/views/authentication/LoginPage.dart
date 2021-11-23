@@ -124,6 +124,8 @@ class _LoginPageState extends State<LoginPage> {
         return;
       }
       showToast("Welcome: $value");
+      Get.delete<UserController>();
+      Get.lazyPut(() => UserController(),fenix: true);
       Get.offAll(()=>MainActivity());
     });
   }

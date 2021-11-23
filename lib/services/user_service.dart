@@ -50,7 +50,7 @@ class UserService {
 
   Future<myUser.User?> getOwnerInfo() async {
     if (auth.currentUser == null) {
-      showToast("User Not Login");
+      // showToast("User Not Login");
       return null;
     }
     myUser.User? response;
