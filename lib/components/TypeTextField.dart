@@ -12,6 +12,7 @@ class TypeTextField extends StatefulWidget {
     this.inputType,
     this.validator,
     this.obscureText,
+    this.autoFillHints,
   }) : super(key: key);
 
   final inputType;
@@ -19,10 +20,11 @@ class TypeTextField extends StatefulWidget {
   final int? maxLength;
   final String? prefix;
   final Icon? prefixIcon;
-  final Icon? suffixIcon;
+  final Widget? suffixIcon;
   final TextEditingController? controller;
   final String? Function(String? value)? validator;
   final bool? obscureText;
+  final Iterable<String>? autoFillHints;
 
   @override
   _TypeTextFieldState createState() => _TypeTextFieldState();
@@ -32,7 +34,7 @@ class _TypeTextFieldState extends State<TypeTextField> {
   @override
   Widget build(BuildContext context) {
     return TextFormField(
-
+      autofillHints: widget.autoFillHints,
       controller: widget.controller,
       maxLength: widget.maxLength,
       autovalidateMode: AutovalidateMode.onUserInteraction,
@@ -44,12 +46,8 @@ class _TypeTextFieldState extends State<TypeTextField> {
       keyboardType:
           widget.inputType == null ? TextInputType.name : widget.inputType,
       decoration: InputDecoration(
-          contentPadding: EdgeInsets.only(
-            top: 20,
-            bottom: 20,
-            left: 10,
-            right: 10
-          ),
+          contentPadding:
+              EdgeInsets.only(top: 20, bottom: 20, left: 10, right: 10),
           labelStyle: TextStyle(
             fontSize: 16,
           ),

@@ -3,25 +3,31 @@ import 'package:flutter/material.dart';
 import 'package:mygoods_flutter/models/category.dart';
 
 class CategoryItemRow extends StatelessWidget {
+  const CategoryItemRow({
+    required this.name,
+    required this.assetImage,
+  });
 
-  const CategoryItemRow(this.category);
-  final Category category;
+  // final Category category;
+  final String name;
+  final String assetImage;
+
   @override
   Widget build(BuildContext context) {
     return Container(
       height: 45,
+      // color: Colors.red,
       // padding: EdgeInsets.only(bottom: 20),
       child: Column(
-        // crossAxisAlignment: CrossAxisAlignment.stretch,
+        crossAxisAlignment: CrossAxisAlignment.end,
         mainAxisAlignment: MainAxisAlignment.spaceEvenly,
         children: [
           Container(
-            child: Row(
-                mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+            child: Row(mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                 // crossAxisAlignment: CrossAxisAlignment.center,
                 children: [
                   Image.asset(
-                    category.image,
+                    assetImage,
                     width: 25,
                     height: 25,
                     fit: BoxFit.cover,
@@ -31,7 +37,7 @@ class CategoryItemRow extends StatelessWidget {
                   ),
                   Expanded(
                       child: Text(
-                    category.name,
+                    name,
                     style: TextStyle(fontSize: 13),
                   )),
                   Icon(Icons.arrow_forward_ios),
@@ -40,14 +46,10 @@ class CategoryItemRow extends StatelessWidget {
                   )
                 ]),
           ),
-          SizedBox(
-            width: double.infinity,
-            height: 5,
-          ),
           Container(
             width: double.infinity,
-            height: 3,
-            color: Colors.grey,
+            height: 2,
+            color: Colors.grey.withOpacity(0.3),
           ),
         ],
       ),

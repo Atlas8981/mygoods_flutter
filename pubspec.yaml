@@ -44,6 +44,7 @@ dependencies:
   cached_network_image: ^3.1.0+1
   json_serializable: ^6.0.1
   json_annotation: ^4.3.0
+  photo_view: ^0.13.0
 
 
 dev_dependencies:
@@ -98,6 +99,7 @@ flutter:
     - assets/images/minus_box.png
     - assets/images/moto.png
     - assets/images/motoicon.png
+    - assets/images/myitem.png
     - assets/images/motopic.png
     - assets/images/nointernet.jpg
     - assets/images/other.png

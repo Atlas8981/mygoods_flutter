@@ -96,11 +96,16 @@ class CategoryPage extends StatelessWidget {
                           return InkWell(
                               onTap: () {
                                 // print("category" + mainCategories[index].name);
-                                Get.to(() => SubCategoryPage(
-                                  title:  mainCategories[index].name,
-                                ),);
+                                Get.to(
+                                  () => SubCategoryPage(
+                                    title: mainCategories[index].name,
+                                  ),
+                                );
                               },
-                              child: CategoryItemRow(mainCategories[index]));
+                              child: CategoryItemRow(
+                                name: mainCategories[index].name,
+                                assetImage: mainCategories[index].image,
+                              ));
                         },
                       )
                       //  Put Column

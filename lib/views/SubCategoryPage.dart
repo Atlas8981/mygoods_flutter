@@ -48,7 +48,6 @@ class SubCategoryPage extends StatelessWidget {
                 itemBuilder: (context, index) {
                   return InkWell(
                       onTap: () {
-                        print(decideSubCategory()[index].name);
                         Get.to(
                           () => ListProduct(
                             mainCat: title,
@@ -56,7 +55,10 @@ class SubCategoryPage extends StatelessWidget {
                           ),
                         );
                       },
-                      child: CategoryItemRow(decideSubCategory()[index]));
+                      child: CategoryItemRow(
+                        name: decideSubCategory()[index].name,
+                        assetImage: decideSubCategory()[index].image,
+                      ));
                 },
               )
               //  Put Column

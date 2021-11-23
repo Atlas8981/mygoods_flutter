@@ -3,6 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_localizations/flutter_localizations.dart';
 
 import 'package:get/get.dart';
+import 'package:mygoods_flutter/controllers/initial_binding.dart';
 import 'package:mygoods_flutter/views/MainActivity.dart';
 import 'package:mygoods_flutter/views/WelcomePage.dart';
 // import 'package:flutter_gen/gen_l10n/app_localizations.dart';
@@ -14,15 +15,14 @@ Future<void> main() async {
 }
 
 class MyApp extends StatelessWidget {
-
   @override
   Widget build(BuildContext context) {
     return GetMaterialApp(
       title: 'MyGoods Flutter From Window @.20',
-      // home: MainActivity(),
-      home: WelcomePage(),
+      home: MainActivity(),
+      // home: WelcomePage(),
+      initialBinding: InitialBinding(),
       localizationsDelegates: [
-        // AppLocalizations.delegate,
         GlobalMaterialLocalizations.delegate,
         GlobalWidgetsLocalizations.delegate,
         GlobalCupertinoLocalizations.delegate,

@@ -34,6 +34,10 @@ final List<Category> furnitureSubCategories = [
   Category(name: "Other", image: "${imageDir}other.png"),
 ];
 
+final redColor = Color.fromARGB(255, 236, 0, 0);
+
+final String dummyNetworkImage = "https://firebasestorage.googleapis.com/v0/b/mygoods-e042f.appspot.com/o/flutter%2F2021-10-31%2021%3A58%3A15.282499?alt=media&token=f492b829-e106-467e-b3f1-6c05122a0969";
+
 final List<String> hasAdditionalInfoList = [
   electronicSubCategories[0].name,
   electronicSubCategories[3].name,

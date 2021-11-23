@@ -318,7 +318,8 @@ class _AddPageState extends State<AddPage> {
 
   Future<myImageClass.Image> uploadFile(File _image) async {
     final imageName = "${DateTime.now()}";
-    Reference storageReference = storage.ref('flutter/').child("$imageName");
+    final Reference storageReference =
+        storage.ref('flutter/').child("$imageName");
     await storageReference.putFile(_image);
     final imageUrl = await storageReference.getDownloadURL();
     final image = myImageClass.Image(imageName: imageName, imageUrl: imageUrl);
