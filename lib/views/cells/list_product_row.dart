@@ -2,7 +2,7 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:mygoods_flutter/models/item.dart';
-import 'package:mygoods_flutter/services/database_service.dart';
+import 'package:mygoods_flutter/services/item_database_service.dart';
 import 'package:mygoods_flutter/views/ProductDetailPage.dart';
 
 class ListItemRow extends StatefulWidget {
@@ -14,7 +14,7 @@ class ListItemRow extends StatefulWidget {
 }
 
 class _ListItemRowState extends State<ListItemRow> {
-  final DatabaseService database = DatabaseService();
+  final ItemDatabaseService database = ItemDatabaseService();
 
   // getItemOwner(String userId);
 

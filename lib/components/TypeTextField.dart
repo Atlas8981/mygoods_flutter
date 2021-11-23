@@ -1,6 +1,4 @@
-
 import 'package:flutter/material.dart';
-
 
 class TypeTextField extends StatefulWidget {
   const TypeTextField({
@@ -13,6 +11,7 @@ class TypeTextField extends StatefulWidget {
     this.prefix,
     this.inputType,
     this.validator,
+    this.obscureText,
   }) : super(key: key);
 
   final inputType;
@@ -23,6 +22,7 @@ class TypeTextField extends StatefulWidget {
   final Icon? suffixIcon;
   final TextEditingController? controller;
   final String? Function(String? value)? validator;
+  final bool? obscureText;
 
   @override
   _TypeTextFieldState createState() => _TypeTextFieldState();
@@ -32,6 +32,7 @@ class _TypeTextFieldState extends State<TypeTextField> {
   @override
   Widget build(BuildContext context) {
     return TextFormField(
+
       controller: widget.controller,
       maxLength: widget.maxLength,
       autovalidateMode: AutovalidateMode.onUserInteraction,
@@ -39,24 +40,27 @@ class _TypeTextFieldState extends State<TypeTextField> {
         fontSize: 16,
         color: Colors.black,
       ),
-      keyboardType: widget.inputType == null ? TextInputType.name : widget.inputType,
+      obscureText: widget.obscureText ?? false,
+      keyboardType:
+          widget.inputType == null ? TextInputType.name : widget.inputType,
       decoration: InputDecoration(
-          contentPadding: EdgeInsets.all(10),
+          contentPadding: EdgeInsets.only(
+            top: 20,
+            bottom: 20,
+            left: 10,
+            right: 10
+          ),
           labelStyle: TextStyle(
             fontSize: 16,
           ),
           labelText: widget.labelText,
           prefixText: widget.prefix == null ? null : widget.prefix,
           border: OutlineInputBorder(),
-          // enabledBorder: OutlineInputBorder(
-          //   borderSide: BorderSide(color: Colors.black, width: 1.5),
-          // ),
           prefixIcon: widget.prefixIcon,
           suffixIcon: widget.suffixIcon,
-          counterStyle: TextStyle(fontSize: 12, height: 1)
-      ),
+          counterStyle: TextStyle(fontSize: 12, height: 1)),
       validator: widget.validator ??
-              (value) {
+          (value) {
             if (value != null && value.isEmpty) {
               return 'Empty Field';
             }
@@ -65,5 +69,3 @@ class _TypeTextFieldState extends State<TypeTextField> {
     );
   }
 }
-
-

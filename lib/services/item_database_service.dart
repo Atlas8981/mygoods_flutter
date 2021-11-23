@@ -2,7 +2,7 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:mygoods_flutter/models/item.dart';
 import 'package:mygoods_flutter/models/user.dart';
 
-class DatabaseService {
+class ItemDatabaseService {
   final firestore = FirebaseFirestore.instance;
   static final String userCollection = "users";
   static final String itemCollection = "items";

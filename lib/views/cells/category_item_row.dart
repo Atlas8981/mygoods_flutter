@@ -3,26 +3,23 @@ import 'package:flutter/material.dart';
 import 'package:mygoods_flutter/models/category.dart';
 
 class CategoryItemRow extends StatelessWidget {
-  final Category category;
-  const CategoryItemRow(this.category);
 
+  const CategoryItemRow(this.category);
+  final Category category;
   @override
   Widget build(BuildContext context) {
     return Container(
       height: 45,
+      // padding: EdgeInsets.only(bottom: 20),
       child: Column(
-        crossAxisAlignment: CrossAxisAlignment.stretch,
+        // crossAxisAlignment: CrossAxisAlignment.stretch,
         mainAxisAlignment: MainAxisAlignment.spaceEvenly,
         children: [
           Container(
-            // color: Colors.red,
             child: Row(
                 mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                // crossAxisAlignment: CrossAxisAlignment.center,
                 children: [
-                  // Icon(
-                  //     Icons.camera,
-                  //   size: 25,
-                  // ),
                   Image.asset(
                     category.image,
                     width: 25,
@@ -42,6 +39,10 @@ class CategoryItemRow extends StatelessWidget {
                     width: 10,
                   )
                 ]),
+          ),
+          SizedBox(
+            width: double.infinity,
+            height: 5,
           ),
           Container(
             width: double.infinity,

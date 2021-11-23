@@ -91,7 +91,6 @@ class CategoryPage extends StatelessWidget {
                       ListView.builder(
                         physics: ScrollPhysics(),
                         shrinkWrap: true,
-                        // primary: true,
                         itemCount: mainCategories.length,
                         itemBuilder: (context, index) {
                           return InkWell(

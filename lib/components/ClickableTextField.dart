@@ -40,7 +40,12 @@ class _ClickableTextFieldState extends State<ClickableTextField> {
       onTap: widget.onTap,
       focusNode: AlwaysDisabledFocusNode(),
       decoration: InputDecoration(
-        contentPadding: EdgeInsets.all(10),
+        contentPadding: EdgeInsets.only(
+            top: 20,
+            bottom: 20,
+            left: 10,
+            right: 10
+        ),
         labelStyle: TextStyle(
           fontSize: 16,
         ),

@@ -12,7 +12,7 @@ import 'package:mygoods_flutter/models/image.dart' as image;
 import 'package:mygoods_flutter/models/item.dart';
 import 'package:mygoods_flutter/models/user.dart';
 import 'package:mygoods_flutter/services/additional_data_service.dart';
-import 'package:mygoods_flutter/services/database_service.dart';
+import 'package:mygoods_flutter/services/item_database_service.dart';
 import 'package:mygoods_flutter/utils/constant.dart';
 
 class ProductDetailPage extends StatefulWidget {
@@ -28,7 +28,7 @@ class _ProductDetailPageState extends State<ProductDetailPage> {
       PageController(initialPage: 0, viewportFraction: 1);
   int currentPage = 0;
 
-  final firestoreService = DatabaseService();
+  final firestoreService = ItemDatabaseService();
 
   final Item item = Get.arguments;
 
@@ -36,6 +36,7 @@ class _ProductDetailPageState extends State<ProductDetailPage> {
 
   Widget imagesViews(List<image.Image> images) {
     return CarouselSlider.builder(
+
       options: CarouselOptions(
         scrollPhysics: BouncingScrollPhysics(),
         height: 300,
@@ -248,7 +249,6 @@ class _ProductDetailPageState extends State<ProductDetailPage> {
   }
 
   void savedItem() {
-    print("Saving item...");
     firestoreService
         .saveItem("$userId", item.itemid)
         .then((value) {
@@ -323,11 +323,11 @@ class _ProductDetailPageState extends State<ProductDetailPage> {
     );
   }
 
-
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
+        //TODO: prone to change
         title: Text("Item Detail: ${item.itemid}"),
       ),
       body: SafeArea(
@@ -347,8 +347,11 @@ class _ProductDetailPageState extends State<ProductDetailPage> {
                     Positioned(
                       bottom: 10,
                       child: DotsIndicator(
-                        dotsCount: 2,
+                        dotsCount: item.images.length,
                         position: currentPage.toDouble(),
+                        onTap: (position) {
+                          carouselController.animateToPage(position.toInt());
+                        },
                       ),
                     )
                   ],

@@ -4,8 +4,8 @@ import 'package:flutter_localizations/flutter_localizations.dart';
 
 import 'package:get/get.dart';
 import 'package:mygoods_flutter/views/MainActivity.dart';
+import 'package:mygoods_flutter/views/WelcomePage.dart';
 // import 'package:flutter_gen/gen_l10n/app_localizations.dart';
-
 
 Future<void> main() async {
   WidgetsFlutterBinding.ensureInitialized();
@@ -13,19 +13,14 @@ Future<void> main() async {
   runApp(MyApp());
 }
 
-// main() => runApp(MyApp());
-
-
 class MyApp extends StatelessWidget {
-  // This widget is the root of your application.
+
   @override
   Widget build(BuildContext context) {
     return GetMaterialApp(
       title: 'MyGoods Flutter From Window @.20',
-      // theme: ThemeData(
-      //   primarySwatch: Colors.blue,
-      // ),
-      home: MainActivity(),
+      // home: MainActivity(),
+      home: WelcomePage(),
       localizationsDelegates: [
         // AppLocalizations.delegate,
         GlobalMaterialLocalizations.delegate,
@@ -33,8 +28,8 @@ class MyApp extends StatelessWidget {
         GlobalCupertinoLocalizations.delegate,
       ],
       supportedLocales: [
-        Locale('en', ''),
-        Locale('km', ''),
+        Locale('en'),
+        Locale('km'),
       ],
       themeMode: ThemeMode.light,
       theme: ThemeData.light().copyWith(
@@ -44,15 +39,6 @@ class MyApp extends StatelessWidget {
         ),
       ),
       darkTheme: ThemeData.dark(),
-      // darkTheme: ThemeData.dark().copyWith(
-      //
-      //   iconTheme: IconTheme.of(context).copyWith(
-      //       color: Colors.white
-      //   ),
-      // ),
-
-      // localizationsDelegates: AppLocalizations.localizationsDelegates,
-      // supportedLocales: AppLocalizations.supportedLocales,
     );
   }
 }

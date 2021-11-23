@@ -4,7 +4,7 @@ import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:mygoods_flutter/models/item.dart';
-import 'package:mygoods_flutter/services/database_service.dart';
+import 'package:mygoods_flutter/services/item_database_service.dart';
 import 'package:mygoods_flutter/views/cells/list_product_row.dart';
 
 class ListProduct extends StatefulWidget {
@@ -24,7 +24,7 @@ class _ListProductState extends State<ListProduct> {
   // final Future<FirebaseApp> _initialization = Firebase.initializeApp();
 
   final FirebaseFirestore firestore = FirebaseFirestore.instance;
-  final DatabaseService databaseService = DatabaseService();
+  final ItemDatabaseService databaseService = ItemDatabaseService();
 
   @override
   Widget build(BuildContext context) {
