@@ -80,4 +80,19 @@ class UserService {
         .update({'image': returnImage.toJson()});
     return returnImage;
   }
+
+  Future<myUser.User?> updateUserInfo(myUser.User newUserInfo) async {
+    final myUser.User response = await firestore
+        .collection("$userCollection")
+        .doc(newUserInfo.userId)
+        .update(newUserInfo.toJson())
+        .then((value) {
+      return newUserInfo;
+    }).catchError((onError) {
+      print(onError);
+      return null;
+    });
+
+    return response;
+  }
 }

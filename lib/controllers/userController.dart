@@ -9,6 +9,7 @@ class UserController extends GetxController {
   Rx<User>? user;
 
   final userService = UserService();
+
   @override
   void onInit() {
     super.onInit();
@@ -17,7 +18,7 @@ class UserController extends GetxController {
 
   void getUserInfo() {
     userService.getOwnerInfo().then((value) {
-      if(value == null){
+      if (value == null) {
         user = null;
         return;
       }
@@ -31,5 +32,16 @@ class UserController extends GetxController {
       user!.value.image = value;
       update();
     });
+  }
+
+  Future<bool> updateUserInfo(User newUserInfo) async {
+    final response = await userService.updateUserInfo(newUserInfo);
+    if (response != null) {
+      user!.value = response;
+      update();
+      return true;
+    } else {
+      return false;
+    }
   }
 }

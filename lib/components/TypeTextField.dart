@@ -53,6 +53,7 @@ class _TypeTextFieldState extends State<TypeTextField> {
           ),
           labelText: widget.labelText,
           prefixText: widget.prefix == null ? null : widget.prefix,
+          prefixStyle: TextStyle(fontSize: 16, letterSpacing: 1.5),
           border: OutlineInputBorder(),
           prefixIcon: widget.prefixIcon,
           suffixIcon: widget.suffixIcon,

@@ -1,5 +1,3 @@
-
-
 import 'package:flutter/material.dart';
 import 'package:fluttertoast/fluttertoast.dart';
 import 'package:mygoods_flutter/models/category.dart';
@@ -25,7 +23,6 @@ final List<Category> carSubCategories = [
   Category(name: "Motorbikes", image: "${imageDir}moto.png"),
   Category(name: "Bicycle", image: "${imageDir}bike.png"),
   Category(name: "Other", image: "${imageDir}other.png"),
-
 ];
 final List<Category> furnitureSubCategories = [
   Category(name: "Table & Desk", image: "${imageDir}table.png"),
@@ -36,7 +33,20 @@ final List<Category> furnitureSubCategories = [
 
 final redColor = Color.fromARGB(255, 236, 0, 0);
 
-final String dummyNetworkImage = "https://firebasestorage.googleapis.com/v0/b/mygoods-e042f.appspot.com/o/flutter%2F2021-10-31%2021%3A58%3A15.282499?alt=media&token=f492b829-e106-467e-b3f1-6c05122a0969";
+final String dummyNetworkImage =
+    "https://firebasestorage.googleapis.com/v0/b/mygoods-e042f.appspot.com/o/flutter%2F2021-10-31%2021%3A58%3A15.282499?alt=media&token=f492b829-e106-467e-b3f1-6c05122a0969";
+
+String? validatePhoneNumber(String? value) {
+  String pattern = r'^(?:[+0][1-9])?[0-9]{9,10}$';
+  RegExp regExp = new RegExp(pattern);
+
+  if (value == null || value.isEmpty) {
+    return 'Empty Field';
+  } else if (!regExp.hasMatch("0" + value)) {
+    return 'Incorrect Phone Format';
+  }
+  return null;
+}
 
 final List<String> hasAdditionalInfoList = [
   electronicSubCategories[0].name,

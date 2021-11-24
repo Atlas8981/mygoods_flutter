@@ -1,5 +1,4 @@
 import 'package:cached_network_image/cached_network_image.dart';
-import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
@@ -7,7 +6,6 @@ import 'package:image_picker/image_picker.dart';
 import 'package:mygoods_flutter/controllers/bottomNavigationViewController.dart';
 import 'package:mygoods_flutter/controllers/userController.dart';
 import 'package:mygoods_flutter/models/category.dart';
-import 'package:mygoods_flutter/models/image.dart' as myImage;
 import 'package:mygoods_flutter/models/user.dart' as myUser;
 import 'package:mygoods_flutter/services/user_service.dart';
 import 'package:mygoods_flutter/utils/constant.dart';
@@ -25,6 +23,7 @@ class AccountPage extends StatelessWidget {
     Category(name: "About Our App", image: "${imageDir}aboutus.png"),
     Category(name: "Terms & Conditions", image: "${imageDir}term.png"),
   ];
+  late myUser.User user;
 
   @override
   Widget build(BuildContext context) {
@@ -37,14 +36,15 @@ class AccountPage extends StatelessWidget {
             onSelected: (PopMenuItems value) {
               switch (value) {
                 case PopMenuItems.editProfile:
-                  Get.to(EditProfilePage());
+                  Get.to(EditProfilePage(user:user,));
                   break;
                 case PopMenuItems.resetPassword:
                   Get.to(ResetPasswordPage());
                   break;
               }
             },
-            itemBuilder: (BuildContext context) => [
+            itemBuilder: (BuildContext context) =>
+            [
               PopupMenuItem<PopMenuItems>(
                 value: PopMenuItems.editProfile,
                 child: Text("Edit Profile"),
@@ -110,7 +110,7 @@ class AccountPage extends StatelessWidget {
             );
           }
 
-          final myUser.User user = controller.user!.value;
+          user = controller.user!.value;
           // final User user = User(
           //     userId: "userId",
           //     username: "username",
