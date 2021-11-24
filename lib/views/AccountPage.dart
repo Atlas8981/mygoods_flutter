@@ -12,7 +12,7 @@ import 'package:mygoods_flutter/utils/constant.dart';
 import 'package:mygoods_flutter/views/EditProfilePage.dart';
 import 'package:mygoods_flutter/views/authentication/ResetPasswordPage.dart';
 import 'package:mygoods_flutter/views/cells/category_item_row.dart';
-import 'package:mygoods_flutter/views/my_items_page.dart';
+import 'package:mygoods_flutter/views/MyItemPage.dart';
 import 'package:mygoods_flutter/views/other/big_image.dart';
 
 class AccountPage extends StatelessWidget {

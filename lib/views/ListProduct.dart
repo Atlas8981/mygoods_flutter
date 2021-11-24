@@ -21,8 +21,6 @@ class ListProduct extends StatefulWidget {
 }
 
 class _ListProductState extends State<ListProduct> {
-  // final Future<FirebaseApp> _initialization = Firebase.initializeApp();
-
   final FirebaseFirestore firestore = FirebaseFirestore.instance;
   final ItemDatabaseService databaseService = ItemDatabaseService();
 

@@ -59,7 +59,7 @@ class MyItemsPage extends StatelessWidget {
   }
 
   void onClickEditItem() {
-    Get.to(()=> EditItemPage());
+    Get.to(() => EditItemPage());
   }
 
   void onClickDeleteItem(context, Item item) {
@@ -126,7 +126,6 @@ class OwnerItemRow extends StatelessWidget {
   Widget build(BuildContext context) {
     return Container(
       width: double.infinity,
-      // padding: const EdgeInsets.only(left: 10,right: 10),
       child: Column(children: [
         InkWell(
           onTap: () {
@@ -149,74 +148,84 @@ class OwnerItemRow extends StatelessWidget {
               SizedBox(
                 width: 15,
               ),
-              Column(
-                mainAxisSize: MainAxisSize.min,
-                crossAxisAlignment: CrossAxisAlignment.start,
-                children: [
-                  Text(
-                    item.name,
-                    style: TextStyle(fontSize: 13, fontWeight: FontWeight.bold),
-                  ),
-                  Divider(
-                    height: 12,
-                  ),
-                  Text(
-                    "USD \$${item.price}",
-                    style: TextStyle(
-                        color: Colors.red,
-                        fontSize: 16,
-                        fontWeight: FontWeight.bold),
-                  ),
-                  Divider(
-                    height: 12,
-                  ),
-                  FutureBuilder<String>(
-                    future: database.getItemOwnerName(item.userid),
-                    builder: (context, snapshot) {
-                      if (snapshot.hasData) {
-                        return Text(
-                          "Post By ${snapshot.data}",
-                          style: TextStyle(fontSize: 12),
-                        );
-                      } else {
-                        return Text(
-                          "Post By someone",
-                          style: TextStyle(fontSize: 12),
-                        );
-                      }
-                    },
-                  ),
-                  Divider(
-                    height: 2,
-                  ),
-                  Text(
-                    "Posted ${calDate(item.date)}",
-                    style: TextStyle(fontSize: 12),
-                  ),
-                  Divider(
-                    height: 2,
-                  ),
-                  Text(
-                    "Views: ${item.views}",
-                    style: TextStyle(fontSize: 12),
-                  ),
-                ],
-              ),
               Expanded(
                 child: Column(
+                  mainAxisSize: MainAxisSize.min,
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: [
+                    Text(
+                      item.name,
+                      style:
+                          TextStyle(fontSize: 13, fontWeight: FontWeight.bold),
+                    ),
+                    SizedBox(
+                      height: 12,
+                    ),
+                    Text(
+                      "USD \$${item.price}",
+                      style: TextStyle(
+                          color: Colors.red,
+                          fontSize: 16,
+                          fontWeight: FontWeight.bold),
+                    ),
+                    SizedBox(
+                      height: 12,
+                    ),
+                    FutureBuilder<String>(
+                      future: database.getItemOwnerName(item.userid),
+                      builder: (context, snapshot) {
+                        if (snapshot.hasData) {
+                          return Text(
+                            "Post By ${snapshot.data}",
+                            style: TextStyle(fontSize: 12),
+                          );
+                        } else {
+                          return Text(
+                            "Post By someone",
+                            style: TextStyle(fontSize: 12),
+                          );
+                        }
+                      },
+                    ),
+                    SizedBox(
+                      height: 2,
+                    ),
+                    Text(
+                      "Posted ${calDate(item.date)}",
+                      style: TextStyle(fontSize: 12),
+                    ),
+                    SizedBox(
+                      height: 2,
+                    ),
+                    Text(
+                      "Views: ${item.views}",
+                      style: TextStyle(fontSize: 12),
+                    ),
+                  ],
+                ),
+              ),
+              Container(
+                height: 125,
+                // color: Colors.cyan,
+                child: Column(
                   crossAxisAlignment: CrossAxisAlignment.end,
+                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                  mainAxisSize: MainAxisSize.max,
                   children: [
                     IconButton(
                       onPressed: onEdit,
-                      icon: Icon(Icons.edit),
+                      icon: Icon(
+                        Icons.edit,
+                      ),
+                      // alignment: Alignment.topCenter,
                       padding: EdgeInsets.all(0),
-                      alignment: Alignment.topCenter,
                     ),
                     IconButton(
                       onPressed: onDelete,
-                      icon: Icon(Icons.delete_outline),
+                      icon: Icon(
+                        Icons.delete_outline,
+                      ),
                       padding: EdgeInsets.all(0),
-                      alignment: Alignment.bottomCenter,
                     ),
                   ],
                 ),
