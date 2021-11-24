@@ -12,6 +12,7 @@ import 'package:mygoods_flutter/utils/constant.dart';
 import 'package:mygoods_flutter/views/EditProfilePage.dart';
 import 'package:mygoods_flutter/views/authentication/ResetPasswordPage.dart';
 import 'package:mygoods_flutter/views/cells/category_item_row.dart';
+import 'package:mygoods_flutter/views/my_items_page.dart';
 import 'package:mygoods_flutter/views/other/big_image.dart';
 
 class AccountPage extends StatelessWidget {
@@ -36,15 +37,16 @@ class AccountPage extends StatelessWidget {
             onSelected: (PopMenuItems value) {
               switch (value) {
                 case PopMenuItems.editProfile:
-                  Get.to(EditProfilePage(user:user,));
+                  Get.to(EditProfilePage(
+                    user: user,
+                  ));
                   break;
                 case PopMenuItems.resetPassword:
                   Get.to(ResetPasswordPage());
                   break;
               }
             },
-            itemBuilder: (BuildContext context) =>
-            [
+            itemBuilder: (BuildContext context) => [
               PopupMenuItem<PopMenuItems>(
                 value: PopMenuItems.editProfile,
                 child: Text("Edit Profile"),
@@ -180,20 +182,20 @@ class AccountPage extends StatelessWidget {
         itemBuilder: (context, index) {
           return InkWell(
             onTap: () {
-              // switch (index){
-              //   case 0:
-              //     Get.to(MyItemsPage());
-              //     break;
-              //   case 1:
-              //     Get.to(MyItemsPage());
-              //     break;
-              //   case 2:
-              //     Get.to(MyItemsPage());
-              //     break;
-              //   case 3:
-              //     Get.to(MyItemsPage());
-              //     break;
-              // }
+              switch (index){
+                case 0:
+                  Get.to(MyItemsPage());
+                  break;
+                // case 1:
+                //   Get.to(MyItemsPage());
+                //   break;
+                // case 2:
+                //   Get.to(MyItemsPage());
+                //   break;
+                // case 3:
+                //   Get.to(MyItemsPage());
+                //   break;
+              }
             },
             child: CategoryItemRow(
               assetImage: bottomListItems[index].image,
