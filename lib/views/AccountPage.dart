@@ -182,18 +182,18 @@ class AccountPage extends StatelessWidget {
         itemBuilder: (context, index) {
           return InkWell(
             onTap: () {
-              switch (index){
+              switch (index) {
                 case 0:
-                  Get.to(MyItemsPage());
+                  Get.to(() => MyItemsPage());
                   break;
                 // case 1:
-                //   Get.to(MyItemsPage());
+                //   Get.to(()=>MyItemsPage());
                 //   break;
                 // case 2:
-                //   Get.to(MyItemsPage());
+                //   Get.to(()=>MyItemsPage());
                 //   break;
                 // case 3:
-                //   Get.to(MyItemsPage());
+                //   Get.to(()=>MyItemsPage());
                 //   break;
               }
             },

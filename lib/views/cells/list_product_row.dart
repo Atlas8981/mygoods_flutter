@@ -6,8 +6,13 @@ import 'package:mygoods_flutter/services/item_database_service.dart';
 import 'package:mygoods_flutter/views/ProductDetailPage.dart';
 
 class ListItemRow extends StatefulWidget {
-  const ListItemRow({Key? key, this.item}) : super(key: key);
+  const ListItemRow({
+    Key? key,
+    this.item,
+    this.onTap,
+  }) : super(key: key);
   final Item? item;
+  final Function()? onTap;
 
   @override
   _ListItemRowState createState() => _ListItemRowState();
@@ -21,7 +26,7 @@ class _ListItemRowState extends State<ListItemRow> {
   String calDate(Timestamp itemDate) {
     //Convert to second
     double date = (Timestamp.now().seconds - itemDate.seconds).toDouble();
-    String timeEnd = "second(s)";
+    String timeEnd = " second(s)";
     if (date > 0) {
       if (date >= 60) {
         date = date / 60;
@@ -59,9 +64,10 @@ class _ListItemRowState extends State<ListItemRow> {
       // padding: const EdgeInsets.only(left: 10,right: 10),
       child: Column(children: [
         InkWell(
-          onTap: (){
-            Get.to(()=>ProductDetailPage(),arguments: item);
-          },
+          onTap: widget.onTap ??
+              () {
+                Get.to(() => ProductDetailPage(), arguments: item);
+              },
           child: Row(
             children: [
               ClipRRect(

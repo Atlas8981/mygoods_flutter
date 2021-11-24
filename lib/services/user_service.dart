@@ -4,6 +4,7 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:cross_file/src/types/interface.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:firebase_storage/firebase_storage.dart';
+import 'package:mygoods_flutter/models/item.dart';
 import 'package:mygoods_flutter/models/user.dart' as myUser;
 import 'package:mygoods_flutter/utils/constant.dart';
 import 'package:mygoods_flutter/models/image.dart' as myImage;
@@ -94,5 +95,21 @@ class UserService {
     });
 
     return response;
+  }
+
+  Future<List<Item>> getUserItems() async {
+    final List<Item> listOfItem = [];
+    await firestore
+        .collection("$itemCollection")
+        .where('userid', isEqualTo: auth.currentUser!.uid)
+        .get()
+        .then((value) {
+      value.docs.forEach((element) {
+        Item item = Item.fromJson(element.data());
+        listOfItem.add(item);
+      });
+    }).catchError((onError) => print(onError));
+
+    return listOfItem;
   }
 }
