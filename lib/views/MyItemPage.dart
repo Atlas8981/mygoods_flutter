@@ -2,7 +2,7 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/widgets.dart';
 import 'package:get/get.dart';
-import 'package:mygoods_flutter/components/custom_alert_dialog.dart';
+import 'package:mygoods_flutter/components/CustomAlertDialog.dart';
 import 'package:mygoods_flutter/controllers/myItemsController.dart';
 import 'package:mygoods_flutter/models/item.dart';
 import 'package:mygoods_flutter/services/item_database_service.dart';
@@ -188,14 +188,14 @@ class OwnerItemRow extends StatelessWidget {
                       },
                     ),
                     SizedBox(
-                      height: 2,
+                      height: 5,
                     ),
                     Text(
                       "Posted ${calDate(item.date)}",
                       style: TextStyle(fontSize: 12),
                     ),
                     SizedBox(
-                      height: 2,
+                      height: 5,
                     ),
                     Text(
                       "Views: ${item.views}",
@@ -217,7 +217,6 @@ class OwnerItemRow extends StatelessWidget {
                       icon: Icon(
                         Icons.edit,
                       ),
-                      // alignment: Alignment.topCenter,
                       padding: EdgeInsets.all(0),
                     ),
                     IconButton(
@@ -233,9 +232,9 @@ class OwnerItemRow extends StatelessWidget {
             ],
           ),
         ),
-        const Divider(
+        Divider(
           thickness: 2,
-          color: Colors.blueGrey,
+          color: Colors.grey.withOpacity(0.5),
         )
       ]),
     );

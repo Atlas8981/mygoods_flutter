@@ -7,16 +7,22 @@ import 'package:mygoods_flutter/components/CategoryDropdownMenu.dart';
 import 'package:mygoods_flutter/components/ClickableTextField.dart';
 import 'package:mygoods_flutter/components/CustomBottomSheet.dart';
 import 'package:mygoods_flutter/components/TypeTextField.dart';
-import 'package:mygoods_flutter/controllers/addImagesController.dart';
+import 'package:mygoods_flutter/controllers/itemFormController.dart';
 import 'package:mygoods_flutter/models/additionalInfo.dart';
 import 'package:mygoods_flutter/services/additional_data_service.dart';
 import 'package:mygoods_flutter/utils/constant.dart';
 
 class ItemForm extends StatefulWidget {
-  const ItemForm({Key? key, this.padding, this.titleText}) : super(key: key);
+  const ItemForm({
+    Key? key,
+    this.padding,
+    this.titleText,
+    this.onConfirm,
+  }) : super(key: key);
 
   final EdgeInsets? padding;
   final Widget? titleText;
+  final Function()? onConfirm;
 
   @override
   _ItemFormState createState() => _ItemFormState();
@@ -26,26 +32,19 @@ class _ItemFormState extends State<ItemForm> {
   final AdditionalDataService additionalDataService = AdditionalDataService();
   GlobalKey<FormState> formKey = GlobalKey<FormState>();
 
-  final addImageController = Get.put(AddImageController());
+  // final addImageController = Get.put(AddImageController());
+  final itemFormCon = Get.put(ItemFormController());
   final key = GlobalKey<AnimatedListState>();
 
   final conditions = ["New", "Used"];
 
   final ImagePicker _imagePicker = ImagePicker();
 
-  String subCat = "", mainCat = "", condition = "";
-  final TextEditingController nameCon = TextEditingController(),
-      priceCon = TextEditingController(),
-      addressCon = TextEditingController(),
-      phoneCon = TextEditingController(),
-      descriptionCon = TextEditingController(),
-      categoryCon = TextEditingController(),
-      additionalInfoCon = TextEditingController(),
-      conditionCon = TextEditingController();
+  // String subCat = "", mainCat = "", condition = "";
 
   final List<Car> carList = [];
 
-  bool showAdditionInfoForm() {
+  bool showAdditionInfoForm(String subCat) {
     final hasAdditionInfo = hasAdditionalInfoList.contains(subCat);
     if (hasAdditionInfo) {
       additionalDataService.getCarData().then((value) {
@@ -139,7 +138,7 @@ class _ItemFormState extends State<ItemForm> {
                 .toList(),
             onTapItem: (value) {
               selectYear = value;
-              additionalInfoCon.text =
+              itemFormCon.additionalInfoCon.text =
                   "$selectBrand, $selectModel, $selectType, $selectYear";
               Get.back();
               setState(() {});
@@ -195,18 +194,18 @@ class _ItemFormState extends State<ItemForm> {
     // carSubCategories[0].name,
     // carSubCategories[1].name,
     // carSubCategories[2].name,
-    if (subCat.capitalize == hasAdditionalInfoList[0]) {
+    if (itemFormCon.subCat.value.capitalize == hasAdditionalInfoList[0]) {
       // phoneProcedure();
       showToast("Mok Dol Luv Hz");
-    } else if (subCat.capitalize == hasAdditionalInfoList[1]) {
+    } else if (itemFormCon.subCat.value.capitalize == hasAdditionalInfoList[1]) {
       // partAccessoriesComputerProcedure();
       showToast("Mok Dol Luv Hz");
-    } else if (subCat.capitalize == hasAdditionalInfoList[2]) {
+    } else if (itemFormCon.subCat.value.capitalize == hasAdditionalInfoList[2]) {
       carProcedure();
-    } else if (subCat.capitalize == hasAdditionalInfoList[3]) {
+    } else if (itemFormCon.subCat.value.capitalize == hasAdditionalInfoList[3]) {
       // motoProcedure();
       showToast("Mok Dol Luv Hz");
-    } else if (subCat.capitalize == hasAdditionalInfoList[4]) {
+    } else if (itemFormCon.subCat.value.capitalize == hasAdditionalInfoList[4]) {
       // bikeProcedure();
       showToast("Mok Dol Luv Hz");
     }
@@ -216,10 +215,8 @@ class _ItemFormState extends State<ItemForm> {
     var pictures = await _imagePicker.pickMultiImage();
     if (pictures != null && pictures.length <= 5) {
       setState(() {
-        // image = picture;
-        // key.currentState!.insertItem(index+1);
         pictures.forEach((picture) {
-          addImageController.rawImages.add(picture);
+          itemFormCon.rawImages.add(picture);
         });
       });
     } else {
@@ -228,8 +225,8 @@ class _ItemFormState extends State<ItemForm> {
   }
 
   buildAddImageRow(context, index) {
-    if (index < addImageController.rawImages.length &&
-        addImageController.rawImages[index].path != null) {
+    final tempRawImages = itemFormCon.rawImages;
+    if (index < tempRawImages.length && tempRawImages[index].path != null) {
       return Container(
         padding: EdgeInsets.all(5),
         child: Stack(children: [
@@ -245,7 +242,7 @@ class _ItemFormState extends State<ItemForm> {
                 child: ClipRRect(
                   borderRadius: BorderRadius.circular(5),
                   child: Image.file(
-                    File(addImageController.rawImages[index].path),
+                    File(tempRawImages[index].path),
                     width: 120,
                     height: 120,
                     fit: BoxFit.cover,
@@ -261,8 +258,7 @@ class _ItemFormState extends State<ItemForm> {
             child: GestureDetector(
               onTap: () {
                 setState(() {
-                  addImageController.rawImages.removeAt(index);
-                  // key.currentState!.removeItem(index, (context, animation) => buildAddImageRow(context, index));
+                  tempRawImages.removeAt(index);
                 });
               },
               child: Icon(
@@ -295,11 +291,219 @@ class _ItemFormState extends State<ItemForm> {
     }
   }
 
+  // Item processData(){
+  //   final Item item = Item(
+  //       date: date,
+  //       subCategory: subCategory,
+  //       images: images,
+  //       amount: amount,
+  //       address: address,
+  //       description: description,
+  //       userid: userid,
+  //       itemid: itemid,
+  //       viewers: viewers,
+  //       phone: phone,
+  //       price: price,
+  //       name: name,
+  //       mainCategory: mainCategory,
+  //       views: views);
+  //   return item;
+  // }
+
+  buildTextInputForm() {
+    return GetBuilder<ItemFormController>(
+      // init: itemFormCon,
+      builder: (controller) {
+        return Column(
+          children: [
+            Row(
+              mainAxisSize: MainAxisSize.max,
+              // mainAxisAlignment: MainAxisAlignment,
+              children: [
+                Expanded(
+                  child: TypeTextField(
+                    labelText: "Item Name",
+                    controller: controller.nameCon,
+                  ),
+                ),
+                SizedBox(
+                  width: 5,
+                ),
+                Expanded(
+                  child: TypeTextField(
+                    labelText: "Price",
+                    controller: controller.priceCon,
+                    inputType: TextInputType.numberWithOptions(
+                        decimal: true, signed: false),
+                    suffixIcon: Icon(Icons.attach_money, color: context.iconColor
+                      // color: Colors.black,
+                    ),
+                  ),
+                ),
+              ],
+            ),
+            SizedBox(
+              height: 10,
+            ),
+            ClickableTextField(
+              labelText: "Category",
+              controller: controller.categoryCon,
+              suffixIcon: Icon(
+                Icons.arrow_forward_ios,
+                color: context.iconColor,
+              ),
+              onTap: () {
+                FocusScope.of(context).requestFocus(FocusNode());
+                showDialog(
+                  context: context,
+                  builder: (context) {
+                    return AlertDialog(
+                      titlePadding: EdgeInsets.all(10),
+                      contentPadding: EdgeInsets.all(10),
+                      actionsPadding: EdgeInsets.all(10),
+                      title: Text("Select Category"),
+                      content: CategoryDropdownMenu(
+                        onConfirm: (main, sub) {
+                          controller.categoryCon.text = "$main , $sub";
+                          itemFormCon.mainCat.value = main;
+                          itemFormCon.subCat.value = sub;
+                          setState(() {});
+                        },
+                      ),
+                    );
+                  },
+                );
+              },
+            ),
+            SizedBox(
+              height: 10,
+            ),
+            Visibility(
+              visible: showAdditionInfoForm(controller.subCat.value),
+              maintainSize: false,
+              child: Column(
+                children: [
+                  ClickableTextField(
+                    labelText: "Enter ${itemFormCon.subCat.value.capitalize} Information",
+                    controller: controller.additionalInfoCon,
+                    suffixIcon: Icon(
+                      Icons.arrow_forward_ios,
+                      color: context.iconColor,
+                    ),
+                    onTap: () async {
+                      FocusScope.of(context).requestFocus(FocusNode());
+                      processAdditionalInformation();
+                    },
+                  ),
+                  SizedBox(
+                    height: 10,
+                  ),
+                ],
+              ),
+            ),
+            ClickableTextField(
+              labelText: "Condition",
+              controller: controller.conditionCon,
+              suffixIcon: Icon(
+                Icons.arrow_forward_ios,
+                color: context.iconColor,
+              ),
+              onTap: () {
+                FocusScope.of(context).requestFocus(FocusNode());
+                Get.bottomSheet(
+                    CustomButtonSheet(
+                      items: conditions,
+                      onItemClick: (index) {
+                        print(conditions[index]);
+                        setState(() {
+                          controller.conditionCon.text = conditions[index];
+                        });
+                      },
+                    ),
+                    backgroundColor: Colors.white);
+              },
+            ),
+            SizedBox(
+              height: 10,
+            ),
+            TypeTextField(
+              labelText: "Address",
+              controller: controller.addressCon,
+            ),
+            SizedBox(
+              height: 10,
+            ),
+            TypeTextField(
+              labelText: "Phone Number",
+              controller: controller.phoneCon,
+              inputType: TextInputType.phone,
+              prefix: "0",
+              validator: (value) {
+                if (value == null || value.isEmpty) {
+                  return "Field Empty";
+                }
+                if (!GetUtils.isPhoneNumber("0$value")) {
+                  return "Wrong Phone Format";
+                }
+                return null;
+              },
+            ),
+            SizedBox(
+              height: 10,
+            ),
+            TextField(
+              controller: controller.descriptionCon,
+              maxLength: 200,
+              textAlign: TextAlign.start,
+              style: TextStyle(
+                fontSize: 16,
+                color: Colors.black,
+              ),
+              keyboardType: TextInputType.multiline,
+              maxLines: 5,
+              decoration: InputDecoration(
+                  alignLabelWithHint: true,
+                  contentPadding: EdgeInsets.all(10),
+                  labelStyle: TextStyle(
+                    fontSize: 16,
+                  ),
+                  labelText: "Description",
+                  border: OutlineInputBorder(),
+                  counterStyle: TextStyle(fontSize: 12, height: 1)),
+            ),
+            SizedBox(
+              height: 10,
+            ),
+          ],
+        );
+      },
+    );
+
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
         title: widget.titleText,
+        actions: [
+          IconButton(
+            onPressed: () {
+              // itemFormCon.itemName.value = nameCon.text.trim();
+              // itemFormCon.price.value = int.parse(priceCon.text.trim());
+              // itemFormCon.mainCat.value = mainCat;
+              // itemFormCon.subCat.value = subCat;
+              // itemFormCon.address.value = addressCon.text.trim();
+              // itemFormCon.phone.value = phoneCon.text.trim();
+              // itemFormCon.description.value = descriptionCon.text.trim();
+              widget.onConfirm!();
+            },
+            icon: Icon(
+              Icons.check,
+              color: Colors.white,
+            ),
+          )
+        ],
       ),
       body: SingleChildScrollView(
         child: Container(
@@ -324,7 +528,7 @@ class _ItemFormState extends State<ItemForm> {
                     alignment: Alignment.centerRight,
                     child: Obx(() {
                       return Text(
-                        "(${addImageController.rawImages.length}/5)",
+                        "(${itemFormCon.rawImages.length}/5)",
                         style: TextStyle(fontSize: 16),
                       );
                     }),
@@ -338,9 +542,9 @@ class _ItemFormState extends State<ItemForm> {
                 child: Obx(() {
                   return ListView.builder(
                     scrollDirection: Axis.horizontal,
-                    itemCount: (addImageController.rawImages.length == 5)
+                    itemCount: (itemFormCon.rawImages.length == 5)
                         ? 5
-                        : addImageController.rawImages.length + 1,
+                        : itemFormCon.rawImages.length + 1,
                     shrinkWrap: true,
                     itemBuilder: (context, index) {
                       return buildAddImageRow(context, index);
@@ -355,169 +559,7 @@ class _ItemFormState extends State<ItemForm> {
               //Forms
               Form(
                 key: formKey,
-                child: Column(
-                  children: [
-                    Row(
-                      mainAxisSize: MainAxisSize.max,
-                      // mainAxisAlignment: MainAxisAlignment,
-                      children: [
-                        Expanded(
-                          child: TypeTextField(
-                            labelText: "Item Name",
-                            controller: nameCon,
-                          ),
-                        ),
-                        SizedBox(
-                          width: 5,
-                        ),
-                        Expanded(
-                          child: TypeTextField(
-                            labelText: "Price",
-                            controller: priceCon,
-                            inputType: TextInputType.numberWithOptions(
-                                decimal: true, signed: false),
-                            suffixIcon: Icon(Icons.attach_money,
-                                color: context.iconColor
-                                // color: Colors.black,
-                                ),
-                          ),
-                        ),
-                      ],
-                    ),
-                    SizedBox(
-                      height: 10,
-                    ),
-                    ClickableTextField(
-                      labelText: "Category",
-                      controller: categoryCon,
-                      suffixIcon: Icon(
-                        Icons.arrow_forward_ios,
-                        color: context.iconColor,
-                      ),
-                      onTap: () {
-                        FocusScope.of(context).requestFocus(FocusNode());
-                        showDialog(
-                          context: context,
-                          builder: (context) {
-                            return AlertDialog(
-                              titlePadding: EdgeInsets.all(10),
-                              contentPadding: EdgeInsets.all(10),
-                              actionsPadding: EdgeInsets.all(10),
-                              title: Text("Select Category"),
-                              content: CategoryDropdownMenu(
-                                onConfirm: (main, sub) {
-                                  categoryCon.text = "$main , $sub";
-                                  mainCat = main;
-                                  subCat = sub;
-                                  setState(() {});
-                                },
-                              ),
-                            );
-                          },
-                        );
-                      },
-                    ),
-                    SizedBox(
-                      height: 10,
-                    ),
-                    Visibility(
-                      visible: showAdditionInfoForm(),
-                      maintainSize: false,
-                      child: Column(
-                        children: [
-                          ClickableTextField(
-                            labelText: "Enter ${subCat.capitalize} Information",
-                            controller: additionalInfoCon,
-                            suffixIcon: Icon(
-                              Icons.arrow_forward_ios,
-                              color: context.iconColor,
-                            ),
-                            onTap: () async {
-                              FocusScope.of(context).requestFocus(FocusNode());
-                              processAdditionalInformation();
-                            },
-                          ),
-                          SizedBox(
-                            height: 10,
-                          ),
-                        ],
-                      ),
-                    ),
-                    ClickableTextField(
-                      labelText: "Condition",
-                      controller: conditionCon,
-                      suffixIcon: Icon(
-                        Icons.arrow_forward_ios,
-                        color: context.iconColor,
-                      ),
-                      onTap: () {
-                        FocusScope.of(context).requestFocus(FocusNode());
-                        Get.bottomSheet(
-                            CustomButtonSheet(
-                              items: conditions,
-                              onItemClick: (index) {
-                                print(conditions[index]);
-                                setState(() {
-                                  conditionCon.text = conditions[index];
-                                });
-                              },
-                            ),
-                            backgroundColor: Colors.white);
-                      },
-                    ),
-                    SizedBox(
-                      height: 10,
-                    ),
-                    TypeTextField(
-                      labelText: "Address",
-                      controller: addressCon,
-                    ),
-                    SizedBox(
-                      height: 10,
-                    ),
-                    TypeTextField(
-                      labelText: "Phone Number",
-                      controller: phoneCon,
-                      inputType: TextInputType.phone,
-                      prefix: "0",
-                      validator: (value) {
-                        if (value == null || value.isEmpty) {
-                          return "Field Empty";
-                        }
-                        if (!GetUtils.isPhoneNumber("0$value")) {
-                          return "Wrong Phone Format";
-                        }
-                        return null;
-                      },
-                    ),
-                    SizedBox(
-                      height: 10,
-                    ),
-                    TextField(
-                      controller: descriptionCon,
-                      maxLength: 200,
-                      textAlign: TextAlign.start,
-                      style: TextStyle(
-                        fontSize: 16,
-                        color: Colors.black,
-                      ),
-                      keyboardType: TextInputType.multiline,
-                      maxLines: 5,
-                      decoration: InputDecoration(
-                          alignLabelWithHint: true,
-                          contentPadding: EdgeInsets.all(10),
-                          labelStyle: TextStyle(
-                            fontSize: 16,
-                          ),
-                          labelText: "Description",
-                          border: OutlineInputBorder(),
-                          counterStyle: TextStyle(fontSize: 12, height: 1)),
-                    ),
-                    SizedBox(
-                      height: 10,
-                    ),
-                  ],
-                ),
+                child: buildTextInputForm(),
               ),
             ],
           ),
