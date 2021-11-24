@@ -7,6 +7,7 @@ import 'package:mygoods_flutter/components/CategoryDropdownMenu.dart';
 import 'package:mygoods_flutter/components/ClickableTextField.dart';
 import 'package:mygoods_flutter/components/CustomBottomSheet.dart';
 import 'package:mygoods_flutter/components/TypeTextField.dart';
+import 'package:mygoods_flutter/controllers/AdditionalInfoController.dart';
 import 'package:mygoods_flutter/controllers/itemFormController.dart';
 import 'package:mygoods_flutter/models/additionalInfo.dart';
 import 'package:mygoods_flutter/services/additional_data_service.dart';
@@ -29,34 +30,16 @@ class ItemForm extends StatefulWidget {
 }
 
 class _ItemFormState extends State<ItemForm> {
-  final AdditionalDataService additionalDataService = AdditionalDataService();
   GlobalKey<FormState> formKey = GlobalKey<FormState>();
-
-  // final addImageController = Get.put(AddImageController());
   final itemFormCon = Get.put(ItemFormController());
-  final key = GlobalKey<AnimatedListState>();
+  final additionalInfoCon = Get.put(AdditionalInfoController());
 
   final conditions = ["New", "Used"];
 
   final ImagePicker _imagePicker = ImagePicker();
 
-  // String subCat = "", mainCat = "", condition = "";
-
-  final List<Car> carList = [];
-
   bool showAdditionInfoForm(String subCat) {
-    final hasAdditionInfo = hasAdditionalInfoList.contains(subCat);
-    if (hasAdditionInfo) {
-      additionalDataService.getCarData().then((value) {
-        if (value != null) {
-          setState(() {
-            carList.clear();
-            carList.addAll(value);
-          });
-        }
-      });
-    }
-    return hasAdditionInfo;
+    return hasAdditionalInfoList.contains(subCat);
   }
 
   void carProcedure() async {
@@ -64,7 +47,7 @@ class _ItemFormState extends State<ItemForm> {
     String selectModel = "";
     String selectType = "";
     String selectYear = "";
-
+    final List<Car> carList = additionalInfoCon.carList.cast();
     await showModalBottomSheet(
         isScrollControlled: true,
         context: context,
@@ -115,8 +98,6 @@ class _ItemFormState extends State<ItemForm> {
             onTapItem: (value) {
               selectType = value;
               Get.back();
-              setState(() {});
-              // print(value);
             },
           );
         });
@@ -141,8 +122,6 @@ class _ItemFormState extends State<ItemForm> {
               itemFormCon.additionalInfoCon.text =
                   "$selectBrand, $selectModel, $selectType, $selectYear";
               Get.back();
-              setState(() {});
-              // print(value);
             },
           );
         });
@@ -151,17 +130,16 @@ class _ItemFormState extends State<ItemForm> {
   void phoneProcedure() async {
     String selectBrand = "";
     String selectModel = "";
+    final List<Phone> phoneList = additionalInfoCon.phoneList.cast<Phone>();
     await showModalBottomSheet(
         isScrollControlled: true,
         context: context,
         builder: (context) {
           return CustomBottomSheetWithSearch(
-            items: carList.map((e) => e.brand).toSet().toList(),
+            items: phoneList.map((e) => e.phoneBrand).toSet().toList(),
             onTapItem: (value) {
               selectBrand = value;
               Get.back();
-              // setState(() {});
-              // print(value);
             },
           );
         });
@@ -174,12 +152,10 @@ class _ItemFormState extends State<ItemForm> {
         context: context,
         builder: (context) {
           return CustomBottomSheetWithSearch(
-            items: carList
-                .map((e) => (e.brand == selectBrand) ? e.model : "Other")
-                .toSet()
-                .toList(),
+            items: phoneList.map((e) => e.phoneModel).toSet().toList(),
             onTapItem: (value) {
               selectModel = value;
+              itemFormCon.additionalInfoCon.text = "$selectBrand, $selectModel";
               Get.back();
               setState(() {});
               // print(value);
@@ -189,23 +165,22 @@ class _ItemFormState extends State<ItemForm> {
   }
 
   void processAdditionalInformation() {
-    // electronicSubCategories[0].name,
-    // electronicSubCategories[3].name,
-    // carSubCategories[0].name,
-    // carSubCategories[1].name,
-    // carSubCategories[2].name,
     if (itemFormCon.subCat.value.capitalize == hasAdditionalInfoList[0]) {
       // phoneProcedure();
       showToast("Mok Dol Luv Hz");
-    } else if (itemFormCon.subCat.value.capitalize == hasAdditionalInfoList[1]) {
+    } else if (itemFormCon.subCat.value.capitalize ==
+        hasAdditionalInfoList[1]) {
       // partAccessoriesComputerProcedure();
       showToast("Mok Dol Luv Hz");
-    } else if (itemFormCon.subCat.value.capitalize == hasAdditionalInfoList[2]) {
+    } else if (itemFormCon.subCat.value.capitalize ==
+        hasAdditionalInfoList[2]) {
       carProcedure();
-    } else if (itemFormCon.subCat.value.capitalize == hasAdditionalInfoList[3]) {
+    } else if (itemFormCon.subCat.value.capitalize ==
+        hasAdditionalInfoList[3]) {
       // motoProcedure();
       showToast("Mok Dol Luv Hz");
-    } else if (itemFormCon.subCat.value.capitalize == hasAdditionalInfoList[4]) {
+    } else if (itemFormCon.subCat.value.capitalize ==
+        hasAdditionalInfoList[4]) {
       // bikeProcedure();
       showToast("Mok Dol Luv Hz");
     }
@@ -291,194 +266,186 @@ class _ItemFormState extends State<ItemForm> {
     }
   }
 
-  // Item processData(){
-  //   final Item item = Item(
-  //       date: date,
-  //       subCategory: subCategory,
-  //       images: images,
-  //       amount: amount,
-  //       address: address,
-  //       description: description,
-  //       userid: userid,
-  //       itemid: itemid,
-  //       viewers: viewers,
-  //       phone: phone,
-  //       price: price,
-  //       name: name,
-  //       mainCategory: mainCategory,
-  //       views: views);
-  //   return item;
-  // }
-
   buildTextInputForm() {
     return GetBuilder<ItemFormController>(
-      // init: itemFormCon,
       builder: (controller) {
-        return Column(
-          children: [
-            Row(
-              mainAxisSize: MainAxisSize.max,
-              // mainAxisAlignment: MainAxisAlignment,
-              children: [
-                Expanded(
-                  child: TypeTextField(
-                    labelText: "Item Name",
-                    controller: controller.nameCon,
-                  ),
-                ),
-                SizedBox(
-                  width: 5,
-                ),
-                Expanded(
-                  child: TypeTextField(
-                    labelText: "Price",
-                    controller: controller.priceCon,
-                    inputType: TextInputType.numberWithOptions(
-                        decimal: true, signed: false),
-                    suffixIcon: Icon(Icons.attach_money, color: context.iconColor
-                      // color: Colors.black,
-                    ),
-                  ),
-                ),
-              ],
-            ),
-            SizedBox(
-              height: 10,
-            ),
-            ClickableTextField(
-              labelText: "Category",
-              controller: controller.categoryCon,
-              suffixIcon: Icon(
-                Icons.arrow_forward_ios,
-                color: context.iconColor,
-              ),
-              onTap: () {
-                FocusScope.of(context).requestFocus(FocusNode());
-                showDialog(
-                  context: context,
-                  builder: (context) {
-                    return AlertDialog(
-                      titlePadding: EdgeInsets.all(10),
-                      contentPadding: EdgeInsets.all(10),
-                      actionsPadding: EdgeInsets.all(10),
-                      title: Text("Select Category"),
-                      content: CategoryDropdownMenu(
-                        onConfirm: (main, sub) {
-                          controller.categoryCon.text = "$main , $sub";
-                          itemFormCon.mainCat.value = main;
-                          itemFormCon.subCat.value = sub;
-                          setState(() {});
-                        },
-                      ),
-                    );
-                  },
-                );
-              },
-            ),
-            SizedBox(
-              height: 10,
-            ),
-            Visibility(
-              visible: showAdditionInfoForm(controller.subCat.value),
-              maintainSize: false,
-              child: Column(
+        return Form(
+          key: controller.formKey,
+          child: Column(
+            children: [
+              Row(
+                mainAxisSize: MainAxisSize.max,
+                // mainAxisAlignment: MainAxisAlignment,
                 children: [
-                  ClickableTextField(
-                    labelText: "Enter ${itemFormCon.subCat.value.capitalize} Information",
-                    controller: controller.additionalInfoCon,
-                    suffixIcon: Icon(
-                      Icons.arrow_forward_ios,
-                      color: context.iconColor,
+                  Expanded(
+                    child: TypeTextField(
+                      labelText: "Item Name",
+                      controller: controller.nameCon,
                     ),
-                    onTap: () async {
-                      FocusScope.of(context).requestFocus(FocusNode());
-                      processAdditionalInformation();
-                    },
                   ),
                   SizedBox(
-                    height: 10,
+                    width: 5,
+                  ),
+                  Expanded(
+                    child: TypeTextField(
+                      labelText: "Price",
+                      controller: controller.priceCon,
+                      inputType: TextInputType.numberWithOptions(
+                          decimal: true, signed: false),
+                      suffixIcon:
+                          Icon(Icons.attach_money, color: context.iconColor
+                              // color: Colors.black,
+                              ),
+                      validator: (value) {
+                        if (value == null || value.isEmpty) {
+                          return "Empty Field";
+                        }
+                        if (!GetUtils.isNum(value)) {
+                          return "Not a Number";
+                        }
+                      },
+                    ),
                   ),
                 ],
               ),
-            ),
-            ClickableTextField(
-              labelText: "Condition",
-              controller: controller.conditionCon,
-              suffixIcon: Icon(
-                Icons.arrow_forward_ios,
-                color: context.iconColor,
+              SizedBox(
+                height: 10,
               ),
-              onTap: () {
-                FocusScope.of(context).requestFocus(FocusNode());
-                Get.bottomSheet(
-                    CustomButtonSheet(
-                      items: conditions,
-                      onItemClick: (index) {
-                        print(conditions[index]);
-                        setState(() {
-                          controller.conditionCon.text = conditions[index];
-                        });
+              ClickableTextField(
+                labelText: "Category",
+                controller: controller.categoryCon,
+                suffixIcon: Icon(
+                  Icons.arrow_forward_ios,
+                  color: context.iconColor,
+                ),
+                onTap: () {
+                  FocusScope.of(context).requestFocus(FocusNode());
+                  showDialog(
+                    context: context,
+                    builder: (context) {
+                      return AlertDialog(
+                        titlePadding: EdgeInsets.all(10),
+                        contentPadding: EdgeInsets.all(10),
+                        actionsPadding: EdgeInsets.all(10),
+                        title: Text("Select Category"),
+                        content: CategoryDropdownMenu(
+                          onConfirm: (main, sub) {
+                            controller.categoryCon.text = "$main , $sub";
+                            itemFormCon.mainCat.value = main;
+                            itemFormCon.subCat.value = sub;
+                            setState(() {});
+                          },
+                        ),
+                      );
+                    },
+                  );
+                },
+              ),
+              SizedBox(
+                height: 10,
+              ),
+              Visibility(
+                visible: showAdditionInfoForm(controller.subCat.value),
+                maintainSize: false,
+                child: Column(
+                  children: [
+                    ClickableTextField(
+                      labelText:
+                          "Enter ${itemFormCon.subCat.value.capitalize} Information",
+                      controller: controller.additionalInfoCon,
+                      suffixIcon: Icon(
+                        Icons.arrow_forward_ios,
+                        color: context.iconColor,
+                      ),
+                      onTap: () async {
+                        FocusScope.of(context).requestFocus(FocusNode());
+                        processAdditionalInformation();
                       },
                     ),
-                    backgroundColor: Colors.white);
-              },
-            ),
-            SizedBox(
-              height: 10,
-            ),
-            TypeTextField(
-              labelText: "Address",
-              controller: controller.addressCon,
-            ),
-            SizedBox(
-              height: 10,
-            ),
-            TypeTextField(
-              labelText: "Phone Number",
-              controller: controller.phoneCon,
-              inputType: TextInputType.phone,
-              prefix: "0",
-              validator: (value) {
-                if (value == null || value.isEmpty) {
-                  return "Field Empty";
-                }
-                if (!GetUtils.isPhoneNumber("0$value")) {
-                  return "Wrong Phone Format";
-                }
-                return null;
-              },
-            ),
-            SizedBox(
-              height: 10,
-            ),
-            TextField(
-              controller: controller.descriptionCon,
-              maxLength: 200,
-              textAlign: TextAlign.start,
-              style: TextStyle(
-                fontSize: 16,
-                color: Colors.black,
+                    SizedBox(
+                      height: 10,
+                    ),
+                  ],
+                ),
               ),
-              keyboardType: TextInputType.multiline,
-              maxLines: 5,
-              decoration: InputDecoration(
-                  alignLabelWithHint: true,
-                  contentPadding: EdgeInsets.all(10),
-                  labelStyle: TextStyle(
-                    fontSize: 16,
-                  ),
-                  labelText: "Description",
-                  border: OutlineInputBorder(),
-                  counterStyle: TextStyle(fontSize: 12, height: 1)),
-            ),
-            SizedBox(
-              height: 10,
-            ),
-          ],
+              ClickableTextField(
+                labelText: "Condition",
+                controller: controller.conditionCon,
+                suffixIcon: Icon(
+                  Icons.arrow_forward_ios,
+                  color: context.iconColor,
+                ),
+                onTap: () {
+                  FocusScope.of(context).requestFocus(FocusNode());
+                  Get.bottomSheet(
+                      CustomButtonSheet(
+                        items: conditions,
+                        onItemClick: (index) {
+                          print(conditions[index]);
+                          setState(() {
+                            controller.conditionCon.text = conditions[index];
+                          });
+                        },
+                      ),
+                      backgroundColor: Colors.white);
+                },
+              ),
+              SizedBox(
+                height: 10,
+              ),
+              TypeTextField(
+                labelText: "Address",
+                controller: controller.addressCon,
+              ),
+              SizedBox(
+                height: 10,
+              ),
+              TypeTextField(
+                labelText: "Phone Number",
+                controller: controller.phoneCon,
+                inputType: TextInputType.phone,
+                prefix: "0",
+                validator: (value) {
+                  if (value == null || value.isEmpty) {
+                    return "Field Empty";
+                  }
+                  if (!GetUtils.isPhoneNumber("0$value")) {
+                    return "Wrong Phone Format";
+                  }
+                  return null;
+                },
+              ),
+              SizedBox(
+                height: 10,
+              ),
+              TextField(
+                controller: controller.descriptionCon,
+                maxLength: 200,
+                textAlign: TextAlign.start,
+                style: TextStyle(
+                  fontSize: 16,
+                  color: Colors.black,
+                ),
+                keyboardType: TextInputType.multiline,
+                maxLines: 5,
+                decoration: InputDecoration(
+                    alignLabelWithHint: true,
+                    contentPadding: EdgeInsets.all(10),
+                    labelStyle: TextStyle(
+                      fontSize: 16,
+                    ),
+                    labelText: "Description",
+                    border: OutlineInputBorder(),
+                    counterStyle: TextStyle(fontSize: 12, height: 1)),
+              ),
+              SizedBox(
+                height: 10,
+              ),
+            ],
+          ),
         );
       },
     );
-
   }
 
   @override
@@ -489,13 +456,6 @@ class _ItemFormState extends State<ItemForm> {
         actions: [
           IconButton(
             onPressed: () {
-              // itemFormCon.itemName.value = nameCon.text.trim();
-              // itemFormCon.price.value = int.parse(priceCon.text.trim());
-              // itemFormCon.mainCat.value = mainCat;
-              // itemFormCon.subCat.value = subCat;
-              // itemFormCon.address.value = addressCon.text.trim();
-              // itemFormCon.phone.value = phoneCon.text.trim();
-              // itemFormCon.description.value = descriptionCon.text.trim();
               widget.onConfirm!();
             },
             icon: Icon(
@@ -557,10 +517,7 @@ class _ItemFormState extends State<ItemForm> {
               ),
 
               //Forms
-              Form(
-                key: formKey,
-                child: buildTextInputForm(),
-              ),
+              buildTextInputForm(),
             ],
           ),
         ),

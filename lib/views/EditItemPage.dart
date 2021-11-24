@@ -1,13 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-import 'package:image_picker/image_picker.dart';
 import 'package:mygoods_flutter/components/item_form.dart';
-import 'package:mygoods_flutter/controllers/addImagesController.dart';
-import 'package:mygoods_flutter/models/additionalInfo.dart';
+import 'package:mygoods_flutter/controllers/itemFormController.dart';
 import 'package:mygoods_flutter/models/item.dart';
-import 'package:mygoods_flutter/services/additional_data_service.dart';
-import 'package:mygoods_flutter/utils/constant.dart';
-import 'package:mygoods_flutter/views/AddPage.dart';
 
 class EditItemPage extends StatefulWidget {
   const EditItemPage({
@@ -22,12 +17,26 @@ class EditItemPage extends StatefulWidget {
 }
 
 class _EditItemPageState extends State<EditItemPage> {
+  late final itemFormController;
 
+  void setDataIntoView(){
+
+  }
+
+  @override
+  void initState() {
+    super.initState();
+    Get.delete<ItemFormController>();
+    itemFormController = Get.put(ItemFormController());
+  }
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      body: ItemForm(),
-    );
+        body: ItemForm(
+      titleText: Text("Edit Item"),
+      padding: EdgeInsets.all(10),
+      onConfirm: () {},
+    ));
   }
 }

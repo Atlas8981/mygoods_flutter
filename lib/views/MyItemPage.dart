@@ -9,7 +9,7 @@ import 'package:mygoods_flutter/services/item_database_service.dart';
 import 'package:mygoods_flutter/services/user_service.dart';
 import 'package:mygoods_flutter/views/ListProduct.dart';
 import 'package:mygoods_flutter/views/cells/list_product_row.dart';
-import 'package:mygoods_flutter/views/edit_item_page.dart';
+import 'package:mygoods_flutter/views/EditItemPage.dart';
 import 'package:mygoods_flutter/views/owner_item_detail_page.dart';
 
 class MyItemsPage extends StatelessWidget {
@@ -37,8 +37,8 @@ class MyItemsPage extends StatelessWidget {
                 );
               }
 
-              final items = controller.items;
-              // print(items);
+              final List<Item> items = controller.items.cast();
+              print(items.length);
               return ListView.builder(
                 itemCount: items.length,
                 itemBuilder: (context, index) {
@@ -137,13 +137,16 @@ class OwnerItemRow extends StatelessWidget {
             children: [
               ClipRRect(
                 borderRadius: BorderRadius.all(Radius.circular(10)),
-                child: Image.network(
-                  item.images[0].imageUrl,
-                  width: 125,
-                  height: 125,
-                  fit: BoxFit.cover,
-                  cacheHeight: 125,
-                ),
+                child: (item.images.length > 0)
+                    ? Image.network(
+                        item.images[0].imageUrl,
+                        width: 125,
+                        height: 125,
+                        fit: BoxFit.cover,
+                        cacheHeight: 125,
+                      )
+                    : SizedBox(
+                        width: 125, height: 125, child: Icon(Icons.camera)),
               ),
               SizedBox(
                 width: 15,

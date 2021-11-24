@@ -97,20 +97,32 @@ class UserService {
     return response;
   }
 
-  Future<List<Item>> getUserItems() async {
-    final List<Item> listOfItem = [];
-    await firestore
-        .collection("$itemCollection")
-        .where('userid', isEqualTo: auth.currentUser!.uid)
-        .get()
-        .then((value) {
-      listOfItem.addAll(value.docs.map((element) {
-        Item item = Item.fromJson(element.data());
-        return item;
-      }));
-    }).catchError((onError) => print(onError));
-
-    return listOfItem;
+  Future<List<Item>?> getUserItems() async {
+    try {
+      final List<Item> listOfItem = [];
+      await firestore
+          .collection("$itemCollection")
+          .orderBy('date', descending: true)
+          .where('userid', isEqualTo: auth.currentUser!.uid)
+          //
+          .get()
+          .then((value) {
+        for (int i = 0; i < value.docs.length; i++) {
+          if (value.docs[i].exists) {
+            Item item = Item.fromJson(value.docs[i].data());
+            listOfItem.add(item);
+          }
+        }
+        // listOfItem.addAll(value.docs.map((element) {
+        //   Item item = Item.fromJson(element.data());
+        //   return item;
+        // }));
+      });
+      return listOfItem;
+    } on FirebaseException catch (e) {
+      print('Failed with error code: ${e.code}');
+      print(e.message);
+    }
   }
 
   Future<bool> deleteUserItem(String itemId) async {

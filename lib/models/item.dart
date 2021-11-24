@@ -53,7 +53,7 @@ class Item {
         description: json["description"],
         userid: json["userid"],
         itemid: json["itemid"],
-        viewers: List<String>.from(json["viewers"].map((x) => x)),
+        viewers: (json["viewers"] != null) ? List<String>.from(json["viewers"].map((x) => x)) : [],
         phone: json["phone"],
         price: json["price"].toDouble(),
         name: json["name"],

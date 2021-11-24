@@ -2,13 +2,13 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:mygoods_flutter/models/item.dart';
 import 'package:mygoods_flutter/models/user.dart';
 
+final String userCollection = "users";
+final String itemCollection = "items";
+final String additionalCollection = "additionInfo";
+final String saveItemCollection = "saveItems";
+
 class ItemDatabaseService {
   final firestore = FirebaseFirestore.instance;
-  static final String userCollection = "users";
-  static final String itemCollection = "items";
-  static final String additionalCollection = "additionInfo";
-  static final String saveItemCollection = "saveItems";
-
   Future<List<Item>> getItems(String mainCat, String subCat) async {
     List<Item> response = [];
     try {
@@ -122,5 +122,4 @@ class ItemDatabaseService {
       print(e.toString());
     }
   }
-
 }

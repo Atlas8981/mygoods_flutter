@@ -1,4 +1,3 @@
-
 import 'dart:io';
 
 import 'package:flutter/material.dart';
@@ -6,13 +5,14 @@ import 'package:get/get.dart';
 import 'package:image_picker/image_picker.dart';
 import 'package:mygoods_flutter/models/item.dart';
 
-class ItemFormController extends GetxController{
+class ItemFormController extends GetxController {
   // final itemName = "".obs;
 
   // final address= "".obs;
   // final description="".obs;
   // final phone = "".obs;
   // final price = 0.obs;
+  GlobalKey formKey = GlobalKey<FormState>();
   final subCat = "".obs;
   final mainCat = "".obs;
   final condition = "".obs;
@@ -53,24 +53,19 @@ class ItemFormController extends GetxController{
     conditionCon.text = "";
     condition.value = "";
     rawImages.clear();
-    // setState(() {
-    //   formKey = GlobalKey<FormState>();
-    // });
+    formKey = new GlobalKey<FormState>();
+    update();
   }
-  void addImage(XFile xfile){
+
+  void addImage(XFile xfile) {
     rawImages.add(xfile);
   }
 
-  List<File> getRawImageInFile(){
+  List<File> getRawImageInFile() {
     List<File> files = [];
     for (int i = 0; i < rawImages.length; i++) {
       files.add(File(rawImages[0].path));
     }
     return files;
   }
-
-  void clear() {
-    rawImages.value = [];
-  }
-
 }

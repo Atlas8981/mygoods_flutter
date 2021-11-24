@@ -14,6 +14,9 @@ class MyItemsController extends GetxController {
 
   void getUserItems() {
     userService.getUserItems().then((value) {
+      if(value == null){
+        return;
+      }
       items.addAll(value);
       update();
     });
@@ -21,7 +24,7 @@ class MyItemsController extends GetxController {
 
   Future<bool> deleteItems(Item item) async {
     final isDeleted = await userService.deleteUserItem(item.itemid);
-    if(isDeleted){
+    if (isDeleted) {
       items.remove(item);
       update();
     }
