@@ -32,28 +32,28 @@ class AccountPage extends StatelessWidget {
       appBar: AppBar(
         title: Text("About Me"),
         actions: [
-          PopupMenuButton<PopMenuItems>(
+          PopupMenuButton<AccountMenuItems>(
             icon: Icon(Icons.more_vert),
-            onSelected: (PopMenuItems value) {
+            onSelected: (AccountMenuItems value) {
               switch (value) {
-                case PopMenuItems.editProfile:
+                case AccountMenuItems.editProfile:
                   Get.to(EditProfilePage(
                     user: user,
                   ));
                   break;
-                case PopMenuItems.resetPassword:
+                case AccountMenuItems.resetPassword:
                   Get.to(ResetPasswordPage());
                   break;
               }
             },
             itemBuilder: (BuildContext context) => [
-              PopupMenuItem<PopMenuItems>(
-                value: PopMenuItems.editProfile,
+              PopupMenuItem<AccountMenuItems>(
+                value: AccountMenuItems.editProfile,
                 child: Text("Edit Profile"),
                 // child: Text('setting'.tr),
               ),
-              PopupMenuItem<PopMenuItems>(
-                value: PopMenuItems.resetPassword,
+              PopupMenuItem<AccountMenuItems>(
+                value: AccountMenuItems.resetPassword,
                 child: Text('Reset Password'),
               ),
             ],
@@ -226,7 +226,7 @@ class AccountPage extends StatelessWidget {
   }
 }
 
-enum PopMenuItems {
+enum AccountMenuItems {
   editProfile,
   resetPassword,
 }

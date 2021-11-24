@@ -32,7 +32,6 @@ class _BigImagePageState extends State<BigImagePage> {
         child: Stack(
           alignment: Alignment.center,
           children: [
-
             Center(
               child: Container(
                 child:ClipRRect(
@@ -54,7 +53,7 @@ class _BigImagePageState extends State<BigImagePage> {
                   onPressed: (){
                     Get.back();
                   },
-                  icon: Icon(Icons.arrow_back,size: 32,)
+                  icon: Icon(Icons.arrow_back,size: 32,color: Colors.blue,)
               ),
             ),
           ],

@@ -104,12 +104,25 @@ class UserService {
         .where('userid', isEqualTo: auth.currentUser!.uid)
         .get()
         .then((value) {
-      value.docs.forEach((element) {
+      listOfItem.addAll(value.docs.map((element) {
         Item item = Item.fromJson(element.data());
-        listOfItem.add(item);
-      });
+        return item;
+      }));
     }).catchError((onError) => print(onError));
 
     return listOfItem;
+  }
+
+  Future<bool> deleteUserItem(String itemId) async {
+    bool isDeleted = false;
+
+    await firestore
+        .collection("$itemCollection")
+        .doc(itemId)
+        .delete()
+        .then((value) {
+      isDeleted = true;
+    });
+    return isDeleted;
   }
 }

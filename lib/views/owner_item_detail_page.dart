@@ -11,7 +11,7 @@ import 'package:mygoods_flutter/models/image.dart' as image;
 import 'package:mygoods_flutter/utils/constant.dart';
 
 class OwnerItemDetailPage extends StatefulWidget {
-  OwnerItemDetailPage({
+  const OwnerItemDetailPage({
     Key? key,
     required this.item,
   }) : super(key: key);
@@ -170,8 +170,15 @@ class _OwnerItemDetailPageState extends State<OwnerItemDetailPage> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        //TODO: prone to change
         title: Text("Item Detail: ${item.itemid}"),
+        actions: [
+          IconButton(
+              onPressed: () {
+
+              },
+              icon: Icon(Icons.edit)
+          )
+        ],
       ),
       body: SafeArea(
         child: Container(
@@ -270,3 +277,7 @@ class _OwnerItemDetailPageState extends State<OwnerItemDetailPage> {
     );
   }
 }
+
+// enum OwnerItemMenu{
+//   E
+// }
