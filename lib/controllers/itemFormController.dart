@@ -11,6 +11,7 @@ import 'package:mygoods_flutter/utils/constant.dart';
 class ItemFormController extends GetxController {
   final itemService = ItemDatabaseService();
   GlobalKey formKey = GlobalKey<FormState>();
+  final isVisible = false.obs;
   final subCat = "".obs;
   final mainCat = "".obs;
   final condition = "".obs;
@@ -103,5 +104,10 @@ class ItemFormController extends GetxController {
       return "${additionalInfo.bikeType}";
     }
     return "";
+  }
+
+  void changeProgressBarVisibility(){
+    isVisible.value = !isVisible.value;
+    update();
   }
 }

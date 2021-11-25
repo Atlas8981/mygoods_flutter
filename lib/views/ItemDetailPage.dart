@@ -7,6 +7,7 @@ import 'package:dots_indicator/dots_indicator.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:mygoods_flutter/components/ImageViews.dart';
 import 'package:mygoods_flutter/models/additionalInfo.dart';
 import 'package:mygoods_flutter/models/image.dart' as image;
 import 'package:mygoods_flutter/models/item.dart';
@@ -23,86 +24,14 @@ class ProductDetailPage extends StatefulWidget {
 }
 
 class _ProductDetailPageState extends State<ProductDetailPage> {
-  final carouselController = CarouselControllerImpl();
   final PageController pageController =
       PageController(initialPage: 0, viewportFraction: 1);
-  int currentPage = 0;
 
   final itemService = ItemDatabaseService();
 
   final Item item = Get.arguments;
 
   bool isSaved = false;
-
-  Widget imagesViews(List<image.Image> images) {
-    return CarouselSlider.builder(
-      options: CarouselOptions(
-        scrollPhysics: BouncingScrollPhysics(),
-        height: 300,
-        // aspectRatio: 1 / 1,
-        viewportFraction: 1,
-        initialPage: 0,
-        pageSnapping: true,
-        enableInfiniteScroll: false,
-        // enableInfiniteScroll: true,
-        // reverse: false,
-        // autoPlay: true,
-        // autoPlayInterval: Duration(seconds: 3),
-        // autoPlayAnimationDuration: Duration(milliseconds: 800),
-        // autoPlayCurve: Curves.fastOutSlowIn,
-        // enlargeCenterPage: true,
-        onPageChanged: (index, reason) {
-          setState(() {
-            currentPage = index;
-          });
-        },
-        scrollDirection: Axis.horizontal,
-      ),
-      carouselController: carouselController,
-      itemCount: images.length,
-      itemBuilder: (context, index, realIndex) {
-        return CachedNetworkImage(
-          imageUrl: images[index].imageUrl,
-          fit: BoxFit.cover,
-          fadeInDuration: Duration(milliseconds: 100),
-          fadeOutDuration: Duration(milliseconds: 100),
-          width: double.infinity,
-          progressIndicatorBuilder: (context, url, progress) {
-            if (progress.progress == null) {
-              return Container();
-            }
-            return Center(
-              child: CircularProgressIndicator(),
-            );
-          },
-          errorWidget: (context, url, error) => Icon(Icons.error),
-        );
-      },
-      // items: [
-      //   Container(
-      //       width: MediaQuery.of(context).size.width,
-      //       margin: EdgeInsets.symmetric(horizontal: 5.0),
-      //       decoration: BoxDecoration(
-      //           color: Colors.amber
-      //       ),
-      //   )
-      // ]
-      // [1,2,3,4,5].map((i) {
-      //   return Builder(
-      //     builder: (BuildContext context) {
-      //       return Container(
-      //           width: MediaQuery.of(context).size.width,
-      //           margin: EdgeInsets.symmetric(horizontal: 5.0),
-      //           decoration: BoxDecoration(
-      //               color: Colors.amber
-      //           ),
-      //           child: Text('text $i', style: TextStyle(fontSize: 16.0),)
-      //       );
-      //     },
-      //   );
-      // }).toList(),
-    );
-  }
 
   Widget additionalInfoView() {
     final hasAdditionInfo = hasAdditionalInfoList.contains(item.subCategory);
@@ -111,7 +40,8 @@ class _ProductDetailPageState extends State<ProductDetailPage> {
     }
 
     return FutureBuilder<DocumentSnapshot<Map<String, dynamic>>?>(
-      future: itemService.getAdditionalInfo(itemId: item.itemid,subCat: item.subCategory),
+      future: itemService.getAdditionalInfo(
+          itemId: item.itemid, subCat: item.subCategory),
       builder: (context, snapshot) {
         if (snapshot.hasData) {
           final data = snapshot.data!.data();
@@ -147,7 +77,6 @@ class _ProductDetailPageState extends State<ProductDetailPage> {
       },
     );
   }
-
 
   Widget sellerInfoView() {
     return FutureBuilder<User?>(
@@ -297,22 +226,7 @@ class _ProductDetailPageState extends State<ProductDetailPage> {
             physics: BouncingScrollPhysics(),
             child: Column(
               children: [
-                Stack(
-                  alignment: Alignment.bottomCenter,
-                  children: [
-                    imagesViews(item.images),
-                    Positioned(
-                      bottom: 10,
-                      child: DotsIndicator(
-                        dotsCount: item.images.length,
-                        position: currentPage.toDouble(),
-                        onTap: (position) {
-                          carouselController.animateToPage(position.toInt());
-                        },
-                      ),
-                    )
-                  ],
-                ),
+                ImagesView(images: item.images),
                 Container(
                   width: double.infinity,
                   padding: EdgeInsets.only(left: 20, right: 20, top: 20),

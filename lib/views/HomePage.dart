@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:mygoods_flutter/models/product.dart';
+import 'package:mygoods_flutter/utils/constant.dart';
 import 'package:mygoods_flutter/views/cells/homepage_cell.dart';
 
 class HomePage extends StatelessWidget {
@@ -27,12 +28,22 @@ class HomePage extends StatelessWidget {
     return Scaffold(
       appBar: AppBar(
         title: Text("Home"),
+        actions: [
+          IconButton(
+              onPressed: () {
+                showToast("In Development");
+              },
+              icon: Icon(Icons.search))
+        ],
       ),
       body: SafeArea(
-        child: Container(
-          padding: EdgeInsets.all(10),
-          child: SingleChildScrollView(
+        child: SingleChildScrollView(
+          child: Container(
+            padding: EdgeInsets.only(left: 10,right: 20),
             child: Column(children: [
+              SizedBox(
+                height: 10,
+              ),
               Container(
                 color: Colors.blue,
                 height: 125,

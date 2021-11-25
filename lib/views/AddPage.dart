@@ -64,15 +64,17 @@ class _AddPageState extends State<AddPage> {
         views: 0);
     //
     reference.doc(id).set(item.toJson()).then((value) {
-      print("success");
+      itemFormController.isVisible.value = true;
       showToast("Success");
       itemFormController.clearData();
     }).catchError((error) {
+      itemFormController.isVisible.value = true;
       print("Failed with error: $error");
     });
   }
 
   Future<void> uploadItemInformation() async {
+    itemFormController.isVisible.value = true;
     uploadFiles(itemFormController.getRawImageInFile()).then((images) {
       uploadData(images);
     });

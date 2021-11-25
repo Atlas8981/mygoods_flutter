@@ -470,62 +470,72 @@ class _ItemFormState extends State<ItemForm> {
           )
         ],
       ),
-      body: SingleChildScrollView(
-        child: Container(
-          padding: widget.padding,
-          child: Column(
-            crossAxisAlignment: CrossAxisAlignment.start,
-            mainAxisSize: MainAxisSize.max,
-            children: [
-              //Top Text in Horizontal Imageview
-              Column(
+      body: Stack(
+        children: [
+          SingleChildScrollView(
+            child: Container(
+              padding: widget.padding,
+              child: Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
                 mainAxisSize: MainAxisSize.max,
                 children: [
-                  Text(
-                    "Upload Photos",
-                    style: TextStyle(
-                      fontSize: 18,
-                      fontWeight: FontWeight.bold,
-                    ),
+                  //Top Text in Horizontal Imageview
+                  Column(
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    mainAxisSize: MainAxisSize.max,
+                    children: [
+                      Text(
+                        "Upload Photos",
+                        style: TextStyle(
+                          fontSize: 18,
+                          fontWeight: FontWeight.bold,
+                        ),
+                      ),
+                      Align(
+                        alignment: Alignment.centerRight,
+                        child: Obx(() {
+                          return Text(
+                            "(${itemFormCon.tempImages.length}/5)",
+                            style: TextStyle(fontSize: 16),
+                          );
+                        }),
+                      ),
+                    ],
                   ),
-                  Align(
-                    alignment: Alignment.centerRight,
+
+                  //Horizontal Image View
+                  Container(
+                    height: 120,
                     child: Obx(() {
-                      return Text(
-                        "(${itemFormCon.tempImages.length}/5)",
-                        style: TextStyle(fontSize: 16),
+                      return ListView.builder(
+                        scrollDirection: Axis.horizontal,
+                        itemCount: (itemFormCon.tempImages.length == 5)
+                            ? 5
+                            : itemFormCon.tempImages.length + 1,
+                        shrinkWrap: true,
+                        itemBuilder: (context, index) {
+                          return buildAddImageRow(context, index);
+                        },
                       );
                     }),
                   ),
+                  SizedBox(
+                    height: 10,
+                  ),
+
+                  //Forms
+                  buildTextInputForm(),
                 ],
               ),
-
-              //Horizontal Image View
-              Container(
-                height: 120,
-                child: Obx(() {
-                  return ListView.builder(
-                    scrollDirection: Axis.horizontal,
-                    itemCount: (itemFormCon.tempImages.length == 5)
-                        ? 5
-                        : itemFormCon.tempImages.length + 1,
-                    shrinkWrap: true,
-                    itemBuilder: (context, index) {
-                      return buildAddImageRow(context, index);
-                    },
-                  );
-                }),
-              ),
-              SizedBox(
-                height: 10,
-              ),
-
-              //Forms
-              buildTextInputForm(),
-            ],
+            ),
           ),
-        ),
+          Obx(()=> Visibility(
+                visible: itemFormCon.isVisible.value,
+                child: Center(
+                  child: CircularProgressIndicator(),
+                )),
+          )
+        ],
       ),
     );
   }

@@ -7,6 +7,7 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:mygoods_flutter/components/ItemForm.dart';
 import 'package:mygoods_flutter/controllers/itemFormController.dart';
+import 'package:mygoods_flutter/controllers/myItemsController.dart';
 import 'package:mygoods_flutter/models/DualImage.dart';
 import 'package:mygoods_flutter/models/item.dart';
 import 'package:mygoods_flutter/models/image.dart' as myImageClass;
@@ -63,7 +64,7 @@ class _EditItemPageState extends State<EditItemPage> {
         userid: preItem.userid,
         itemid: "${preItem.itemid}",
         viewers: preItem.viewers,
-        phone: itemFormController.phoneCon.text,
+        phone: "0${itemFormController.phoneCon.text}",
         price: double.parse(itemFormController.priceCon.text),
         name: itemFormController.nameCon.text,
         mainCategory: itemFormController.mainCat.value,
@@ -71,14 +72,19 @@ class _EditItemPageState extends State<EditItemPage> {
     //
     reference.doc(preItem.itemid).update(newItem.toJson()).then((value) {
       showToast("Success");
+      itemFormController.isVisible.value = false;
       itemFormController.clearData();
+      Get.find<MyItemsController>().updateUserItem(newItem);
       Get.back();
     }).catchError((error) {
+      itemFormController.isVisible.value = false;
       print("Failed with error: $error");
     });
+
   }
 
   Future<void> uploadItemInformation() async {
+    itemFormController.isVisible.value = true;
     uploadFiles(itemFormController.tempImages.cast()).then((images) {
       uploadData(images);
     });
@@ -98,7 +104,7 @@ class _EditItemPageState extends State<EditItemPage> {
     itemFormController.addressCon.text = preItem.address;
     itemFormController.nameCon.text = preItem.name;
     itemFormController.priceCon.text = preItem.price.toString();
-    itemFormController.phoneCon.text = preItem.phone;
+    itemFormController.phoneCon.text = preItem.phone.substring(1);
     itemFormController.descriptionCon.text = preItem.description;
     itemFormController.getAdditionalInfo(preItem.itemid, preItem.subCategory);
   }

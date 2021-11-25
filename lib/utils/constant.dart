@@ -3,6 +3,7 @@ import 'dart:io';
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
 import 'package:fluttertoast/fluttertoast.dart';
+import 'package:get/get.dart';
 import 'package:mygoods_flutter/models/DualImage.dart';
 import 'package:mygoods_flutter/models/additionalInfo.dart';
 import 'package:mygoods_flutter/models/category.dart';
@@ -53,13 +54,12 @@ String? validatePhoneNumber(String? value) {
   return null;
 }
 
-checkImageProvider(DualImage image){
-  if(image.isNetworkImage){
+checkImageProvider(DualImage image) {
+  if (image.isNetworkImage) {
     return CachedNetworkImageProvider(image.itemImage!.imageUrl);
-  }else{
+  } else {
     return FileImage(File(image.imagePath!));
   }
-
 }
 
 String? processAdditionalInfo(AdditionalInfo additionalInfo) {
@@ -98,7 +98,6 @@ String? processAdditionalInfo(AdditionalInfo additionalInfo) {
   return processedData;
 }
 
-
 final List<String> hasAdditionalInfoList = [
   electronicSubCategories[0].name,
   electronicSubCategories[3].name,
@@ -116,5 +115,12 @@ void showToast(String message) {
     fontSize: 18,
     backgroundColor: Colors.blue,
     textColor: Colors.white,
+  );
+}
+
+void showSnackBar(String title, String message) {
+  Get.snackbar(
+    "$title",
+    "$message",
   );
 }

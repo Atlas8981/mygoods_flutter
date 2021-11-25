@@ -12,7 +12,7 @@ class MyItemsController extends GetxController {
   void onInit() {
     super.onInit();
     getUserItems();
-    listenForItemChange();
+    // listenForItemChange();
   }
 
   @override
@@ -28,6 +28,13 @@ class MyItemsController extends GetxController {
       items.addAll(value);
       update();
     });
+  }
+
+  void updateUserItem(Item newItem) {
+    final index =
+        items.indexWhere((element) => element.itemid == newItem.itemid);
+    items[index] = newItem;
+    update();
   }
 
   void listenForItemChange() {
