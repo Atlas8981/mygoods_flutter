@@ -82,7 +82,8 @@ class _OwnerItemDetailPageState extends State<OwnerItemDetailPage> {
       return Container();
     }
     return FutureBuilder<DocumentSnapshot<Map<String, dynamic>>?>(
-      future: firestoreService.getAdditionalInfo(item),
+      future: firestoreService.getAdditionalInfo(
+          itemId: item.itemid, subCat: item.subCategory),
       builder: (context, snapshot) {
         if (snapshot.hasData) {
           final data = snapshot.data!.data();
@@ -171,14 +172,7 @@ class _OwnerItemDetailPageState extends State<OwnerItemDetailPage> {
     return Scaffold(
       appBar: AppBar(
         title: Text("Item Detail: ${item.itemid}"),
-        actions: [
-          IconButton(
-              onPressed: () {
-
-              },
-              icon: Icon(Icons.edit)
-          )
-        ],
+        actions: [IconButton(onPressed: () {}, icon: Icon(Icons.edit))],
       ),
       body: SafeArea(
         child: Container(

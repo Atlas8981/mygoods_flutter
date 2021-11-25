@@ -7,10 +7,8 @@ import 'package:mygoods_flutter/controllers/myItemsController.dart';
 import 'package:mygoods_flutter/models/item.dart';
 import 'package:mygoods_flutter/services/item_database_service.dart';
 import 'package:mygoods_flutter/services/user_service.dart';
-import 'package:mygoods_flutter/views/ListProduct.dart';
-import 'package:mygoods_flutter/views/cells/list_product_row.dart';
 import 'package:mygoods_flutter/views/EditItemPage.dart';
-import 'package:mygoods_flutter/views/owner_item_detail_page.dart';
+import 'package:mygoods_flutter/views/OwnerItemDetailPage.dart';
 
 class MyItemsPage extends StatelessWidget {
   MyItemsPage({Key? key}) : super(key: key);
@@ -26,20 +24,22 @@ class MyItemsPage extends StatelessWidget {
         title: Text("My Item(s)"),
       ),
       body: SafeArea(
-        child: Container(
-          padding: EdgeInsets.all(10),
-          child: GetBuilder<MyItemsController>(
-            init: myItemController,
-            builder: (controller) {
-              if (controller.items.length == 0) {
-                return Center(
-                  child: CircularProgressIndicator(),
-                );
-              }
-
-              final List<Item> items = controller.items.cast();
-              print(items.length);
-              return ListView.builder(
+        child: GetBuilder<MyItemsController>(
+          init: myItemController,
+          builder: (controller) {
+            if (controller.items.length == 0) {
+              return Center(
+                child: CircularProgressIndicator(),
+              );
+            }
+            final List<Item> items = controller.items.cast();
+            return Container(
+              padding: EdgeInsets.only(
+                top: 10,
+                left: 10,
+                right: 10,
+              ),
+              child: ListView.builder(
                 itemCount: items.length,
                 itemBuilder: (context, index) {
                   return OwnerItemRow(
@@ -47,19 +47,23 @@ class MyItemsPage extends StatelessWidget {
                     onDelete: () {
                       onClickDeleteItem(context, items[index]);
                     },
-                    onEdit: onClickEditItem,
+                    onEdit: () {
+                      onClickEditItem(items[index]);
+                    },
                   );
                 },
-              );
-            },
-          ),
+              ),
+            );
+          },
         ),
       ),
     );
   }
 
-  void onClickEditItem() {
-    Get.to(() => EditItemPage());
+  void onClickEditItem(Item item) {
+    Get.to(() => EditItemPage(
+          item: item,
+        ));
   }
 
   void onClickDeleteItem(context, Item item) {

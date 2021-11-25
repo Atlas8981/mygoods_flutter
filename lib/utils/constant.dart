@@ -1,5 +1,10 @@
+import 'dart:io';
+
+import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
 import 'package:fluttertoast/fluttertoast.dart';
+import 'package:mygoods_flutter/models/DualImage.dart';
+import 'package:mygoods_flutter/models/additionalInfo.dart';
 import 'package:mygoods_flutter/models/category.dart';
 
 final String imageDir = "assets/images/";
@@ -47,6 +52,52 @@ String? validatePhoneNumber(String? value) {
   }
   return null;
 }
+
+checkImageProvider(DualImage image){
+  if(image.isNetworkImage){
+    return CachedNetworkImageProvider(image.itemImage!.imageUrl);
+  }else{
+    return FileImage(File(image.imagePath!));
+  }
+
+}
+
+String? processAdditionalInfo(AdditionalInfo additionalInfo) {
+  String processedData = "";
+  if (additionalInfo.car != null) {
+    final Car tempCar = additionalInfo.car!;
+    processedData = processedData +
+        "\n\n" +
+        "Car Brand : " +
+        tempCar.brand +
+        "\nCar Model : " +
+        tempCar.model +
+        "\nCar Type : " +
+        tempCar.category +
+        "\nCar Year : " +
+        tempCar.year;
+  }
+  if (additionalInfo.phone != null) {
+    final Phone tempPhone = additionalInfo.phone!;
+    processedData = processedData +
+        "\n\n" +
+        "Phone Brand : " +
+        tempPhone.phoneBrand +
+        "\nPhone Model : " +
+        tempPhone.phoneModel;
+  }
+  if (additionalInfo.motoType != null) {
+    processedData = processedData + "\n\n${additionalInfo.motoType}";
+  }
+  if (additionalInfo.computerParts != null) {
+    processedData = processedData + "\n\n${additionalInfo.computerParts}";
+  }
+  if (additionalInfo.bikeType != null) {
+    processedData = processedData + "\n\n${additionalInfo.bikeType}";
+  }
+  return processedData;
+}
+
 
 final List<String> hasAdditionalInfoList = [
   electronicSubCategories[0].name,

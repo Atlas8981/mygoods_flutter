@@ -104,7 +104,6 @@ class UserService {
           .collection("$itemCollection")
           .orderBy('date', descending: true)
           .where('userid', isEqualTo: auth.currentUser!.uid)
-          //
           .get()
           .then((value) {
         for (int i = 0; i < value.docs.length; i++) {
@@ -113,16 +112,29 @@ class UserService {
             listOfItem.add(item);
           }
         }
-        // listOfItem.addAll(value.docs.map((element) {
-        //   Item item = Item.fromJson(element.data());
-        //   return item;
-        // }));
       });
       return listOfItem;
     } on FirebaseException catch (e) {
       print('Failed with error code: ${e.code}');
       print(e.message);
     }
+  }
+
+  Stream<QuerySnapshot<Map<String,dynamic>>> listenForUserItemChange(){
+    final List<Item> listOfItem = [];
+    return firestore.collection("$itemCollection")
+        .orderBy('date', descending: true)
+        .where('userid', isEqualTo: auth.currentUser!.uid)
+        .snapshots()
+    //     .listen((value) {
+    //     for (int i = 0; i < value.docs.length; i++) {
+    //     if (value.docs[i].exists) {
+    //       Item item = Item.fromJson(value.docs[i].data());
+    //       listOfItem.add(item);
+    //     }
+    //   }
+    // })
+    ;
   }
 
   Future<bool> deleteUserItem(String itemId) async {

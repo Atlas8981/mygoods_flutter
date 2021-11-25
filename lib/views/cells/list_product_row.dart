@@ -3,7 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:mygoods_flutter/models/item.dart';
 import 'package:mygoods_flutter/services/item_database_service.dart';
-import 'package:mygoods_flutter/views/ProductDetailPage.dart';
+import 'package:mygoods_flutter/views/ItemDetailPage.dart';
 
 class ListItemRow extends StatefulWidget {
   const ListItemRow({

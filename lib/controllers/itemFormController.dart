@@ -3,20 +3,18 @@ import 'dart:io';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:image_picker/image_picker.dart';
-import 'package:mygoods_flutter/models/item.dart';
+import 'package:mygoods_flutter/models/DualImage.dart';
+import 'package:mygoods_flutter/models/additionalInfo.dart';
+import 'package:mygoods_flutter/services/item_database_service.dart';
+import 'package:mygoods_flutter/utils/constant.dart';
 
 class ItemFormController extends GetxController {
-  // final itemName = "".obs;
-
-  // final address= "".obs;
-  // final description="".obs;
-  // final phone = "".obs;
-  // final price = 0.obs;
+  final itemService = ItemDatabaseService();
   GlobalKey formKey = GlobalKey<FormState>();
   final subCat = "".obs;
   final mainCat = "".obs;
   final condition = "".obs;
-  final RxList rawImages = [].obs;
+  final RxList tempImages = [].obs;
   final TextEditingController nameCon = TextEditingController(),
       priceCon = TextEditingController(),
       addressCon = TextEditingController(),
@@ -52,20 +50,58 @@ class ItemFormController extends GetxController {
     nameCon.text = "";
     conditionCon.text = "";
     condition.value = "";
-    rawImages.clear();
+    tempImages.clear();
     formKey = new GlobalKey<FormState>();
     update();
   }
 
-  void addImage(XFile xfile) {
-    rawImages.add(xfile);
+  void addImage(DualImage dualImage) {
+    tempImages.add(dualImage);
   }
 
   List<File> getRawImageInFile() {
-    List<File> files = [];
-    for (int i = 0; i < rawImages.length; i++) {
-      files.add(File(rawImages[0].path));
+    final List<File> files = [];
+
+    for (int i = 0; i < tempImages.length; i++) {
+      final DualImage tempDualImage = tempImages[0];
+      if (!tempDualImage.isNetworkImage) {
+        files.add(File(tempDualImage.imagePath!));
+      }
     }
     return files;
+  }
+
+  void getAdditionalInfo(String itemId, String subCat) {
+    itemService.getAdditionalInfo(itemId: itemId, subCat: subCat).then((value) {
+      if (value == null) {
+        return;
+      }
+      final AdditionalInfo additionalInfo =
+          additionalInfoFromFirestore(value.data()!);
+
+      conditionCon.text = "${additionalInfo.condition}";
+      additionalInfoCon.text = getAdditionInfo(additionalInfo);
+    });
+  }
+
+  String getAdditionInfo(AdditionalInfo additionalInfo) {
+    if (additionalInfo.car != null) {
+      final Car tempCar = additionalInfo.car!;
+      return "${tempCar.brand}, ${tempCar.model}, ${tempCar.category}, ${tempCar.year}";
+    }
+    if (additionalInfo.phone != null) {
+      final Phone tempPhone = additionalInfo.phone!;
+      return "${tempPhone.phoneBrand}, ${tempPhone.phoneModel}";
+    }
+    if (additionalInfo.motoType != null) {
+      return "${additionalInfo.motoType}";
+    }
+    if (additionalInfo.computerParts != null) {
+      return "${additionalInfo.computerParts}";
+    }
+    if (additionalInfo.bikeType != null) {
+      return "${additionalInfo.bikeType}";
+    }
+    return "";
   }
 }

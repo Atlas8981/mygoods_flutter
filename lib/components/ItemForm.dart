@@ -9,9 +9,11 @@ import 'package:mygoods_flutter/components/CustomBottomSheet.dart';
 import 'package:mygoods_flutter/components/TypeTextField.dart';
 import 'package:mygoods_flutter/controllers/AdditionalInfoController.dart';
 import 'package:mygoods_flutter/controllers/itemFormController.dart';
+import 'package:mygoods_flutter/models/DualImage.dart';
 import 'package:mygoods_flutter/models/additionalInfo.dart';
 import 'package:mygoods_flutter/services/additional_data_service.dart';
 import 'package:mygoods_flutter/utils/constant.dart';
+import 'package:mygoods_flutter/views/other/big_image.dart';
 
 class ItemForm extends StatefulWidget {
   const ItemForm({
@@ -158,7 +160,6 @@ class _ItemFormState extends State<ItemForm> {
               itemFormCon.additionalInfoCon.text = "$selectBrand, $selectModel";
               Get.back();
               setState(() {});
-              // print(value);
             },
           );
         });
@@ -187,37 +188,42 @@ class _ItemFormState extends State<ItemForm> {
   }
 
   void _imageFromGallery(index) async {
-    var pictures = await _imagePicker.pickMultiImage();
-    if (pictures != null && pictures.length <= 5) {
+    List<XFile>? rawXfile = await _imagePicker.pickMultiImage();
+    if (rawXfile == null) {
+      showToast("Image not picked");
+    }
+    if (rawXfile!.length > 5) {
+      showToast("Select Less than 5 Images");
+    }
+    final totalImage = (itemFormCon.tempImages.length + rawXfile.length);
+    if (totalImage <= 5) {
       setState(() {
-        pictures.forEach((picture) {
-          itemFormCon.rawImages.add(picture);
+        rawXfile.forEach((picture) {
+          itemFormCon.addImage(DualImage(false, imagePath: picture.path));
         });
       });
     } else {
-      showToast("Select Less than 5 Images");
+      showToast("Total images exceed 5");
     }
   }
 
   buildAddImageRow(context, index) {
-    final tempRawImages = itemFormCon.rawImages;
-    if (index < tempRawImages.length && tempRawImages[index].path != null) {
+    final List<DualImage> tempImages = itemFormCon.tempImages.cast();
+    if (index < tempImages.length) {
       return Container(
         padding: EdgeInsets.all(5),
         child: Stack(children: [
           Align(
             alignment: Alignment.center,
-            child: GestureDetector(
-              onTap: () {
-                print('I click on Image');
-              },
-              child: Card(
-                margin: EdgeInsets.all(0),
-                elevation: 5,
+            child: Card(
+              margin: EdgeInsets.all(0),
+              elevation: 5,
+              child: InkWell(
+                onTap: () {},
                 child: ClipRRect(
                   borderRadius: BorderRadius.circular(5),
-                  child: Image.file(
-                    File(tempRawImages[index].path),
+                  child: Image(
+                    image: checkImageProvider(tempImages[index]),
                     width: 120,
                     height: 120,
                     fit: BoxFit.cover,
@@ -233,7 +239,7 @@ class _ItemFormState extends State<ItemForm> {
             child: GestureDetector(
               onTap: () {
                 setState(() {
-                  tempRawImages.removeAt(index);
+                  tempImages.removeAt(index);
                 });
               },
               child: Icon(
@@ -247,7 +253,7 @@ class _ItemFormState extends State<ItemForm> {
       );
     } else {
       return Card(
-        elevation: 3,
+        elevation: 5,
         child: Container(
           width: 120,
           height: 120,
@@ -381,7 +387,6 @@ class _ItemFormState extends State<ItemForm> {
                       CustomButtonSheet(
                         items: conditions,
                         onItemClick: (index) {
-                          print(conditions[index]);
                           setState(() {
                             controller.conditionCon.text = conditions[index];
                           });
@@ -488,7 +493,7 @@ class _ItemFormState extends State<ItemForm> {
                     alignment: Alignment.centerRight,
                     child: Obx(() {
                       return Text(
-                        "(${itemFormCon.rawImages.length}/5)",
+                        "(${itemFormCon.tempImages.length}/5)",
                         style: TextStyle(fontSize: 16),
                       );
                     }),
@@ -502,9 +507,9 @@ class _ItemFormState extends State<ItemForm> {
                 child: Obx(() {
                   return ListView.builder(
                     scrollDirection: Axis.horizontal,
-                    itemCount: (itemFormCon.rawImages.length == 5)
+                    itemCount: (itemFormCon.tempImages.length == 5)
                         ? 5
-                        : itemFormCon.rawImages.length + 1,
+                        : itemFormCon.tempImages.length + 1,
                     shrinkWrap: true,
                     itemBuilder: (context, index) {
                       return buildAddImageRow(context, index);

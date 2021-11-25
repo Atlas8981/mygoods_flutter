@@ -28,7 +28,7 @@ class _ProductDetailPageState extends State<ProductDetailPage> {
       PageController(initialPage: 0, viewportFraction: 1);
   int currentPage = 0;
 
-  final firestoreService = ItemDatabaseService();
+  final itemService = ItemDatabaseService();
 
   final Item item = Get.arguments;
 
@@ -36,7 +36,6 @@ class _ProductDetailPageState extends State<ProductDetailPage> {
 
   Widget imagesViews(List<image.Image> images) {
     return CarouselSlider.builder(
-
       options: CarouselOptions(
         scrollPhysics: BouncingScrollPhysics(),
         height: 300,
@@ -107,11 +106,12 @@ class _ProductDetailPageState extends State<ProductDetailPage> {
 
   Widget additionalInfoView() {
     final hasAdditionInfo = hasAdditionalInfoList.contains(item.subCategory);
-    if(!hasAdditionInfo){
+    if (!hasAdditionInfo) {
       return Container();
     }
+
     return FutureBuilder<DocumentSnapshot<Map<String, dynamic>>?>(
-      future: firestoreService.getAdditionalInfo(Get.arguments),
+      future: itemService.getAdditionalInfo(itemId: item.itemid,subCat: item.subCategory),
       builder: (context, snapshot) {
         if (snapshot.hasData) {
           final data = snapshot.data!.data();
@@ -148,45 +148,10 @@ class _ProductDetailPageState extends State<ProductDetailPage> {
     );
   }
 
-  String? processAdditionalInfo(AdditionalInfo additionalInfo) {
-    String processedData = "";
-    if (additionalInfo.car != null) {
-      final Car tempCar = additionalInfo.car!;
-      processedData = processedData +
-          "\n\n" +
-          "Car Brand : " +
-          tempCar.brand +
-          "\nCar Model : " +
-          tempCar.model +
-          "\nCar Type : " +
-          tempCar.category +
-          "\nCar Year : " +
-          tempCar.year;
-    }
-    if (additionalInfo.phone != null) {
-      final Phone tempPhone = additionalInfo.phone!;
-      processedData = processedData +
-          "\n\n" +
-          "Phone Brand : " +
-          tempPhone.phoneBrand +
-          "\nPhone Model : " +
-          tempPhone.phoneModel;
-    }
-    if (additionalInfo.motoType != null) {
-      processedData = processedData + "\n\n${additionalInfo.motoType}";
-    }
-    if (additionalInfo.computerParts != null) {
-      processedData = processedData + "\n\n${additionalInfo.computerParts}";
-    }
-    if (additionalInfo.bikeType != null) {
-      processedData = processedData + "\n\n${additionalInfo.bikeType}";
-    }
-    return processedData;
-  }
 
   Widget sellerInfoView() {
     return FutureBuilder<User?>(
-        future: firestoreService.getItemOwner(item.userid),
+        future: itemService.getItemOwner(item.userid),
         builder: (context, snapshot) {
           if (!snapshot.hasData) {
             return Center(
@@ -249,9 +214,7 @@ class _ProductDetailPageState extends State<ProductDetailPage> {
   }
 
   void savedItem() {
-    firestoreService
-        .saveItem("$userId", item.itemid)
-        .then((value) {
+    itemService.saveItem("$userId", item.itemid).then((value) {
       setState(() {
         isSaved = true;
       });
@@ -260,9 +223,7 @@ class _ProductDetailPageState extends State<ProductDetailPage> {
 
   void unSaveItem() {
     print("Unsaving item...");
-    firestoreService
-        .unsaveItem("$userId", item.itemid)
-        .then((value) {
+    itemService.unsaveItem("$userId", item.itemid).then((value) {
       setState(() {
         isSaved = false;
       });
@@ -295,8 +256,7 @@ class _ProductDetailPageState extends State<ProductDetailPage> {
             width: double.infinity,
             height: 50,
             child: FutureBuilder<bool>(
-              future: firestoreService.checkSaveItem(
-                  "$userId", item.itemid),
+              future: itemService.checkSaveItem("$userId", item.itemid),
               builder: (context, snapshot) {
                 if (!snapshot.hasData) {
                   return OutlinedButton(onPressed: () {}, child: Text("SAVE"));
@@ -327,15 +287,12 @@ class _ProductDetailPageState extends State<ProductDetailPage> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        //TODO: prone to change
-        title: Text("Item Detail: ${item.itemid}"),
+        title: Text("Item Detail"),
       ),
       body: SafeArea(
         child: Container(
           width: double.infinity,
           height: double.infinity,
-
-          // color: Colors.grey,
           child: SingleChildScrollView(
             physics: BouncingScrollPhysics(),
             child: Column(

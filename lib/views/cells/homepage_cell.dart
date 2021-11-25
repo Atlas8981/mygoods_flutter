@@ -1,4 +1,5 @@
 
+import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:mygoods_flutter/models/product.dart';
@@ -18,8 +19,8 @@ class HomepageCell extends StatelessWidget {
           child: Wrap(
             direction: Axis.vertical,
             children: [
-              Image.network(
-                product.image,
+              CachedNetworkImage(
+                imageUrl: product.image,
                 width: 125,
                 height: 125,
                 fit: BoxFit.cover,

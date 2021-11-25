@@ -45,6 +45,7 @@ class _TypeTextFieldState extends State<TypeTextField> {
       obscureText: widget.obscureText ?? false,
       keyboardType:
           widget.inputType == null ? TextInputType.name : widget.inputType,
+      cursorHeight: 24,
       decoration: InputDecoration(
           contentPadding:
               EdgeInsets.only(top: 20, bottom: 20, left: 10, right: 10),

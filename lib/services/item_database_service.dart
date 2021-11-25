@@ -60,13 +60,13 @@ class ItemDatabaseService {
   }
 
   Future<DocumentSnapshot<Map<String, dynamic>>?> getAdditionalInfo(
-      Item item) async {
+      {required String itemId, required String subCat}) async {
     try {
       return await firestore
           .collection("$itemCollection")
-          .doc(item.itemid)
+          .doc(itemId)
           .collection("$additionalCollection")
-          .doc(item.subCategory)
+          .doc(subCat)
           .get();
     } catch (e) {
       print(e.toString());
