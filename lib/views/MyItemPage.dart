@@ -6,7 +6,7 @@ import 'package:mygoods_flutter/components/CustomAlertDialog.dart';
 import 'package:mygoods_flutter/controllers/MyItemsController.dart';
 import 'package:mygoods_flutter/models/item.dart';
 import 'package:mygoods_flutter/services/item_database_service.dart';
-import 'package:mygoods_flutter/services/user_service.dart';
+import 'package:mygoods_flutter/services/UserService.dart';
 import 'package:mygoods_flutter/views/EditItemPage.dart';
 import 'package:mygoods_flutter/views/OwnerItemDetailPage.dart';
 

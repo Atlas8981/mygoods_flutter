@@ -26,27 +26,4 @@ class AdditionalDataService {
     }
     // return response;
   }
-// Future<http.Response> login(String email, String password) async {
-//   const String grantType = "password";
-//   var headers = {
-//     'Authorization': 'Basic bW9iaWxlLWFnZW50LWFwcDpQQHNzdzByZA==',
-//     'Content-Type': 'application/x-www-form-urlencoded'
-//   };
-//
-//   final String url = "http://$domain:$port/oauth/token";
-//
-//   var uri = Uri.parse(url);
-//   var response = await http.post(
-//     uri,
-//     body: {
-//       'grant_type': '$grantType',
-//       'username': '$email',
-//       "password": "$password",
-//     },
-//     headers: headers,
-//   );
-//
-//   return response;
-//
-// }
 }

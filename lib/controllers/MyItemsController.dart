@@ -2,7 +2,7 @@ import 'dart:async';
 
 import 'package:get/get.dart';
 import 'package:mygoods_flutter/models/item.dart';
-import 'package:mygoods_flutter/services/user_service.dart';
+import 'package:mygoods_flutter/services/UserService.dart';
 
 class MyItemsController extends GetxController {
   final items = [].obs;

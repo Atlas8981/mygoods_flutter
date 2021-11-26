@@ -1,35 +1,40 @@
 import 'dart:convert';
 
 import 'package:cached_network_image/cached_network_image.dart';
-import 'package:carousel_slider/carousel_slider.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
-import 'package:dots_indicator/dots_indicator.dart';
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:mygoods_flutter/components/ImageViews.dart';
 import 'package:mygoods_flutter/models/additionalInfo.dart';
-import 'package:mygoods_flutter/models/image.dart' as image;
+import 'package:mygoods_flutter/models/image.dart' as myImage;
 import 'package:mygoods_flutter/models/item.dart';
-import 'package:mygoods_flutter/models/user.dart';
-import 'package:mygoods_flutter/services/additional_data_service.dart';
+import 'package:mygoods_flutter/models/user.dart' as myUser;
 import 'package:mygoods_flutter/services/item_database_service.dart';
+import 'package:mygoods_flutter/services/UserService.dart';
 import 'package:mygoods_flutter/utils/constant.dart';
 
-class ProductDetailPage extends StatefulWidget {
-  ProductDetailPage({Key? key}) : super(key: key);
+class ItemDetailPage extends StatefulWidget {
+  const ItemDetailPage({
+    Key? key,
+    required this.item,
+  }) : super(key: key);
+
+  final Item item;
 
   @override
-  State<ProductDetailPage> createState() => _ProductDetailPageState();
+  State<ItemDetailPage> createState() => _ItemDetailPageState();
 }
 
-class _ProductDetailPageState extends State<ProductDetailPage> {
+class _ItemDetailPageState extends State<ItemDetailPage> {
   final PageController pageController =
       PageController(initialPage: 0, viewportFraction: 1);
 
   final itemService = ItemDatabaseService();
+  final userService = UserService();
 
-  final Item item = Get.arguments;
+  late final Item item = widget.item;
 
   bool isSaved = false;
 
@@ -79,7 +84,7 @@ class _ProductDetailPageState extends State<ProductDetailPage> {
   }
 
   Widget sellerInfoView() {
-    return FutureBuilder<User?>(
+    return FutureBuilder<myUser.User?>(
         future: itemService.getItemOwner(item.userid),
         builder: (context, snapshot) {
           if (!snapshot.hasData) {
@@ -92,7 +97,7 @@ class _ProductDetailPageState extends State<ProductDetailPage> {
               child: Text("Something went wrong"),
             );
           }
-          final User user = snapshot.data!;
+          final myUser.User user = snapshot.data!;
           return Column(
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
@@ -143,7 +148,7 @@ class _ProductDetailPageState extends State<ProductDetailPage> {
   }
 
   void savedItem() {
-    itemService.saveItem("$userId", item.itemid).then((value) {
+    userService.saveItem(item.itemid).then((value) {
       setState(() {
         isSaved = true;
       });
@@ -151,20 +156,15 @@ class _ProductDetailPageState extends State<ProductDetailPage> {
   }
 
   void unSaveItem() {
-    print("Unsaving item...");
-    itemService.unsaveItem("$userId", item.itemid).then((value) {
+    userService.unsaveItem(item.itemid).then((value) {
       setState(() {
         isSaved = false;
       });
     });
   }
 
-  final String userId = "0mBKC9q7RTZmEdGxp2QqwOm2eRf2";
-
   Widget bottomTwoButtons() {
     return Container(
-      // color: Colors.red,
-      // width: double.infinity,
       padding: EdgeInsets.all(20),
       child: Column(
         children: [
@@ -181,30 +181,34 @@ class _ProductDetailPageState extends State<ProductDetailPage> {
           SizedBox(
             height: 10,
           ),
-          SizedBox(
-            width: double.infinity,
-            height: 50,
-            child: FutureBuilder<bool>(
-              future: itemService.checkSaveItem("$userId", item.itemid),
-              builder: (context, snapshot) {
-                if (!snapshot.hasData) {
-                  return OutlinedButton(onPressed: () {}, child: Text("SAVE"));
-                }
-                isSaved = snapshot.data!;
-                print("Future Builder $isSaved");
-                return OutlinedButton(
-                  style: OutlinedButton.styleFrom(
-                    side: BorderSide(width: 1.5, color: Colors.blue),
-                  ),
-                  onPressed: onClickSaveItemButton,
-                  child: Text(
-                    (isSaved) ? "Saved".toUpperCase() : "Save".toUpperCase(),
-                    style: TextStyle(
-                      fontSize: 16,
+          Visibility(
+            visible: (FirebaseAuth.instance.currentUser != null),
+            child: SizedBox(
+              width: double.infinity,
+              height: 50,
+              child: FutureBuilder<bool>(
+                future: userService.checkSaveItem(item.itemid),
+                builder: (context, snapshot) {
+                  if (!snapshot.hasData) {
+                    return OutlinedButton(
+                        onPressed: () {}, child: Text("SAVE"));
+                  }
+                  isSaved = snapshot.data!;
+                  print("Future Builder $isSaved");
+                  return OutlinedButton(
+                    style: OutlinedButton.styleFrom(
+                      side: BorderSide(width: 1.5, color: Colors.blue),
                     ),
-                  ),
-                );
-              },
+                    onPressed: onClickSaveItemButton,
+                    child: Text(
+                      (isSaved) ? "Saved".toUpperCase() : "Save".toUpperCase(),
+                      style: TextStyle(
+                        fontSize: 16,
+                      ),
+                    ),
+                  );
+                },
+              ),
             ),
           ),
         ],

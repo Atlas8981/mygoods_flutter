@@ -3,7 +3,7 @@ import 'dart:io';
 import 'package:get/get.dart';
 import 'package:image_picker/image_picker.dart';
 import 'package:mygoods_flutter/models/user.dart';
-import 'package:mygoods_flutter/services/user_service.dart';
+import 'package:mygoods_flutter/services/UserService.dart';
 
 class UserController extends GetxController {
   Rx<User>? user;

@@ -1,3 +1,4 @@
+import 'package:cached_network_image/cached_network_image.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
@@ -8,10 +9,10 @@ import 'package:mygoods_flutter/views/ItemDetailPage.dart';
 class ListItemRow extends StatefulWidget {
   const ListItemRow({
     Key? key,
-    this.item,
+    required this.item,
     this.onTap,
   }) : super(key: key);
-  final Item? item;
+  final Item item;
   final Function()? onTap;
 
   @override
@@ -20,8 +21,6 @@ class ListItemRow extends StatefulWidget {
 
 class _ListItemRowState extends State<ListItemRow> {
   final ItemDatabaseService database = ItemDatabaseService();
-
-  // getItemOwner(String userId);
 
   String calDate(Timestamp itemDate) {
     //Convert to second
@@ -56,9 +55,10 @@ class _ListItemRowState extends State<ListItemRow> {
     return "${date.toInt()}" + timeEnd;
   }
 
+  late final item = widget.item;
+
   @override
   Widget build(BuildContext context) {
-    final item = widget.item;
     return Container(
       width: double.infinity,
       // padding: const EdgeInsets.only(left: 10,right: 10),
@@ -66,19 +66,20 @@ class _ListItemRowState extends State<ListItemRow> {
         InkWell(
           onTap: widget.onTap ??
               () {
-                Get.to(() => ProductDetailPage(), arguments: item);
+                Get.to(() => ItemDetailPage(
+                      item: item,
+                    ));
               },
           child: Row(
             children: [
               ClipRRect(
                 borderRadius: BorderRadius.all(Radius.circular(10)),
-                child: Image.network(
+                child: CachedNetworkImage(
                   // "assets/images/bikepicture.jpg",
-                  item!.images[0].imageUrl,
+                  imageUrl: item.images[0].imageUrl,
                   width: 125,
                   height: 125,
                   fit: BoxFit.cover,
-                  cacheHeight: 125,
                 ),
               ),
               SizedBox(

@@ -21,7 +21,6 @@ class ListItem extends StatefulWidget {
 }
 
 class _ListItemState extends State<ListItem> {
-  final FirebaseFirestore firestore = FirebaseFirestore.instance;
   final ItemDatabaseService databaseService = ItemDatabaseService();
 
   @override
@@ -43,6 +42,7 @@ class _ListItemState extends State<ListItem> {
               return Container(
                 padding: const EdgeInsets.all(10),
                 child: ListView.builder(
+                  physics: BouncingScrollPhysics(),
                   itemCount: snapshot.data!.length,
                   itemBuilder: (context, index) {
                     return ListItemRow(item: snapshot.data![index]);

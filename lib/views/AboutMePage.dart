@@ -8,9 +8,10 @@ import 'package:mygoods_flutter/controllers/BottomNavigationViewController.dart'
 import 'package:mygoods_flutter/controllers/UserController.dart';
 import 'package:mygoods_flutter/models/category.dart';
 import 'package:mygoods_flutter/models/user.dart' as myUser;
-import 'package:mygoods_flutter/services/user_service.dart';
+import 'package:mygoods_flutter/services/UserService.dart';
 import 'package:mygoods_flutter/utils/constant.dart';
 import 'package:mygoods_flutter/views/EditProfilePage.dart';
+import 'package:mygoods_flutter/views/SavedItemsPage.dart';
 import 'package:mygoods_flutter/views/authentication/ResetPasswordPage.dart';
 import 'package:mygoods_flutter/views/cells/category_item_row.dart';
 import 'package:mygoods_flutter/views/MyItemPage.dart';
@@ -29,9 +30,6 @@ class AboutMePage extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    double height =
-        Get.height - AppBar().preferredSize.height - Get.bottomBarHeight;
-    // MediaQuery.of(context).size.height;
     return Scaffold(
       appBar: AppBar(
         title: Text("About Me"),
@@ -183,9 +181,9 @@ class AboutMePage extends StatelessWidget {
                 case 0:
                   Get.to(() => MyItemsPage());
                   break;
-                // case 1:
-                //   Get.to(()=>MyItemsPage());
-                //   break;
+                case 1:
+                  Get.to(()=>SavedItemsPage());
+                  break;
                 // case 2:
                 //   Get.to(()=>MyItemsPage());
                 //   break;

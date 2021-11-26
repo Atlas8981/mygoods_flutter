@@ -1,14 +1,12 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:mygoods_flutter/models/item.dart';
-import 'package:mygoods_flutter/models/user.dart';
-
-final String userCollection = "users";
-final String itemCollection = "items";
-final String additionalCollection = "additionInfo";
-final String saveItemCollection = "saveItems";
+import 'package:mygoods_flutter/models/user.dart' as myUser;
+import 'package:mygoods_flutter/utils/constant.dart';
 
 class ItemDatabaseService {
   final firestore = FirebaseFirestore.instance;
+
   Future<List<Item>> getItems(String mainCat, String subCat) async {
     List<Item> response = [];
     try {
@@ -45,14 +43,14 @@ class ItemDatabaseService {
     return response;
   }
 
-  Future<User?> getItemOwner(String userId) async {
-    User? response;
+  Future<myUser.User?> getItemOwner(String userId) async {
+    myUser.User? response;
     try {
       await firestore
           .collection("$userCollection")
           .doc(userId)
           .get()
-          .then((value) => {response = User.fromJson(value.data()!)});
+          .then((value) => {response = myUser.User.fromJson(value.data()!)});
     } catch (e) {
       print(e.toString());
     }
@@ -73,53 +71,4 @@ class ItemDatabaseService {
     }
   }
 
-  Future<bool> checkSaveItem(String userId, String itemId) async {
-    bool response = false;
-    try {
-      await firestore
-          .collection("$userCollection")
-          .doc(userId)
-          .collection("$saveItemCollection")
-          .doc(itemId)
-          .get()
-          .then((value) {
-        if (value.data() != null)
-          response = true;
-        else
-          response = false;
-      });
-    } catch (e) {
-      print(e.toString());
-    }
-    return response;
-  }
-
-  Future<void> saveItem(String userId, String itemId) async {
-    try {
-      return await firestore
-          .collection("$userCollection")
-          .doc(userId)
-          .collection("$saveItemCollection")
-          .doc(itemId)
-          .set({
-        'date': Timestamp.now(),
-        'itemid': itemId,
-      });
-    } catch (e) {
-      print(e.toString());
-    }
-  }
-
-  Future<void> unsaveItem(String userId, String itemId) async {
-    try {
-      return await firestore
-          .collection("$userCollection")
-          .doc(userId)
-          .collection("$saveItemCollection")
-          .doc(itemId)
-          .delete();
-    } catch (e) {
-      print(e.toString());
-    }
-  }
 }

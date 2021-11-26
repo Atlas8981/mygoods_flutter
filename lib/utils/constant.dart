@@ -9,6 +9,10 @@ import 'package:mygoods_flutter/models/additionalInfo.dart';
 import 'package:mygoods_flutter/models/category.dart';
 
 final String imageDir = "assets/images/";
+final String userCollection = "users";
+final String itemCollection = "items";
+final String additionalCollection = "additionInfo";
+final String saveItemCollection = "saveItems";
 
 final List<Category> mainCategories = [
   Category(name: "Electronic", image: "${imageDir}electronic.png"),

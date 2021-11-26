@@ -62,7 +62,7 @@ class _AddPageState extends State<AddPage> {
         name: itemFormController.nameCon.text,
         mainCategory: itemFormController.mainCat.value,
         views: 0);
-    //
+
     reference.doc(id).set(item.toJson()).then((value) {
       itemFormController.isVisible.value = true;
       showToast("Success");

@@ -1,7 +1,6 @@
 import 'dart:io';
 
 import 'package:cloud_firestore/cloud_firestore.dart';
-import 'package:cross_file/src/types/interface.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:firebase_storage/firebase_storage.dart';
 import 'package:mygoods_flutter/models/item.dart';
@@ -13,10 +12,6 @@ class UserService {
   final auth = FirebaseAuth.instance;
   final firestore = FirebaseFirestore.instance;
   final storage = FirebaseStorage.instance;
-  static final String userCollection = "users";
-  static final String itemCollection = "items";
-  static final String additionalCollection = "additionInfo";
-  static final String saveItemCollection = "saveItems";
 
   Future<String?> login(String email, String password) async {
     try {
@@ -120,21 +115,22 @@ class UserService {
     }
   }
 
-  Stream<QuerySnapshot<Map<String,dynamic>>> listenForUserItemChange(){
+  Stream<QuerySnapshot<Map<String, dynamic>>> listenForUserItemChange() {
     final List<Item> listOfItem = [];
-    return firestore.collection("$itemCollection")
-        .orderBy('date', descending: true)
-        .where('userid', isEqualTo: auth.currentUser!.uid)
-        .snapshots()
-    //     .listen((value) {
-    //     for (int i = 0; i < value.docs.length; i++) {
-    //     if (value.docs[i].exists) {
-    //       Item item = Item.fromJson(value.docs[i].data());
-    //       listOfItem.add(item);
-    //     }
-    //   }
-    // })
-    ;
+    return firestore
+            .collection("$itemCollection")
+            .orderBy('date', descending: true)
+            .where('userid', isEqualTo: auth.currentUser!.uid)
+            .snapshots()
+        //     .listen((value) {
+        //     for (int i = 0; i < value.docs.length; i++) {
+        //     if (value.docs[i].exists) {
+        //       Item item = Item.fromJson(value.docs[i].data());
+        //       listOfItem.add(item);
+        //     }
+        //   }
+        // })
+        ;
   }
 
   Future<bool> deleteUserItem(String itemId) async {
@@ -149,4 +145,119 @@ class UserService {
     });
     return isDeleted;
   }
+
+  Future<bool> checkSaveItem(String itemId) async {
+    bool response = false;
+    final userId = auth.currentUser!.uid;
+    try {
+      final value = await firestore
+          .collection("$userCollection")
+          .doc(userId)
+          .collection("$saveItemCollection")
+          .doc(itemId)
+          .get();
+      if (value.data() != null)
+        response = true;
+      else
+        response = false;
+    } catch (e) {
+      print(e.toString());
+    }
+    return response;
+  }
+
+  Future<void> saveItem( String itemId) async {
+    final userId = auth.currentUser!.uid;
+    try {
+      return await firestore
+          .collection("$userCollection")
+          .doc(userId)
+          .collection("$saveItemCollection")
+          .doc(itemId)
+          .set({
+        'date': Timestamp.now(),
+        'itemid': itemId,
+      });
+    } catch (e) {
+      print(e.toString());
+    }
+  }
+
+  Future<void> unsaveItem(String itemId) async {
+    final userId = auth.currentUser!.uid;
+    try {
+      return await firestore
+          .collection("$userCollection")
+          .doc(userId)
+          .collection("$saveItemCollection")
+          .doc(itemId)
+          .delete();
+    } catch (e) {
+      print(e.toString());
+    }
+  }
+
+  Future<List<Item>?> getUserSavedItem() async {
+    final List<String> itemIds = [];
+    final List<Item> listOfItem = [];
+    final userId = auth.currentUser!.uid;
+    print(userId);
+    try {
+      final value = await firestore
+          .collection("$userCollection")
+          .doc(userId)
+          .collection("$saveItemCollection")
+          .orderBy('date', descending: true)
+          .get();
+      print(value.docs.length);
+      if(value.docs.length == 0){
+        return listOfItem;
+      }
+
+      for (int i = 0; i < value.docs.length; i++) {
+        if (value.docs[i].exists) {
+          final tempItemId = value.docs[i].data()['itemid'];
+          itemIds.add(tempItemId);
+        }
+      }
+      return await getSaveItems(itemIds);
+    } on FirebaseException catch (e) {
+      print('Failed with error code: ${e.code}');
+      print(e.message);
+    }
+    return null;
+  }
+
+  Future<List<Item>> getSaveItems(List<String> itemIds) async {
+    final List<Item?> querySaveItems =
+        await Future.wait(itemIds.map((e) => getSaveItem(e)));
+    querySaveItems.removeWhere((element) => element == null);
+    final List<Item> saveItems = querySaveItems.cast<Item>();
+    return saveItems;
+  }
+
+  Future<Item?> getSaveItem(String itemId) async {
+    final value =
+        await firestore.collection("$itemCollection").doc(itemId).get();
+    if (value.exists) {
+      final Item saveItem = Item.fromJson(value.data()!);
+      return saveItem;
+    }
+    return null;
+  }
+
+// Future<List<myImageClass.Image>> uploadFiles(List<File> _images) async {
+//   var images = await Future.wait(_images.map((_image) => uploadFile(_image)));
+//   return images;
+// }
+//
+// Future<myImageClass.Image> uploadFile(File _image) async {
+//   final imageName = "${DateTime.now()}";
+//   final Reference storageReference =
+//       storage.ref('flutter/').child("$imageName");
+//   await storageReference.putFile(_image);
+//   final imageUrl = await storageReference.getDownloadURL();
+//   final image = myImageClass.Image(imageName: imageName, imageUrl: imageUrl);
+//   return image;
+// }
 }
