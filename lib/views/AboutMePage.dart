@@ -137,7 +137,13 @@ class AboutMePage extends StatelessWidget {
                     backgroundImage: CachedNetworkImageProvider(
                       "${user.image.imageUrl}",
                     ),
-                    foregroundColor: Colors.white,
+                    child: Visibility(
+                      visible: user.image.imageUrl.isEmpty,
+                        child: Center(
+                      child: CircularProgressIndicator(),
+                    )),
+                    backgroundColor: Colors.white,
+
                     radius: 65,
                   ),
                 ),
@@ -182,7 +188,7 @@ class AboutMePage extends StatelessWidget {
                   Get.to(() => MyItemsPage());
                   break;
                 case 1:
-                  Get.to(()=>SavedItemsPage());
+                  Get.to(() => SavedItemsPage());
                   break;
                 // case 2:
                 //   Get.to(()=>MyItemsPage());
