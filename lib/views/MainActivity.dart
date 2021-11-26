@@ -79,76 +79,17 @@ class _MainActivityState extends State<MainActivity> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      // appBar: AppBar(
-      //   title: Obx(
-      //     () {
-      //       return Text(
-      //         appTitle(bottomNavigationController),
-      //       );
-      //     },
-      //   ),
-      //   actions: <Widget>[
-      //     IconButton(
-      //       icon: Icon(Icons.settings),
-      //       onPressed: () {
-      //         Get.to(() => SelectLanguagePage());
-      //       },
-      //     ),
-      //     Obx(() {
-      //       if(bottomNavigationController.tabIndex.value ==2){
-      //         return IconButton(
-      //           icon: Icon(Icons.check),
-      //           onPressed: () {
-      //
-      //           },
-      //         );
-      //       }else{
-      //         return Container();
-      //       }
-      //     })
-      //   ],
-      // ),
       body: Obx(() => IndexedStack(
             index: bottomNavigationController.tabIndex.value,
             children: [
               HomePage(),
               CategoryPage(),
               AddPage(),
-              AccountPage(),
+              AboutMePage(),
             ],
           )),
       bottomNavigationBar:
           buildBottomNavigationMenu(context, bottomNavigationController),
-      // bottomNavigationBar: BottomNavigationBar(
-      //   type: BottomNavigationBarType.fixed,
-      //   showUnselectedLabels: false,
-      //   unselectedItemColor: Colors.grey,
-      //   items:  [
-      //     BottomNavigationBarItem(
-      //       icon: Icon(Icons.home),
-      //       label: 'Home',
-      //     ),
-      //     BottomNavigationBarItem(
-      //       icon: Icon(Icons.list_outlined),
-      //       label: 'Category',
-      //     ),
-      //     BottomNavigationBarItem(
-      //       icon: Icon(Icons.add_box_outlined),
-      //       label: 'Add',
-      //     ),
-      //     BottomNavigationBarItem(
-      //       icon: Icon(Icons.person),
-      //       label: 'Account',
-      //     ),
-      //   ],
-      //   currentIndex: _selectedIndex,
-      //   selectedItemColor: Colors.blue[800],
-      //   onTap: (index) {
-      //     setState(() {
-      //       _selectedIndex = index;
-      //     });
-      //   },
-      // ),
     );
   }
 }

@@ -3,6 +3,7 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:image_picker/image_picker.dart';
+import 'package:mygoods_flutter/components/CustomAlertDialog.dart';
 import 'package:mygoods_flutter/controllers/BottomNavigationViewController.dart';
 import 'package:mygoods_flutter/controllers/UserController.dart';
 import 'package:mygoods_flutter/models/category.dart';
@@ -15,7 +16,7 @@ import 'package:mygoods_flutter/views/cells/category_item_row.dart';
 import 'package:mygoods_flutter/views/MyItemPage.dart';
 import 'package:mygoods_flutter/views/other/big_image.dart';
 
-class AccountPage extends StatelessWidget {
+class AboutMePage extends StatelessWidget {
   final userService = UserService();
 
   late final List<Category> bottomListItems = [
@@ -28,6 +29,9 @@ class AccountPage extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    double height =
+        Get.height - AppBar().preferredSize.height - Get.bottomBarHeight;
+    // MediaQuery.of(context).size.height;
     return Scaffold(
       appBar: AppBar(
         title: Text("About Me"),
@@ -66,7 +70,11 @@ class AccountPage extends StatelessWidget {
             padding: EdgeInsets.only(
               top: 20,
             ),
+            // color: Colors.blue,
+            // height: height,
             child: Column(
+              crossAxisAlignment: CrossAxisAlignment.stretch,
+              mainAxisSize: MainAxisSize.max,
               children: [
                 centerProfile(),
                 Divider(
@@ -76,22 +84,22 @@ class AccountPage extends StatelessWidget {
                 ),
                 bottomListWidgets(),
                 Divider(
-                  height: 70,
+                  height: 100,
                 ),
                 Container(
+                  width: double.infinity,
+                  height: 50,
                   padding: EdgeInsets.only(left: 20, right: 20),
-                  child: SizedBox(
-                    width: double.infinity,
-                    height: 50,
-                    child: ElevatedButton(
-                      onPressed: onSignOutButtonClick,
-                      child: Text(
-                        "Sign Out".toUpperCase(),
-                        style: TextStyle(letterSpacing: 1.1),
-                      ),
-                      style: ButtonStyle(
-                          backgroundColor: MaterialStateProperty.all(redColor)),
+                  child: ElevatedButton(
+                    onPressed: () {
+                      onSignOutButtonClick(context);
+                    },
+                    child: Text(
+                      "Sign Out".toUpperCase(),
+                      style: TextStyle(letterSpacing: 1.1),
                     ),
+                    style: ButtonStyle(
+                        backgroundColor: MaterialStateProperty.all(redColor)),
                   ),
                 ),
               ],
@@ -111,19 +119,7 @@ class AccountPage extends StatelessWidget {
               child: CircularProgressIndicator(),
             );
           }
-
           user = controller.user!.value;
-          // final User user = User(
-          //     userId: "userId",
-          //     username: "username",
-          //     firstName: "firstName",
-          //     lastName: "lastName",
-          //     email: "email",
-          //     phoneNumber: "phoneNumber",
-          //     address: "address",
-          //     image: myImage.Image(
-          //         imageName: "dummyNetworkImage", imageUrl: "$dummyNetworkImage"),
-          //     preferenceId: ["preferenceId"]);
           return Column(
             children: [
               InkWell(
@@ -178,6 +174,7 @@ class AccountPage extends StatelessWidget {
       padding: EdgeInsets.only(left: 20, right: 20),
       child: ListView.builder(
         shrinkWrap: true,
+        physics: NeverScrollableScrollPhysics(),
         itemCount: bottomListItems.length,
         itemBuilder: (context, index) {
           return InkWell(
@@ -210,19 +207,26 @@ class AccountPage extends StatelessWidget {
   final ImagePicker imagePicker = ImagePicker();
 
   Future<XFile?> pickImage() async {
-    XFile? picture = await imagePicker.pickImage(source: ImageSource.gallery);
+    final XFile? picture =
+        await imagePicker.pickImage(source: ImageSource.gallery);
     return picture;
   }
 
-  void onSignOutButtonClick() {
-    userService.signOut().then((value) {
-      if (value) {
-        showToast("Sign Out Successfully");
-        Get.find<LandingPageController>().changeTabIndex(0);
-      } else {
-        showToast("Sign Out Unsuccessfully");
-      }
-    });
+  void onSignOutButtonClick(context) {
+    showCustomDialog(
+      context,
+      title: "Are your sure you want to sign out ?",
+      onConfirm: () {
+        userService.signOut().then((value) {
+          if (value) {
+            showToast("Sign Out Successfully");
+            Get.find<LandingPageController>().changeTabIndex(0);
+          } else {
+            showToast("Sign Out Unsuccessfully");
+          }
+        });
+      },
+    );
   }
 }
 
