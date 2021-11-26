@@ -73,11 +73,16 @@ class _AddPageState extends State<AddPage> {
     });
   }
 
-  Future<void> uploadItemInformation() async {
+  void uploadItemInformation() async {
     itemFormController.isVisible.value = true;
     uploadFiles(itemFormController.getRawImageInFile()).then((images) {
       uploadData(images);
     });
+  }
+
+  @override
+  void initState() {
+    super.initState();
   }
 
   @override

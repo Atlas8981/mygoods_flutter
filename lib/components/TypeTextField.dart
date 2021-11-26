@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:get/get.dart';
 
 class TypeTextField extends StatefulWidget {
   const TypeTextField({
@@ -13,6 +14,7 @@ class TypeTextField extends StatefulWidget {
     this.validator,
     this.obscureText,
     this.autoFillHints,
+    this.buildCounter,
   }) : super(key: key);
 
   final inputType;
@@ -25,6 +27,7 @@ class TypeTextField extends StatefulWidget {
   final String? Function(String? value)? validator;
   final bool? obscureText;
   final Iterable<String>? autoFillHints;
+  final InputCounterWidgetBuilder? buildCounter;
 
   @override
   _TypeTextFieldState createState() => _TypeTextFieldState();
@@ -42,6 +45,7 @@ class _TypeTextFieldState extends State<TypeTextField> {
         fontSize: 16,
         color: Colors.black,
       ),
+      buildCounter: widget.buildCounter,
       obscureText: widget.obscureText ?? false,
       keyboardType:
           widget.inputType == null ? TextInputType.name : widget.inputType,
@@ -54,11 +58,12 @@ class _TypeTextFieldState extends State<TypeTextField> {
           ),
           labelText: widget.labelText,
           prefixText: widget.prefix == null ? null : widget.prefix,
-          prefixStyle: TextStyle(fontSize: 16, letterSpacing: 1.5),
+          prefixStyle: TextStyle(fontSize: 16, letterSpacing: 2),
           border: OutlineInputBorder(),
           prefixIcon: widget.prefixIcon,
           suffixIcon: widget.suffixIcon,
-          counterStyle: TextStyle(fontSize: 12, height: 1)),
+          counterStyle: TextStyle(fontSize: 12, height: 1),
+      ),
       validator: widget.validator ??
           (value) {
             if (value != null && value.isEmpty) {
@@ -66,6 +71,9 @@ class _TypeTextFieldState extends State<TypeTextField> {
             }
             return null;
           },
+      onEditingComplete: () {
+        FocusScope.of(context).requestFocus(FocusNode());
+      },
     );
   }
 }

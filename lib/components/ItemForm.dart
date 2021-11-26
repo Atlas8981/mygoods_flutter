@@ -210,11 +210,11 @@ class _ItemFormState extends State<ItemForm> {
   buildAddImageRow(context, index) {
     final List<DualImage> tempImages = itemFormCon.tempImages.cast();
     if (index < tempImages.length) {
-      return Container(
-        padding: EdgeInsets.all(5),
-        child: Stack(children: [
-          Align(
-            alignment: Alignment.center,
+      return Stack(children: [
+        Align(
+          alignment: Alignment.center,
+          child: Container(
+            padding: EdgeInsets.all(5),
             child: Card(
               margin: EdgeInsets.all(0),
               elevation: 5,
@@ -232,25 +232,26 @@ class _ItemFormState extends State<ItemForm> {
               ),
             ),
           ),
-          //Delete Button
-          Positioned(
-            top: 5,
-            right: 5,
-            child: GestureDetector(
-              onTap: () {
-                setState(() {
-                  tempImages.removeAt(index);
-                });
-              },
-              child: Icon(
-                Icons.indeterminate_check_box_outlined,
-                color: Colors.white,
-                size: 24,
-              ),
+        ),
+        //Delete Button
+        Positioned(
+          top: 5,
+          right: 5,
+          child: GestureDetector(
+            onTap: () {
+              FocusScope.of(context).requestFocus(FocusNode());
+              setState(() {
+                tempImages.removeAt(index);
+              });
+            },
+            child: Icon(
+              Icons.indeterminate_check_box_outlined,
+              color: Colors.white,
+              size: 24,
             ),
           ),
-        ]),
-      );
+        ),
+      ]);
     } else {
       return Card(
         elevation: 5,
@@ -260,6 +261,7 @@ class _ItemFormState extends State<ItemForm> {
           padding: EdgeInsets.all(5),
           child: IconButton(
             onPressed: () {
+              FocusScope.of(context).requestFocus(FocusNode());
               _imageFromGallery(index);
             },
             icon: Icon(
@@ -410,6 +412,15 @@ class _ItemFormState extends State<ItemForm> {
                 controller: controller.phoneCon,
                 inputType: TextInputType.phone,
                 prefix: "0",
+                maxLength: 9,
+                buildCounter: (context,
+                    {required currentLength, required isFocused, maxLength}) {
+                  return Text(
+                    '${currentLength + 1}/${maxLength! + 1}',
+                    semanticsLabel: 'character count',
+                    style: TextStyle(fontSize: 12, height: 1),
+                  );
+                },
                 validator: (value) {
                   if (value == null || value.isEmpty) {
                     return "Field Empty";
@@ -459,6 +470,20 @@ class _ItemFormState extends State<ItemForm> {
       appBar: AppBar(
         title: widget.titleText,
         actions: [
+          GestureDetector(
+            onLongPress: () {
+              itemFormCon.clearData();
+            },
+            child: IconButton(
+              onPressed: () {
+                showToast("Long Press to Clear Data");
+              },
+              icon: Icon(
+                Icons.refresh,
+                color: Colors.white,
+              ),
+            ),
+          ),
           IconButton(
             onPressed: () {
               widget.onConfirm!();
@@ -467,7 +492,7 @@ class _ItemFormState extends State<ItemForm> {
               Icons.check,
               color: Colors.white,
             ),
-          )
+          ),
         ],
       ),
       body: Stack(
@@ -529,7 +554,8 @@ class _ItemFormState extends State<ItemForm> {
               ),
             ),
           ),
-          Obx(()=> Visibility(
+          Obx(
+            () => Visibility(
                 visible: itemFormCon.isVisible.value,
                 child: Center(
                   child: CircularProgressIndicator(),

@@ -52,9 +52,6 @@ class _ClickableTextFieldState extends State<ClickableTextField> {
         labelText: widget.labelText,
         prefixText: widget.prefix,
         border: OutlineInputBorder(),
-        // enabledBorder: OutlineInputBorder(
-        //   borderSide: BorderSide(color: Colors.black, width: 1.5),
-        // ),
         prefixIcon: widget.prefixIcon,
         suffixIcon: widget.suffixIcon,
         counterStyle: TextStyle(fontSize: 12, height: 1),
