@@ -3,7 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter/widgets.dart';
 import 'package:get/get.dart';
 import 'package:mygoods_flutter/components/CustomAlertDialog.dart';
-import 'package:mygoods_flutter/controllers/myItemsController.dart';
+import 'package:mygoods_flutter/controllers/MyItemsController.dart';
 import 'package:mygoods_flutter/models/item.dart';
 import 'package:mygoods_flutter/services/item_database_service.dart';
 import 'package:mygoods_flutter/services/user_service.dart';

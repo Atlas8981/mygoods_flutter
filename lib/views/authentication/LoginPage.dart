@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:mygoods_flutter/components/TypeTextField.dart';
-import 'package:mygoods_flutter/controllers/userController.dart';
+import 'package:mygoods_flutter/controllers/UserController.dart';
 import 'package:mygoods_flutter/services/user_service.dart';
 import 'package:mygoods_flutter/utils/constant.dart';
 import 'package:mygoods_flutter/views/MainActivity.dart';

@@ -1,5 +1,5 @@
 import 'package:get/get.dart';
-import 'package:mygoods_flutter/controllers/userController.dart';
+import 'package:mygoods_flutter/controllers/UserController.dart';
 
 class InitialBinding extends Bindings {
   @override

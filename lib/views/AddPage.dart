@@ -8,7 +8,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter/widgets.dart';
 import 'package:get/get.dart';
 import 'package:mygoods_flutter/components/ItemForm.dart';
-import 'package:mygoods_flutter/controllers/itemFormController.dart';
+import 'package:mygoods_flutter/controllers/ItemFormController.dart';
 import 'package:mygoods_flutter/models/image.dart' as myImageClass;
 import 'package:mygoods_flutter/models/item.dart';
 import 'package:mygoods_flutter/services/item_database_service.dart';

@@ -60,4 +60,5 @@ class MyItemsController extends GetxController {
     }
     return isDeleted;
   }
+
 }

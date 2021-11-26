@@ -8,7 +8,7 @@ import 'package:mygoods_flutter/components/ClickableTextField.dart';
 import 'package:mygoods_flutter/components/CustomBottomSheet.dart';
 import 'package:mygoods_flutter/components/TypeTextField.dart';
 import 'package:mygoods_flutter/controllers/AdditionalInfoController.dart';
-import 'package:mygoods_flutter/controllers/itemFormController.dart';
+import 'package:mygoods_flutter/controllers/ItemFormController.dart';
 import 'package:mygoods_flutter/models/DualImage.dart';
 import 'package:mygoods_flutter/models/additionalInfo.dart';
 import 'package:mygoods_flutter/services/additional_data_service.dart';
