@@ -1,26 +1,42 @@
+import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
-import 'package:mygoods_flutter/models/product.dart';
+import 'package:mygoods_flutter/models/image.dart' as myImage;
+import 'package:mygoods_flutter/models/item.dart';
 import 'package:mygoods_flutter/utils/constant.dart';
 import 'package:mygoods_flutter/views/cells/homepage_cell.dart';
 
 class HomePage extends StatelessWidget {
-  final productList = [
-    Product(
-        id: 012,
-        title: "iPhone XL",
-        price: 0.0,
+  final itemList = [
+    Item(
+        date: Timestamp.now(),
+        subCategory: "subCategory",
+        images: [myImage.Image(imageName: "imageName", imageUrl: "$dummyNetworkImage")],
+        amount: 0,
+        address: "address",
         description: "description",
-        image:
-            "https://firebasestorage.googleapis.com/v0/b/mygoods-e042f.appspot.com/o/images%2F05411168-1699-4119-a7af-b9017e2df1bd?alt=media&token=b4677321-c035-4cb4-9fc1-7cd869ebc017",
-        rating: Rating(rate: 0.0, count: 0)),
-    Product(
-        id: 013,
-        title: "title",
-        price: 0.0,
+        userid: "userid",
+        itemid: "itemid",
+        viewers: [],
+        phone: "phone",
+        price: 123,
+        name: "name",
+        mainCategory: "mainCategory",
+        views: 0),
+    Item(
+        date: Timestamp.now(),
+        subCategory: "subCategory",
+        images: [myImage.Image(imageName: "imageName", imageUrl: "$dummyNetworkImage")],
+        amount: 0,
+        address: "address",
         description: "description",
-        image:
-            "https://firebasestorage.googleapis.com/v0/b/mygoods-e042f.appspot.com/o/images%2F05411168-1699-4119-a7af-b9017e2df1bd?alt=media&token=b4677321-c035-4cb4-9fc1-7cd869ebc017",
-        rating: Rating(rate: 0.0, count: 0)),
+        userid: "userid",
+        itemid: "itemid",
+        viewers: [],
+        phone: "phone",
+        price: 123,
+        name: "name",
+        mainCategory: "mainCategory",
+        views: 0),
   ];
 
   @override
@@ -76,10 +92,10 @@ class HomePage extends StatelessWidget {
                       scrollDirection: Axis.horizontal,
                       // shrinkWrap: true,
                       // physics: NeverScrollableScrollPhysics(),
-                      itemCount: productList.length,
+                      itemCount: itemList.length,
                       itemBuilder: (BuildContext context, int index) {
                         // return ProductTile(productList[index]);
-                        return HomepageCell(productList[index]);
+                        return HomepageCell(itemList[index]);
                       },
                     ),
                   ),
@@ -106,10 +122,10 @@ class HomePage extends StatelessWidget {
                     height: 175,
                     child: ListView.builder(
                       scrollDirection: Axis.horizontal,
-                      itemCount: productList.length,
+                      itemCount: itemList.length,
                       itemBuilder: (BuildContext context, int index) {
                         // return ProductTile(productList[index]);
-                        return HomepageCell(productList[index]);
+                        return HomepageCell(itemList[index]);
                       },
                     ),
                   ),
@@ -136,10 +152,10 @@ class HomePage extends StatelessWidget {
                     height: 175,
                     child: ListView.builder(
                       scrollDirection: Axis.horizontal,
-                      itemCount: productList.length,
+                      itemCount: itemList.length,
                       itemBuilder: (BuildContext context, int index) {
                         // return ProductTile(productList[index]);
-                        return HomepageCell(productList[index]);
+                        return HomepageCell(itemList[index]);
                       },
                     ),
                   ),

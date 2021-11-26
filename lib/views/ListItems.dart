@@ -7,8 +7,8 @@ import 'package:mygoods_flutter/models/item.dart';
 import 'package:mygoods_flutter/services/item_database_service.dart';
 import 'package:mygoods_flutter/views/cells/list_product_row.dart';
 
-class ListProduct extends StatefulWidget {
-  const ListProduct({
+class ListItem extends StatefulWidget {
+  const ListItem({
     Key? key,
     required this.mainCat,
     required this.subCat,
@@ -17,10 +17,10 @@ class ListProduct extends StatefulWidget {
   final String mainCat, subCat;
 
   @override
-  _ListProductState createState() => _ListProductState();
+  _ListItemState createState() => _ListItemState();
 }
 
-class _ListProductState extends State<ListProduct> {
+class _ListItemState extends State<ListItem> {
   final FirebaseFirestore firestore = FirebaseFirestore.instance;
   final ItemDatabaseService databaseService = ItemDatabaseService();
 

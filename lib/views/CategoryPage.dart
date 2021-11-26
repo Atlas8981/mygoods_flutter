@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-import 'package:mygoods_flutter/controllers/productController.dart';
 import 'package:mygoods_flutter/models/category.dart';
 import 'package:mygoods_flutter/utils/constant.dart';
 import 'package:mygoods_flutter/views/cells/category_item_row.dart';
@@ -9,8 +8,6 @@ import 'package:mygoods_flutter/views/cells/popular_category_item.dart';
 import 'SubCategoryPage.dart';
 
 class CategoryPage extends StatelessWidget {
-  final productController = Get.put(ProductController());
-
   final List<Category> popularCategory = [
     Category(name: "Phone", image: "${imageDir}phonepicture.jpg"),
     Category(name: "Bicycle", image: "${imageDir}bikepicture.jpg"),

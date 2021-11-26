@@ -2,12 +2,12 @@
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'package:mygoods_flutter/models/product.dart';
+import 'package:mygoods_flutter/models/item.dart';
 
 class HomepageCell extends StatelessWidget {
 
-  const HomepageCell(this.product);
-  final Product product;
+  const HomepageCell(this.item);
+  final Item item;
 
   @override
   Widget build(BuildContext context) {
@@ -20,13 +20,13 @@ class HomepageCell extends StatelessWidget {
             direction: Axis.vertical,
             children: [
               CachedNetworkImage(
-                imageUrl: product.image,
+                imageUrl: item.images[0].imageUrl,
                 width: 125,
                 height: 125,
                 fit: BoxFit.cover,
               ),
-              Text("${product.title}"),
-              Text("USD ${product.price}"),
+              Text("${item.name}"),
+              Text("USD ${item.price}"),
             ],
           ),
         ),
