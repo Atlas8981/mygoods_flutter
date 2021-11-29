@@ -5,6 +5,7 @@ import 'package:mygoods_flutter/controllers/UserController.dart';
 import 'package:mygoods_flutter/services/UserService.dart';
 import 'package:mygoods_flutter/utils/constant.dart';
 import 'package:mygoods_flutter/views/MainActivity.dart';
+import 'package:mygoods_flutter/views/authentication/LoginWithPhoneNumberPage.dart';
 
 class LoginPage extends StatefulWidget {
   LoginPage({Key? key}) : super(key: key);
@@ -21,6 +22,7 @@ class _LoginPageState extends State<LoginPage> {
 
   final formKey = GlobalKey<FormState>();
   final userService = UserService();
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -79,10 +81,20 @@ class _LoginPageState extends State<LoginPage> {
                           ),
                           obscureText: isObscure,
                         ),
-                        SizedBox(
-                          height: 40,
-                        ),
+                        // SizedBox(
+                        //   height: 40,
+                        // ),
                       ],
+                    ),
+                  ),
+                  Align(
+                    alignment: Alignment.centerRight,
+                    child: SizedBox(
+                      // width: double.infinity,
+                      height: 50,
+                      child: TextButton(
+                          onPressed: forgotPasswordButtonClick,
+                          child: Text("Forgot Password".toUpperCase())),
                     ),
                   ),
                   Column(
@@ -97,15 +109,32 @@ class _LoginPageState extends State<LoginPage> {
                       SizedBox(
                         height: 20,
                       ),
+                    ],
+                  ),
+                  Center(
+                    child: Text(
+                      "Or",
+                      style: TextStyle(fontSize: 18),
+                    ),
+                  ),
+                  Column(
+                    children: [
+                      SizedBox(
+                        height: 20,
+                      ),
                       SizedBox(
                         width: double.infinity,
                         height: 50,
                         child: TextButton(
-                            onPressed: forgotPasswordButtonClick,
-                            child: Text("Forgot Password".toUpperCase())),
-                      )
+                            onPressed: signInWithPhoneNumberButtonClick,
+                            child: Text(
+                                "Sign In With Phone Number".toUpperCase())),
+                      ),
+                      SizedBox(
+                        height: 20,
+                      ),
                     ],
-                  )
+                  ),
                 ],
               ),
             ),
@@ -115,21 +144,29 @@ class _LoginPageState extends State<LoginPage> {
     );
   }
 
-
   void signInButtonClick() {
     final String email = emailCon.text.trim();
     final String password = passwordCon.text.trim();
+
+    if (!formKey.currentState!.validate()) {
+      return;
+    }
+
     userService.login(email, password).then((value) {
-      if(value == null){
+      if (value == null) {
         return;
       }
       showToast("Welcome: $value");
       Get.delete<UserController>();
-      Get.lazyPut(() => UserController(),fenix: true);
-      Get.offAll(()=>MainActivity());
+      Get.lazyPut(() => UserController(), fenix: true);
+      Get.offAll(() => MainActivity());
     });
   }
 
   void forgotPasswordButtonClick() {}
+
+  void signInWithPhoneNumberButtonClick() {
+    Get.to(() => LoginWithPhoneNumberPage());
+  }
 }
 //jack_atlas59@yahoo.com

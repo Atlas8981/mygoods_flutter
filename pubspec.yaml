@@ -45,6 +45,7 @@ dependencies:
   json_serializable: ^6.0.1
   json_annotation: ^4.3.0
   photo_view: ^0.13.0
+  otp_text_field: ^1.1.1
 
 
 dev_dependencies:

@@ -12,7 +12,7 @@ class WelcomePage extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return WillPopScope(
-      onWillPop: ()async {
+      onWillPop: () async {
         Get.back(result: false);
         return true;
       },
@@ -73,7 +73,8 @@ class WelcomePage extends StatelessWidget {
                         height: 50,
                         child: TextButton(
                             onPressed: loginWithPhoneButtonClick,
-                            child: Text("Log In With Phone Number".toUpperCase())),
+                            child:
+                                Text("Log In With Phone Number".toUpperCase())),
                       ),
                     ],
                   ),
@@ -87,14 +88,14 @@ class WelcomePage extends StatelessWidget {
   }
 
   void signUpButtonClick() {
-    Get.to(()=>SignUpPage());
+    Get.to(() => SignUpPage());
   }
 
   void loginButtonClick() {
-    Get.to(()=>LoginPage());
+    Get.to(() => LoginPage());
   }
 
   void loginWithPhoneButtonClick() {
-    Get.to(()=>LoginWithPhoneNumberPage());
+    Get.to(() => LoginWithPhoneNumberPage());
   }
 }

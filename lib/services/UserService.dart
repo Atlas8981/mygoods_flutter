@@ -46,7 +46,6 @@ class UserService {
 
   Future<myUser.User?> getOwnerInfo() async {
     if (auth.currentUser == null) {
-      // showToast("User Not Login");
       return null;
     }
     myUser.User? response;
@@ -55,7 +54,9 @@ class UserService {
           .collection("$userCollection")
           .doc(auth.currentUser!.uid)
           .get()
-          .then((value) => {response = myUser.User.fromJson(value.data()!)});
+          .then((value) {
+        response = myUser.User.fromJson(value.data()!);
+      });
     } catch (e) {
       print(e.toString());
     }
@@ -117,10 +118,10 @@ class UserService {
 
   Stream<QuerySnapshot<Map<String, dynamic>>> listenForUserItemChange() {
     return firestore
-            .collection("$itemCollection")
-            .orderBy('date', descending: true)
-            .where('userid', isEqualTo: auth.currentUser!.uid)
-            .snapshots();
+        .collection("$itemCollection")
+        .orderBy('date', descending: true)
+        .where('userid', isEqualTo: auth.currentUser!.uid)
+        .snapshots();
   }
 
   Future<bool> deleteUserItem(String itemId) async {
@@ -156,7 +157,7 @@ class UserService {
     return response;
   }
 
-  Future<void> saveItem( String itemId) async {
+  Future<void> saveItem(String itemId) async {
     final userId = auth.currentUser!.uid;
     try {
       return await firestore
@@ -200,7 +201,7 @@ class UserService {
           .orderBy('date', descending: true)
           .get();
       print(value.docs.length);
-      if(value.docs.length == 0){
+      if (value.docs.length == 0) {
         return listOfItem;
       }
 
