@@ -19,8 +19,8 @@ class MyApp extends StatelessWidget {
   Widget build(BuildContext context) {
     return GetMaterialApp(
       title: 'MyGoods Flutter From Window @.20',
-      home: MainActivity(),
-      // home: WelcomePage(),
+      // home: MainActivity(),
+      home: WelcomePage(),
       initialBinding: InitialBinding(),
       localizationsDelegates: [
         GlobalMaterialLocalizations.delegate,

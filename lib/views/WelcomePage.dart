@@ -3,6 +3,7 @@ import 'package:flutter/widgets.dart';
 import 'package:get/get.dart';
 import 'package:mygoods_flutter/utils/constant.dart';
 import 'package:mygoods_flutter/views/authentication/LoginPage.dart';
+import 'package:mygoods_flutter/views/authentication/LoginWithPhoneNumberPage.dart';
 import 'package:mygoods_flutter/views/authentication/SignUpPage.dart';
 
 class WelcomePage extends StatelessWidget {
@@ -63,7 +64,17 @@ class WelcomePage extends StatelessWidget {
                         child: ElevatedButton(
                             onPressed: loginButtonClick,
                             child: Text("Log In".toUpperCase())),
-                      )
+                      ),
+                      SizedBox(
+                        height: 20,
+                      ),
+                      SizedBox(
+                        width: double.infinity,
+                        height: 50,
+                        child: TextButton(
+                            onPressed: loginWithPhoneButtonClick,
+                            child: Text("Log In With Phone Number".toUpperCase())),
+                      ),
                     ],
                   ),
                 )
@@ -81,5 +92,9 @@ class WelcomePage extends StatelessWidget {
 
   void loginButtonClick() {
     Get.to(()=>LoginPage());
+  }
+
+  void loginWithPhoneButtonClick() {
+    Get.to(()=>LoginWithPhoneNumberPage());
   }
 }
