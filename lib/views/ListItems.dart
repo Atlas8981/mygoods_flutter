@@ -4,7 +4,7 @@ import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:mygoods_flutter/models/item.dart';
-import 'package:mygoods_flutter/services/item_database_service.dart';
+import 'package:mygoods_flutter/services/ItemService.dart';
 import 'package:mygoods_flutter/views/cells/list_product_row.dart';
 
 class ListItem extends StatefulWidget {
@@ -21,7 +21,7 @@ class ListItem extends StatefulWidget {
 }
 
 class _ListItemState extends State<ListItem> {
-  final ItemDatabaseService databaseService = ItemDatabaseService();
+  final ItemService databaseService = ItemService();
 
   @override
   Widget build(BuildContext context) {

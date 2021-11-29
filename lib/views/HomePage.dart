@@ -10,7 +10,9 @@ class HomePage extends StatelessWidget {
     Item(
         date: Timestamp.now(),
         subCategory: "subCategory",
-        images: [myImage.Image(imageName: "imageName", imageUrl: "$dummyNetworkImage")],
+        images: [
+          myImage.Image(imageName: "imageName", imageUrl: "$dummyNetworkImage")
+        ],
         amount: 0,
         address: "address",
         description: "description",
@@ -25,7 +27,111 @@ class HomePage extends StatelessWidget {
     Item(
         date: Timestamp.now(),
         subCategory: "subCategory",
-        images: [myImage.Image(imageName: "imageName", imageUrl: "$dummyNetworkImage")],
+        images: [
+          myImage.Image(imageName: "imageName", imageUrl: "$dummyNetworkImage")
+        ],
+        amount: 0,
+        address: "address",
+        description: "description",
+        userid: "userid",
+        itemid: "itemid",
+        viewers: [],
+        phone: "phone",
+        price: 123,
+        name: "name",
+        mainCategory: "mainCategory",
+        views: 0),
+    Item(
+        date: Timestamp.now(),
+        subCategory: "subCategory",
+        images: [
+          myImage.Image(imageName: "imageName", imageUrl: "$dummyNetworkImage")
+        ],
+        amount: 0,
+        address: "address",
+        description: "description",
+        userid: "userid",
+        itemid: "itemid",
+        viewers: [],
+        phone: "phone",
+        price: 123,
+        name: "name",
+        mainCategory: "mainCategory",
+        views: 0),
+    Item(
+        date: Timestamp.now(),
+        subCategory: "subCategory",
+        images: [
+          myImage.Image(imageName: "imageName", imageUrl: "$dummyNetworkImage")
+        ],
+        amount: 0,
+        address: "address",
+        description: "description",
+        userid: "userid",
+        itemid: "itemid",
+        viewers: [],
+        phone: "phone",
+        price: 123,
+        name: "name",
+        mainCategory: "mainCategory",
+        views: 0),
+    Item(
+        date: Timestamp.now(),
+        subCategory: "subCategory",
+        images: [
+          myImage.Image(imageName: "imageName", imageUrl: "$dummyNetworkImage")
+        ],
+        amount: 0,
+        address: "address",
+        description: "description",
+        userid: "userid",
+        itemid: "itemid",
+        viewers: [],
+        phone: "phone",
+        price: 123,
+        name: "name",
+        mainCategory: "mainCategory",
+        views: 0),
+    Item(
+        date: Timestamp.now(),
+        subCategory: "subCategory",
+        images: [
+          myImage.Image(imageName: "imageName", imageUrl: "$dummyNetworkImage")
+        ],
+        amount: 0,
+        address: "address",
+        description: "description",
+        userid: "userid",
+        itemid: "itemid",
+        viewers: [],
+        phone: "phone",
+        price: 123,
+        name: "name",
+        mainCategory: "mainCategory",
+        views: 0),
+    Item(
+        date: Timestamp.now(),
+        subCategory: "subCategory",
+        images: [
+          myImage.Image(imageName: "imageName", imageUrl: "$dummyNetworkImage")
+        ],
+        amount: 0,
+        address: "address",
+        description: "description",
+        userid: "userid",
+        itemid: "itemid",
+        viewers: [],
+        phone: "phone",
+        price: 123,
+        name: "name",
+        mainCategory: "mainCategory",
+        views: 0),
+    Item(
+        date: Timestamp.now(),
+        subCategory: "subCategory",
+        images: [
+          myImage.Image(imageName: "imageName", imageUrl: "$dummyNetworkImage")
+        ],
         amount: 0,
         address: "address",
         description: "description",
@@ -38,6 +144,38 @@ class HomePage extends StatelessWidget {
         mainCategory: "mainCategory",
         views: 0),
   ];
+
+  Widget homePageListView(String title,
+      {required Function() onTap, required List<Item> items}) {
+    return Column(
+      children: [
+        Row(
+          mainAxisAlignment: MainAxisAlignment.spaceBetween,
+          children: [
+            Text(
+              "$title",
+              style: TextStyle(fontSize: 18, fontWeight: FontWeight.bold),
+            ),
+            TextButton(
+              onPressed: onTap,
+              child: Text("View All"),
+            ),
+          ],
+        ),
+        SingleChildScrollView(
+          scrollDirection: Axis.horizontal,
+          child: Row(
+            children: items
+                .map((e) {
+                  return HomepageCell(e);
+                })
+                .toList()
+                .cast(),
+          ),
+        ),
+      ],
+    );
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -53,116 +191,37 @@ class HomePage extends StatelessWidget {
         ],
       ),
       body: SafeArea(
-        child: SingleChildScrollView(
-          child: Container(
-            padding: EdgeInsets.only(left: 10,right: 20),
-            child: Column(children: [
-              SizedBox(
-                height: 10,
-              ),
-              Container(
-                color: Colors.blue,
-                height: 125,
-                width: double.infinity,
-                child: Image.asset(
-                  "assets/images/banner1.png",
-                  fit: BoxFit.cover,
-                ),
-              ),
-              Column(
-                children: [
-                  Row(
-                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                    children: [
-                      Text(
-                        "Trending",
-                        style: TextStyle(
-                            fontSize: 18, fontWeight: FontWeight.bold),
-                      ),
-                      TextButton(
-                        onPressed: () {},
-                        child: Text("View All"),
-                      ),
-                    ],
-                  ),
-                  SizedBox(
-                    // width: double.infinity,
-                    height: 175,
-                    child: ListView.builder(
-                      scrollDirection: Axis.horizontal,
-                      // shrinkWrap: true,
-                      // physics: NeverScrollableScrollPhysics(),
-                      itemCount: itemList.length,
-                      itemBuilder: (BuildContext context, int index) {
-                        // return ProductTile(productList[index]);
-                        return HomepageCell(itemList[index]);
-                      },
-                    ),
-                  ),
-                ],
-              ),
-              Column(
-                children: [
-                  Row(
-                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                    children: [
-                      Text(
-                        "Recently View",
-                        style: TextStyle(
-                            fontSize: 18, fontWeight: FontWeight.bold),
-                      ),
-                      TextButton(
-                        onPressed: () {},
-                        child: Text("View All"),
-                      ),
-                    ],
-                  ),
-                  SizedBox(
-                    // width: double.infinity,
-                    height: 175,
-                    child: ListView.builder(
-                      scrollDirection: Axis.horizontal,
-                      itemCount: itemList.length,
-                      itemBuilder: (BuildContext context, int index) {
-                        // return ProductTile(productList[index]);
-                        return HomepageCell(itemList[index]);
-                      },
-                    ),
-                  ),
-                ],
-              ),
-              Column(
-                children: [
-                  Row(
-                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                    children: [
-                      Text(
-                        "You May Like",
-                        style: TextStyle(
-                            fontSize: 18, fontWeight: FontWeight.bold),
-                      ),
-                      TextButton(
-                        onPressed: () {},
-                        child: Text("View All"),
-                      ),
-                    ],
-                  ),
-                  SizedBox(
-                    // width: double.infinity,
-                    height: 175,
-                    child: ListView.builder(
-                      scrollDirection: Axis.horizontal,
-                      itemCount: itemList.length,
-                      itemBuilder: (BuildContext context, int index) {
-                        // return ProductTile(productList[index]);
-                        return HomepageCell(itemList[index]);
-                      },
-                    ),
-                  ),
-                ],
-              ),
-            ]),
-          ),
+        child: Container(
+          height: double.infinity,
+          width: double.infinity,
+          padding: EdgeInsets.only(left: 10, right: 10),
+          child: ListView(children: [
+            SizedBox(
+              height: 10,
+            ),
+            Image.asset(
+              "assets/images/banner1.png",
+              fit: BoxFit.cover,
+              height: 125,
+              width: double.infinity,
+            ),
+            FutureBuilder<List<Item>>(
+              // future: ,
+              builder: (context, snapshot) {
+                if (!snapshot.hasData) {
+                  return Text("Pg rok data oy");
+                } else if (snapshot.hasData) {
+                  final List<Item> items = snapshot.data!;
+                  return homePageListView("Trending", items: items, onTap: () {
+                    showToast("In Development");
+                  });
+                }
+                return Center(
+                  child: CircularProgressIndicator(),
+                );
+              },
+            ),
+          ]),
         ),
       ),
     );

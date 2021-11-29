@@ -5,11 +5,11 @@ import 'package:get/get.dart';
 import 'package:image_picker/image_picker.dart';
 import 'package:mygoods_flutter/models/DualImage.dart';
 import 'package:mygoods_flutter/models/additionalInfo.dart';
-import 'package:mygoods_flutter/services/item_database_service.dart';
+import 'package:mygoods_flutter/services/ItemService.dart';
 import 'package:mygoods_flutter/utils/constant.dart';
 
 class ItemFormController extends GetxController {
-  final itemService = ItemDatabaseService();
+  final itemService = ItemService();
   GlobalKey formKey = GlobalKey<FormState>();
   final isVisible = false.obs;
   final subCat = "".obs;

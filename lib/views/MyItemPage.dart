@@ -5,7 +5,7 @@ import 'package:get/get.dart';
 import 'package:mygoods_flutter/components/CustomAlertDialog.dart';
 import 'package:mygoods_flutter/controllers/MyItemsController.dart';
 import 'package:mygoods_flutter/models/item.dart';
-import 'package:mygoods_flutter/services/item_database_service.dart';
+import 'package:mygoods_flutter/services/ItemService.dart';
 import 'package:mygoods_flutter/services/UserService.dart';
 import 'package:mygoods_flutter/views/EditItemPage.dart';
 import 'package:mygoods_flutter/views/OwnerItemDetailPage.dart';
@@ -91,7 +91,7 @@ class OwnerItemRow extends StatelessWidget {
   final Function()? onEdit;
   final Function()? onDelete;
 
-  final ItemDatabaseService database = ItemDatabaseService();
+  final ItemService database = ItemService();
 
   String calDate(Timestamp itemDate) {
     //Convert to second

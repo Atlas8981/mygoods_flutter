@@ -116,21 +116,11 @@ class UserService {
   }
 
   Stream<QuerySnapshot<Map<String, dynamic>>> listenForUserItemChange() {
-    final List<Item> listOfItem = [];
     return firestore
             .collection("$itemCollection")
             .orderBy('date', descending: true)
             .where('userid', isEqualTo: auth.currentUser!.uid)
-            .snapshots()
-        //     .listen((value) {
-        //     for (int i = 0; i < value.docs.length; i++) {
-        //     if (value.docs[i].exists) {
-        //       Item item = Item.fromJson(value.docs[i].data());
-        //       listOfItem.add(item);
-        //     }
-        //   }
-        // })
-        ;
+            .snapshots();
   }
 
   Future<bool> deleteUserItem(String itemId) async {

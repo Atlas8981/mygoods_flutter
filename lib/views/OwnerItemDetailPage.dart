@@ -8,7 +8,7 @@ import 'package:mygoods_flutter/components/ImageViews.dart';
 import 'package:mygoods_flutter/controllers/MyItemsController.dart';
 import 'package:mygoods_flutter/models/additionalInfo.dart';
 import 'package:mygoods_flutter/models/item.dart';
-import 'package:mygoods_flutter/services/item_database_service.dart';
+import 'package:mygoods_flutter/services/ItemService.dart';
 import 'package:mygoods_flutter/utils/constant.dart';
 import 'package:mygoods_flutter/views/EditItemPage.dart';
 
@@ -24,7 +24,7 @@ class OwnerItemDetailPage extends StatefulWidget {
 }
 
 class _OwnerItemDetailPageState extends State<OwnerItemDetailPage> {
-  final firestoreService = ItemDatabaseService();
+  final firestoreService = ItemService();
   final PageController pageController =
       PageController(initialPage: 0, viewportFraction: 1);
 

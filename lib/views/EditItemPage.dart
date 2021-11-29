@@ -11,7 +11,7 @@ import 'package:mygoods_flutter/controllers/MyItemsController.dart';
 import 'package:mygoods_flutter/models/DualImage.dart';
 import 'package:mygoods_flutter/models/item.dart';
 import 'package:mygoods_flutter/models/image.dart' as myImageClass;
-import 'package:mygoods_flutter/services/item_database_service.dart';
+import 'package:mygoods_flutter/services/ItemService.dart';
 import 'package:mygoods_flutter/utils/constant.dart';
 
 class EditItemPage extends StatefulWidget {

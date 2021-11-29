@@ -4,7 +4,7 @@ import 'package:mygoods_flutter/models/item.dart';
 import 'package:mygoods_flutter/models/user.dart' as myUser;
 import 'package:mygoods_flutter/utils/constant.dart';
 
-class ItemDatabaseService {
+class ItemService {
   final firestore = FirebaseFirestore.instance;
 
   Future<List<Item>> getItems(String mainCat, String subCat) async {
@@ -71,4 +71,39 @@ class ItemDatabaseService {
     }
   }
 
+  Future<void> addViewToItem (String itemId,List<String> viewers) async {
+    final auth = FirebaseAuth.instance;
+    if(auth.currentUser == null){
+      return;
+    }
+    viewers.add(auth.currentUser!.uid);
+    final List<String> newViewers = viewers.toSet().toList();
+    await firestore
+        .collection("$itemCollection")
+        .doc(itemId)
+        .update({
+      'viewers': newViewers
+    });
+
+  }
+
+  Future<List<Item>> getTrendingItems() async{
+    List<Item> itemList = [];
+    try {
+      await firestore
+          .collection("$itemCollection")
+          .limit(10)
+          .orderBy("views", descending: true)
+          .get()
+          .then((value) => {
+        value.docs.forEach((element) {
+          Item item = Item.fromJson(element.data());
+          itemList.add(item);
+        })
+      });
+    } catch (e) {
+      print(e.toString());
+    }
+    return itemList;
+  }
 }

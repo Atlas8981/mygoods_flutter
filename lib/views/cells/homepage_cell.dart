@@ -12,23 +12,24 @@ class HomepageCell extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Container(
-      // width: 150,
-      child: Card(
-        child: InkWell(
-          onTap: () => {},
-          child: Wrap(
-            direction: Axis.vertical,
-            children: [
-              CachedNetworkImage(
+      padding: EdgeInsets.only(right: 10),
+      child: InkWell(
+        onTap: () {},
+        child: Wrap(
+          direction: Axis.vertical,
+          children: [
+            ClipRRect(
+              borderRadius: BorderRadius.all(Radius.circular(5)),
+              child: CachedNetworkImage(
                 imageUrl: item.images[0].imageUrl,
                 width: 125,
                 height: 125,
                 fit: BoxFit.cover,
               ),
-              Text("${item.name}"),
-              Text("USD ${item.price}"),
-            ],
-          ),
+            ),
+            Text("${item.name}"),
+            Text("USD ${item.price}"),
+          ],
         ),
       ),
     );

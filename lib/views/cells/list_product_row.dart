@@ -3,7 +3,7 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:mygoods_flutter/models/item.dart';
-import 'package:mygoods_flutter/services/item_database_service.dart';
+import 'package:mygoods_flutter/services/ItemService.dart';
 import 'package:mygoods_flutter/views/ItemDetailPage.dart';
 
 class ListItemRow extends StatefulWidget {
@@ -20,7 +20,7 @@ class ListItemRow extends StatefulWidget {
 }
 
 class _ListItemRowState extends State<ListItemRow> {
-  final ItemDatabaseService database = ItemDatabaseService();
+  final ItemService database = ItemService();
 
   String calDate(Timestamp itemDate) {
     //Convert to second
