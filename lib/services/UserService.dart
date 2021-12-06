@@ -18,7 +18,7 @@ class UserService {
       final response = await auth.signInWithEmailAndPassword(
           email: email, password: password);
       if (response.user != null && response.user!.uid.isNotEmpty) {
-        return response.user!.uid;
+        return response.user!.displayName;
       }
     } on FirebaseAuthException catch (e) {
       if (e.code == 'user-not-found') {

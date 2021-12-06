@@ -224,6 +224,7 @@ class AboutMePage extends StatelessWidget {
         userService.signOut().then((value) {
           if (value) {
             showToast("Sign Out Successfully");
+            Get.back();
             Get.find<LandingPageController>().changeTabIndex(0);
           } else {
             showToast("Sign Out Unsuccessfully");

@@ -117,11 +117,11 @@ class _LoginPageState extends State<LoginPage> {
                       style: TextStyle(fontSize: 18),
                     ),
                   ),
+                  SizedBox(
+                    height: 20,
+                  ),
                   Column(
                     children: [
-                      SizedBox(
-                        height: 20,
-                      ),
                       SizedBox(
                         width: double.infinity,
                         height: 50,
@@ -156,7 +156,7 @@ class _LoginPageState extends State<LoginPage> {
       if (value == null) {
         return;
       }
-      showToast("Welcome: $value");
+      // showToast("Welcome: $value");
       Get.delete<UserController>();
       Get.lazyPut(() => UserController(), fenix: true);
       Get.offAll(() => MainActivity());
