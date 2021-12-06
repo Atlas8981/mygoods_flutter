@@ -44,8 +44,16 @@ class UserService {
     }
   }
 
+  Future<void> registerUser(myUser.User user) async {
+    return await firestore
+        .collection("$userCollection")
+        .doc("${user.userId}")
+        .set(user.toJson());
+  }
+
   Future<myUser.User?> getOwnerInfo() async {
     if (auth.currentUser == null) {
+      print("User Null");
       return null;
     }
     myUser.User? response;
@@ -56,6 +64,7 @@ class UserService {
           .get()
           .then((value) {
         response = myUser.User.fromJson(value.data()!);
+        print(response.toString());
       });
     } catch (e) {
       print(e.toString());

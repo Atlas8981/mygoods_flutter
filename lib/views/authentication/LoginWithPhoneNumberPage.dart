@@ -48,10 +48,11 @@ class LoginWithPhoneNumberPage extends StatelessWidget {
               },
             ),
             TextButton(
-                onPressed: () {
-                  loginWithPhoneNumber();
-                },
-                child: Text("Confirm"))
+              onPressed: () {
+                loginWithPhoneNumber();
+              },
+              child: Text("Confirm"),
+            )
           ],
         ),
       ),
@@ -61,7 +62,7 @@ class LoginWithPhoneNumberPage extends StatelessWidget {
   final auth = FirebaseAuth.instance;
 
   Future<void> loginWithPhoneNumber() async {
-    if(phoneCon.text.isEmpty){
+    if (phoneCon.text.isEmpty) {
       return;
     }
     await auth.verifyPhoneNumber(

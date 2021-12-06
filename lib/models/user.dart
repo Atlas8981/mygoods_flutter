@@ -1,6 +1,7 @@
-import 'package:mygoods_flutter/models/image.dart';
-
+import 'package:flutter/cupertino.dart';
+import 'package:mygoods_flutter/models/image.dart' as myImage;
 import 'package:json_annotation/json_annotation.dart';
+import 'package:mygoods_flutter/utils/constant.dart';
 
 part 'user.g.dart';
 
@@ -17,15 +18,15 @@ class User {
       required this.image,
       required this.preferenceId});
 
-   String userId;
-   String username;
-   String firstName;
-   String lastName;
-   String email;
-   String phoneNumber;
-   Image image;
-   String address;
-   List<String> preferenceId;
+  String userId;
+  String username;
+  String firstName;
+  String lastName;
+  String? email;
+  String phoneNumber;
+  myImage.Image? image;
+  String address;
+  List<String>? preferenceId;
 
   factory User.fromJson(Map<String, dynamic> json) => _$UserFromJson(json);
 

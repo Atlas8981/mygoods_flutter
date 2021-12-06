@@ -115,7 +115,7 @@ class _ItemDetailPageState extends State<ItemDetailPage> {
                   CircleAvatar(
                     radius: 35,
                     backgroundImage:
-                        CachedNetworkImageProvider("${user.image.imageUrl}"),
+                        CachedNetworkImageProvider("${user.image!.imageUrl}"),
                   ),
                   SizedBox(
                     width: 10,

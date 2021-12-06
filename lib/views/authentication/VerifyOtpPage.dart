@@ -2,6 +2,7 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import 'package:get/get.dart';
 import 'package:mygoods_flutter/controllers/UserController.dart';
 import 'package:mygoods_flutter/utils/constant.dart';
@@ -25,56 +26,72 @@ class _VerifyOTPPageState extends State<VerifyOTPPage> {
 
   @override
   Widget build(BuildContext context) {
+    final double statusBarHeight = MediaQuery.of(context).padding.top;
     return Scaffold(
-      body: Column(
-        mainAxisAlignment: MainAxisAlignment.center,
-        children: [
-          Container(
-            padding: EdgeInsets.all(20),
-            child: OTPTextField(
-              length: 6,
-              width: MediaQuery.of(context).size.width,
-              textFieldAlignment: MainAxisAlignment.spaceAround,
-              fieldWidth: 35,
-              fieldStyle: FieldStyle.underline,
-              outlineBorderRadius: 15,
-              style: TextStyle(fontSize: 16),
-              onCompleted: (pin) {
-                // Get.to(()=>HomePage());
-                smsCode = pin;
-                signInWithPhoneNumber(pin);
-              },
-              onChanged: (value) {
-                smsCode = value;
-              },
+      body: Container(
+        height: double.maxFinite,
+        child: Column(
+          children: [
+            Container(
+              width: double.maxFinite,
+              height: statusBarHeight,
+              color: Colors.blue,
             ),
-          ),
-          Container(
-            padding: EdgeInsets.all(20),
-            child: SizedBox(
-              height: 40,
-              width: double.infinity,
-              child: ElevatedButton(
-                style: ButtonStyle(),
-                onPressed: () {
-                  FocusScope.of(context).requestFocus(FocusNode());
-                  if (smsCode == null) {
-                    showToast("Wrong SMS Code");
-                    return;
-                  }
-                  signInWithPhoneNumber(smsCode!);
-                  // Get.to(()=>HomePage());
+            Expanded(
+              child: Column(
+                crossAxisAlignment: CrossAxisAlignment.center,
+                mainAxisAlignment: MainAxisAlignment.center,
+                children: [
+                  Container(
+                    padding: EdgeInsets.all(20),
+                    child: OTPTextField(
+                      length: 6,
+                      width: MediaQuery.of(context).size.width,
+                      textFieldAlignment: MainAxisAlignment.spaceAround,
+                      fieldWidth: 35,
+                      fieldStyle: FieldStyle.underline,
+                      outlineBorderRadius: 15,
+                      style: TextStyle(fontSize: 16),
+                      onCompleted: (pin) {
+                        // Get.to(()=>HomePage());
+                        smsCode = pin;
+                        signInWithPhoneNumber(pin);
+                      },
+                      onChanged: (value) {
+                        smsCode = value;
+                      },
+                    ),
+                  ),
+                  Container(
+                    padding: EdgeInsets.all(20),
+                    child: SizedBox(
+                      height: 40,
+                      width: double.infinity,
+                      child: ElevatedButton(
+                        style: ButtonStyle(),
+                        onPressed: () {
+                          FocusScope.of(context).requestFocus(FocusNode());
+                          if (smsCode == null) {
+                            showToast("Wrong SMS Code");
+                            return;
+                          }
+                          signInWithPhoneNumber(smsCode!);
+                          // Get.to(()=>HomePage());
 
-                  // showToast("Verification Complete");
-                },
-                child: Text(
-                  "Verify",
-                  style: TextStyle(fontSize: 14),
-                ),
+                          // showToast("Verification Complete");
+                        },
+                        child: Text(
+                          "Verify",
+                          style: TextStyle(fontSize: 14),
+                        ),
+                      ),
+                    ),
+                  ),
+                ],
               ),
             ),
-          ),
-        ],
+          ],
+        ),
       ),
     );
   }
@@ -97,7 +114,10 @@ class _VerifyOTPPageState extends State<VerifyOTPPage> {
           Get.lazyPut(() => UserController(), fenix: true);
           Get.offAll(() => MainActivity());
         } else {
-          Get.offAll(() => RegisterPage());
+          Get.offAll(() => RegisterPage(
+                userId: authCredential.user!.uid,
+                phoneNumber: authCredential.user!.phoneNumber!,
+              ));
         }
       } else {
         showToast("Login Failed");

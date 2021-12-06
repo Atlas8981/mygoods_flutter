@@ -62,8 +62,9 @@ class WelcomePage extends StatelessWidget {
                         width: double.infinity,
                         height: 50,
                         child: ElevatedButton(
-                            onPressed: loginButtonClick,
-                            child: Text("Log In".toUpperCase())),
+                          onPressed: loginButtonClick,
+                          child: Text("Log In With Email".toUpperCase()),
+                        ),
                       ),
                       SizedBox(
                         height: 20,
@@ -72,9 +73,9 @@ class WelcomePage extends StatelessWidget {
                         width: double.infinity,
                         height: 50,
                         child: TextButton(
-                            onPressed: loginWithPhoneButtonClick,
-                            child:
-                                Text("Log In With Phone Number".toUpperCase())),
+                          onPressed: loginWithPhoneButtonClick,
+                          child: Text("Log In With Phone Number".toUpperCase()),
+                        ),
                       ),
                     ],
                   ),

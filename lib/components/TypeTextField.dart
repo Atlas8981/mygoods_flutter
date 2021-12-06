@@ -15,6 +15,7 @@ class TypeTextField extends StatefulWidget {
     this.obscureText,
     this.autoFillHints,
     this.buildCounter,
+    this.hint,
   }) : super(key: key);
 
   final inputType;
@@ -28,6 +29,7 @@ class TypeTextField extends StatefulWidget {
   final bool? obscureText;
   final Iterable<String>? autoFillHints;
   final InputCounterWidgetBuilder? buildCounter;
+  final String? hint;
 
   @override
   _TypeTextFieldState createState() => _TypeTextFieldState();
@@ -63,6 +65,7 @@ class _TypeTextFieldState extends State<TypeTextField> {
           prefixIcon: widget.prefixIcon,
           suffixIcon: widget.suffixIcon,
           counterStyle: TextStyle(fontSize: 12, height: 1),
+        hintText: widget.hint,
       ),
       validator: widget.validator ??
           (value) {

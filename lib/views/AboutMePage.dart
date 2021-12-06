@@ -1,3 +1,4 @@
+import 'package:avatars/avatars.dart';
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
@@ -7,7 +8,9 @@ import 'package:mygoods_flutter/components/CustomAlertDialog.dart';
 import 'package:mygoods_flutter/controllers/BottomNavigationViewController.dart';
 import 'package:mygoods_flutter/controllers/UserController.dart';
 import 'package:mygoods_flutter/models/category.dart';
+import 'package:mygoods_flutter/models/image.dart' as myImage;
 import 'package:mygoods_flutter/models/user.dart' as myUser;
+import 'package:mygoods_flutter/models/user.dart';
 import 'package:mygoods_flutter/services/UserService.dart';
 import 'package:mygoods_flutter/utils/constant.dart';
 import 'package:mygoods_flutter/views/EditProfilePage.dart';
@@ -108,6 +111,64 @@ class AboutMePage extends StatelessWidget {
     );
   }
 
+  Widget checkUserImage(UserController controller, User user) {
+    if (user.image != null && user.image!.imageUrl.isNotEmpty) {
+      return InkWell(
+        onLongPress: () async {
+          final XFile? pickedImage = await pickImage();
+          if (pickedImage == null) {
+            return;
+          }
+          controller.changeProfilePicture(pickedImage);
+        },
+        onTap: () {
+          Get.to(() => BigImagePage(image: user.image!));
+        },
+        child: Hero(
+          tag: user.image!.imageName,
+          child: CircleAvatar(
+            backgroundImage: CachedNetworkImageProvider(
+              "${user.image!.imageUrl}",
+            ),
+            child: Visibility(
+                visible: user.image!.imageUrl.isEmpty,
+                child: Center(
+                  child: CircularProgressIndicator(),
+                )),
+            backgroundColor: Colors.white,
+            radius: 65,
+          ),
+        ),
+      );
+    } else {
+      String fullName = "${user.firstName} ${user.lastName}";
+      return Stack(
+        alignment: Alignment.center,
+        children: [
+          InkWell(
+            onLongPress: () async {
+              final XFile? pickedImage = await pickImage();
+              if (pickedImage == null) {
+                return;
+              }
+              controller.changeProfilePicture(pickedImage);
+            },
+            child: Avatar(
+              name: fullName,
+              onTap: () {},
+              value: fullName,
+            ),
+          ),
+          Visibility(
+              visible: user.image!.imageName == "pending",
+              child: Center(
+                child: CircularProgressIndicator(),
+              )),
+        ],
+      );
+    }
+  }
+
   centerProfile() {
     return Center(
       child: GetBuilder<UserController>(
@@ -120,34 +181,7 @@ class AboutMePage extends StatelessWidget {
           user = controller.user!.value;
           return Column(
             children: [
-              InkWell(
-                onLongPress: () async {
-                  final XFile? pickedImage = await pickImage();
-                  if (pickedImage == null) {
-                    return;
-                  }
-                  controller.changeProfilePicture(pickedImage);
-                },
-                onTap: () {
-                  Get.to(() => BigImagePage(image: user.image));
-                },
-                child: Hero(
-                  tag: user.image.imageName,
-                  child: CircleAvatar(
-                    backgroundImage: CachedNetworkImageProvider(
-                      "${user.image.imageUrl}",
-                    ),
-                    child: Visibility(
-                      visible: user.image.imageUrl.isEmpty,
-                        child: Center(
-                      child: CircularProgressIndicator(),
-                    )),
-                    backgroundColor: Colors.white,
-
-                    radius: 65,
-                  ),
-                ),
-              ),
+              checkUserImage(controller, user),
               SizedBox(
                 height: 10,
               ),
