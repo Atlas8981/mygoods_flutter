@@ -1,7 +1,5 @@
-import 'package:flutter/cupertino.dart';
 import 'package:mygoods_flutter/models/image.dart' as myImage;
 import 'package:json_annotation/json_annotation.dart';
-import 'package:mygoods_flutter/utils/constant.dart';
 
 part 'user.g.dart';
 

@@ -3,7 +3,6 @@ import 'package:get/get.dart';
 import 'package:mygoods_flutter/components/TypeTextField.dart';
 import 'package:mygoods_flutter/controllers/UserController.dart';
 import 'package:mygoods_flutter/services/UserService.dart';
-import 'package:mygoods_flutter/utils/constant.dart';
 import 'package:mygoods_flutter/views/MainActivity.dart';
 import 'package:mygoods_flutter/views/authentication/LoginWithPhoneNumberPage.dart';
 
@@ -153,13 +152,14 @@ class _LoginPageState extends State<LoginPage> {
     }
 
     userService.login(email, password).then((value) {
-      if (value == null) {
-        return;
-      }
+      // if (value == null) {
+      //   return;
+      // }
       // showToast("Welcome: $value");
       Get.delete<UserController>();
       Get.lazyPut(() => UserController(), fenix: true);
       Get.offAll(() => MainActivity());
+
     });
   }
 

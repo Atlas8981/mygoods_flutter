@@ -1,7 +1,4 @@
-import 'package:cached_network_image/cached_network_image.dart';
-import 'package:carousel_slider/carousel_slider.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
-import 'package:dots_indicator/dots_indicator.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:mygoods_flutter/components/ImageViews.dart';
@@ -86,9 +83,9 @@ class _OwnerItemDetailPageState extends State<OwnerItemDetailPage> {
   Widget build(BuildContext context) {
     return GetBuilder<MyItemsController>(
       builder: (controller) {
-        final index = controller.items
+        final index = controller.items!
             .indexWhere((element) => element.itemid == widget.item!.itemid);
-        final Item item = controller.items[index];
+        final Item item = controller.items![index];
         return Scaffold(
           appBar: AppBar(
             title: Text("Item Detail: ${item.itemid}"),

@@ -1,10 +1,15 @@
+import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:mygoods_flutter/components/TypeTextField.dart';
+import 'package:mygoods_flutter/controllers/UserController.dart';
 import 'package:mygoods_flutter/utils/constant.dart';
+import 'package:mygoods_flutter/views/MainActivity.dart';
+import 'package:mygoods_flutter/views/RegisterPage.dart';
 import 'package:mygoods_flutter/views/authentication/VerifyOtpPage.dart';
+import 'package:mygoods_flutter/views/authentication/test_otp_page.dart';
 
 class LoginWithPhoneNumberPage extends StatelessWidget {
   LoginWithPhoneNumberPage({Key? key}) : super(key: key);
@@ -65,23 +70,56 @@ class LoginWithPhoneNumberPage extends StatelessWidget {
     if (phoneCon.text.isEmpty) {
       return;
     }
+    final String phoneNumber = phoneCon.text.trim();
     await auth.verifyPhoneNumber(
-      phoneNumber: '+855${phoneCon.text.trim()}',
-      verificationCompleted: (PhoneAuthCredential credential) async {},
+      phoneNumber: '+855$phoneNumber',
+      verificationCompleted: (PhoneAuthCredential credential) async {
+        // if(GetPlatform.isAndroid){
+        //   signInWithCredential(credential);
+        // }
+      },
       verificationFailed: (FirebaseAuthException e) {
         if (e.code == 'invalid-phone-number') {
-          showToast('The provided phone number is not valid.');
-          print('The provided phone number is not valid.');
+          showToast('Invalid Phone Number');
+        } else if (e.code == "too-many-requests") {
+          showToast("Too Many Request");
         }
         print(e.message);
+        print(e.code);
       },
       codeSent: (String verificationId, int? resendToken) async {
+        // Get.to(() => CodeAutoFillTestPage());
+
         Get.to(() => VerifyOTPPage(
               verificationId: verificationId,
+              phoneNumber: phoneNumber,
             ));
-        // await auth.signInWithCredential(credential);
       },
       codeAutoRetrievalTimeout: (String verificationId) {},
+      timeout: Duration(seconds: 60),
     );
+  }
+
+  Future<void> signInWithCredential(credential) async {
+    final authCredential = await auth.signInWithCredential(credential);
+    if (authCredential.user != null) {
+      showToast("Login Success");
+      final response = await FirebaseFirestore.instance
+          .collection("$userCollection")
+          .doc(authCredential.user!.uid)
+          .get();
+      if (response.exists) {
+        Get.delete<UserController>();
+        Get.lazyPut(() => UserController(), fenix: true);
+        Get.offAll(() => MainActivity());
+      } else {
+        Get.offAll(() => RegisterPage(
+              userId: authCredential.user!.uid,
+              phoneNumber: authCredential.user!.phoneNumber!,
+            ));
+      }
+    } else {
+      showToast("Login Failed");
+    }
   }
 }

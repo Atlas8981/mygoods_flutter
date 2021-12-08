@@ -85,7 +85,7 @@ class _EditProfilePageState extends State<EditProfilePage> {
         children: [
           SingleChildScrollView(
             child: Container(
-              padding: EdgeInsets.all(10),
+              padding: EdgeInsets.all(20),
               child: Form(
                 key: formKey,
                 child: Column(

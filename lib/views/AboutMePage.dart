@@ -131,10 +131,11 @@ class AboutMePage extends StatelessWidget {
               "${user.image!.imageUrl}",
             ),
             child: Visibility(
-                visible: user.image!.imageUrl.isEmpty,
-                child: Center(
-                  child: CircularProgressIndicator(),
-                )),
+              visible: user.image!.imageUrl.isEmpty,
+              child: Center(
+                child: CircularProgressIndicator(),
+              ),
+            ),
             backgroundColor: Colors.white,
             radius: 65,
           ),
@@ -153,7 +154,14 @@ class AboutMePage extends StatelessWidget {
               }
               controller.changeProfilePicture(pickedImage);
             },
-            child: Avatar(
+            child:
+            // SvgPicture.network(
+            //   "https://avatars.dicebear.com/api/identicon/name.svg",
+            //   height: 120,
+            //   fit: BoxFit.cover,
+            //   key: UniqueKey(),
+            // ),
+            Avatar(
               name: fullName,
               onTap: () {},
               value: fullName,

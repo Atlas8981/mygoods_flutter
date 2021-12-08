@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:get/get.dart';
 
 class TypeTextField extends StatefulWidget {
   const TypeTextField({
@@ -53,18 +52,18 @@ class _TypeTextFieldState extends State<TypeTextField> {
           widget.inputType == null ? TextInputType.name : widget.inputType,
       cursorHeight: 24,
       decoration: InputDecoration(
-          contentPadding:
-              EdgeInsets.only(top: 20, bottom: 20, left: 10, right: 10),
-          labelStyle: TextStyle(
-            fontSize: 16,
-          ),
-          labelText: widget.labelText,
-          prefixText: widget.prefix == null ? null : widget.prefix,
-          prefixStyle: TextStyle(fontSize: 16, letterSpacing: 2),
-          border: OutlineInputBorder(),
-          prefixIcon: widget.prefixIcon,
-          suffixIcon: widget.suffixIcon,
-          counterStyle: TextStyle(fontSize: 12, height: 1),
+        contentPadding:
+            EdgeInsets.only(top: 20, bottom: 20, left: 10, right: 10),
+        labelStyle: TextStyle(
+          fontSize: 16,
+        ),
+        labelText: widget.labelText,
+        prefixText: widget.prefix == null ? null : widget.prefix,
+        prefixStyle: TextStyle(fontSize: 16, letterSpacing: 2),
+        border: OutlineInputBorder(),
+        prefixIcon: widget.prefixIcon,
+        suffixIcon: widget.suffixIcon,
+        counterStyle: TextStyle(fontSize: 12, height: 1),
         hintText: widget.hint,
       ),
       validator: widget.validator ??

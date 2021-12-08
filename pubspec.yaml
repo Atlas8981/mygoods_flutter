@@ -48,6 +48,9 @@ dependencies:
   otp_text_field: ^1.1.1
   avatars: ^2.0.0
   sms_autofill: ^2.2.0
+  flutter_countdown_timer: ^4.1.0
+  flutter_svg: ^1.0.0
+  circular_widgets: ^2.0.0
 
 
 dev_dependencies:

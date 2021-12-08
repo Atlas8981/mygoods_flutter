@@ -2,11 +2,9 @@ import 'dart:io';
 
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-import 'package:image_picker/image_picker.dart';
 import 'package:mygoods_flutter/models/DualImage.dart';
 import 'package:mygoods_flutter/models/additionalInfo.dart';
 import 'package:mygoods_flutter/services/ItemService.dart';
-import 'package:mygoods_flutter/utils/constant.dart';
 
 class ItemFormController extends GetxController {
   final itemService = ItemService();

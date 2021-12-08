@@ -7,6 +7,7 @@ import 'package:get/get.dart';
 import 'package:mygoods_flutter/controllers/initial_binding.dart';
 import 'package:mygoods_flutter/views/MainActivity.dart';
 import 'package:mygoods_flutter/views/WelcomePage.dart';
+import 'package:mygoods_flutter/views/authentication/VerifyOtpPage.dart';
 
 Future<void> main() async {
   WidgetsFlutterBinding.ensureInitialized();
@@ -24,6 +25,7 @@ class MyApp extends StatelessWidget {
       title: 'MyGoods Flutter From Window @.20',
       home: MainActivity(),
       // home: WelcomePage(),
+      // home: VerifyOTPPage(),
       initialBinding: InitialBinding(),
       localizationsDelegates: [
         GlobalMaterialLocalizations.delegate,

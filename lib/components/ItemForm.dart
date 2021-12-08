@@ -1,5 +1,3 @@
-import 'dart:io';
-
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:image_picker/image_picker.dart';
@@ -11,9 +9,7 @@ import 'package:mygoods_flutter/controllers/AdditionalInfoController.dart';
 import 'package:mygoods_flutter/controllers/ItemFormController.dart';
 import 'package:mygoods_flutter/models/DualImage.dart';
 import 'package:mygoods_flutter/models/additionalInfo.dart';
-import 'package:mygoods_flutter/services/additional_data_service.dart';
 import 'package:mygoods_flutter/utils/constant.dart';
-import 'package:mygoods_flutter/views/other/big_image.dart';
 
 class ItemForm extends StatefulWidget {
   const ItemForm({

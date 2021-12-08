@@ -96,7 +96,6 @@ class UserService {
       return newUserInfo;
     }).catchError((onError) {
       print(onError);
-      return null;
     });
 
     return response;
@@ -111,6 +110,9 @@ class UserService {
           .where('userid', isEqualTo: auth.currentUser!.uid)
           .get()
           .then((value) {
+        if (value.docs.length == 0) {
+          return listOfItem;
+        }
         for (int i = 0; i < value.docs.length; i++) {
           if (value.docs[i].exists) {
             Item item = Item.fromJson(value.docs[i].data());
@@ -201,7 +203,6 @@ class UserService {
     final List<String> itemIds = [];
     final List<Item> listOfItem = [];
     final userId = auth.currentUser!.uid;
-    print(userId);
     try {
       final value = await firestore
           .collection("$userCollection")
@@ -209,7 +210,7 @@ class UserService {
           .collection("$saveItemCollection")
           .orderBy('date', descending: true)
           .get();
-      print(value.docs.length);
+
       if (value.docs.length == 0) {
         return listOfItem;
       }

@@ -27,12 +27,18 @@ class MyItemsPage extends StatelessWidget {
         child: GetBuilder<MyItemsController>(
           init: myItemController,
           builder: (controller) {
-            if (controller.items.length == 0) {
+            if (controller.items == null) {
               return Center(
                 child: CircularProgressIndicator(),
               );
             }
-            final List<Item> items = controller.items.cast();
+
+            final List<Item> items = controller.items!.cast();
+            if (items.length == 0) {
+              return Center(
+                child: Text("You have no items"),
+              );
+            }
             return Container(
               padding: EdgeInsets.only(
                 top: 10,
