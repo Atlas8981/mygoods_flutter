@@ -68,6 +68,7 @@ class LoginWithPhoneNumberPage extends StatelessWidget {
 
   Future<void> loginWithPhoneNumber() async {
     if (phoneCon.text.isEmpty) {
+      showToast("Empty Phone Number");
       return;
     }
     final String phoneNumber = phoneCon.text.trim();
@@ -88,14 +89,16 @@ class LoginWithPhoneNumberPage extends StatelessWidget {
         print(e.code);
       },
       codeSent: (String verificationId, int? resendToken) async {
-        // Get.to(() => CodeAutoFillTestPage());
-
-        Get.to(() => VerifyOTPPage(
-              verificationId: verificationId,
-              phoneNumber: phoneNumber,
-            ));
+        Get.to(
+          () => VerifyOTPPage(
+            verificationId: verificationId,
+            phoneNumber: phoneNumber,
+          ),
+        );
       },
-      codeAutoRetrievalTimeout: (String verificationId) {},
+      codeAutoRetrievalTimeout: (String verificationId) {
+
+      },
       timeout: Duration(seconds: 60),
     );
   }

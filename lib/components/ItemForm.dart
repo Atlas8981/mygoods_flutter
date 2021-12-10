@@ -28,7 +28,7 @@ class ItemForm extends StatefulWidget {
 }
 
 class _ItemFormState extends State<ItemForm> {
-  GlobalKey<FormState> formKey = GlobalKey<FormState>();
+  final formKey = GlobalKey<FormState>();
   final itemFormCon = Get.put(ItemFormController());
   final additionalInfoCon = Get.put(AdditionalInfoController());
 
@@ -458,6 +458,12 @@ class _ItemFormState extends State<ItemForm> {
         );
       },
     );
+  }
+
+  @override
+  void initState() {
+    super.initState();
+    itemFormCon.formKey = formKey;
   }
 
   @override

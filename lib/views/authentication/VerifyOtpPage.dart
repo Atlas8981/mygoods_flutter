@@ -27,40 +27,14 @@ class VerifyOTPPage extends StatefulWidget {
 class _VerifyOTPPageState extends State<VerifyOTPPage> with CodeAutoFill {
   String? smsCode;
   String? appSignature;
-
-  @override
-  void codeUpdated() {
-    setState(() {
-      smsCode = code;
-      // otpCon.text = code!;
-      print("$code");
-    });
-  }
-
-  @override
-  void listenForCode({String? smsCodeRegexPattern}) {
-    print(smsCodeRegexPattern);
-  }
-
-  @override
-  void initState() {
-    super.initState();
-    // listenForCode();
-
-    SmsAutoFill().getAppSignature.then((signature) {
-      setState(() {
-        appSignature = signature;
-      });
-    });
-  }
-
-  @override
-  void dispose() {
-    super.dispose();
-    cancel();
-  }
+  late String? verificationId = widget.verificationId;
 
   final otpCon = TextEditingController();
+
+  String messageText = "Waiting for SMS Code";
+  final int endTime = DateTime.now().millisecondsSinceEpoch + 1000 * 60;
+  bool isTimerEnd = false;
+  final auth = FirebaseAuth.instance;
 
   Widget otpTextField() {
     return PinFieldAutoFill(
@@ -101,9 +75,32 @@ class _VerifyOTPPageState extends State<VerifyOTPPage> with CodeAutoFill {
     // );
   }
 
-  final int endTime = DateTime.now().millisecondsSinceEpoch + 1000 * 60;
+  @override
+  void codeUpdated() {
+    setState(() {
+      smsCode = code;
+      messageText = "$code";
+      print(code);
+    });
+  }
 
-  // late final countdownController = CountdownTimerController(endTime: endTime);
+  @override
+  void initState() {
+    super.initState();
+    listenForCode();
+
+    SmsAutoFill().getAppSignature.then((signature) {
+      setState(() {
+        appSignature = signature;
+      });
+    });
+  }
+
+  @override
+  void dispose() {
+    super.dispose();
+    cancel();
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -135,11 +132,23 @@ class _VerifyOTPPageState extends State<VerifyOTPPage> with CodeAutoFill {
                       style: TextStyle(fontSize: 18),
                     ),
                     textStyle: TextStyle(fontSize: 18),
+                    onEnd: () {
+                      isTimerEnd = true;
+                    },
                   ),
                   // Container(
                   //   padding: EdgeInsets.all(20),
                   //   child: otpTextField(),
                   // ),
+                  SizedBox(
+                    height: 20,
+                  ),
+                  ElevatedButton(
+                    onPressed: () {
+                      resendCode();
+                    },
+                    child: Text("Resend Code"),
+                  ),
                   SizedBox(
                     height: 20,
                   ),
@@ -186,10 +195,14 @@ class _VerifyOTPPageState extends State<VerifyOTPPage> with CodeAutoFill {
                     width: double.maxFinite,
                     child: TextButton(
                       onPressed: () {
-                        listenForCode();
+                        if (smsCode != null) {
+                          signInWithPhoneNumber(smsCode!);
+                        } else {
+                          showToast("No Code");
+                        }
                       },
                       child: Text(
-                        "From Messages \nWaiting for SMS Code",
+                        "From Message\n$messageText",
                         maxLines: 2,
                         textAlign: TextAlign.center,
                         style: TextStyle(
@@ -210,10 +223,10 @@ class _VerifyOTPPageState extends State<VerifyOTPPage> with CodeAutoFill {
     );
   }
 
-  final auth = FirebaseAuth.instance;
+
 
   Future<void> signInWithPhoneNumber(String pin) async {
-    if (widget.verificationId == null) {
+    if (verificationId == null) {
       return;
     }
     final PhoneAuthCredential credential = PhoneAuthProvider.credential(
@@ -248,5 +261,37 @@ class _VerifyOTPPageState extends State<VerifyOTPPage> with CodeAutoFill {
         showToast("Invalid OTP");
       }
     }
+  }
+
+  Future<void> resendCode() async {
+    if(isTimerEnd) {
+      isTimerEnd = false;
+      await auth.verifyPhoneNumber(
+        phoneNumber: '+855${widget.phoneNumber}',
+        verificationCompleted: (PhoneAuthCredential credential) async {
+          // if(GetPlatform.isAndroid){
+          //   signInWithCredential(credential);
+          // }
+        },
+        verificationFailed: (FirebaseAuthException e) {
+          if (e.code == 'invalid-phone-number') {
+            showToast('Invalid Phone Number');
+          } else if (e.code == "too-many-requests") {
+            showToast("Too Many Request");
+          }
+          print(e.message);
+          print(e.code);
+        },
+        codeSent: (String vId, int? resendToken) async {
+          verificationId = vId;
+        },
+        codeAutoRetrievalTimeout: (String verificationId) {
+
+        },
+        timeout: Duration(seconds: 60),
+
+      );
+    }
+
   }
 }
