@@ -84,26 +84,34 @@ class ItemService {
         .update({
       'viewers': newViewers
     });
-
   }
 
-  Future<List<Item>> getTrendingItems() async{
-    List<Item> itemList = [];
-    try {
-      await firestore
-          .collection("$itemCollection")
-          .limit(10)
-          .orderBy("views", descending: true)
-          .get()
-          .then((value) => {
-        value.docs.forEach((element) {
-          Item item = Item.fromJson(element.data());
-          itemList.add(item);
-        })
-      });
-    } catch (e) {
-      print(e.toString());
+  Future<Item?> getItemById(String itemId) async {
+    final value =
+          await firestore.collection("$itemCollection").doc(itemId).get();
+    if (value.exists) {
+      final Item saveItem = Item.fromJson(value.data()!);
+      return saveItem;
     }
-    return itemList;
   }
+
+  // Future<List<Item>> getTrendingItems() async{
+  //   List<Item> itemList = [];
+  //   try {
+  //     await firestore
+  //         .collection("$itemCollection")
+  //         .limit(10)
+  //         .orderBy("views", descending: true)
+  //         .get()
+  //         .then((value) => {
+  //       value.docs.forEach((element) {
+  //         Item item = Item.fromJson(element.data());
+  //         itemList.add(item);
+  //       })
+  //     });
+  //   } catch (e) {
+  //     print(e.toString());
+  //   }
+  //   return itemList;
+  // }
 }

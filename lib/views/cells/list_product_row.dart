@@ -80,6 +80,7 @@ class _ListItemRowState extends State<ListItemRow> {
                   width: 125,
                   height: 125,
                   fit: BoxFit.cover,
+
                 ),
               ),
               SizedBox(

@@ -192,7 +192,7 @@ class _ItemDetailPageState extends State<ItemDetailPage> {
                         onPressed: () {}, child: Text("SAVE"));
                   }
                   isSaved = snapshot.data!;
-                  print("Future Builder $isSaved");
+                  // print("Future Builder $isSaved");
                   return OutlinedButton(
                     style: OutlinedButton.styleFrom(
                       side: BorderSide(width: 1.5, color: Colors.blue),

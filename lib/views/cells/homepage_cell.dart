@@ -1,33 +1,46 @@
-
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:mygoods_flutter/models/item.dart';
 
 class HomepageCell extends StatelessWidget {
-
   const HomepageCell(this.item);
+
   final Item item;
 
   @override
   Widget build(BuildContext context) {
     return Container(
       padding: EdgeInsets.only(right: 10),
+      width: 125,
       child: InkWell(
         onTap: () {},
-        child: Wrap(
-          direction: Axis.vertical,
+        child: Column(
+          // direction: Axis.vertical,
+          crossAxisAlignment: CrossAxisAlignment.start,
           children: [
             ClipRRect(
               borderRadius: BorderRadius.all(Radius.circular(5)),
-              child: CachedNetworkImage(
-                imageUrl: item.images[0].imageUrl,
+              child:
+              Image.network(
+                item.images[0].imageUrl,
                 width: 125,
                 height: 125,
                 fit: BoxFit.cover,
-              ),
+              )
+              // CachedNetworkImage(
+              //   imageUrl: item.images[0].imageUrl,
+              //   width: 125,
+              //   height: 125,
+              //   fit: BoxFit.cover,
+              //
+              // ),
             ),
-            Text("${item.name}"),
+            Text(
+              "${item.name}",
+              maxLines: 1,
+              overflow: TextOverflow.ellipsis,
+            ),
             Text("USD ${item.price}"),
           ],
         ),

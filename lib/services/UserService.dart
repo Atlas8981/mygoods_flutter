@@ -5,6 +5,7 @@ import 'package:firebase_auth/firebase_auth.dart';
 import 'package:firebase_storage/firebase_storage.dart';
 import 'package:mygoods_flutter/models/item.dart';
 import 'package:mygoods_flutter/models/user.dart' as myUser;
+import 'package:mygoods_flutter/services/ItemService.dart';
 import 'package:mygoods_flutter/utils/constant.dart';
 import 'package:mygoods_flutter/models/image.dart' as myImage;
 
@@ -12,6 +13,7 @@ class UserService {
   final auth = FirebaseAuth.instance;
   final firestore = FirebaseFirestore.instance;
   final storage = FirebaseStorage.instance;
+  final itemService = ItemService();
 
   Future<String?> login(String email, String password) async {
     try {
@@ -231,21 +233,21 @@ class UserService {
 
   Future<List<Item>> getSaveItems(List<String> itemIds) async {
     final List<Item?> querySaveItems =
-        await Future.wait(itemIds.map((e) => getSaveItem(e)));
+        await Future.wait(itemIds.map((e) => itemService.getItemById(e)));
     querySaveItems.removeWhere((element) => element == null);
     final List<Item> saveItems = querySaveItems.cast<Item>();
     return saveItems;
   }
 
-  Future<Item?> getSaveItem(String itemId) async {
-    final value =
-        await firestore.collection("$itemCollection").doc(itemId).get();
-    if (value.exists) {
-      final Item saveItem = Item.fromJson(value.data()!);
-      return saveItem;
-    }
-    return null;
-  }
+// Future<Item?> getSaveItem(String itemId) async {
+//   final value =
+//       await firestore.collection("$itemCollection").doc(itemId).get();
+//   if (value.exists) {
+//     final Item saveItem = Item.fromJson(value.data()!);
+//     return saveItem;
+//   }
+//   return null;
+// }
 
 // Future<List<myImageClass.Image>> uploadFiles(List<File> _images) async {
 //   var images = await Future.wait(_images.map((_image) => uploadFile(_image)));

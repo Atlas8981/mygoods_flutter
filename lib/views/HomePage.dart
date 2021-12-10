@@ -1,7 +1,10 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
+import 'package:get/get.dart';
+import 'package:mygoods_flutter/controllers/HomePageController.dart';
 import 'package:mygoods_flutter/models/image.dart' as myImage;
 import 'package:mygoods_flutter/models/item.dart';
+import 'package:mygoods_flutter/services/HomePageService.dart';
 import 'package:mygoods_flutter/utils/constant.dart';
 import 'package:mygoods_flutter/views/cells/homepage_cell.dart';
 
@@ -130,7 +133,10 @@ class HomePage extends StatelessWidget {
         date: Timestamp.now(),
         subCategory: "subCategory",
         images: [
-          myImage.Image(imageName: "imageName", imageUrl: "$dummyNetworkImage")
+          myImage.Image(
+            imageName: "imageName",
+            imageUrl: "$dummyNetworkImage",
+          )
         ],
         amount: 0,
         address: "address",
@@ -144,6 +150,8 @@ class HomePage extends StatelessWidget {
         mainCategory: "mainCategory",
         views: 0),
   ];
+  final homePageService = HomePageService();
+  final homePageController = Get.put(HomePageController());
 
   Widget homePageListView(String title,
       {required Function() onTap, required List<Item> items}) {
@@ -205,20 +213,25 @@ class HomePage extends StatelessWidget {
               height: 125,
               width: double.infinity,
             ),
-            FutureBuilder<List<Item>>(
-              // future: ,
-              builder: (context, snapshot) {
-                if (!snapshot.hasData) {
-                  return Text("Pg rok data oy");
-                } else if (snapshot.hasData) {
-                  final List<Item> items = snapshot.data!;
-                  return homePageListView("Trending", items: items, onTap: () {
+            GetBuilder<HomePageController>(
+              builder: (controller) {
+                if (controller.recentViewItem == null) {
+                  return Center(
+                    child: CircularProgressIndicator(),
+                  );
+                }
+                final List<Item> recentItems =
+                    controller.recentViewItem!.cast();
+                if (recentItems.length != 0) {
+                  return homePageListView(
+                      "Trending",
+                      items: recentItems,
+                      onTap: () {
                     showToast("In Development");
                   });
+                } else {
+                  return Text("Ort mean");
                 }
-                return Center(
-                  child: CircularProgressIndicator(),
-                );
               },
             ),
           ]),
