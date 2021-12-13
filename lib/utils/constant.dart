@@ -3,6 +3,7 @@ import 'dart:io';
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_chat_ui/flutter_chat_ui.dart';
 import 'package:fluttertoast/fluttertoast.dart';
 import 'package:get/get.dart';
 import 'package:mygoods_flutter/models/DualImage.dart';
@@ -10,6 +11,7 @@ import 'package:mygoods_flutter/models/additionalInfo.dart';
 import 'package:mygoods_flutter/models/category.dart';
 import 'package:mygoods_flutter/models/item.dart';
 import 'package:mygoods_flutter/models/image.dart' as myImage;
+import 'package:flutter_chat_types/flutter_chat_types.dart' as types;
 
 final String imageDir = "assets/images/";
 final String userCollection = "users";
@@ -255,6 +257,14 @@ final List<String> hasAdditionalInfoList = [
   carSubCategories[1].name,
   carSubCategories[2].name,
 ];
+
+Color getUserAvatarNameColor(types.User user) {
+  final index = user.id.hashCode % colors.length;
+  return colors[index];
+}
+
+String getUserName(types.User user) =>
+    '${user.firstName ?? ''} ${user.lastName ?? ''}'.trim();
 
 void showToast(String message) {
   Fluttertoast.showToast(

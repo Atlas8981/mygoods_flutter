@@ -5,6 +5,7 @@ import 'package:mygoods_flutter/controllers/BottomNavigationViewController.dart'
 import 'package:mygoods_flutter/views/AboutMePage.dart';
 import 'package:mygoods_flutter/views/AddPage.dart';
 import 'package:mygoods_flutter/views/CategoryPage.dart';
+import 'package:mygoods_flutter/views/chat/ChatListPage.dart';
 
 import 'HomePage.dart';
 
@@ -55,6 +56,10 @@ class _MainActivityState extends State<MainActivity> {
                 label: 'Add',
               ),
               BottomNavigationBarItem(
+                icon: Icon(Icons.chat_outlined),
+                label: 'Message',
+              ),
+              BottomNavigationBarItem(
                 icon: Icon(Icons.person_outline),
                 label: 'Account',
               ),
@@ -85,11 +90,14 @@ class _MainActivityState extends State<MainActivity> {
               HomePage(),
               CategoryPage(),
               AddPage(),
+              ChatListPage(),
               AboutMePage(),
             ],
           )),
-      bottomNavigationBar:
-          buildBottomNavigationMenu(context, bottomNavigationController),
+      bottomNavigationBar: buildBottomNavigationMenu(
+        context,
+        bottomNavigationController,
+      ),
     );
   }
 }

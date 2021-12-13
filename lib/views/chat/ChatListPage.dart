@@ -1,11 +1,83 @@
+import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_firebase_chat_core/flutter_firebase_chat_core.dart';
 import 'package:get/get.dart';
-import 'package:mygoods_flutter/components/ListBottomSheet.dart';
 import 'package:mygoods_flutter/utils/constant.dart';
+import 'package:mygoods_flutter/views/chat/ChatPage.dart';
+import 'package:mygoods_flutter/views/chat/ChatRoom.dart';
+import 'package:flutter_chat_types/flutter_chat_types.dart' as types;
 
 class ChatListPage extends StatelessWidget {
-  const ChatListPage({Key? key}) : super(key: key);
+  ChatListPage({Key? key}) : super(key: key);
+
+  final fireChatCore = FirebaseChatCore.instance;
+
+  void _handlePressed(types.User otherUser, BuildContext context) async {
+    final room = await FirebaseChatCore.instance
+        .createRoom(otherUser).then((value) {
+          print(value);
+    });
+    // print("On Presses" + room.toString());
+    // Get.to(() => ChatRoom(), arguments: room);
+  }
+
+  void deleteUsers() {
+    fireChatCore.deleteUserFromFirestore("g42wcXAXFsehuXwu5eJ6316eYs52");
+  }
+
+  Future<void> createUsers() async {
+    await fireChatCore.createUserInFirestore(
+      types.User(
+        firstName: 'John',
+        id: "g42wcXAXFsehuXwu5eJ6316eYs52",
+        // UID from Firebase Authentication
+        imageUrl: 'https://i.pravatar.cc/300',
+        lastName: 'Doe',
+      ),
+    ).then((value) {
+      print("done");
+    });
+  }
+
+  final auth = FirebaseAuth.instance;
+
+  late types.User _user = types.User(id: auth.currentUser!.uid);
+
+  Widget _buildAvatar(types.Room room) {
+    var color = Colors.transparent;
+
+    if (room.type == types.RoomType.direct) {
+      try {
+        final otherUser = room.users.firstWhere(
+          (u) => u.id != _user.id,
+        );
+
+        color = getUserAvatarNameColor(otherUser);
+      } catch (e) {
+        // Do nothing if other user is not found
+      }
+    }
+
+    final hasImage = room.imageUrl != null;
+    final name = room.name ?? '';
+
+    return Container(
+      margin: const EdgeInsets.only(right: 16),
+      child: CircleAvatar(
+        backgroundColor: hasImage ? Colors.transparent : color,
+        backgroundImage: hasImage ? NetworkImage(room.imageUrl!) : null,
+        radius: 20,
+        child: !hasImage
+            ? Text(
+                name.isEmpty ? '' : name[0].toUpperCase(),
+                style: const TextStyle(color: Colors.white),
+              )
+            : null,
+      ),
+    );
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -62,16 +134,81 @@ class ChatListPage extends StatelessWidget {
             },
             icon: Icon(Icons.filter_list),
           ),
+          IconButton(
+            onPressed: () {
+              createUsers();
+            },
+            icon: Icon(Icons.person_add),
+          ),
+          IconButton(
+            onPressed: () {
+              // createUsers();
+              _handlePressed(
+                types.User(
+                  firstName: 'John',
+                  id: "g42wcXAXFsehuXwu5eJ6316eYs52", // UID from Firebase Authentication
+                  imageUrl: 'https://i.pravatar.cc/300',
+                  lastName: 'Doe',
+                ),
+                context,
+              );
+            },
+            icon: Icon(Icons.add),
+          ),
+          IconButton(
+            onPressed: () {
+              deleteUsers();
+            },
+            icon: Icon(Icons.delete_outline),
+          )
         ],
       ),
-      body: Container(
-        padding: EdgeInsets.all(10),
-        child: ListView.builder(
-          itemCount: 2,
-          itemBuilder: (context, index) {
-            return ChatRow();
-          },
-        ),
+      body: StreamBuilder<List<types.Room>>(
+        stream: FirebaseChatCore.instance.rooms(),
+        initialData: const [],
+        builder: (context, snapshot) {
+          if (!snapshot.hasData || snapshot.data!.isEmpty) {
+            return Container(
+              alignment: Alignment.center,
+              margin: const EdgeInsets.only(
+                bottom: 200,
+              ),
+              child: const Text('No rooms'),
+            );
+          }
+
+          return ListView.builder(
+            itemCount: snapshot.data!.length,
+            itemBuilder: (context, index) {
+              final room = snapshot.data![index];
+              print(snapshot.data!.length);
+              print(room);
+              return InkWell(
+                onTap: () {
+                  Navigator.of(context).push(
+                    MaterialPageRoute(
+                      builder: (context) => ChatPage(
+                        room: room,
+                      ),
+                    ),
+                  );
+                },
+                child: Container(
+                  padding: const EdgeInsets.symmetric(
+                    horizontal: 16,
+                    vertical: 8,
+                  ),
+                  child: Row(
+                    children: [
+                      _buildAvatar(room),
+                      Text(room.name ?? ''),
+                    ],
+                  ),
+                ),
+              );
+            },
+          );
+        },
       ),
     );
   }
@@ -82,71 +219,77 @@ class ChatRow extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Container(
-      height: 100,
-      // color: Colors.red,
-      child: Row(
-        children: [
-          CircleAvatar(
-            backgroundImage: NetworkImage(dummyNetworkImage),
-            radius: 40,
-          ),
-          SizedBox(
-            width: 8,
-          ),
-          Expanded(
-            child: Container(
-              // color: Colors.blue,
-              child: Column(
-                crossAxisAlignment: CrossAxisAlignment.start,
-                mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                children: [
-                  Row(
-                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                    children: [
-                      Text("(Atlas 5951)"),
-                      Text(
-                        "(22 June 2021)",
-                        style: TextStyle(
-                            fontSize: 12, color: Colors.black.withOpacity(0.8)),
+    return InkWell(
+      onTap: () {
+        Get.to(() => ChatRoom());
+      },
+      child: Container(
+        height: 100,
+        // color: Colors.red,
+        child: Row(
+          children: [
+            CircleAvatar(
+              backgroundImage: NetworkImage(dummyNetworkImage),
+              radius: 40,
+            ),
+            SizedBox(
+              width: 8,
+            ),
+            Expanded(
+              child: Container(
+                // color: Colors.blue,
+                child: Column(
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                  children: [
+                    Row(
+                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                      children: [
+                        Text("(Atlas 5951)"),
+                        Text(
+                          "(22 June 2021)",
+                          style: TextStyle(
+                              fontSize: 12,
+                              color: Colors.black.withOpacity(0.8)),
+                        ),
+                      ],
+                    ),
+                    Text(
+                      "(Disc Brake Rotor Snails)",
+                      style: TextStyle(
+                        fontSize: 16,
                       ),
-                    ],
-                  ),
-                  Text(
-                    "(Disc Brake Rotor Snails)",
-                    style: TextStyle(
-                      fontSize: 16,
                     ),
-                  ),
-                  Text(
-                    "(Item Status) This item is not available",
-                    style: TextStyle(
-                      fontSize: 14,
+                    Text(
+                      "(Item Status) This item is not available",
+                      style: TextStyle(
+                        fontSize: 14,
+                      ),
                     ),
-                  ),
-                  Text(
-                    "(Last Text) How Much?",
-                    style: TextStyle(
-                      fontSize: 14,
+                    Text(
+                      "(Last Text) How Much?",
+                      style: TextStyle(
+                        fontSize: 14,
+                      ),
                     ),
-                  ),
-                ],
+                  ],
+                ),
               ),
             ),
-          ),
-          SizedBox(
-            width: 8,
-          ),
-          ClipRRect(
-            borderRadius: BorderRadius.circular(10),
-            child: Image.network(
-              dummyNetworkImage,
-              height: 80,
-              width: 80,
-              fit: BoxFit.cover,
+            SizedBox(
+              width: 8,
             ),
-          )
-        ],
+            ClipRRect(
+              borderRadius: BorderRadius.circular(10),
+              child: Image.network(
+                dummyNetworkImage,
+                height: 80,
+                width: 80,
+                fit: BoxFit.cover,
+              ),
+            )
+          ],
+        ),
       ),
     );
   }

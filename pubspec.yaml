@@ -51,6 +51,11 @@ dependencies:
   flutter_countdown_timer: ^4.1.0
   flutter_svg: ^1.0.0
   circular_widgets: ^2.0.0
+  flutter_firebase_chat_core: ^1.5.0
+  flutter_chat_ui: ^1.5.3
+  open_file: ^3.2.1
+  file_picker: ^4.2.7
+  mime: ^1.0.1
 
 
 dev_dependencies:
@@ -128,6 +133,7 @@ flutter:
     - assets/images/term.png
     - assets/images/watch.png
     - assets/images/watches.jpg
+    - assets/messages.json
 
   # An image asset can refer to one or more resolution-specific "variants", see
   # https://flutter.dev/assets-and-images/#resolution-aware.

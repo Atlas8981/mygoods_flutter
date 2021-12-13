@@ -3,7 +3,7 @@ import 'package:get/get.dart';
 import 'package:image_picker/image_picker.dart';
 import 'package:mygoods_flutter/components/CategoryDropdownMenu.dart';
 import 'package:mygoods_flutter/components/ClickableTextField.dart';
-import 'package:mygoods_flutter/components/CustomBottomSheet.dart';
+import 'package:mygoods_flutter/components/ListBottomSheet.dart';
 import 'package:mygoods_flutter/components/TypeTextField.dart';
 import 'package:mygoods_flutter/controllers/AdditionalInfoController.dart';
 import 'package:mygoods_flutter/controllers/ItemFormController.dart';
@@ -382,7 +382,7 @@ class _ItemFormState extends State<ItemForm> {
                 onTap: () {
                   FocusScope.of(context).requestFocus(FocusNode());
                   Get.bottomSheet(
-                      CustomButtonSheet(
+                      ListButtonSheet(
                         items: conditions,
                         onItemClick: (index) {
                           setState(() {

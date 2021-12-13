@@ -131,8 +131,8 @@ class _CustomBottomSheetWithSearchState
   }
 }
 
-class CustomButtonSheet extends StatefulWidget {
-  const CustomButtonSheet({
+class ListButtonSheet extends StatefulWidget {
+  const ListButtonSheet({
     Key? key,
     required this.items,
     required this.onItemClick,
@@ -142,10 +142,10 @@ class CustomButtonSheet extends StatefulWidget {
   final Function(int index) onItemClick;
 
   @override
-  _CustomButtonSheetState createState() => _CustomButtonSheetState();
+  _ListButtonSheetState createState() => _ListButtonSheetState();
 }
 
-class _CustomButtonSheetState extends State<CustomButtonSheet> {
+class _ListButtonSheetState extends State<ListButtonSheet> {
   @override
   Widget build(BuildContext context) {
     return Container(
