@@ -60,17 +60,17 @@ class HomePageService {
     return listOfItem;
   }
 
-  Future<List<Item>> getPreferenceItems() async {
-    final List<Item> items = [];
-    final query = await firestore
-        .collection("$itemCollection")
-        .orderBy("views", descending: true)
-        .limit(10)
-        .get();
-    query.docs.forEach((element) {
-      Item item = Item.fromJson(element.data());
-      items.add(item);
-    });
-    return items;
-  }
+  // Future<List<Item>> getPreferenceItems() async {
+  //   final List<Item> items = [];
+  //   final query = await firestore
+  //       .collection("$itemCollection")
+  //       .orderBy("views", descending: true)
+  //       .limit(10)
+  //       .get();
+  //   query.docs.forEach((element) {
+  //     Item item = Item.fromJson(element.data());
+  //     items.add(item);
+  //   });
+  //   return items;
+  // }
 }

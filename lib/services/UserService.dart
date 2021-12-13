@@ -151,6 +151,9 @@ class UserService {
   }
 
   Future<bool> checkSaveItem(String itemId) async {
+    if (auth.currentUser == null) {
+      return false;
+    }
     bool response = false;
     final userId = auth.currentUser!.uid;
     try {
@@ -237,6 +240,20 @@ class UserService {
     querySaveItems.removeWhere((element) => element == null);
     final List<Item> saveItems = querySaveItems.cast<Item>();
     return saveItems;
+  }
+
+  Future<void> addToRecentView(String itemId) async {
+    if(auth.currentUser == null){
+      return;
+    }
+    firestore.collection("$userCollection")
+        .doc(auth.currentUser!.uid)
+        .collection("$recentViewItemCollection")
+        .doc(itemId)
+        .set({
+      'date':Timestamp.now(),
+      'itemID':itemId,
+    });
   }
 
 // Future<Item?> getSaveItem(String itemId) async {

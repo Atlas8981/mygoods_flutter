@@ -27,6 +27,8 @@ class HomepageCell extends StatelessWidget {
                 width: 125,
                 height: 125,
                 fit: BoxFit.cover,
+                cacheHeight: 500,
+
               )
               // CachedNetworkImage(
               //   imageUrl: item.images[0].imageUrl,

@@ -2,24 +2,46 @@ import 'package:get/get.dart';
 import 'package:mygoods_flutter/services/HomePageService.dart';
 
 class HomePageController extends GetxController {
-  RxList? recentViewItem;
-
+  RxList? recentViewItems;
+  RxList? trendingItems;
+  // RxList? recommendationItems;
+  final homePageService = HomePageService();
   @override
   void onInit() {
     super.onInit();
-    getRecentViewItem();
+    getRecentViewItems();
+    getTrendingItems();
   }
-
-  final homePageService = HomePageService();
-
-  void getRecentViewItem() {
-    homePageService.getRecentViewItems().then((value) {
+  void getTrendingItems() {
+    homePageService.getTrendingItems().then((value) {
       if (value.length == 0) {
-        recentViewItem = [].obs;
+        trendingItems = [].obs;
       } else {
-        recentViewItem = value.obs;
+        trendingItems = value.obs;
       }
       update();
     });
   }
+
+  void getRecentViewItems() {
+    homePageService.getRecentViewItems().then((value) {
+      if (value.length == 0) {
+        recentViewItems = [].obs;
+      } else {
+        recentViewItems = value.obs;
+      }
+      update();
+    });
+  }
+
+  // void getRecommendationItem() {
+    // homePageService.getRecentViewItems().then((value) {
+    //   if (value.length == 0) {
+    //     recentViewItems = [].obs;
+    //   } else {
+    //     recentViewItems = value.obs;
+    //   }
+    //   update();
+    // });
+  // }
 }

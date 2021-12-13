@@ -1,12 +1,15 @@
 import 'dart:io';
 
 import 'package:cached_network_image/cached_network_image.dart';
+import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 import 'package:fluttertoast/fluttertoast.dart';
 import 'package:get/get.dart';
 import 'package:mygoods_flutter/models/DualImage.dart';
 import 'package:mygoods_flutter/models/additionalInfo.dart';
 import 'package:mygoods_flutter/models/category.dart';
+import 'package:mygoods_flutter/models/item.dart';
+import 'package:mygoods_flutter/models/image.dart' as myImage;
 
 final String imageDir = "assets/images/";
 final String userCollection = "users";
@@ -14,6 +17,148 @@ final String itemCollection = "items";
 final String additionalCollection = "additionInfo";
 final String saveItemCollection = "saveItems";
 final String recentViewItemCollection = "recentView";
+
+final dummyItemList = [
+  Item(
+      date: Timestamp.now(),
+      subCategory: "subCategory",
+      images: [
+        myImage.Image(imageName: "imageName", imageUrl: "$dummyNetworkImage")
+      ],
+      amount: 0,
+      address: "address",
+      description: "description",
+      userid: "userid",
+      itemid: "itemid",
+      viewers: [],
+      phone: "phone",
+      price: 123,
+      name: "name",
+      mainCategory: "mainCategory",
+      views: 0),
+  Item(
+      date: Timestamp.now(),
+      subCategory: "subCategory",
+      images: [
+        myImage.Image(imageName: "imageName", imageUrl: "$dummyNetworkImage")
+      ],
+      amount: 0,
+      address: "address",
+      description: "description",
+      userid: "userid",
+      itemid: "itemid",
+      viewers: [],
+      phone: "phone",
+      price: 123,
+      name: "name",
+      mainCategory: "mainCategory",
+      views: 0),
+  Item(
+      date: Timestamp.now(),
+      subCategory: "subCategory",
+      images: [
+        myImage.Image(imageName: "imageName", imageUrl: "$dummyNetworkImage")
+      ],
+      amount: 0,
+      address: "address",
+      description: "description",
+      userid: "userid",
+      itemid: "itemid",
+      viewers: [],
+      phone: "phone",
+      price: 123,
+      name: "name",
+      mainCategory: "mainCategory",
+      views: 0),
+  Item(
+      date: Timestamp.now(),
+      subCategory: "subCategory",
+      images: [
+        myImage.Image(imageName: "imageName", imageUrl: "$dummyNetworkImage")
+      ],
+      amount: 0,
+      address: "address",
+      description: "description",
+      userid: "userid",
+      itemid: "itemid",
+      viewers: [],
+      phone: "phone",
+      price: 123,
+      name: "name",
+      mainCategory: "mainCategory",
+      views: 0),
+  Item(
+      date: Timestamp.now(),
+      subCategory: "subCategory",
+      images: [
+        myImage.Image(imageName: "imageName", imageUrl: "$dummyNetworkImage")
+      ],
+      amount: 0,
+      address: "address",
+      description: "description",
+      userid: "userid",
+      itemid: "itemid",
+      viewers: [],
+      phone: "phone",
+      price: 123,
+      name: "name",
+      mainCategory: "mainCategory",
+      views: 0),
+  Item(
+      date: Timestamp.now(),
+      subCategory: "subCategory",
+      images: [
+        myImage.Image(imageName: "imageName", imageUrl: "$dummyNetworkImage")
+      ],
+      amount: 0,
+      address: "address",
+      description: "description",
+      userid: "userid",
+      itemid: "itemid",
+      viewers: [],
+      phone: "phone",
+      price: 123,
+      name: "name",
+      mainCategory: "mainCategory",
+      views: 0),
+  Item(
+      date: Timestamp.now(),
+      subCategory: "subCategory",
+      images: [
+        myImage.Image(imageName: "imageName", imageUrl: "$dummyNetworkImage")
+      ],
+      amount: 0,
+      address: "address",
+      description: "description",
+      userid: "userid",
+      itemid: "itemid",
+      viewers: [],
+      phone: "phone",
+      price: 123,
+      name: "name",
+      mainCategory: "mainCategory",
+      views: 0),
+  Item(
+      date: Timestamp.now(),
+      subCategory: "subCategory",
+      images: [
+        myImage.Image(
+          imageName: "imageName",
+          imageUrl: "$dummyNetworkImage",
+        )
+      ],
+      amount: 0,
+      address: "address",
+      description: "description",
+      userid: "userid",
+      itemid: "itemid",
+      viewers: [],
+      phone: "phone",
+      price: 123,
+      name: "name",
+      mainCategory: "mainCategory",
+      views: 0),
+];
 
 final List<Category> mainCategories = [
   Category(name: "Electronic", image: "${imageDir}electronic.png"),

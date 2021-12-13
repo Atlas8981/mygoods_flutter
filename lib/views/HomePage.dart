@@ -1,4 +1,3 @@
-import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:mygoods_flutter/controllers/HomePageController.dart';
@@ -9,147 +8,6 @@ import 'package:mygoods_flutter/utils/constant.dart';
 import 'package:mygoods_flutter/views/cells/homepage_cell.dart';
 
 class HomePage extends StatelessWidget {
-  final itemList = [
-    Item(
-        date: Timestamp.now(),
-        subCategory: "subCategory",
-        images: [
-          myImage.Image(imageName: "imageName", imageUrl: "$dummyNetworkImage")
-        ],
-        amount: 0,
-        address: "address",
-        description: "description",
-        userid: "userid",
-        itemid: "itemid",
-        viewers: [],
-        phone: "phone",
-        price: 123,
-        name: "name",
-        mainCategory: "mainCategory",
-        views: 0),
-    Item(
-        date: Timestamp.now(),
-        subCategory: "subCategory",
-        images: [
-          myImage.Image(imageName: "imageName", imageUrl: "$dummyNetworkImage")
-        ],
-        amount: 0,
-        address: "address",
-        description: "description",
-        userid: "userid",
-        itemid: "itemid",
-        viewers: [],
-        phone: "phone",
-        price: 123,
-        name: "name",
-        mainCategory: "mainCategory",
-        views: 0),
-    Item(
-        date: Timestamp.now(),
-        subCategory: "subCategory",
-        images: [
-          myImage.Image(imageName: "imageName", imageUrl: "$dummyNetworkImage")
-        ],
-        amount: 0,
-        address: "address",
-        description: "description",
-        userid: "userid",
-        itemid: "itemid",
-        viewers: [],
-        phone: "phone",
-        price: 123,
-        name: "name",
-        mainCategory: "mainCategory",
-        views: 0),
-    Item(
-        date: Timestamp.now(),
-        subCategory: "subCategory",
-        images: [
-          myImage.Image(imageName: "imageName", imageUrl: "$dummyNetworkImage")
-        ],
-        amount: 0,
-        address: "address",
-        description: "description",
-        userid: "userid",
-        itemid: "itemid",
-        viewers: [],
-        phone: "phone",
-        price: 123,
-        name: "name",
-        mainCategory: "mainCategory",
-        views: 0),
-    Item(
-        date: Timestamp.now(),
-        subCategory: "subCategory",
-        images: [
-          myImage.Image(imageName: "imageName", imageUrl: "$dummyNetworkImage")
-        ],
-        amount: 0,
-        address: "address",
-        description: "description",
-        userid: "userid",
-        itemid: "itemid",
-        viewers: [],
-        phone: "phone",
-        price: 123,
-        name: "name",
-        mainCategory: "mainCategory",
-        views: 0),
-    Item(
-        date: Timestamp.now(),
-        subCategory: "subCategory",
-        images: [
-          myImage.Image(imageName: "imageName", imageUrl: "$dummyNetworkImage")
-        ],
-        amount: 0,
-        address: "address",
-        description: "description",
-        userid: "userid",
-        itemid: "itemid",
-        viewers: [],
-        phone: "phone",
-        price: 123,
-        name: "name",
-        mainCategory: "mainCategory",
-        views: 0),
-    Item(
-        date: Timestamp.now(),
-        subCategory: "subCategory",
-        images: [
-          myImage.Image(imageName: "imageName", imageUrl: "$dummyNetworkImage")
-        ],
-        amount: 0,
-        address: "address",
-        description: "description",
-        userid: "userid",
-        itemid: "itemid",
-        viewers: [],
-        phone: "phone",
-        price: 123,
-        name: "name",
-        mainCategory: "mainCategory",
-        views: 0),
-    Item(
-        date: Timestamp.now(),
-        subCategory: "subCategory",
-        images: [
-          myImage.Image(
-            imageName: "imageName",
-            imageUrl: "$dummyNetworkImage",
-          )
-        ],
-        amount: 0,
-        address: "address",
-        description: "description",
-        userid: "userid",
-        itemid: "itemid",
-        viewers: [],
-        phone: "phone",
-        price: 123,
-        name: "name",
-        mainCategory: "mainCategory",
-        views: 0),
-  ];
   final homePageService = HomePageService();
   final homePageController = Get.put(HomePageController());
 
@@ -215,25 +73,61 @@ class HomePage extends StatelessWidget {
             ),
             GetBuilder<HomePageController>(
               builder: (controller) {
-                if (controller.recentViewItem == null) {
+                if (controller.trendingItems == null) {
                   return Center(
                     child: CircularProgressIndicator(),
                   );
                 }
-                final List<Item> recentItems =
-                    controller.recentViewItem!.cast();
-                if (recentItems.length != 0) {
-                  return homePageListView(
-                      "Trending",
-                      items: recentItems,
+                final List<Item> trendingItems =
+                    controller.trendingItems!.cast();
+                if (trendingItems.length != 0) {
+                  return homePageListView("Trending", items: trendingItems,
                       onTap: () {
                     showToast("In Development");
                   });
                 } else {
-                  return Text("Ort mean");
+                  return Container();
                 }
               },
             ),
+            FutureBuilder<List<Item>>(
+              future: homePageService.getRecentViewItems(),
+              builder: (context, snapshot) {
+                if (!snapshot.hasData) {
+                  return Center(
+                    child: CircularProgressIndicator(),
+                  );
+                }
+                final List<Item> recentItems = snapshot.data!;
+                if (recentItems.length != 0) {
+                  return homePageListView("Recently View", items: recentItems,
+                      onTap: () {
+                    showToast("In Development");
+                  });
+                } else {
+                  return Container();
+                }
+              },
+            ),
+            // GetBuilder<HomePageController>(
+            //   builder: (controller) {
+            //     if (controller.recentViewItems == null) {
+            //       return Center(
+            //         child: CircularProgressIndicator(),
+            //       );
+            //     }
+            //     final List<Item> recentItems =
+            //         controller.recentViewItems!.cast();
+            //     if (recentItems.length != 0) {
+            //       return homePageListView("Recently View", items: recentItems,
+            //           onTap: () {
+            //         showToast("In Development");
+            //       });
+            //     } else {
+            //       return Container();
+            //     }
+            //   },
+            // ),
           ]),
         ),
       ),

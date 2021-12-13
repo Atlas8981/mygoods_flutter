@@ -1,4 +1,3 @@
-
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
@@ -173,7 +172,7 @@ class _ItemDetailPageState extends State<ItemDetailPage> {
                 onPressed: () {},
                 child: Text(
                   "View Seller Profile".toUpperCase(),
-                  style: TextStyle(fontSize: 16),
+                  style: TextStyle(fontSize: 16, letterSpacing: 1.5),
                 )),
           ),
           SizedBox(
@@ -215,12 +214,22 @@ class _ItemDetailPageState extends State<ItemDetailPage> {
   }
 
   void addView() {
-    itemService.addViewToItem(item.itemid,item.viewers);
+    itemService.addViewToItem(item.itemid, item.viewers);
+  }
+
+  void addRecentView() {
+    userService.addToRecentView(item.itemid);
+  }
+
+  @override
+  void initState() {
+    super.initState();
+    addRecentView();
+    addView();
   }
 
   @override
   Widget build(BuildContext context) {
-    addView();
     return Scaffold(
       appBar: AppBar(
         title: Text("Item Detail"),
@@ -313,6 +322,4 @@ class _ItemDetailPageState extends State<ItemDetailPage> {
       ),
     );
   }
-
-
 }
