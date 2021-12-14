@@ -9,7 +9,6 @@ import 'package:mygoods_flutter/utils/constant.dart';
 import 'package:mygoods_flutter/views/MainActivity.dart';
 import 'package:mygoods_flutter/views/RegisterPage.dart';
 import 'package:mygoods_flutter/views/authentication/VerifyOtpPage.dart';
-import 'package:mygoods_flutter/views/authentication/test_otp_page.dart';
 
 class LoginWithPhoneNumberPage extends StatelessWidget {
   LoginWithPhoneNumberPage({Key? key}) : super(key: key);

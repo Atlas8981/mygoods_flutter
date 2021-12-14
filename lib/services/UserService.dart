@@ -3,11 +3,15 @@ import 'dart:io';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:firebase_storage/firebase_storage.dart';
+import 'package:flutter_firebase_chat_core/flutter_firebase_chat_core.dart';
+import 'package:get/get.dart';
+import 'package:mygoods_flutter/controllers/UserController.dart';
 import 'package:mygoods_flutter/models/item.dart';
 import 'package:mygoods_flutter/models/user.dart' as myUser;
 import 'package:mygoods_flutter/services/ItemService.dart';
 import 'package:mygoods_flutter/utils/constant.dart';
 import 'package:mygoods_flutter/models/image.dart' as myImage;
+import 'package:flutter_chat_types/flutter_chat_types.dart' as types;
 
 class UserService {
   final auth = FirebaseAuth.instance;
@@ -15,13 +19,11 @@ class UserService {
   final storage = FirebaseStorage.instance;
   final itemService = ItemService();
 
-  Future<String?> login(String email, String password) async {
+  Future<UserCredential?> login(String email, String password) async {
     try {
       final response = await auth.signInWithEmailAndPassword(
           email: email, password: password);
-      if (response.user != null && response.user!.uid.isNotEmpty) {
-        return response.user!.displayName;
-      }
+      return response;
     } on FirebaseAuthException catch (e) {
       if (e.code == 'user-not-found') {
         showToast('No user found for that email.');
@@ -74,7 +76,8 @@ class UserService {
     return response;
   }
 
-  Future<myImage.Image> updateUserImage(File userImage) async {
+  Future<myImage.Image> updateUserImage(
+      File userImage, myUser.User user) async {
     final imageName = "${DateTime.now()}";
     final Reference storageReference =
         storage.ref('flutter/').child("$imageName");
@@ -86,10 +89,23 @@ class UserService {
         .collection("$userCollection")
         .doc(auth.currentUser!.uid)
         .update({'image': returnImage.toJson()});
+    final tempUser = user;
+    tempUser.image = returnImage;
+    await createUserInChatUser(tempUser);
     return returnImage;
   }
 
+  Future<void> createUserInChatUser(myUser.User user) async {
+    await FirebaseChatCore.instance.createUserInFirestore(types.User(
+      id: user.userId,
+      firstName: user.firstName,
+      imageUrl: user.image?.imageUrl,
+      lastName: user.lastName,
+    ));
+  }
+
   Future<myUser.User?> updateUserInfo(myUser.User newUserInfo) async {
+    await createUserInChatUser(newUserInfo);
     final myUser.User response = await firestore
         .collection("$userCollection")
         .doc(newUserInfo.userId)
@@ -243,16 +259,17 @@ class UserService {
   }
 
   Future<void> addToRecentView(String itemId) async {
-    if(auth.currentUser == null){
+    if (auth.currentUser == null) {
       return;
     }
-    firestore.collection("$userCollection")
+    firestore
+        .collection("$userCollection")
         .doc(auth.currentUser!.uid)
         .collection("$recentViewItemCollection")
         .doc(itemId)
         .set({
-      'date':Timestamp.now(),
-      'itemID':itemId,
+      'date': Timestamp.now(),
+      'itemID': itemId,
     });
   }
 

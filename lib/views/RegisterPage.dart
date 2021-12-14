@@ -1,6 +1,7 @@
 import 'dart:ui';
 
 import 'package:flutter/material.dart';
+import 'package:flutter_firebase_chat_core/flutter_firebase_chat_core.dart';
 import 'package:get/get.dart';
 import 'package:mygoods_flutter/components/TypeTextField.dart';
 import 'package:mygoods_flutter/controllers/UserController.dart';
@@ -8,17 +9,19 @@ import 'package:mygoods_flutter/models/user.dart';
 import 'package:mygoods_flutter/services/UserService.dart';
 import 'package:mygoods_flutter/models/image.dart' as myImage;
 import 'package:mygoods_flutter/views/MainActivity.dart';
+import 'package:flutter_chat_types/flutter_chat_types.dart' as types;
 
 class RegisterPage extends StatelessWidget {
-  RegisterPage({Key? key, required this.userId,required this.phoneNumber}) : super(key: key);
+  RegisterPage({Key? key, required this.userId, this.phoneNumber})
+      : super(key: key);
 
   final String userId;
-  final String phoneNumber;
+  String? phoneNumber;
 
   final firstnameCon = TextEditingController(),
       lastnameCon = TextEditingController(),
       usernameCon = TextEditingController(),
-      // phoneCon = TextEditingController(),
+      phoneCon = TextEditingController(),
       addressCon = TextEditingController();
   final GlobalKey formKey = GlobalKey<FormState>();
 
@@ -94,33 +97,41 @@ class RegisterPage extends StatelessWidget {
               labelText: "Username",
               inputType: TextInputType.name,
               controller: usernameCon),
-          // SizedBox(
-          //   height: 20,
-          // ),
-          // TypeTextField(
-          //   labelText: "Phone Number",
-          //   controller: phoneCon,
-          //   inputType: TextInputType.phone,
-          //   prefix: "0",
-          //   maxLength: 9,
-          //   buildCounter: (context,
-          //       {required currentLength, required isFocused, maxLength}) {
-          //     return Text(
-          //       '${currentLength + 1}/${maxLength! + 1}',
-          //       semanticsLabel: 'character count',
-          //       style: TextStyle(fontSize: 12, height: 1),
-          //     );
-          //   },
-          //   validator: (value) {
-          //     if (value == null || value.isEmpty) {
-          //       return "Field Empty";
-          //     }
-          //     if (!GetUtils.isPhoneNumber("0$value")) {
-          //       return "Wrong Phone Format";
-          //     }
-          //     return null;
-          //   },
-          // ),
+          (phoneNumber == null)
+              ? Column(
+                  children: [
+                    SizedBox(
+                      height: 20,
+                    ),
+                    TypeTextField(
+                      labelText: "Phone Number",
+                      controller: phoneCon,
+                      inputType: TextInputType.phone,
+                      prefix: "0",
+                      maxLength: 9,
+                      buildCounter: (context,
+                          {required currentLength,
+                          required isFocused,
+                          maxLength}) {
+                        return Text(
+                          '${currentLength + 1}/${maxLength! + 1}',
+                          semanticsLabel: 'character count',
+                          style: TextStyle(fontSize: 12, height: 1),
+                        );
+                      },
+                      validator: (value) {
+                        if (value == null || value.isEmpty) {
+                          return "Field Empty";
+                        }
+                        if (!GetUtils.isPhoneNumber("0$value")) {
+                          return "Wrong Phone Format";
+                        }
+                        return null;
+                      },
+                    ),
+                  ],
+                )
+              : Container(),
           SizedBox(
             height: 20,
           ),
@@ -152,20 +163,29 @@ class RegisterPage extends StatelessWidget {
 
   void putDataIntoFirestore() {
     final username = usernameCon.text.trim();
-    final fistname = firstnameCon.text.trim();
+    final firstname = firstnameCon.text.trim();
     final lastname = lastnameCon.text.trim();
     final address = addressCon.text.trim();
-
+    if (phoneNumber == null) {
+      phoneNumber = phoneCon.text.trim();
+    }
     final User user = User(
         userId: userId,
         username: username,
-        firstName: fistname,
+        firstName: firstname,
         lastName: lastname,
         email: "",
-        phoneNumber: phoneNumber,
+        phoneNumber: phoneNumber!,
         address: address,
         image: myImage.Image(imageName: "", imageUrl: ""),
         preferenceId: []);
+
+    FirebaseChatCore.instance.createUserInFirestore(types.User(
+      id: user.userId,
+      firstName: user.firstName,
+      imageUrl: user.image?.imageUrl,
+      lastName: user.lastName,
+    ));
 
     userService.registerUser(user).then((value) {
       Get.delete<UserController>();

@@ -8,7 +8,7 @@ class LandingPageController extends GetxController {
   void changeTabIndex(int index) {
     int preTabIndex = tabIndex.value;
     tabIndex.value = index;
-    if (index == 2 || index == 3) {
+    if (index >= 2) {
       checkLogin(preTabIndex);
     }
   }

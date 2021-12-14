@@ -1,42 +1,33 @@
-import 'dart:convert';
+import 'dart:io';
 
 import 'package:file_picker/file_picker.dart';
+import 'package:firebase_storage/firebase_storage.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter/widgets.dart';
+import 'package:flutter/services.dart';
 import 'package:flutter_chat_ui/flutter_chat_ui.dart';
 import 'package:flutter_firebase_chat_core/flutter_firebase_chat_core.dart';
+import 'package:http/http.dart' as http;
 import 'package:image_picker/image_picker.dart';
+import 'package:marquee/marquee.dart';
 import 'package:mime/mime.dart';
-import 'package:mygoods_flutter/utils/constant.dart';
-import 'package:flutter/services.dart' show rootBundle;
-import 'package:flutter_chat_types/flutter_chat_types.dart' as types;
-import 'package:mygoods_flutter/views/chat/ChatPage.dart';
 import 'package:open_file/open_file.dart';
-import 'package:uuid/uuid.dart';
+import 'package:path_provider/path_provider.dart';
+import 'package:flutter_chat_types/flutter_chat_types.dart' as types;
 
 class ChatRoom extends StatefulWidget {
-  const ChatRoom({Key? key}) : super(key: key);
+  const ChatRoom({
+    Key? key,
+    required this.room,
+  }) : super(key: key);
+
+  final types.Room room;
 
   @override
-  State<ChatRoom> createState() => _ChatRoomState();
+  _ChatRoomState createState() => _ChatRoomState();
 }
 
 class _ChatRoomState extends State<ChatRoom> {
-  List<types.Message> _messages = [];
-
-  final _user = const types.User(id: '06c33e8b-e835-4736-80f4-63f44b66666c');
-
-  @override
-  void initState() {
-    super.initState();
-    _loadMessages();
-  }
-
-  void _addMessage(types.Message message) {
-    setState(() {
-      _messages.insert(0, message);
-    });
-  }
+  bool _isAttachmentUploading = false;
 
   void _handleAttachmentPressed() {
     showModalBottomSheet<void>(
@@ -89,17 +80,28 @@ class _ChatRoomState extends State<ChatRoom> {
     );
 
     if (result != null && result.files.single.path != null) {
-      final message = types.FileMessage(
-        author: _user,
-        createdAt: DateTime.now().millisecondsSinceEpoch,
-        id: const Uuid().v4(),
-        mimeType: lookupMimeType(result.files.single.path!),
-        name: result.files.single.name,
-        size: result.files.single.size,
-        uri: result.files.single.path!,
-      );
+      _setAttachmentUploading(true);
+      final name = result.files.single.name;
+      final filePath = result.files.single.path!;
+      final file = File(filePath);
 
-      _addMessage(message);
+      try {
+        final reference = FirebaseStorage.instance.ref(name);
+        await reference.putFile(file);
+        final uri = await reference.getDownloadURL();
+
+        final message = types.PartialFile(
+          mimeType: lookupMimeType(filePath),
+          name: name,
+          size: result.files.single.size,
+          uri: uri,
+        );
+
+        FirebaseChatCore.instance.sendMessage(message, widget.room.id);
+        _setAttachmentUploading(false);
+      } finally {
+        _setAttachmentUploading(false);
+      }
     }
   }
 
@@ -111,27 +113,55 @@ class _ChatRoomState extends State<ChatRoom> {
     );
 
     if (result != null) {
+      _setAttachmentUploading(true);
+      final file = File(result.path);
+      final size = file.lengthSync();
       final bytes = await result.readAsBytes();
       final image = await decodeImageFromList(bytes);
+      final name = result.name;
 
-      final message = types.ImageMessage(
-        author: _user,
-        createdAt: DateTime.now().millisecondsSinceEpoch,
-        height: image.height.toDouble(),
-        id: const Uuid().v4(),
-        name: result.name,
-        size: bytes.length,
-        uri: result.path,
-        width: image.width.toDouble(),
-      );
+      try {
+        final reference = FirebaseStorage.instance.ref(name);
+        await reference.putFile(file);
+        final uri = await reference.getDownloadURL();
 
-      _addMessage(message);
+        final message = types.PartialImage(
+          height: image.height.toDouble(),
+          name: name,
+          size: size,
+          uri: uri,
+          width: image.width.toDouble(),
+        );
+
+        FirebaseChatCore.instance.sendMessage(
+          message,
+          widget.room.id,
+        );
+        _setAttachmentUploading(false);
+      } finally {
+        _setAttachmentUploading(false);
+      }
     }
   }
 
   void _handleMessageTap(types.Message message) async {
     if (message is types.FileMessage) {
-      await OpenFile.open(message.uri);
+      var localPath = message.uri;
+
+      if (message.uri.startsWith('http')) {
+        final client = http.Client();
+        final request = await client.get(Uri.parse(message.uri));
+        final bytes = request.bodyBytes;
+        final documentsDir = (await getApplicationDocumentsDirectory()).path;
+        localPath = '$documentsDir/${message.name}';
+
+        if (!File(localPath).existsSync()) {
+          final file = File(localPath);
+          await file.writeAsBytes(bytes);
+        }
+      }
+
+      await OpenFile.open(localPath);
     }
   }
 
@@ -139,161 +169,66 @@ class _ChatRoomState extends State<ChatRoom> {
     types.TextMessage message,
     types.PreviewData previewData,
   ) {
-    final index = _messages.indexWhere((element) => element.id == message.id);
-    final updatedMessage = _messages[index].copyWith(previewData: previewData);
+    final updatedMessage = message.copyWith(previewData: previewData);
 
-    WidgetsBinding.instance?.addPostFrameCallback((_) {
-      setState(() {
-        _messages[index] = updatedMessage;
-      });
-    });
+    FirebaseChatCore.instance.updateMessage(updatedMessage, widget.room.id);
   }
 
   void _handleSendPressed(types.PartialText message) {
-    final textMessage = types.TextMessage(
-      author: _user,
-      createdAt: DateTime.now().millisecondsSinceEpoch,
-      id: const Uuid().v4(),
-      text: message.text,
+    FirebaseChatCore.instance.sendMessage(
+      message,
+      widget.room.id,
     );
-
-    _addMessage(textMessage);
   }
 
-  void _loadMessages() async {
-    final response = await rootBundle.loadString('assets/messages.json');
-    final messages = (jsonDecode(response) as List)
-        .map((e) => types.Message.fromJson(e as Map<String, dynamic>))
-        .toList();
-
+  void _setAttachmentUploading(bool uploading) {
     setState(() {
-      _messages = messages;
+      _isAttachmentUploading = uploading;
     });
-  }
-
-  Widget _buildAvatar(types.Room room) {
-    var color = Colors.transparent;
-
-    if (room.type == types.RoomType.direct) {
-      try {
-        final otherUser = room.users.firstWhere(
-          (u) => u.id != _user.id,
-        );
-
-        color = getUserAvatarNameColor(otherUser);
-      } catch (e) {
-        // Do nothing if other user is not found
-      }
-    }
-
-    final hasImage = room.imageUrl != null;
-    final name = room.name ?? '';
-
-    return Container(
-      margin: const EdgeInsets.only(right: 16),
-      child: CircleAvatar(
-        backgroundColor: hasImage ? Colors.transparent : color,
-        backgroundImage: hasImage ? NetworkImage(room.imageUrl!) : null,
-        radius: 20,
-        child: !hasImage
-            ? Text(
-                name.isEmpty ? '' : name[0].toUpperCase(),
-                style: const TextStyle(color: Colors.white),
-              )
-            : null,
-      ),
-    );
   }
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        titleSpacing: 0,
-        title: Container(
-          // color: Colors.red,
-          width: double.maxFinite,
-          child: Row(
-            children: [
-              CircleAvatar(
-                backgroundImage: NetworkImage(dummyNetworkImage),
-              ),
-              SizedBox(
-                width: 8,
-              ),
-              Flexible(
-                child: Column(
-                  crossAxisAlignment: CrossAxisAlignment.start,
-                  children: [
-                    RichText(
-                      overflow: TextOverflow.ellipsis,
-                      strutStyle: StrutStyle(fontSize: 18.0),
-                      maxLines: 1,
-                      text: TextSpan(
-                          style: TextStyle(
-                              fontSize: 18, fontWeight: FontWeight.w500),
-                          text: 'Oabdasdasdasjdasjdas'),
-                    ),
-                    Text(
-                      "Last Active",
-                      overflow: TextOverflow.ellipsis,
-                      style: TextStyle(fontSize: 14),
-                    ),
-                  ],
-                ),
-              )
-            ],
+        systemOverlayStyle: SystemUiOverlayStyle.light,
+        title: SizedBox(
+          height: 100,
+          child: Marquee(
+            text: 'Chat with ${widget.room.name})',
+            blankSpace: 100,
           ),
         ),
-        actions: [
-          IconButton(onPressed: () {}, icon: Icon(Icons.warning)),
-          IconButton(onPressed: () {}, icon: Icon(Icons.phone)),
-          PopupMenuButton(
-            itemBuilder: (context) {
-              return [PopupMenuItem(child: Text("Someething"))];
-            },
-          )
-        ],
       ),
-      body: StreamBuilder<List<types.Room>>(
-        stream: FirebaseChatCore.instance.rooms(),
-        initialData: const [],
+      body: StreamBuilder<types.Room>(
+        initialData: widget.room,
+        stream: FirebaseChatCore.instance.room(widget.room.id),
         builder: (context, snapshot) {
-          if (!snapshot.hasData || snapshot.data!.isEmpty) {
-            return Container(
-              alignment: Alignment.center,
-              margin: const EdgeInsets.only(
-                bottom: 200,
-              ),
-              child: const Text('No rooms'),
-            );
-          }
-
-          return ListView.builder(
-            itemCount: snapshot.data!.length,
-            itemBuilder: (context, index) {
-              final room = snapshot.data![index];
-              print(room);
-              return GestureDetector(
-                onTap: () {
-                  Navigator.of(context).push(
-                    MaterialPageRoute(
-                      builder: (context) => ChatPage(
-                        room: room,
-                      ),
-                    ),
-                  );
-                },
-                child: Container(
-                  padding: const EdgeInsets.symmetric(
-                    horizontal: 16,
-                    vertical: 8,
+          return StreamBuilder<List<types.Message>>(
+            initialData: const [],
+            stream: FirebaseChatCore.instance.messages(snapshot.data!),
+            builder: (context, snapshot) {
+              return SafeArea(
+                bottom: false,
+                child: Chat(
+                  isAttachmentUploading: _isAttachmentUploading,
+                  messages: snapshot.data ?? [],
+                  onAvatarTap: (user) {
+                    print(user);
+                  },
+                  showUserAvatars: true,
+                  showUserNames: true,
+                  sendButtonVisibilityMode: SendButtonVisibilityMode.editing,
+                  onAttachmentPressed: _handleAttachmentPressed,
+                  onMessageTap: _handleMessageTap,
+                  onPreviewDataFetched: _handlePreviewDataFetched,
+                  onSendPressed: _handleSendPressed,
+                  user: types.User(
+                    id: FirebaseChatCore.instance.firebaseUser?.uid ??
+                        '',
                   ),
-                  child: Row(
-                    children: [
-                      _buildAvatar(room),
-                      Text(room.name ?? ''),
-                    ],
+                  theme: DarkChatTheme(
+                    primaryColor: Colors.blue,
                   ),
                 ),
               );

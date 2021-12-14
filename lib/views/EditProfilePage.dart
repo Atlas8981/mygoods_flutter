@@ -62,6 +62,7 @@ class _EditProfilePageState extends State<EditProfilePage> {
       isVisible = true;
     });
 
+
     Get.find<UserController>().updateUserInfo(newUserInfo).then((value) {
       setState(() {
         isVisible = false;

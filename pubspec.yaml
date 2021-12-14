@@ -56,6 +56,7 @@ dependencies:
   open_file: ^3.2.1
   file_picker: ^4.2.7
   mime: ^1.0.1
+  marquee: ^2.2.0
 
 
 dev_dependencies:

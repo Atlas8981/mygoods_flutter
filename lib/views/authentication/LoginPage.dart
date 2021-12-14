@@ -1,9 +1,13 @@
+import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:mygoods_flutter/components/TypeTextField.dart';
+import 'package:mygoods_flutter/controllers/ItemFormController.dart';
 import 'package:mygoods_flutter/controllers/UserController.dart';
 import 'package:mygoods_flutter/services/UserService.dart';
+import 'package:mygoods_flutter/utils/constant.dart';
 import 'package:mygoods_flutter/views/MainActivity.dart';
+import 'package:mygoods_flutter/views/RegisterPage.dart';
 import 'package:mygoods_flutter/views/authentication/LoginWithPhoneNumberPage.dart';
 
 class LoginPage extends StatefulWidget {
@@ -151,15 +155,26 @@ class _LoginPageState extends State<LoginPage> {
       return;
     }
 
-    userService.login(email, password).then((value) {
-      // if (value == null) {
-      //   return;
-      // }
-      // showToast("Welcome: $value");
-      Get.delete<UserController>();
-      Get.lazyPut(() => UserController(), fenix: true);
-      Get.offAll(() => MainActivity());
-
+    userService.login(email, password).then((credential) async {
+      if (credential != null) {
+        final response = await FirebaseFirestore.instance
+            .collection("$userCollection")
+            .doc(credential.user!.uid)
+            .get();
+        if (response.exists && response.data() != null && response.data()!.isNotEmpty) {
+          Get.delete<UserController>();
+          Get.lazyPut(() => UserController(), fenix: true);
+          Get.delete<ItemFormController>();
+          Get.lazyPut(() => ItemFormController(), fenix: true);
+          Get.offAll(() => MainActivity());
+        } else {
+          Get.offAll(
+            () => RegisterPage(
+              userId: credential.user!.uid,
+            ),
+          );
+        }
+      }
     });
   }
 

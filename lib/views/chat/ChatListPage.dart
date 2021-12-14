@@ -1,48 +1,25 @@
-import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:cached_network_image/cached_network_image.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_firebase_chat_core/flutter_firebase_chat_core.dart';
 import 'package:get/get.dart';
 import 'package:mygoods_flutter/utils/constant.dart';
-import 'package:mygoods_flutter/views/chat/ChatPage.dart';
 import 'package:mygoods_flutter/views/chat/ChatRoom.dart';
 import 'package:flutter_chat_types/flutter_chat_types.dart' as types;
+import 'UserListPage.dart';
 
-class ChatListPage extends StatelessWidget {
+class ChatListPage extends StatefulWidget {
   ChatListPage({Key? key}) : super(key: key);
 
+  @override
+  State<ChatListPage> createState() => _ChatListPageState();
+}
+
+class _ChatListPageState extends State<ChatListPage> {
   final fireChatCore = FirebaseChatCore.instance;
 
-  void _handlePressed(types.User otherUser, BuildContext context) async {
-    final room = await FirebaseChatCore.instance
-        .createRoom(otherUser).then((value) {
-          print(value);
-    });
-    // print("On Presses" + room.toString());
-    // Get.to(() => ChatRoom(), arguments: room);
-  }
-
-  void deleteUsers() {
-    fireChatCore.deleteUserFromFirestore("g42wcXAXFsehuXwu5eJ6316eYs52");
-  }
-
-  Future<void> createUsers() async {
-    await fireChatCore.createUserInFirestore(
-      types.User(
-        firstName: 'John',
-        id: "g42wcXAXFsehuXwu5eJ6316eYs52",
-        // UID from Firebase Authentication
-        imageUrl: 'https://i.pravatar.cc/300',
-        lastName: 'Doe',
-      ),
-    ).then((value) {
-      print("done");
-    });
-  }
-
   final auth = FirebaseAuth.instance;
-
   late types.User _user = types.User(id: auth.currentUser!.uid);
 
   Widget _buildAvatar(types.Room room) {
@@ -67,8 +44,9 @@ class ChatListPage extends StatelessWidget {
       margin: const EdgeInsets.only(right: 16),
       child: CircleAvatar(
         backgroundColor: hasImage ? Colors.transparent : color,
-        backgroundImage: hasImage ? NetworkImage(room.imageUrl!) : null,
-        radius: 20,
+        backgroundImage:
+            hasImage ? CachedNetworkImageProvider(room.imageUrl!) : null,
+        radius: 30,
         child: !hasImage
             ? Text(
                 name.isEmpty ? '' : name[0].toUpperCase(),
@@ -83,7 +61,7 @@ class ChatListPage extends StatelessWidget {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: Text("Chats"),
+        title: Text("Chat List"),
         actions: [
           IconButton(
             onPressed: () {
@@ -122,45 +100,15 @@ class ChatListPage extends StatelessWidget {
                   );
                 },
               );
-
-              // Get.bottomSheet(
-              //   ListButtonSheet(
-              //     items: ["something"],
-              //     onItemClick: (index) {
-              //
-              //     },
-              //   ),
-              // );
             },
             icon: Icon(Icons.filter_list),
           ),
           IconButton(
             onPressed: () {
-              createUsers();
+              Get.to(() => UserListPage());
             },
             icon: Icon(Icons.person_add),
           ),
-          IconButton(
-            onPressed: () {
-              // createUsers();
-              _handlePressed(
-                types.User(
-                  firstName: 'John',
-                  id: "g42wcXAXFsehuXwu5eJ6316eYs52", // UID from Firebase Authentication
-                  imageUrl: 'https://i.pravatar.cc/300',
-                  lastName: 'Doe',
-                ),
-                context,
-              );
-            },
-            icon: Icon(Icons.add),
-          ),
-          IconButton(
-            onPressed: () {
-              deleteUsers();
-            },
-            icon: Icon(Icons.delete_outline),
-          )
         ],
       ),
       body: StreamBuilder<List<types.Room>>(
@@ -181,17 +129,12 @@ class ChatListPage extends StatelessWidget {
             itemCount: snapshot.data!.length,
             itemBuilder: (context, index) {
               final room = snapshot.data![index];
-              print(snapshot.data!.length);
-              print(room);
+
               return InkWell(
                 onTap: () {
-                  Navigator.of(context).push(
-                    MaterialPageRoute(
-                      builder: (context) => ChatPage(
+                  Get.to(() => ChatRoom(
                         room: room,
-                      ),
-                    ),
-                  );
+                      ));
                 },
                 child: Container(
                   padding: const EdgeInsets.symmetric(
@@ -220,9 +163,7 @@ class ChatRow extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return InkWell(
-      onTap: () {
-        Get.to(() => ChatRoom());
-      },
+      onTap: () {},
       child: Container(
         height: 100,
         // color: Colors.red,
