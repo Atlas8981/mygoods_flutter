@@ -1,6 +1,8 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:get/get.dart';
 import 'package:mygoods_flutter/models/item.dart';
+import 'package:mygoods_flutter/views/ItemDetailPage.dart';
 
 class HomepageCell extends StatelessWidget {
   const HomepageCell(this.item);
@@ -13,7 +15,9 @@ class HomepageCell extends StatelessWidget {
       padding: EdgeInsets.only(right: 10),
       width: 125,
       child: InkWell(
-        onTap: () {},
+        onTap: () {
+          Get.to(()=>ItemDetailPage(item: item));
+        },
         child: Column(
           // direction: Axis.vertical,
           crossAxisAlignment: CrossAxisAlignment.start,

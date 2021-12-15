@@ -75,12 +75,10 @@ class _ListItemRowState extends State<ListItemRow> {
               ClipRRect(
                 borderRadius: BorderRadius.all(Radius.circular(10)),
                 child: CachedNetworkImage(
-                  // "assets/images/bikepicture.jpg",
                   imageUrl: item.images[0].imageUrl,
                   width: 125,
                   height: 125,
                   fit: BoxFit.cover,
-
                 ),
               ),
               SizedBox(

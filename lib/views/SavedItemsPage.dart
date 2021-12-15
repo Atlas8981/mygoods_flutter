@@ -3,7 +3,7 @@ import 'package:get/get.dart';
 import 'package:mygoods_flutter/controllers/SavedItemsController.dart';
 import 'package:mygoods_flutter/models/item.dart';
 import 'package:mygoods_flutter/views/ItemDetailPage.dart';
-import 'package:mygoods_flutter/views/cells/list_product_row.dart';
+import 'package:mygoods_flutter/views/cells/ListItemRow.dart';
 
 class SavedItemsPage extends StatelessWidget {
   const SavedItemsPage({Key? key}) : super(key: key);

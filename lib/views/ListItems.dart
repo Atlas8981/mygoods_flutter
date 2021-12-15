@@ -4,7 +4,7 @@ import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:mygoods_flutter/models/item.dart';
 import 'package:mygoods_flutter/services/ItemService.dart';
-import 'package:mygoods_flutter/views/cells/list_product_row.dart';
+import 'package:mygoods_flutter/views/cells/ListItemRow.dart';
 
 class ListItem extends StatefulWidget {
   const ListItem({
