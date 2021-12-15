@@ -155,27 +155,25 @@ class _LoginWithEmailPageState extends State<LoginWithEmailPage> {
       return;
     }
 
-    userService.login(email, password).then((credential) async {
+    userService.loginWithEmailPassword(email, password)
+        .then((credential) async {
       if (credential != null) {
-        final response = await FirebaseFirestore.instance
-            .collection("$userCollection")
-            .doc(credential.user!.uid)
-            .get();
-        if (response.exists &&
-            response.data() != null &&
-            response.data()!.isNotEmpty) {
-          Get.delete<UserController>();
-          Get.lazyPut(() => UserController(), fenix: true);
-          Get.delete<ItemFormController>();
-          Get.lazyPut(() => ItemFormController(), fenix: true);
-          Get.offAll(() => MainActivity());
-        } else {
-          Get.offAll(
-            () => RegisterPage(
-              userId: credential.user!.uid,
-            ),
-          );
-        }
+        showToast("Login Success");
+        userService.isUserHaveData(credential.user!.uid).then((value) {
+          if (value) {
+            Get.delete<UserController>();
+            Get.lazyPut(() => UserController(), fenix: true);
+            Get.delete<ItemFormController>();
+            Get.lazyPut(() => ItemFormController(), fenix: true);
+            Get.offAll(() => MainActivity());
+          } else {
+            Get.offAll(
+                  () => RegisterPage(
+                userId: credential.user!.uid,
+              ),
+            );
+          }
+        });
       }
     });
   }

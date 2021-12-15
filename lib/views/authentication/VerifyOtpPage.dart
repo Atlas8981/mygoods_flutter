@@ -6,6 +6,7 @@ import 'package:flutter_countdown_timer/flutter_countdown_timer.dart';
 import 'package:get/get.dart';
 import 'package:mygoods_flutter/controllers/ItemFormController.dart';
 import 'package:mygoods_flutter/controllers/UserController.dart';
+import 'package:mygoods_flutter/services/UserService.dart';
 import 'package:mygoods_flutter/utils/constant.dart';
 import 'package:mygoods_flutter/views/MainActivity.dart';
 import 'package:mygoods_flutter/views/RegisterPage.dart';
@@ -224,6 +225,8 @@ class _VerifyOTPPageState extends State<VerifyOTPPage> with CodeAutoFill {
     );
   }
 
+  final userService = UserService();
+
   Future<void> signInWithPhoneNumber(String pin) async {
     if (verificationId == null) {
       return;
@@ -236,24 +239,22 @@ class _VerifyOTPPageState extends State<VerifyOTPPage> with CodeAutoFill {
       final authCredential = await auth.signInWithCredential(credential);
       if (authCredential.user != null) {
         showToast("Login Success");
-        final response = await FirebaseFirestore.instance
-            .collection("$userCollection")
-            .doc(authCredential.user!.uid)
-            .get();
-        if (response.exists &&
-            response.data() != null &&
-            response.data()!.isNotEmpty) {
-          Get.delete<UserController>();
-          Get.lazyPut(() => UserController(), fenix: true);
-          Get.delete<ItemFormController>();
-          Get.lazyPut(() => ItemFormController(), fenix: true);
-          Get.offAll(() => MainActivity());
-        } else {
-          Get.offAll(() => RegisterPage(
+        userService.isUserHaveData(authCredential.user!.uid).then((value) {
+          if (value) {
+            Get.delete<UserController>();
+            Get.lazyPut(() => UserController(), fenix: true);
+            Get.delete<ItemFormController>();
+            Get.lazyPut(() => ItemFormController(), fenix: true);
+            Get.offAll(() => MainActivity());
+          } else {
+            Get.offAll(
+              () => RegisterPage(
                 userId: authCredential.user!.uid,
                 phoneNumber: authCredential.user!.phoneNumber!,
-              ));
-        }
+              ),
+            );
+          }
+        });
       } else {
         showToast("Login Failed");
       }

@@ -4,12 +4,16 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:firebase_storage/firebase_storage.dart';
 import 'package:flutter_firebase_chat_core/flutter_firebase_chat_core.dart';
+import 'package:get/get.dart';
+import 'package:mygoods_flutter/controllers/ItemFormController.dart';
+import 'package:mygoods_flutter/controllers/UserController.dart';
 import 'package:mygoods_flutter/models/item.dart';
 import 'package:mygoods_flutter/models/user.dart' as myUser;
 import 'package:mygoods_flutter/services/ItemService.dart';
 import 'package:mygoods_flutter/utils/constant.dart';
 import 'package:mygoods_flutter/models/image.dart' as myImage;
 import 'package:flutter_chat_types/flutter_chat_types.dart' as types;
+import 'package:mygoods_flutter/views/MainActivity.dart';
 
 class UserService {
   final auth = FirebaseAuth.instance;
@@ -17,7 +21,8 @@ class UserService {
   final storage = FirebaseStorage.instance;
   final itemService = ItemService();
 
-  Future<UserCredential?> login(String email, String password) async {
+  Future<UserCredential?> loginWithEmailPassword(
+      String email, String password) async {
     try {
       final response = await auth.signInWithEmailAndPassword(
           email: email, password: password);
@@ -29,6 +34,19 @@ class UserService {
         showToast('Wrong password provided for that user.');
       }
     }
+  }
+
+  Future<bool> isUserHaveData(String id) async{
+    final response = await FirebaseFirestore.instance
+        .collection("$userCollection")
+        .doc(id)
+        .get();
+    if (response.exists &&
+        response.data() != null &&
+        response.data()!.isNotEmpty) {
+      return true;
+    }
+    return false;
   }
 
   Future<bool> signOut() async {
