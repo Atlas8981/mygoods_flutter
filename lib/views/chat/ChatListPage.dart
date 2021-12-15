@@ -1,9 +1,12 @@
+import 'package:avatars/avatars.dart';
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter/widgets.dart';
 import 'package:flutter_firebase_chat_core/flutter_firebase_chat_core.dart';
 import 'package:get/get.dart';
+import 'package:intl/intl.dart';
 import 'package:mygoods_flutter/utils/constant.dart';
 import 'package:mygoods_flutter/views/chat/ChatRoom.dart';
 import 'package:flutter_chat_types/flutter_chat_types.dart' as types;
@@ -150,6 +153,7 @@ class ChatRoomRow extends StatelessWidget {
 
     return Container(
       margin: const EdgeInsets.only(right: 16),
+      key: UniqueKey(),
       child: CircleAvatar(
         backgroundColor: hasImage ? Colors.transparent : color,
         backgroundImage: hasImage
@@ -157,10 +161,22 @@ class ChatRoomRow extends StatelessWidget {
             : null,
         radius: 30,
         child: !hasImage
-            ? Text(
-                name.isEmpty ? '' : name[0].toUpperCase(),
-                style: const TextStyle(color: Colors.white),
+            ? Avatar(
+                name: name,
+                value: name,
+                margin: EdgeInsets.zero,
+                shape: AvatarShape(
+                  width: 60,
+                  height: 60,
+                  shapeBorder: RoundedRectangleBorder(
+                    borderRadius: BorderRadius.all(Radius.circular(30)),
+                  ),
+                ),
               )
+            // Text(
+            //         name.isEmpty ? '' : name[0].toUpperCase(),
+            //         style: const TextStyle(color: Colors.white),
+            //       )
             : null,
       ),
     );
@@ -182,38 +198,49 @@ class ChatRoomRow extends StatelessWidget {
         child: Row(
           children: [
             _buildAvatar(room),
-            Column(
-              crossAxisAlignment: CrossAxisAlignment.start,
-              children: [
-                Text(
-                  room.name ?? '',
-                  style: TextStyle(fontSize: 14),
-                ),
-                SizedBox(
-                  height: 5,
-                ),
-                FutureBuilder<String>(
-                  future: getLastMessage(room),
-                  builder: (context, snapshot) {
-                    if (snapshot.hasData) {
-                      final message = snapshot.data;
-                      if (message == null || message.isEmpty) {
-                        return Container();
+            Expanded(
+              child: Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: [
+                  Text(
+                    room.name ?? '',
+                    style: TextStyle(fontSize: 14),
+                  ),
+                  SizedBox(
+                    height: 5,
+                  ),
+                  FutureBuilder<String>(
+                    future: getLastMessage(room),
+                    builder: (context, snapshot) {
+                      final textStyle = TextStyle(
+                          color: Colors.black.withOpacity(0.8), fontSize: 12);
+                      if (snapshot.hasData) {
+                        final message = snapshot.data;
+                        if (message == null || message.isEmpty) {
+                          return Text("(No Message)", style: textStyle);
+                        }
+                        return Text(
+                          snapshot.data!,
+                          style: textStyle,
+                        );
                       }
-                      return Text(
-                        snapshot.data!,
-                        style: TextStyle(
-                            color: Colors.black.withOpacity(0.8), fontSize: 12),
-                      );
-                    }
-                    return Container();
-                  },
-                )
-              ],
+                      return Text("...", style: textStyle);
+                    },
+                  )
+                ],
+              ),
             ),
+            Text(
+                "${formatDate(room)}"),
           ],
         ),
       ),
     );
+  }
+  String formatDate(types.Room room){
+    final dateTime = DateTime.fromMillisecondsSinceEpoch(room.updatedAt!);
+    final dateFormat = new DateFormat('E MM, hh:mm');
+
+    return dateFormat.format(dateTime);
   }
 }
