@@ -4,6 +4,7 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:mygoods_flutter/components/TypeTextField.dart';
+import 'package:mygoods_flutter/controllers/ItemFormController.dart';
 import 'package:mygoods_flutter/controllers/UserController.dart';
 import 'package:mygoods_flutter/utils/constant.dart';
 import 'package:mygoods_flutter/views/MainActivity.dart';
@@ -95,9 +96,7 @@ class LoginWithPhoneNumberPage extends StatelessWidget {
           ),
         );
       },
-      codeAutoRetrievalTimeout: (String verificationId) {
-
-      },
+      codeAutoRetrievalTimeout: (String verificationId) {},
       timeout: Duration(seconds: 60),
     );
   }
@@ -110,9 +109,13 @@ class LoginWithPhoneNumberPage extends StatelessWidget {
           .collection("$userCollection")
           .doc(authCredential.user!.uid)
           .get();
-      if (response.exists && response.data() != null && response.data()!.isNotEmpty) {
+      if (response.exists &&
+          response.data() != null &&
+          response.data()!.isNotEmpty) {
         Get.delete<UserController>();
         Get.lazyPut(() => UserController(), fenix: true);
+        Get.delete<ItemFormController>();
+        Get.lazyPut(() => ItemFormController(), fenix: true);
         Get.offAll(() => MainActivity());
       } else {
         Get.offAll(() => RegisterPage(

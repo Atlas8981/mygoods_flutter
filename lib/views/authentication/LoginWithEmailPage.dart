@@ -161,7 +161,9 @@ class _LoginWithEmailPageState extends State<LoginWithEmailPage> {
             .collection("$userCollection")
             .doc(credential.user!.uid)
             .get();
-        if (response.exists && response.data() != null && response.data()!.isNotEmpty) {
+        if (response.exists &&
+            response.data() != null &&
+            response.data()!.isNotEmpty) {
           Get.delete<UserController>();
           Get.lazyPut(() => UserController(), fenix: true);
           Get.delete<ItemFormController>();

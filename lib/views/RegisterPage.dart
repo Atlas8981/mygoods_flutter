@@ -161,7 +161,7 @@ class RegisterPage extends StatelessWidget {
 
   final userService = UserService();
 
-  void putDataIntoFirestore() {
+  Future<void> putDataIntoFirestore() async {
     final username = usernameCon.text.trim();
     final firstname = firstnameCon.text.trim();
     final lastname = lastnameCon.text.trim();
@@ -180,14 +180,14 @@ class RegisterPage extends StatelessWidget {
         image: myImage.Image(imageName: "", imageUrl: ""),
         preferenceId: []);
 
-    FirebaseChatCore.instance.createUserInFirestore(types.User(
+    await FirebaseChatCore.instance.createUserInFirestore(types.User(
       id: user.userId,
       firstName: user.firstName,
       imageUrl: user.image?.imageUrl,
       lastName: user.lastName,
     ));
 
-    userService.registerUser(user).then((value) {
+    await userService.registerUser(user).then((value) {
       Get.delete<UserController>();
       Get.lazyPut(() => UserController(), fenix: true);
       Get.offAll(() => MainActivity());

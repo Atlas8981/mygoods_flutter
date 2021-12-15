@@ -1,4 +1,5 @@
 import 'package:cached_network_image/cached_network_image.dart';
+import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_chat_types/flutter_chat_types.dart' as types;
@@ -25,7 +26,25 @@ class _UserListPageState extends State<UserListPage> {
     fireChatCore.deleteUserFromFirestore(userId);
   }
 
-  Widget authenticatedUserRow(myUser.User user){
+  void checkCurrentUserHaveChatData() async{
+    final currentUser = await FirebaseFirestore.instance
+        .collection("chatUsers")
+        .doc("${fireChatCore.firebaseUser?.uid}")
+        .get();
+    if (!currentUser.exists) {
+      final currentUser = Get.find<UserController>().user!.value;
+      await fireChatCore.createUserInFirestore(types.User(
+        id: currentUser.userId,
+        firstName: currentUser.firstName,
+        lastName: currentUser.lastName,
+        imageUrl: (currentUser.image == null)
+            ? dummyNetworkImage
+            : currentUser.image!.imageUrl,
+      ));
+    }
+  }
+
+  Widget authenticatedUserRow(myUser.User user) {
     return InkWell(
       onTap: () async {
         setState(() {
@@ -36,20 +55,16 @@ class _UserListPageState extends State<UserListPage> {
           id: user.userId,
           firstName: user.firstName,
           lastName: user.lastName,
-          imageUrl: (user.image == null)
-              ? dummyNetworkImage
-              : user.image!.imageUrl,
+          imageUrl:
+              (user.image == null) ? dummyNetworkImage : user.image!.imageUrl,
         );
 
-        await fireChatCore
-            .createUserInFirestore(otherUser)
-            .then((value) {
-          print("User Created");
-        });
+        checkCurrentUserHaveChatData();
 
-        await FirebaseChatCore.instance
-            .createRoom(otherUser)
-            .then((value) {
+
+        await fireChatCore.createUserInFirestore(otherUser);
+
+        await fireChatCore.createRoom(otherUser).then((value) {
           setState(() {
             isShow = true;
           });
@@ -63,9 +78,7 @@ class _UserListPageState extends State<UserListPage> {
           ),
           leading: CircleAvatar(
             backgroundImage: CachedNetworkImageProvider(
-              (user.image == null)
-                  ? dummyNetworkImage
-                  : user.image!.imageUrl,
+              (user.image == null) ? dummyNetworkImage : user.image!.imageUrl,
             ),
             radius: 30,
           ),
@@ -89,7 +102,7 @@ class _UserListPageState extends State<UserListPage> {
                 child: CircularProgressIndicator()),
           ),
           Container(
-            padding: EdgeInsets.only(top: 8,bottom: 8),
+            padding: EdgeInsets.only(top: 8, bottom: 8),
             child: FutureBuilder<List<myUser.User>>(
               future: chatService.getAllAuthenticatedUsers(),
               initialData: const [],
