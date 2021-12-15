@@ -57,6 +57,44 @@ class _ChatListPageState extends State<ChatListPage> {
     );
   }
 
+  void showFilterDialog() {
+    showCupertinoModalPopup(
+      context: context,
+      builder: (context) {
+        return CupertinoActionSheet(
+          actions: [
+            CupertinoActionSheetAction(
+              child: Text("All"),
+              onPressed: () {},
+            ),
+            CupertinoActionSheetAction(
+              child: Text("Buy"),
+              onPressed: () {},
+            ),
+            CupertinoActionSheetAction(
+              child: Text("Sell"),
+              onPressed: () {},
+            ),
+            CupertinoActionSheetAction(
+              child: Text("Unread"),
+              onPressed: () {},
+            ),
+            CupertinoActionSheetAction(
+              child: Text("Block User"),
+              onPressed: () {},
+            ),
+          ],
+          cancelButton: CupertinoActionSheetAction(
+            child: Text("Cancel"),
+            onPressed: () {
+              Navigator.pop(context);
+            },
+          ),
+        );
+      },
+    );
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -65,41 +103,7 @@ class _ChatListPageState extends State<ChatListPage> {
         actions: [
           IconButton(
             onPressed: () {
-              showCupertinoModalPopup(
-                context: context,
-                builder: (context) {
-                  return CupertinoActionSheet(
-                    actions: [
-                      CupertinoActionSheetAction(
-                        child: Text("All"),
-                        onPressed: () {},
-                      ),
-                      CupertinoActionSheetAction(
-                        child: Text("Buy"),
-                        onPressed: () {},
-                      ),
-                      CupertinoActionSheetAction(
-                        child: Text("Sell"),
-                        onPressed: () {},
-                      ),
-                      CupertinoActionSheetAction(
-                        child: Text("Unread"),
-                        onPressed: () {},
-                      ),
-                      CupertinoActionSheetAction(
-                        child: Text("Block User"),
-                        onPressed: () {},
-                      ),
-                    ],
-                    cancelButton: CupertinoActionSheetAction(
-                      child: Text("Cancel"),
-                      onPressed: () {
-                        Navigator.pop(context);
-                      },
-                    ),
-                  );
-                },
-              );
+              showFilterDialog();
             },
             icon: Icon(Icons.filter_list),
           ),

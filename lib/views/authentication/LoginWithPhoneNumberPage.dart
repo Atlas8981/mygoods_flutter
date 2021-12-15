@@ -110,7 +110,7 @@ class LoginWithPhoneNumberPage extends StatelessWidget {
           .collection("$userCollection")
           .doc(authCredential.user!.uid)
           .get();
-      if (response.exists) {
+      if (response.exists && response.data() != null && response.data()!.isNotEmpty) {
         Get.delete<UserController>();
         Get.lazyPut(() => UserController(), fenix: true);
         Get.offAll(() => MainActivity());

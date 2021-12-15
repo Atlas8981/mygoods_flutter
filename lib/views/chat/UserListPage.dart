@@ -25,9 +25,61 @@ class _UserListPageState extends State<UserListPage> {
     fireChatCore.deleteUserFromFirestore(userId);
   }
 
+  Widget authenticatedUserRow(myUser.User user){
+    return InkWell(
+      onTap: () async {
+        setState(() {
+          isShow = true;
+        });
+
+        final otherUser = types.User(
+          id: user.userId,
+          firstName: user.firstName,
+          lastName: user.lastName,
+          imageUrl: (user.image == null)
+              ? dummyNetworkImage
+              : user.image!.imageUrl,
+        );
+
+        await fireChatCore
+            .createUserInFirestore(otherUser)
+            .then((value) {
+          print("User Created");
+        });
+
+        await FirebaseChatCore.instance
+            .createRoom(otherUser)
+            .then((value) {
+          setState(() {
+            isShow = true;
+          });
+          Get.back();
+        });
+      },
+      child: Container(
+        child: ListTile(
+          title: Text(
+            "${user.firstName} ${user.lastName}",
+          ),
+          leading: CircleAvatar(
+            backgroundImage: CachedNetworkImageProvider(
+              (user.image == null)
+                  ? dummyNetworkImage
+                  : user.image!.imageUrl,
+            ),
+            radius: 30,
+          ),
+        ),
+      ),
+    );
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      appBar: AppBar(
+        title: Text("Click on user to start chat"),
+      ),
       body: Stack(
         children: [
           Center(
@@ -36,87 +88,36 @@ class _UserListPageState extends State<UserListPage> {
                 visible: isShow,
                 child: CircularProgressIndicator()),
           ),
-          FutureBuilder<List<myUser.User>>(
-            future: chatService.getAllAuthenticatedUsers(),
-            initialData: const [],
-            builder: (context, snapshot) {
-              if (snapshot.hasData) {
-                final listOfUsers = snapshot.data!;
-                return ListView.separated(
-                    itemCount: listOfUsers.length,
-                    separatorBuilder: (context, index) {
-                      return SizedBox(
-                        height: 8,
-                      );
-                    },
-                    itemBuilder: (context, index) {
-                      final user = listOfUsers[index];
-                      return InkWell(
-                        onTap: () async {
-                          setState(() {
-                            isShow = true;
-                          });
+          Container(
+            padding: EdgeInsets.only(top: 8,bottom: 8),
+            child: FutureBuilder<List<myUser.User>>(
+              future: chatService.getAllAuthenticatedUsers(),
+              initialData: const [],
+              builder: (context, snapshot) {
+                if (snapshot.hasData) {
+                  final listOfUsers = snapshot.data!;
+                  return ListView.separated(
+                      itemCount: listOfUsers.length,
+                      separatorBuilder: (context, index) {
+                        return SizedBox(
+                          height: 8,
+                        );
+                      },
+                      itemBuilder: (context, index) {
+                        final user = listOfUsers[index];
+                        return authenticatedUserRow(user);
+                      });
+                } else if (snapshot.hasError) {
+                  return Center(
+                    child: Text("Error"),
+                  );
+                }
 
-                          final otherUser = types.User(
-                            id: user.userId,
-                            firstName: user.firstName,
-                            lastName: user.lastName,
-                            imageUrl: (user.image == null)
-                                ? dummyNetworkImage
-                                : user.image!.imageUrl,
-                          );
-                          // final currentUser = Get.find<UserController>().user!.value;
-                          // final otherUser = types.User(
-                          //   id: FirebaseAuth.instance.currentUser!.uid,
-                          //   firstName: currentUser.firstName,
-                          //   lastName: currentUser.lastName,
-                          //   imageUrl: (currentUser.image == null)
-                          //       ? dummyNetworkImage
-                          //       : currentUser.image!.imageUrl,
-                          // );
-
-                          await fireChatCore
-                              .createUserInFirestore(otherUser)
-                              .then((value) {
-                            print("User Created");
-                          });
-
-                          await FirebaseChatCore.instance
-                              .createRoom(otherUser)
-                              .then((value) {
-                            setState(() {
-                              isShow = true;
-                            });
-                            Get.back();
-                          });
-                        },
-                        child: Container(
-                          child: ListTile(
-                            title: Text(
-                              "${user.firstName} ${user.lastName}",
-                            ),
-                            leading: CircleAvatar(
-                              backgroundImage: CachedNetworkImageProvider(
-                                (user.image == null)
-                                    ? dummyNetworkImage
-                                    : user.image!.imageUrl,
-                              ),
-                              radius: 30,
-                            ),
-                          ),
-                        ),
-                      );
-                    });
-              } else if (snapshot.hasError) {
                 return Center(
-                  child: Text("Error"),
+                  child: CircularProgressIndicator(),
                 );
-              }
-
-              return Center(
-                child: CircularProgressIndicator(),
-              );
-            },
+              },
+            ),
           ),
         ],
       ),

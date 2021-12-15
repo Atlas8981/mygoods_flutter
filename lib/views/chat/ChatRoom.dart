@@ -192,13 +192,15 @@ class _ChatRoomState extends State<ChatRoom> {
     return Scaffold(
       appBar: AppBar(
         systemOverlayStyle: SystemUiOverlayStyle.light,
-        title: SizedBox(
-          height: 100,
-          child: Marquee(
-            text: 'Chat with ${widget.room.name})',
-            blankSpace: 100,
-          ),
-        ),
+        title: ("${widget.room.name}".length > 20)
+            ? SizedBox(
+                height: 100,
+                child: Marquee(
+                  text: 'Chat with ${widget.room.name})',
+                  blankSpace: 100,
+                ),
+              )
+            : Text('Chat with ${widget.room.name})'),
       ),
       body: StreamBuilder<types.Room>(
         initialData: widget.room,
@@ -224,8 +226,7 @@ class _ChatRoomState extends State<ChatRoom> {
                   onPreviewDataFetched: _handlePreviewDataFetched,
                   onSendPressed: _handleSendPressed,
                   user: types.User(
-                    id: FirebaseChatCore.instance.firebaseUser?.uid ??
-                        '',
+                    id: FirebaseChatCore.instance.firebaseUser?.uid ?? '',
                   ),
                   theme: DarkChatTheme(
                     primaryColor: Colors.blue,

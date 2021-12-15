@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter/widgets.dart';
 import 'package:get/get.dart';
 import 'package:mygoods_flutter/utils/constant.dart';
-import 'package:mygoods_flutter/views/authentication/LoginPage.dart';
+import 'package:mygoods_flutter/views/authentication/LoginWithEmailPage.dart';
 import 'package:mygoods_flutter/views/authentication/LoginWithPhoneNumberPage.dart';
 import 'package:mygoods_flutter/views/authentication/SignUpPage.dart';
 
@@ -93,7 +93,7 @@ class WelcomePage extends StatelessWidget {
   }
 
   void loginButtonClick() {
-    Get.to(() => LoginPage());
+    Get.to(() => LoginWithEmailPage());
   }
 
   void loginWithPhoneButtonClick() {

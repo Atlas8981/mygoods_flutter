@@ -10,14 +10,14 @@ import 'package:mygoods_flutter/views/MainActivity.dart';
 import 'package:mygoods_flutter/views/RegisterPage.dart';
 import 'package:mygoods_flutter/views/authentication/LoginWithPhoneNumberPage.dart';
 
-class LoginPage extends StatefulWidget {
-  LoginPage({Key? key}) : super(key: key);
+class LoginWithEmailPage extends StatefulWidget {
+  LoginWithEmailPage({Key? key}) : super(key: key);
 
   @override
-  State<LoginPage> createState() => _LoginPageState();
+  State<LoginWithEmailPage> createState() => _LoginWithEmailPageState();
 }
 
-class _LoginPageState extends State<LoginPage> {
+class _LoginWithEmailPageState extends State<LoginWithEmailPage> {
   final emailCon = TextEditingController(),
       passwordCon = TextEditingController();
 
