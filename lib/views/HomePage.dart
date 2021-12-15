@@ -30,13 +30,20 @@ class HomePage extends StatelessWidget {
         ),
         SingleChildScrollView(
           scrollDirection: Axis.horizontal,
-          child: Row(
-            children: items
-                .map((e) {
-                  return HomepageCell(e);
-                })
-                .toList()
-                .cast(),
+          child: SizedBox(
+            width: double.maxFinite,
+            child: Row(
+              children:
+                  // [
+                  //   HomepageCell(items[0]),
+                  // ]
+                  items
+                      .map((e) {
+                        return HomepageCell(e);
+                      })
+                      .toList()
+                      .cast(),
+            ),
           ),
         ),
       ],
