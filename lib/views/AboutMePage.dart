@@ -77,8 +77,6 @@ class _AboutMePageState extends State<AboutMePage> {
             padding: EdgeInsets.only(
               top: 20,
             ),
-            // color: Colors.blue,
-            // height: height,
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.stretch,
               mainAxisSize: MainAxisSize.max,
