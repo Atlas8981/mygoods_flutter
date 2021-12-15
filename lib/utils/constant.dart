@@ -4,7 +4,6 @@ import 'package:cached_network_image/cached_network_image.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_chat_ui/flutter_chat_ui.dart';
-import 'package:flutter_firebase_chat_core/flutter_firebase_chat_core.dart';
 import 'package:fluttertoast/fluttertoast.dart';
 import 'package:get/get.dart';
 import 'package:mygoods_flutter/models/DualImage.dart';
@@ -20,8 +19,6 @@ final String itemCollection = "items";
 final String additionalCollection = "additionInfo";
 final String saveItemCollection = "saveItems";
 final String recentViewItemCollection = "recentView";
-
-
 
 final dummyItemList = [
   Item(

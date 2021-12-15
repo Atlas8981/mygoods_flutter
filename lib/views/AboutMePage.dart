@@ -20,7 +20,12 @@ import 'package:mygoods_flutter/views/cells/category_item_row.dart';
 import 'package:mygoods_flutter/views/MyItemPage.dart';
 import 'package:mygoods_flutter/views/other/big_image.dart';
 
-class AboutMePage extends StatelessWidget {
+class AboutMePage extends StatefulWidget {
+  @override
+  State<AboutMePage> createState() => _AboutMePageState();
+}
+
+class _AboutMePageState extends State<AboutMePage> {
   final userService = UserService();
 
   late final List<Category> bottomListItems = [
@@ -29,6 +34,7 @@ class AboutMePage extends StatelessWidget {
     Category(name: "About Our App", image: "${imageDir}aboutus.png"),
     Category(name: "Terms & Conditions", image: "${imageDir}term.png"),
   ];
+
   late myUser.User user;
 
   @override
@@ -155,13 +161,13 @@ class AboutMePage extends StatelessWidget {
               controller.changeProfilePicture(pickedImage);
             },
             child:
-            // SvgPicture.network(
-            //   "https://avatars.dicebear.com/api/identicon/name.svg",
-            //   height: 120,
-            //   fit: BoxFit.cover,
-            //   key: UniqueKey(),
-            // ),
-            Avatar(
+                // SvgPicture.network(
+                //   "https://avatars.dicebear.com/api/identicon/name.svg",
+                //   height: 120,
+                //   fit: BoxFit.cover,
+                //   key: UniqueKey(),
+                // ),
+                Avatar(
               name: fullName,
               onTap: () {},
               value: fullName,

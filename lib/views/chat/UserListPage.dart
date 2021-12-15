@@ -1,6 +1,5 @@
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
-import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_chat_types/flutter_chat_types.dart' as types;
 import 'package:flutter_firebase_chat_core/flutter_firebase_chat_core.dart';
@@ -26,7 +25,7 @@ class _UserListPageState extends State<UserListPage> {
     fireChatCore.deleteUserFromFirestore(userId);
   }
 
-  void checkCurrentUserHaveChatData() async{
+  void checkCurrentUserHaveChatData() async {
     final currentUser = await FirebaseFirestore.instance
         .collection("chatUsers")
         .doc("${fireChatCore.firebaseUser?.uid}")
@@ -60,7 +59,6 @@ class _UserListPageState extends State<UserListPage> {
         );
 
         checkCurrentUserHaveChatData();
-
 
         await fireChatCore.createUserInFirestore(otherUser);
 
