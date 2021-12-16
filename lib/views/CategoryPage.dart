@@ -32,7 +32,7 @@ class CategoryPage extends StatelessWidget {
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
-                Padding(
+                Container(
                   padding: EdgeInsets.all(20),
                   child: Column(
                     crossAxisAlignment: CrossAxisAlignment.start,
@@ -42,19 +42,23 @@ class CategoryPage extends StatelessWidget {
                         style: TextStyle(
                             fontSize: 18, fontWeight: FontWeight.bold),
                       ),
+                      SizedBox(
+                        height: 8,
+                      ),
                       GridView.count(
                         scrollDirection: Axis.vertical,
                         //Very Important Line to make grid view scroll
-                        physics: ScrollPhysics(),
+                        // physics: ScrollPhysics(),
+                        childAspectRatio: (85 / 90),
                         shrinkWrap: true,
-                        primary: true,
+                        // primary: true,
                         crossAxisCount: 3,
                         //1.0
                         crossAxisSpacing: 4.0,
                         children: List.generate(
                           popularCategory.length,
                           (index) {
-                            return PopularCategoryRow(popularCategory[index]);
+                            return PopularCategoryCell(popularCategory[index]);
                           },
                         ),
                       ),
@@ -62,12 +66,12 @@ class CategoryPage extends StatelessWidget {
                   ),
                 ),
                 Container(
-                  width: double.infinity,
-                  height: 10,
-                  color: Colors.black,
+                  width: double.maxFinite,
+                  height: 5,
+                  color: Colors.black.withOpacity(0.2),
                 ),
                 Container(
-                  width: double.infinity,
+                  width: double.maxFinite,
                   height: 10,
                 ),
                 Padding(
@@ -92,7 +96,6 @@ class CategoryPage extends StatelessWidget {
                         itemBuilder: (context, index) {
                           return InkWell(
                               onTap: () {
-                                // print("category" + mainCategories[index].name);
                                 Get.to(
                                   () => SubCategoryPage(
                                     title: mainCategories[index].name,
