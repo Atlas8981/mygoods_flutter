@@ -6,7 +6,9 @@ import 'package:flutter_localizations/flutter_localizations.dart';
 
 import 'package:get/get.dart';
 import 'package:mygoods_flutter/controllers/initial_binding.dart';
+import 'package:mygoods_flutter/utils/constant.dart';
 import 'package:mygoods_flutter/views/MainActivity.dart';
+import 'package:mygoods_flutter/views/SplashPage.dart';
 
 Future<void> main() async {
   WidgetsFlutterBinding.ensureInitialized();
@@ -24,7 +26,7 @@ class MyApp extends StatelessWidget {
   Widget build(BuildContext context) {
     return GetMaterialApp(
       title: 'MyGoods Flutter From Window @.20',
-      home: MainActivity(),
+      home: SplashPage(),
       // home: WelcomePage(),
       // home: VerifyOTPPage(),
       initialBinding: InitialBinding(),
