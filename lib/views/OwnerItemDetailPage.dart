@@ -132,9 +132,9 @@ class _OwnerItemDetailPageState extends State<OwnerItemDetailPage> {
             ],
           ),
           body: SafeArea(
-            child: Container(
-              width: double.infinity,
-              height: double.infinity,
+            child: SizedBox(
+              width: double.maxFinite,
+              height: double.maxFinite,
               child: SingleChildScrollView(
                 physics: BouncingScrollPhysics(),
                 child: Column(
@@ -192,7 +192,7 @@ class _OwnerItemDetailPageState extends State<OwnerItemDetailPage> {
                             height: 20,
                           ),
                           Text(
-                            "${item.description}",
+                            item.description,
                             style: TextStyle(
                                 fontSize: 14, fontWeight: FontWeight.w600),
                           ),

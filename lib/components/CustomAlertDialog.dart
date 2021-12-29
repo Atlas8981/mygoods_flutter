@@ -84,16 +84,16 @@ void showSingleChoiceAlertDialog(
         },
   );
   AlertDialog alert = AlertDialog(
-    title: Text("$title"),
-    content: Text("$content"),
+    title: Text(title),
+    content: Text(content),
     actions: [
       okButton,
     ],
   );
 
   CupertinoAlertDialog cupertinoAlert = CupertinoAlertDialog(
-    title: Text("$title"),
-    content: Text("$content"),
+    title: Text(title),
+    content: Text(content),
     actions: [
       okButton,
     ],

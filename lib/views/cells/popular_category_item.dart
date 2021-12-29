@@ -4,7 +4,11 @@ import 'package:mygoods_flutter/models/category.dart';
 
 class PopularCategoryCell extends StatelessWidget {
   final Category category;
-  const PopularCategoryCell(this.category);
+
+  const PopularCategoryCell(
+    this.category, {
+    Key? key,
+  }) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
@@ -28,7 +32,7 @@ class PopularCategoryCell extends StatelessWidget {
             child: Align(
               alignment: Alignment.center,
               child: Text(
-                "${category.name}",
+                category.name,
                 maxLines: 2,
                 textAlign: TextAlign.center,
                 overflow: TextOverflow.ellipsis,

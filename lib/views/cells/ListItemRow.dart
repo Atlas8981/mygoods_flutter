@@ -59,8 +59,8 @@ class _ListItemRowState extends State<ListItemRow> {
 
   @override
   Widget build(BuildContext context) {
-    return Container(
-      width: double.infinity,
+    return SizedBox(
+      width: double.maxFinite,
       // padding: const EdgeInsets.only(left: 10,right: 10),
       child: Column(children: [
         InkWell(

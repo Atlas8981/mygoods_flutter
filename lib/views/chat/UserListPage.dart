@@ -10,7 +10,7 @@ import 'package:mygoods_flutter/utils/constant.dart';
 import 'package:mygoods_flutter/models/user.dart' as myUser;
 
 class UserListPage extends StatefulWidget {
-  UserListPage({Key? key}) : super(key: key);
+  const UserListPage({Key? key}) : super(key: key);
 
   @override
   State<UserListPage> createState() => _UserListPageState();
@@ -69,17 +69,15 @@ class _UserListPageState extends State<UserListPage> {
           Get.back();
         });
       },
-      child: Container(
-        child: ListTile(
-          title: Text(
-            "${user.firstName} ${user.lastName}",
+      child: ListTile(
+        title: Text(
+          "${user.firstName} ${user.lastName}",
+        ),
+        leading: CircleAvatar(
+          backgroundImage: CachedNetworkImageProvider(
+            (user.image == null) ? dummyNetworkImage : user.image!.imageUrl,
           ),
-          leading: CircleAvatar(
-            backgroundImage: CachedNetworkImageProvider(
-              (user.image == null) ? dummyNetworkImage : user.image!.imageUrl,
-            ),
-            radius: 30,
-          ),
+          radius: 30,
         ),
       ),
     );

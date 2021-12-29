@@ -2,7 +2,7 @@ import 'dart:core';
 import 'package:flutter/material.dart';
 
 class DropdownTextField extends StatefulWidget {
-  DropdownTextField({
+  const DropdownTextField({Key? key,
     required this.labelText,
     this.controller,
     this.icon,
@@ -13,14 +13,14 @@ class DropdownTextField extends StatefulWidget {
     required this.listString,
     this.onClickTextField,
     required this.onChange,
-  });
+  }) : super(key: key);
 
   final String labelText;
   final TextEditingController? controller;
   final IconData? icon;
   final String? prefixText;
-  final inputType;
-  final onPrefixIconClicked;
+  final TextInputType? inputType;
+  final Function()? onPrefixIconClicked;
   final String currentSelectedValue;
   final List<String> listString;
   final Function()? onClickTextField;
@@ -31,7 +31,7 @@ class DropdownTextField extends StatefulWidget {
 }
 
 class _DropdownTextFieldState extends State<DropdownTextField> {
-  FocusNode _focus = new AlwaysDisabledFocusNode();
+  final FocusNode _focus = AlwaysDisabledFocusNode();
   bool isFocus = false;
 
   @override
@@ -55,13 +55,13 @@ class _DropdownTextFieldState extends State<DropdownTextField> {
 
   @override
   Widget build(BuildContext context) {
-    return Container(
+    return SizedBox(
         height: 58,
         width: double.infinity,
         child: DropdownButtonFormField(
           // onTap: widget.onClickTextField,
           onTap: () {
-            FocusScope.of(context).requestFocus(new FocusNode());
+            FocusScope.of(context).requestFocus(FocusNode());
           },
           focusNode: _focus,
           decoration: InputDecoration(

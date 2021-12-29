@@ -8,8 +8,9 @@ import 'package:mygoods_flutter/views/cells/category_item_row.dart';
 
 class SubCategoryPage extends StatelessWidget {
   const SubCategoryPage({
+    Key? key,
     required this.title,
-  });
+  }) : super(key: key);
 
   final String title;
 
@@ -31,10 +32,9 @@ class SubCategoryPage extends StatelessWidget {
       appBar: AppBar(
         title: Text(title),
       ),
-      body: Container(
-        width: double.infinity,
-        height: double.infinity,
-        // color: Colors.red,
+      body: SizedBox(
+        width: double.maxFinite,
+        height: double.maxFinite,
         child: Padding(
           padding: EdgeInsets.all(20),
           child: Column(

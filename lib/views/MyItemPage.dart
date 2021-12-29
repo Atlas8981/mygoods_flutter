@@ -34,7 +34,7 @@ class MyItemsPage extends StatelessWidget {
             }
 
             final List<Item> items = controller.items!.cast();
-            if (items.length == 0) {
+            if (items.isEmpty) {
               return Center(
                 child: Text("You have no items"),
               );
@@ -134,8 +134,8 @@ class OwnerItemRow extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Container(
-      width: double.infinity,
+    return SizedBox(
+      width: double.maxFinite,
       child: Column(children: [
         InkWell(
           onTap: () {
@@ -147,7 +147,7 @@ class OwnerItemRow extends StatelessWidget {
             children: [
               ClipRRect(
                 borderRadius: BorderRadius.all(Radius.circular(10)),
-                child: (item.images.length > 0)
+                child: (item.images.isNotEmpty)
                     ? Image.network(
                         item.images[0].imageUrl,
                         width: 125,
@@ -217,7 +217,7 @@ class OwnerItemRow extends StatelessWidget {
                   ],
                 ),
               ),
-              Container(
+              SizedBox(
                 height: 125,
                 // color: Colors.cyan,
                 child: Column(

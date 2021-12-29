@@ -21,6 +21,8 @@ import 'package:mygoods_flutter/views/MyItemPage.dart';
 import 'package:mygoods_flutter/views/other/big_image.dart';
 
 class AboutMePage extends StatefulWidget {
+  const AboutMePage({Key? key}) : super(key: key);
+
   @override
   State<AboutMePage> createState() => _AboutMePageState();
 }
@@ -132,7 +134,7 @@ class _AboutMePageState extends State<AboutMePage> {
           tag: user.image!.imageName,
           child: CircleAvatar(
             backgroundImage: CachedNetworkImageProvider(
-              "${user.image!.imageUrl}",
+              user.image!.imageUrl,
             ),
             child: Visibility(
               visible: user.image!.imageUrl.isEmpty,
@@ -207,11 +209,11 @@ class _AboutMePageState extends State<AboutMePage> {
               SizedBox(
                 height: 10,
               ),
-              Text("${user.address}"),
+              Text(user.address),
               SizedBox(
                 height: 10,
               ),
-              Text("${user.phoneNumber}"),
+              Text(user.phoneNumber),
             ],
           );
         },

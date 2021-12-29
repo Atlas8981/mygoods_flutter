@@ -4,16 +4,12 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:firebase_storage/firebase_storage.dart';
 import 'package:flutter_firebase_chat_core/flutter_firebase_chat_core.dart';
-import 'package:get/get.dart';
-import 'package:mygoods_flutter/controllers/ItemFormController.dart';
-import 'package:mygoods_flutter/controllers/UserController.dart';
 import 'package:mygoods_flutter/models/item.dart';
 import 'package:mygoods_flutter/models/user.dart' as myUser;
 import 'package:mygoods_flutter/services/ItemService.dart';
 import 'package:mygoods_flutter/utils/constant.dart';
 import 'package:mygoods_flutter/models/image.dart' as myImage;
 import 'package:flutter_chat_types/flutter_chat_types.dart' as types;
-import 'package:mygoods_flutter/views/MainActivity.dart';
 
 class UserService {
   final auth = FirebaseAuth.instance;
@@ -38,7 +34,7 @@ class UserService {
 
   Future<bool> isUserHaveData(String id) async{
     final response = await FirebaseFirestore.instance
-        .collection("$userCollection")
+        .collection(userCollection)
         .doc(id)
         .get();
     if (response.exists &&
@@ -66,25 +62,24 @@ class UserService {
 
   Future<void> registerUser(myUser.User user) async {
     return await firestore
-        .collection("$userCollection")
-        .doc("${user.userId}")
+        .collection(userCollection)
+        .doc(user.userId)
         .set(user.toJson());
   }
 
   Future<myUser.User?> getOwnerInfo() async {
     if (auth.currentUser == null) {
-      print("User Null");
       return null;
     }
     myUser.User? response;
     try {
       await firestore
-          .collection("$userCollection")
+          .collection(userCollection)
           .doc(auth.currentUser!.uid)
           .get()
           .then((value) {
         response = myUser.User.fromJson(value.data()!);
-        print(response.toString());
+        // print(response.toString());
       });
     } catch (e) {
       print(e.toString());
@@ -96,13 +91,13 @@ class UserService {
       File userImage, myUser.User user) async {
     final imageName = "${DateTime.now()}";
     final Reference storageReference =
-        storage.ref('flutter/').child("$imageName");
+        storage.ref('flutter/').child(imageName);
     await storageReference.putFile(userImage);
     final downloadedImageUrl = await storageReference.getDownloadURL();
     final myImage.Image returnImage =
         myImage.Image(imageName: imageName, imageUrl: downloadedImageUrl);
     await firestore
-        .collection("$userCollection")
+        .collection(userCollection)
         .doc(auth.currentUser!.uid)
         .update({'image': returnImage.toJson()});
     final tempUser = user;
@@ -123,7 +118,7 @@ class UserService {
   Future<myUser.User?> updateUserInfo(myUser.User newUserInfo) async {
     await createUserInChatUser(newUserInfo);
     final myUser.User response = await firestore
-        .collection("$userCollection")
+        .collection(userCollection)
         .doc(newUserInfo.userId)
         .update(newUserInfo.toJson())
         .then((value) {
@@ -139,12 +134,12 @@ class UserService {
     try {
       final List<Item> listOfItem = [];
       await firestore
-          .collection("$itemCollection")
+          .collection(itemCollection)
           .orderBy('date', descending: true)
           .where('userid', isEqualTo: auth.currentUser!.uid)
           .get()
           .then((value) {
-        if (value.docs.length == 0) {
+        if (value.docs.isEmpty) {
           return listOfItem;
         }
         for (int i = 0; i < value.docs.length; i++) {
@@ -163,7 +158,7 @@ class UserService {
 
   Stream<QuerySnapshot<Map<String, dynamic>>> listenForUserItemChange() {
     return firestore
-        .collection("$itemCollection")
+        .collection(itemCollection)
         .orderBy('date', descending: true)
         .where('userid', isEqualTo: auth.currentUser!.uid)
         .snapshots();
@@ -173,7 +168,7 @@ class UserService {
     bool isDeleted = false;
 
     await firestore
-        .collection("$itemCollection")
+        .collection(itemCollection)
         .doc(itemId)
         .delete()
         .then((value) {
@@ -190,15 +185,16 @@ class UserService {
     final userId = auth.currentUser!.uid;
     try {
       final value = await firestore
-          .collection("$userCollection")
+          .collection(userCollection)
           .doc(userId)
-          .collection("$saveItemCollection")
+          .collection(saveItemCollection)
           .doc(itemId)
           .get();
-      if (value.data() != null)
+      if (value.data() != null) {
         response = true;
-      else
+      } else {
         response = false;
+      }
     } catch (e) {
       print(e.toString());
     }
@@ -209,9 +205,9 @@ class UserService {
     final userId = auth.currentUser!.uid;
     try {
       return await firestore
-          .collection("$userCollection")
+          .collection(userCollection)
           .doc(userId)
-          .collection("$saveItemCollection")
+          .collection(saveItemCollection)
           .doc(itemId)
           .set({
         'date': Timestamp.now(),
@@ -226,9 +222,9 @@ class UserService {
     final userId = auth.currentUser!.uid;
     try {
       return await firestore
-          .collection("$userCollection")
+          .collection(userCollection)
           .doc(userId)
-          .collection("$saveItemCollection")
+          .collection(saveItemCollection)
           .doc(itemId)
           .delete();
     } catch (e) {
@@ -242,13 +238,13 @@ class UserService {
     final userId = auth.currentUser!.uid;
     try {
       final value = await firestore
-          .collection("$userCollection")
+          .collection(userCollection)
           .doc(userId)
-          .collection("$saveItemCollection")
+          .collection(saveItemCollection)
           .orderBy('date', descending: true)
           .get();
 
-      if (value.docs.length == 0) {
+      if (value.docs.isEmpty) {
         return listOfItem;
       }
 
@@ -279,9 +275,9 @@ class UserService {
       return;
     }
     firestore
-        .collection("$userCollection")
+        .collection(userCollection)
         .doc(auth.currentUser!.uid)
-        .collection("$recentViewItemCollection")
+        .collection(recentViewItemCollection)
         .doc(itemId)
         .set({
       'date': Timestamp.now(),

@@ -11,7 +11,7 @@ class ItemService {
     List<Item> response = [];
     try {
       await firestore
-          .collection("$itemCollection")
+          .collection(itemCollection)
           .limit(10)
           .where("mainCategory", isEqualTo: mainCat)
           .where("subCategory", isEqualTo: subCat)
@@ -33,7 +33,7 @@ class ItemService {
     String response = "";
     try {
       await firestore
-          .collection("$userCollection")
+          .collection(userCollection)
           .doc(userId)
           .get()
           .then((value) => {response = value.get("username")});
@@ -47,7 +47,7 @@ class ItemService {
     myUser.User? response;
     try {
       await firestore
-          .collection("$userCollection")
+          .collection(userCollection)
           .doc(userId)
           .get()
           .then((value) => {response = myUser.User.fromJson(value.data()!)});
@@ -61,9 +61,9 @@ class ItemService {
       {required String itemId, required String subCat}) async {
     try {
       return await firestore
-          .collection("$itemCollection")
+          .collection(itemCollection)
           .doc(itemId)
-          .collection("$additionalCollection")
+          .collection(additionalCollection)
           .doc(subCat)
           .get();
     } catch (e) {
@@ -79,7 +79,7 @@ class ItemService {
     viewers.add(auth.currentUser!.uid);
     final List<String> newViewers = viewers.toSet().toList();
     await firestore
-        .collection("$itemCollection")
+        .collection(itemCollection)
         .doc(itemId)
         .update({
       'viewers': newViewers
@@ -88,7 +88,7 @@ class ItemService {
 
   Future<Item?> getItemById(String itemId) async {
     final value =
-          await firestore.collection("$itemCollection").doc(itemId).get();
+          await firestore.collection(itemCollection).doc(itemId).get();
     if (value.exists) {
       final Item saveItem = Item.fromJson(value.data()!);
       return saveItem;

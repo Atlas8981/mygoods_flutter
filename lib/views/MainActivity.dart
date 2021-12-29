@@ -38,7 +38,7 @@ class _MainActivityState extends State<MainActivity> {
           selectedItemColor: Colors.blue,
           // unselectedLabelStyle: unselectedLabelStyle,
           // selectedLabelStyle: selectedLabelStyle,
-          items: [
+          items: const [
             BottomNavigationBarItem(
               icon: Icon(
                 Icons.home,

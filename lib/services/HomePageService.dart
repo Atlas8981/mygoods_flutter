@@ -12,14 +12,14 @@ class HomePageService {
   Future<List<Item>> getTrendingItems() async {
     final List<Item> items = [];
     final query = await firestore
-        .collection("$itemCollection")
+        .collection(itemCollection)
         .orderBy("views", descending: true)
         .limit(10)
         .get();
-    query.docs.forEach((element) {
+    for (var element in query.docs) {
       Item item = Item.fromJson(element.data());
       items.add(item);
-    });
+    }
     return items;
   }
 
@@ -32,13 +32,13 @@ class HomePageService {
     final userId = auth.currentUser!.uid;
     try {
       final value = await firestore
-          .collection("$userCollection")
+          .collection(userCollection)
           .doc(userId)
-          .collection("$recentViewItemCollection")
+          .collection(recentViewItemCollection)
           .orderBy('date', descending: true)
           .limit(10)
           .get();
-      if (value.docs.length == 0) {
+      if (value.docs.isEmpty) {
         return listOfItem;
       }
 
@@ -64,13 +64,13 @@ class HomePageService {
   Future<List<Item>> getAllTrendingItems() async {
     final List<Item> items = [];
     final query = await firestore
-        .collection("$itemCollection")
+        .collection(itemCollection)
         .orderBy("views", descending: true)
         .get();
-    query.docs.forEach((element) {
+    for (var element in query.docs) {
       Item item = Item.fromJson(element.data());
       items.add(item);
-    });
+    }
     return items;
   }
 
@@ -83,12 +83,12 @@ class HomePageService {
     final userId = auth.currentUser!.uid;
     try {
       final value = await firestore
-          .collection("$userCollection")
+          .collection(userCollection)
           .doc(userId)
-          .collection("$recentViewItemCollection")
+          .collection(recentViewItemCollection)
           .orderBy('date', descending: true)
           .get();
-      if (value.docs.length == 0) {
+      if (value.docs.isEmpty) {
         return listOfItem;
       }
 

@@ -15,7 +15,7 @@ class SavedItemsController extends GetxController {
     userService.getUserSavedItem().then((value) {
       if (value == null) {
         return;
-      } else if (value.length == 0) {
+      } else if (value.isEmpty) {
         items = [].obs;
         update();
         return;

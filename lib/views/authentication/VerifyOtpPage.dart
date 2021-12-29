@@ -1,4 +1,3 @@
-import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
@@ -110,7 +109,7 @@ class _VerifyOTPPageState extends State<VerifyOTPPage> with CodeAutoFill {
       appBar: AppBar(
         title: Text("Verify OTP : ${widget.phoneNumber}"),
       ),
-      body: Container(
+      body: SizedBox(
         height: double.maxFinite,
         child: Column(
           children: [

@@ -26,7 +26,7 @@ class SavedItemsPage extends StatelessWidget {
 
             }
             final List<Item> items = controller.items!.cast();
-            if (controller.items!.length == 0) {
+            if (controller.items!.isEmpty) {
               return Center(
                 child: Text("No Saved Item"),
               );

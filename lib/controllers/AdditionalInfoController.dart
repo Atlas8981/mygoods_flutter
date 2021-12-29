@@ -16,7 +16,7 @@ class AdditionalInfoController extends GetxController {
   void getCarList() {
     additionalDataService.getCarData().then((value) {
       if (value != null) {
-        if (carList.length > 0) {
+        if (carList.isNotEmpty) {
           carList.clear();
         }
         carList.addAll(value);

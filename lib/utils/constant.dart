@@ -13,19 +13,22 @@ import 'package:mygoods_flutter/models/item.dart';
 import 'package:mygoods_flutter/models/image.dart' as myImage;
 import 'package:flutter_chat_types/flutter_chat_types.dart' as types;
 
-final String imageDir = "assets/images/";
-final String userCollection = "users";
-final String itemCollection = "items";
-final String additionalCollection = "additionInfo";
-final String saveItemCollection = "saveItems";
-final String recentViewItemCollection = "recentView";
+const String imageDir = "assets/images/";
+const String userCollection = "users";
+const String itemCollection = "items";
+const String additionalCollection = "additionInfo";
+const String saveItemCollection = "saveItems";
+const String recentViewItemCollection = "recentView";
 
 final dummyItemList = [
   Item(
       date: Timestamp.now(),
       subCategory: "subCategory",
       images: [
-        myImage.Image(imageName: "imageName", imageUrl: "$dummyNetworkImage")
+        myImage.Image(
+          imageName: "imageName",
+          imageUrl: dummyNetworkImage,
+        )
       ],
       amount: 0,
       address: "address",
@@ -42,7 +45,7 @@ final dummyItemList = [
       date: Timestamp.now(),
       subCategory: "subCategory",
       images: [
-        myImage.Image(imageName: "imageName", imageUrl: "$dummyNetworkImage")
+        myImage.Image(imageName: "imageName", imageUrl: dummyNetworkImage)
       ],
       amount: 0,
       address: "address",
@@ -59,7 +62,7 @@ final dummyItemList = [
       date: Timestamp.now(),
       subCategory: "subCategory",
       images: [
-        myImage.Image(imageName: "imageName", imageUrl: "$dummyNetworkImage")
+        myImage.Image(imageName: "imageName", imageUrl: dummyNetworkImage)
       ],
       amount: 0,
       address: "address",
@@ -76,7 +79,7 @@ final dummyItemList = [
       date: Timestamp.now(),
       subCategory: "subCategory",
       images: [
-        myImage.Image(imageName: "imageName", imageUrl: "$dummyNetworkImage")
+        myImage.Image(imageName: "imageName", imageUrl: dummyNetworkImage)
       ],
       amount: 0,
       address: "address",
@@ -93,7 +96,7 @@ final dummyItemList = [
       date: Timestamp.now(),
       subCategory: "subCategory",
       images: [
-        myImage.Image(imageName: "imageName", imageUrl: "$dummyNetworkImage")
+        myImage.Image(imageName: "imageName", imageUrl: dummyNetworkImage)
       ],
       amount: 0,
       address: "address",
@@ -110,7 +113,7 @@ final dummyItemList = [
       date: Timestamp.now(),
       subCategory: "subCategory",
       images: [
-        myImage.Image(imageName: "imageName", imageUrl: "$dummyNetworkImage")
+        myImage.Image(imageName: "imageName", imageUrl: dummyNetworkImage)
       ],
       amount: 0,
       address: "address",
@@ -127,7 +130,7 @@ final dummyItemList = [
       date: Timestamp.now(),
       subCategory: "subCategory",
       images: [
-        myImage.Image(imageName: "imageName", imageUrl: "$dummyNetworkImage")
+        myImage.Image(imageName: "imageName", imageUrl: dummyNetworkImage)
       ],
       amount: 0,
       address: "address",
@@ -146,7 +149,7 @@ final dummyItemList = [
       images: [
         myImage.Image(
           imageName: "imageName",
-          imageUrl: "$dummyNetworkImage",
+          imageUrl: dummyNetworkImage,
         )
       ],
       amount: 0,
@@ -191,12 +194,12 @@ final List<Category> furnitureSubCategories = [
 
 final redColor = Color.fromARGB(255, 236, 0, 0);
 
-final String dummyNetworkImage =
+const String dummyNetworkImage =
     "https://firebasestorage.googleapis.com/v0/b/mygoods-e042f.appspot.com/o/flutter%2F2021-10-31%2021%3A58%3A15.282499?alt=media&token=f492b829-e106-467e-b3f1-6c05122a0969";
 
 String? validatePhoneNumber(String? value) {
   String pattern = r'^(?:[+0][1-9])?[0-9]{9,10}$';
-  RegExp regExp = new RegExp(pattern);
+  RegExp regExp = RegExp(pattern);
 
   if (value == null || value.isEmpty) {
     return 'Empty Field';
@@ -268,7 +271,7 @@ String getUserName(types.User user) =>
 
 void showToast(String message) {
   Fluttertoast.showToast(
-    msg: "$message",
+    msg: message,
     toastLength: Toast.LENGTH_SHORT,
     gravity: ToastGravity.BOTTOM,
     timeInSecForIosWeb: 1,
@@ -280,7 +283,7 @@ void showToast(String message) {
 
 void showSnackBar(String title, String message) {
   Get.snackbar(
-    "$title",
-    "$message",
+    title,
+    message,
   );
 }

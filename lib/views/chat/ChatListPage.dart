@@ -13,7 +13,7 @@ import 'package:flutter_chat_types/flutter_chat_types.dart' as types;
 import 'UserListPage.dart';
 
 class ChatListPage extends StatefulWidget {
-  ChatListPage({Key? key}) : super(key: key);
+  const ChatListPage({Key? key}) : super(key: key);
 
   @override
   State<ChatListPage> createState() => _ChatListPageState();
@@ -108,13 +108,20 @@ class _ChatListPageState extends State<ChatListPage> {
   }
 }
 
-class ChatRoomRow extends StatelessWidget {
-  ChatRoomRow({
+class ChatRoomRow extends StatefulWidget {
+  const ChatRoomRow({
     Key? key,
     required this.room,
   }) : super(key: key);
   final types.Room room;
+
+  @override
+  State<ChatRoomRow> createState() => _ChatRoomRowState();
+}
+
+class _ChatRoomRowState extends State<ChatRoomRow> {
   final auth = FirebaseAuth.instance;
+
   late final types.User _user = types.User(id: auth.currentUser!.uid);
 
   Future<String> getLastMessage(types.Room room) async {
@@ -128,7 +135,7 @@ class ChatRoomRow extends StatelessWidget {
     if (room.lastMessages![0].type == types.MessageType.text) {
       final lastMessageText =
           types.TextMessage.fromJson(room.lastMessages![0].toJson());
-      return "${lastMessageText.text}";
+      return lastMessageText.text;
     }
     return "";
   }
@@ -186,9 +193,11 @@ class ChatRoomRow extends StatelessWidget {
   Widget build(BuildContext context) {
     return InkWell(
       onTap: () {
-        Get.to(() => ChatRoom(
-              room: room,
-            ));
+        Get.to(
+          () => ChatRoom(
+            room: widget.room,
+          ),
+        );
       },
       child: Container(
         padding: const EdgeInsets.symmetric(
@@ -197,20 +206,20 @@ class ChatRoomRow extends StatelessWidget {
         ),
         child: Row(
           children: [
-            _buildAvatar(room),
+            _buildAvatar(widget.room),
             Expanded(
               child: Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
                   Text(
-                    room.name ?? '',
+                    widget.room.name ?? '',
                     style: TextStyle(fontSize: 14),
                   ),
                   SizedBox(
                     height: 5,
                   ),
                   FutureBuilder<String>(
-                    future: getLastMessage(room),
+                    future: getLastMessage(widget.room),
                     builder: (context, snapshot) {
                       final textStyle = TextStyle(
                           color: Colors.black.withOpacity(0.8), fontSize: 12);
@@ -230,16 +239,16 @@ class ChatRoomRow extends StatelessWidget {
                 ],
               ),
             ),
-            Text(
-                "${formatDate(room)}"),
+            Text(formatDate(widget.room)),
           ],
         ),
       ),
     );
   }
-  String formatDate(types.Room room){
+
+  String formatDate(types.Room room) {
     final dateTime = DateTime.fromMillisecondsSinceEpoch(room.updatedAt!);
-    final dateFormat = new DateFormat('E MM, hh:mm');
+    final dateFormat = DateFormat('E MM, hh:mm');
 
     return dateFormat.format(dateTime);
   }

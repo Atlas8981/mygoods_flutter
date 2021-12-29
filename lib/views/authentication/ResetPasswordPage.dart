@@ -45,16 +45,14 @@ class _ResetPasswordPageState extends State<ResetPasswordPage> {
           child: Column(
             children: [
               //Title
-              Container(
-                  // padding: EdgeInsets.only(top: 4, left: 20, right: 20),
-                  child: Align(
-                      alignment: Alignment.topLeft,
-                      child: Text(
-                        "resetPasswordTitle".tr,
-                        // "Something",
-                        style: TextStyle(
-                            fontSize: 24, color: Colors.black, height: 1.5),
-                      ))),
+              Align(
+                  alignment: Alignment.topLeft,
+                  child: Text(
+                    "resetPasswordTitle".tr,
+                    // "Something",
+                    style: TextStyle(
+                        fontSize: 24, color: Colors.black, height: 1.5),
+                  )),
               SizedBox(
                 height: 20,
               ),

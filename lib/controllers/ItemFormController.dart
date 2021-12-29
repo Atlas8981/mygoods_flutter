@@ -50,7 +50,7 @@ class ItemFormController extends GetxController {
     conditionCon.text = "";
     condition.value = "";
     tempImages.clear();
-    formKey = new GlobalKey<FormState>();
+    formKey = GlobalKey<FormState>();
     update();
   }
 

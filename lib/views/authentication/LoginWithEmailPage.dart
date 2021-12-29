@@ -1,4 +1,3 @@
-import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:mygoods_flutter/components/TypeTextField.dart';
@@ -11,7 +10,7 @@ import 'package:mygoods_flutter/views/RegisterPage.dart';
 import 'package:mygoods_flutter/views/authentication/LoginWithPhoneNumberPage.dart';
 
 class LoginWithEmailPage extends StatefulWidget {
-  LoginWithEmailPage({Key? key}) : super(key: key);
+  const LoginWithEmailPage({Key? key}) : super(key: key);
 
   @override
   State<LoginWithEmailPage> createState() => _LoginWithEmailPageState();
@@ -61,7 +60,7 @@ class _LoginWithEmailPageState extends State<LoginWithEmailPage> {
                           controller: emailCon,
                           prefixIcon: Icon(Icons.email_outlined),
                           inputType: TextInputType.emailAddress,
-                          autoFillHints: [AutofillHints.email],
+                          autoFillHints: const [AutofillHints.email],
                         ),
                         SizedBox(
                           height: 40,
@@ -69,7 +68,7 @@ class _LoginWithEmailPageState extends State<LoginWithEmailPage> {
                         TypeTextField(
                           labelText: "Password",
                           controller: passwordCon,
-                          autoFillHints: [AutofillHints.password],
+                          autoFillHints: const [AutofillHints.password],
                           inputType: TextInputType.visiblePassword,
                           prefixIcon: Icon(Icons.password),
                           suffixIcon: IconButton(
@@ -155,7 +154,8 @@ class _LoginWithEmailPageState extends State<LoginWithEmailPage> {
       return;
     }
 
-    userService.loginWithEmailPassword(email, password)
+    userService
+        .loginWithEmailPassword(email, password)
         .then((credential) async {
       if (credential != null) {
         showToast("Login Success");
@@ -168,7 +168,7 @@ class _LoginWithEmailPageState extends State<LoginWithEmailPage> {
             Get.offAll(() => MainActivity());
           } else {
             Get.offAll(
-                  () => RegisterPage(
+              () => RegisterPage(
                 userId: credential.user!.uid,
               ),
             );

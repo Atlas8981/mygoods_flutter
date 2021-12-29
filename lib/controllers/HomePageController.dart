@@ -14,7 +14,7 @@ class HomePageController extends GetxController {
   }
   void getTrendingItems() {
     homePageService.getTrendingItems().then((value) {
-      if (value.length == 0) {
+      if (value.isEmpty) {
         trendingItems = [].obs;
       } else {
         trendingItems = value.obs;
@@ -25,7 +25,7 @@ class HomePageController extends GetxController {
 
   void getRecentViewItems() {
     homePageService.getRecentViewItems().then((value) {
-      if (value.length == 0) {
+      if (value.isEmpty) {
         recentViewItems = [].obs;
       } else {
         recentViewItems = value.obs;

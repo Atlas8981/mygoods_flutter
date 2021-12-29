@@ -5,7 +5,7 @@ import 'package:mygoods_flutter/models/item.dart';
 import 'package:mygoods_flutter/views/ItemDetailPage.dart';
 
 class HomepageCell extends StatelessWidget {
-  const HomepageCell(this.item);
+  const HomepageCell(this.item, {Key? key}) : super(key: key);
 
   final Item item;
 
@@ -16,7 +16,7 @@ class HomepageCell extends StatelessWidget {
       width: 125,
       child: InkWell(
         onTap: () {
-          Get.to(()=>ItemDetailPage(item: item));
+          Get.to(() => ItemDetailPage(item: item));
         },
         child: Column(
           // direction: Axis.vertical,
@@ -40,7 +40,7 @@ class HomepageCell extends StatelessWidget {
                 // ),
                 ),
             Text(
-              "${item.name}",
+              item.name,
               maxLines: 1,
               overflow: TextOverflow.ellipsis,
             ),

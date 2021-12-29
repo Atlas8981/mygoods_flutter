@@ -25,8 +25,8 @@ class _CustomBottomSheetWithSearchState
     extends State<CustomBottomSheetWithSearch> {
   List<String> _tempList = [];
 
-  late List<String> _listOfItems = widget.items;
-  final TextEditingController searchFieldCon = new TextEditingController();
+  late final List<String> _listOfItems = widget.items;
+  final TextEditingController searchFieldCon = TextEditingController();
 
   @override
   Widget build(BuildContext context) {
@@ -46,9 +46,9 @@ class _CustomBottomSheetWithSearchState
                         controller: searchFieldCon,
                         decoration: InputDecoration(
                           contentPadding: EdgeInsets.all(8),
-                          border: new OutlineInputBorder(
-                            borderRadius: new BorderRadius.circular(15.0),
-                            borderSide: new BorderSide(),
+                          border: OutlineInputBorder(
+                            borderRadius: BorderRadius.circular(15.0),
+                            borderSide: BorderSide(),
                           ),
                           prefixIcon: Icon(Icons.search),
                         ),
@@ -73,33 +73,31 @@ class _CustomBottomSheetWithSearchState
                     }),
               ]),
               Expanded(
-                child: Container(
-                  child: ListView.builder(
-                      controller: scrollController,
-                      // physics: const NeverScrollableScrollPhysics(),
-                      //5
-                      shrinkWrap: true,
-                      itemCount: (_tempList.length > 0)
-                          ? _tempList.length
-                          : _listOfItems.length,
-                      // separatorBuilder: (context, int) {
-                      //   return Divider();
-                      // },
-                      itemBuilder: (context, index) {
-                        return InkWell(
+                child: ListView.builder(
+                    controller: scrollController,
+                    // physics: const NeverScrollableScrollPhysics(),
+                    //5
+                    shrinkWrap: true,
+                    itemCount: (_tempList.isNotEmpty)
+                        ? _tempList.length
+                        : _listOfItems.length,
+                    // separatorBuilder: (context, int) {
+                    //   return Divider();
+                    // },
+                    itemBuilder: (context, index) {
+                      return InkWell(
 
-                          //6
-                            child: (_tempList.length > 0)
-                                ? _showBottomSheetWithSearch(index, _tempList)
-                                : _showBottomSheetWithSearch(
-                                index, _listOfItems),
-                            onTap: () {
-                              widget.onTapItem((_tempList.length > 0)
-                                  ? _tempList[index]
-                                  : _listOfItems[index]);
-                            });
-                      }),
-                ),
+                        //6
+                          child: (_tempList.isNotEmpty)
+                              ? _showBottomSheetWithSearch(index, _tempList)
+                              : _showBottomSheetWithSearch(
+                              index, _listOfItems),
+                          onTap: () {
+                            widget.onTapItem((_tempList.isNotEmpty)
+                                ? _tempList[index]
+                                : _listOfItems[index]);
+                          });
+                    }),
               ),
             ]),
           );

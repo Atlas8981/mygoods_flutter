@@ -48,7 +48,7 @@ class SignUpPage extends StatelessWidget {
                           labelText: "Email",
                           controller: emailCon,
                           prefixIcon: Icon(Icons.email_outlined),
-                          autoFillHints: [AutofillHints.email],
+                          autoFillHints: const [AutofillHints.email],
                         ),
                         SizedBox(
                           height: 30,

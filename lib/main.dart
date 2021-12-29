@@ -6,8 +6,6 @@ import 'package:flutter_localizations/flutter_localizations.dart';
 
 import 'package:get/get.dart';
 import 'package:mygoods_flutter/controllers/initial_binding.dart';
-import 'package:mygoods_flutter/utils/constant.dart';
-import 'package:mygoods_flutter/views/MainActivity.dart';
 import 'package:mygoods_flutter/views/SplashPage.dart';
 
 Future<void> main() async {
@@ -16,12 +14,15 @@ Future<void> main() async {
   SystemChrome.setSystemUIOverlayStyle(SystemUiOverlayStyle(
     statusBarColor: Colors.transparent,
   ));
-  FirebaseChatCore.instance
-      .setConfig(FirebaseChatCoreConfig("rooms", "chatUsers"));
+  FirebaseChatCore.instance.setConfig(
+    FirebaseChatCoreConfig("rooms", "chatUsers"),
+  );
   runApp(MyApp());
 }
 
 class MyApp extends StatelessWidget {
+  const MyApp({Key? key}) : super(key: key);
+
   @override
   Widget build(BuildContext context) {
     return GetMaterialApp(
@@ -30,12 +31,12 @@ class MyApp extends StatelessWidget {
       // home: WelcomePage(),
       // home: VerifyOTPPage(),
       initialBinding: InitialBinding(),
-      localizationsDelegates: [
+      localizationsDelegates: const [
         GlobalMaterialLocalizations.delegate,
         GlobalWidgetsLocalizations.delegate,
         GlobalCupertinoLocalizations.delegate,
       ],
-      supportedLocales: [
+      supportedLocales: const [
         Locale('en'),
         Locale('km'),
       ],

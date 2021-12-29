@@ -15,17 +15,12 @@ class MyItemsController extends GetxController {
     // listenForItemChange();
   }
 
-  @override
-  void dispose() {
-    super.dispose();
-  }
-
   void getUserItems() {
     userService.getUserItems().then((value) {
       if (value == null) {
         return;
       }
-      if (value.length == 0) {
+      if (value.isEmpty) {
         items = [].obs;
       }
 

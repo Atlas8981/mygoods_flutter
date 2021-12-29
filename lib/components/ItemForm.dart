@@ -194,9 +194,9 @@ class _ItemFormState extends State<ItemForm> {
     final totalImage = (itemFormCon.tempImages.length + rawXfile.length);
     if (totalImage <= 5) {
       setState(() {
-        rawXfile.forEach((picture) {
+        for (var picture in rawXfile) {
           itemFormCon.addImage(DualImage(false, imagePath: picture.path));
-        });
+        }
       });
     } else {
       showToast("Total images exceed 5");
@@ -531,7 +531,7 @@ class _ItemFormState extends State<ItemForm> {
                   ),
 
                   //Horizontal Image View
-                  Container(
+                  SizedBox(
                     height: 120,
                     child: Obx(() {
                       return ListView.builder(

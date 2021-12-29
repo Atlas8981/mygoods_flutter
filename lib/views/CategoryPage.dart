@@ -17,6 +17,8 @@ class CategoryPage extends StatelessWidget {
     Category(name: "Desktop", image: "${imageDir}desktoppic.png"),
   ];
 
+  CategoryPage({Key? key}) : super(key: key);
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -24,9 +26,9 @@ class CategoryPage extends StatelessWidget {
         title: Text("Category"),
       ),
       body: SafeArea(
-        child: Container(
-          width: double.infinity,
-          height: double.infinity,
+        child: SizedBox(
+          width: double.maxFinite,
+          height: double.maxFinite,
           // color: Colors.yellow,
           child: SingleChildScrollView(
             child: Column(
@@ -70,7 +72,7 @@ class CategoryPage extends StatelessWidget {
                   height: 5,
                   color: Colors.black.withOpacity(0.2),
                 ),
-                Container(
+                SizedBox(
                   width: double.maxFinite,
                   height: 10,
                 ),
@@ -85,7 +87,7 @@ class CategoryPage extends StatelessWidget {
                         style: TextStyle(
                             fontSize: 18, fontWeight: FontWeight.bold),
                       ),
-                      Container(
+                      SizedBox(
                         width: double.infinity,
                         height: 20,
                       ),

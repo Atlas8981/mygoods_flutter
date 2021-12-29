@@ -9,9 +9,9 @@ class AdditionalDataService {
       'X-Parse-Application-Id': 'hlhoNKjOvEhqzcVAJ1lxjicJLZNVv36GdbboZj3Z',
       'X-Parse-Master-Key': 'SNMJJF0CZZhTPhLDIqGhTlUNV9r60M2Z5spyWfXW',
     };
-    final int limit = 9581;
-    final String order = "Make";
-    final String url =
+    const int limit = 9581;
+    const String order = "Make";
+    const String url =
         "https://parseapi.back4app.com/classes/Car_Model_List?limit=$limit&order=$order";
     var uri = Uri.parse(url);
     var response = await http.get(uri, headers: headers);

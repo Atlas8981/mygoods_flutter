@@ -17,7 +17,7 @@ class TypeTextField extends StatefulWidget {
     this.hint,
   }) : super(key: key);
 
-  final inputType;
+  final TextInputType? inputType;
   final String labelText;
   final int? maxLength;
   final String? prefix;
@@ -49,7 +49,7 @@ class _TypeTextFieldState extends State<TypeTextField> {
       buildCounter: widget.buildCounter,
       obscureText: widget.obscureText ?? false,
       keyboardType:
-          widget.inputType == null ? TextInputType.name : widget.inputType,
+          widget.inputType ?? TextInputType.name,
       cursorHeight: 24,
       decoration: InputDecoration(
         contentPadding:
@@ -58,7 +58,7 @@ class _TypeTextFieldState extends State<TypeTextField> {
           fontSize: 16,
         ),
         labelText: widget.labelText,
-        prefixText: widget.prefix == null ? null : widget.prefix,
+        prefixText: widget.prefix,
         prefixStyle: TextStyle(fontSize: 16, letterSpacing: 2),
         border: OutlineInputBorder(),
         prefixIcon: widget.prefixIcon,

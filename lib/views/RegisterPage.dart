@@ -12,8 +12,11 @@ import 'package:mygoods_flutter/views/MainActivity.dart';
 import 'package:flutter_chat_types/flutter_chat_types.dart' as types;
 
 class RegisterPage extends StatelessWidget {
-  RegisterPage({Key? key, required this.userId, this.phoneNumber})
-      : super(key: key);
+  RegisterPage({
+    Key? key,
+    required this.userId,
+    this.phoneNumber,
+  }) : super(key: key);
 
   final String userId;
   String? phoneNumber;
@@ -27,7 +30,6 @@ class RegisterPage extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    print(phoneNumber);
     return WillPopScope(
       onWillPop: () async {
         return false;
@@ -57,7 +59,7 @@ class RegisterPage extends StatelessWidget {
   topTextViews() {
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
-      children: [
+      children: const [
         Text(
           "Create an Account",
           style: TextStyle(fontWeight: FontWeight.bold, fontSize: 24),
@@ -166,9 +168,7 @@ class RegisterPage extends StatelessWidget {
     final firstname = firstnameCon.text.trim();
     final lastname = lastnameCon.text.trim();
     final address = addressCon.text.trim();
-    if (phoneNumber == null) {
-      phoneNumber = phoneCon.text.trim();
-    }
+    phoneNumber ??= phoneCon.text.trim();
     final User user = User(
         userId: userId,
         username: username,

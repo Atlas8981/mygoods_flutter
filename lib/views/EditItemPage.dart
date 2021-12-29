@@ -41,8 +41,7 @@ class _EditItemPageState extends State<EditItemPage> {
       return _image.itemImage!;
     }
     final imageName = "${DateTime.now()}";
-    final Reference storageReference =
-        storage.ref('flutter/').child("$imageName");
+    final Reference storageReference = storage.ref('flutter/').child(imageName);
     await storageReference.putFile(File(_image.imagePath!));
     final imageUrl = await storageReference.getDownloadURL();
     final image = myImageClass.Image(imageName: imageName, imageUrl: imageUrl);
@@ -50,8 +49,7 @@ class _EditItemPageState extends State<EditItemPage> {
   }
 
   void uploadData(List<myImageClass.Image> images) {
-    final CollectionReference reference =
-        firestore.collection("$itemCollection");
+    final CollectionReference reference = firestore.collection(itemCollection);
 
     final Item newItem = Item(
         date: preItem.date,
@@ -61,7 +59,7 @@ class _EditItemPageState extends State<EditItemPage> {
         address: itemFormController.addressCon.text,
         description: itemFormController.descriptionCon.text,
         userid: preItem.userid,
-        itemid: "${preItem.itemid}",
+        itemid: preItem.itemid,
         viewers: preItem.viewers,
         phone: "0${itemFormController.phoneCon.text}",
         price: double.parse(itemFormController.priceCon.text),
@@ -79,7 +77,6 @@ class _EditItemPageState extends State<EditItemPage> {
       itemFormController.isVisible.value = false;
       print("Failed with error: $error");
     });
-
   }
 
   Future<void> uploadItemInformation() async {
@@ -93,9 +90,11 @@ class _EditItemPageState extends State<EditItemPage> {
 
   void setDataIntoView() {
     preItem = widget.item!;
-    preItem.images.forEach((image) {
-      itemFormController.addImage(DualImage(true, itemImage: image));
-    });
+    for (var image in preItem.images) {
+      itemFormController.addImage(
+        DualImage(true, itemImage: image),
+      );
+    }
     itemFormController.mainCat.value = preItem.mainCategory;
     itemFormController.subCat.value = preItem.subCategory;
     itemFormController.categoryCon.text =
@@ -122,7 +121,9 @@ class _EditItemPageState extends State<EditItemPage> {
         body: ItemForm(
       titleText: Text("Edit Item"),
       padding: EdgeInsets.all(10),
-      onConfirm: () {uploadItemInformation();},
+      onConfirm: () {
+        uploadItemInformation();
+      },
     ));
   }
 }

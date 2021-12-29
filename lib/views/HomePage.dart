@@ -12,6 +12,8 @@ class HomePage extends StatelessWidget {
   final homePageService = HomePageService();
   final homePageController = Get.put(HomePageController());
 
+  HomePage({Key? key}) : super(key: key);
+
   Widget homePageListView(
     String title, {
     required Function() onTap,
@@ -23,14 +25,14 @@ class HomePage extends StatelessWidget {
           mainAxisAlignment: MainAxisAlignment.spaceBetween,
           children: [
             Text(
-              "$title",
+              title,
               style: TextStyle(fontSize: 18, fontWeight: FontWeight.bold),
             ),
             TextButton(
               onPressed: () {
                 Get.to(
                   () => ViewAllPage(
-                    title: "$title",
+                    title: title,
                     smallListItem: items,
                   ),
                 );
@@ -99,7 +101,7 @@ class HomePage extends StatelessWidget {
                   }
                   final List<Item> trendingItems =
                       controller.trendingItems!.cast();
-                  if (trendingItems.length != 0) {
+                  if (trendingItems.isNotEmpty) {
                     return homePageListView("Trending", items: trendingItems,
                         onTap: () {
                       showToast("In Development");
@@ -118,7 +120,7 @@ class HomePage extends StatelessWidget {
                   }
                   final List<Item> recentViewItems =
                       controller.recentViewItems!.cast();
-                  if (recentViewItems.length != 0) {
+                  if (recentViewItems.isNotEmpty) {
                     return homePageListView("Recently View",
                         items: recentViewItems, onTap: () {
                       showToast("In Development");

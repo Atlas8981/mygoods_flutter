@@ -35,12 +35,8 @@ class _CategoryDropdownMenuState extends State<CategoryDropdownMenu> {
 
   @override
   Widget build(BuildContext context) {
-    if (subCategories == null) {
-      subCategories = electronicSubCategories;
-    }
-    if (subCategory == null) {
-      subCategory = electronicSubCategories[0].name;
-    }
+    subCategories ??= electronicSubCategories;
+    subCategory ??= electronicSubCategories[0].name;
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
       mainAxisSize: MainAxisSize.min,

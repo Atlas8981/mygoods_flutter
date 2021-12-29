@@ -14,6 +14,8 @@ import 'package:mygoods_flutter/models/item.dart';
 import 'package:mygoods_flutter/utils/constant.dart';
 
 class AddPage extends StatefulWidget {
+  const AddPage({Key? key}) : super(key: key);
+
   @override
   _AddPageState createState() => _AddPageState();
 }
@@ -32,7 +34,7 @@ class _AddPageState extends State<AddPage> {
   Future<myImageClass.Image> uploadFile(File _image) async {
     final imageName = "${DateTime.now()}";
     final Reference storageReference =
-        storage.ref('flutter/').child("$imageName");
+        storage.ref('flutter/').child(imageName);
     await storageReference.putFile(_image);
     final imageUrl = await storageReference.getDownloadURL();
     final image = myImageClass.Image(imageName: imageName, imageUrl: imageUrl);
@@ -41,7 +43,7 @@ class _AddPageState extends State<AddPage> {
 
   void uploadData(List<myImageClass.Image> images) {
     final CollectionReference reference =
-        firestore.collection("$itemCollection");
+        firestore.collection(itemCollection);
 
     final String id =
         reference.doc().path.toString().replaceAll("$itemCollection/", "");
@@ -54,7 +56,7 @@ class _AddPageState extends State<AddPage> {
         address: itemFormController.addressCon.text,
         description: itemFormController.descriptionCon.text,
         userid: auth.currentUser!.uid,
-        itemid: "$id",
+        itemid: id,
         viewers: [],
         phone: itemFormController.phoneCon.text,
         price: double.parse(itemFormController.priceCon.text),
