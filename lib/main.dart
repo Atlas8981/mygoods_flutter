@@ -6,6 +6,7 @@ import 'package:flutter_localizations/flutter_localizations.dart';
 
 import 'package:get/get.dart';
 import 'package:mygoods_flutter/controllers/initial_binding.dart';
+import 'package:mygoods_flutter/views/MainActivity.dart';
 import 'package:mygoods_flutter/views/SplashPage.dart';
 
 Future<void> main() async {
@@ -27,9 +28,10 @@ class MyApp extends StatelessWidget {
   Widget build(BuildContext context) {
     return GetMaterialApp(
       title: 'MyGoods Flutter From Window @.20',
-      home: SplashPage(),
-      // home: WelcomePage(),
+      // home: SplashPage(),
+      home: MainActivity(),
       // home: VerifyOTPPage(),
+      // defaultTransition: Transition.rightToLeft,
       initialBinding: InitialBinding(),
       localizationsDelegates: const [
         GlobalMaterialLocalizations.delegate,
