@@ -27,11 +27,8 @@ class MyApp extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return GetMaterialApp(
-      title: 'MyGoods Flutter From Window @.20',
-      // home: SplashPage(),
+      title: 'MyGoods Flutter With Java Spring Boot MySQL',
       home: MainActivity(),
-      // home: VerifyOTPPage(),
-      // defaultTransition: Transition.rightToLeft,
       initialBinding: InitialBinding(),
       localizationsDelegates: const [
         GlobalMaterialLocalizations.delegate,
