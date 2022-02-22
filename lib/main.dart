@@ -27,7 +27,7 @@ class MyApp extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return GetMaterialApp(
-      title: 'MyGoods Flutter From Window @.20',
+      title: 'MyGoods Flutter Using Amplify',
       // home: SplashPage(),
       home: MainActivity(),
       // home: VerifyOTPPage(),
