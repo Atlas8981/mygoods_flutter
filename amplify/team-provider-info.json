@@ -1,0 +1,15 @@
+{
+  "staging": {
+    "awscloudformation": {
+      "AuthRoleName": "amplify-mygood-staging-85658-authRole",
+      "UnauthRoleArn": "arn:aws:iam::009147815733:role/amplify-mygood-staging-85658-unauthRole",
+      "AuthRoleArn": "arn:aws:iam::009147815733:role/amplify-mygood-staging-85658-authRole",
+      "Region": "us-east-1",
+      "DeploymentBucketName": "amplify-mygood-staging-85658-deployment",
+      "UnauthRoleName": "amplify-mygood-staging-85658-unauthRole",
+      "StackName": "amplify-mygood-staging-85658",
+      "StackId": "arn:aws:cloudformation:us-east-1:009147815733:stack/amplify-mygood-staging-85658/64742cc0-93bd-11ec-91e9-0a792c3b0e27",
+      "AmplifyAppId": "dv96d62w1rdkl"
+    }
+  }
+}
