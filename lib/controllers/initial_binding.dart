@@ -1,4 +1,5 @@
 import 'package:get/get.dart';
+import 'package:mygoods_flutter/controllers/AuthenticationController.dart';
 import 'package:mygoods_flutter/controllers/UserController.dart';
 
 class InitialBinding extends Bindings {
@@ -8,5 +9,6 @@ class InitialBinding extends Bindings {
       () => UserController(),
       fenix: true,
     );
+    Get.put(AuthenticationController(), permanent: true);
   }
 }

@@ -15,6 +15,7 @@ class TypeTextField extends StatefulWidget {
     this.autoFillHints,
     this.buildCounter,
     this.hint,
+    this.onEditingComplete,
   }) : super(key: key);
 
   final TextInputType? inputType;
@@ -29,6 +30,7 @@ class TypeTextField extends StatefulWidget {
   final Iterable<String>? autoFillHints;
   final InputCounterWidgetBuilder? buildCounter;
   final String? hint;
+  final Function()? onEditingComplete;
 
   @override
   _TypeTextFieldState createState() => _TypeTextFieldState();
@@ -75,6 +77,7 @@ class _TypeTextFieldState extends State<TypeTextField> {
           },
       onEditingComplete: () {
         FocusScope.of(context).requestFocus(FocusNode());
+        widget.onEditingComplete;
       },
     );
   }

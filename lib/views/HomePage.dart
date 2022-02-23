@@ -1,9 +1,13 @@
+import 'dart:convert';
+
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:mygoods_flutter/controllers/HomePageController.dart';
+import 'package:mygoods_flutter/models/image.dart';
 import 'package:mygoods_flutter/models/image.dart' as myImage;
 import 'package:mygoods_flutter/models/item.dart';
 import 'package:mygoods_flutter/services/HomePageService.dart';
+import 'package:mygoods_flutter/services/ImageService.dart';
 import 'package:mygoods_flutter/utils/constant.dart';
 import 'package:mygoods_flutter/views/ViewAllPage.dart';
 import 'package:mygoods_flutter/views/cells/homepage_cell.dart';
@@ -62,6 +66,8 @@ class HomePage extends StatelessWidget {
       ],
     );
   }
+
+  final imageService = ImageService();
 
   @override
   Widget build(BuildContext context) {
@@ -130,25 +136,34 @@ class HomePage extends StatelessWidget {
                   }
                 },
               ),
-              // FutureBuilder<List<Item>>(
-              //   future: homePageService.getRecentViewItems(),
+
+              // FutureBuilder<List<GetAllImage>?>(
+              //   future: imageService.getImages(),
               //   builder: (context, snapshot) {
-              //     if (!snapshot.hasData) {
+              //     if (snapshot.connectionState == ConnectionState.waiting) {
               //       return Center(
               //         child: CircularProgressIndicator(),
               //       );
               //     }
-              //     final List<Item> recentItems = snapshot.data!;
-              //     if (recentItems.length != 0) {
-              //       return homePageListView("Recently View", items: recentItems,
-              //           onTap: () {
-              //         showToast("In Development");
-              //       });
-              //     } else {
-              //       return Container();
+              //     if (snapshot.hasError ||
+              //         !snapshot.hasData ||
+              //         snapshot.data == null) {
+              //       return Center(
+              //         child: Text("Ort Der"),
+              //       );
               //     }
+              //     final listOfImage = snapshot.data!;
+              //     return Center(
+              //       child: Image.memory(
+              //         base64Decode(
+              //             listOfImage[2].imageUrl.replaceAll(".png", "")),
+              //         width: 100,
+              //         height: 100,
+              //       ),
+              //     );
               //   },
               // ),
+
             ],
           ),
         ),

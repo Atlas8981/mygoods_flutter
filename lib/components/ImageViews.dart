@@ -43,7 +43,7 @@ class _ImagesViewState extends State<ImagesView> {
           itemCount: images.length,
           itemBuilder: (context, index, realIndex) {
             return CachedNetworkImage(
-              imageUrl: images[index].imageUrl,
+              imageUrl: images[index].imageUrl!,
               fit: BoxFit.cover,
               fadeInDuration: Duration(milliseconds: 100),
               fadeOutDuration: Duration(milliseconds: 100),

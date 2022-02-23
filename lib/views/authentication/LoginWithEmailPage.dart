@@ -1,8 +1,12 @@
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import 'package:get/get.dart';
 import 'package:mygoods_flutter/components/TypeTextField.dart';
+import 'package:mygoods_flutter/controllers/AuthenticationController.dart';
 import 'package:mygoods_flutter/controllers/ItemFormController.dart';
 import 'package:mygoods_flutter/controllers/UserController.dart';
+import 'package:mygoods_flutter/models/token_response.dart';
+import 'package:mygoods_flutter/services/AuthenticationService.dart';
 import 'package:mygoods_flutter/services/UserService.dart';
 import 'package:mygoods_flutter/utils/constant.dart';
 import 'package:mygoods_flutter/views/MainActivity.dart';
@@ -53,40 +57,43 @@ class _LoginWithEmailPageState extends State<LoginWithEmailPage> {
                   ),
                   Form(
                     key: formKey,
-                    child: Column(
-                      children: [
-                        TypeTextField(
-                          labelText: "Email",
-                          controller: emailCon,
-                          prefixIcon: Icon(Icons.email_outlined),
-                          inputType: TextInputType.emailAddress,
-                          autoFillHints: const [AutofillHints.email],
-                        ),
-                        SizedBox(
-                          height: 40,
-                        ),
-                        TypeTextField(
-                          labelText: "Password",
-                          controller: passwordCon,
-                          autoFillHints: const [AutofillHints.password],
-                          inputType: TextInputType.visiblePassword,
-                          prefixIcon: Icon(Icons.password),
-                          suffixIcon: IconButton(
-                            onPressed: () {
-                              setState(() {
-                                isObscure = !isObscure;
-                              });
-                            },
-                            icon: Icon((isObscure)
-                                ? Icons.visibility
-                                : Icons.visibility_off),
+                    child: AutofillGroup(
+                      child: Column(
+                        children: [
+                          TypeTextField(
+                            labelText: "Email",
+                            controller: emailCon,
+                            prefixIcon: Icon(Icons.email_outlined),
+                            inputType: TextInputType.emailAddress,
+                            autoFillHints: const [AutofillHints.email],
                           ),
-                          obscureText: isObscure,
-                        ),
-                        // SizedBox(
-                        //   height: 40,
-                        // ),
-                      ],
+                          SizedBox(
+                            height: 40,
+                          ),
+                          TypeTextField(
+                            labelText: "Password",
+                            controller: passwordCon,
+                            autoFillHints: const [AutofillHints.password],
+                            inputType: TextInputType.visiblePassword,
+                            prefixIcon: Icon(Icons.password),
+                            suffixIcon: IconButton(
+                              onPressed: () {
+                                setState(() {
+                                  isObscure = !isObscure;
+                                });
+                              },
+                              icon: Icon((isObscure)
+                                  ? Icons.visibility
+                                  : Icons.visibility_off),
+                            ),
+                            obscureText: isObscure,
+                            onEditingComplete: () =>
+                                TextInput.finishAutofillContext(
+                              shouldSave: true,
+                            ),
+                          ),
+                        ],
+                      ),
                     ),
                   ),
                   Align(
@@ -106,6 +113,7 @@ class _LoginWithEmailPageState extends State<LoginWithEmailPage> {
                         height: 50,
                         child: ElevatedButton(
                             onPressed: signInButtonClick,
+                            onLongPress: debugLogin,
                             child: Text("Sign In".toUpperCase())),
                       ),
                       SizedBox(
@@ -128,9 +136,10 @@ class _LoginWithEmailPageState extends State<LoginWithEmailPage> {
                         width: double.infinity,
                         height: 50,
                         child: TextButton(
-                            onPressed: signInWithPhoneNumberButtonClick,
-                            child: Text(
-                                "Sign In With Phone Number".toUpperCase())),
+                          onPressed: signInWithPhoneNumberButtonClick,
+                          child:
+                              Text("Sign In With Phone Number".toUpperCase()),
+                        ),
                       ),
                       SizedBox(
                         height: 20,
@@ -146,6 +155,9 @@ class _LoginWithEmailPageState extends State<LoginWithEmailPage> {
     );
   }
 
+  final authService = AuthenticationService();
+  final authCon = Get.find<AuthenticationController>();
+
   void signInButtonClick() {
     final String email = emailCon.text.trim();
     final String password = passwordCon.text.trim();
@@ -154,28 +166,19 @@ class _LoginWithEmailPageState extends State<LoginWithEmailPage> {
       return;
     }
 
-    userService
-        .loginWithEmailPassword(email, password)
-        .then((credential) async {
-      if (credential != null) {
-        showToast("Login Success");
-        userService.isUserHaveData(credential.user!.uid).then((value) {
-          if (value) {
-            Get.delete<UserController>();
-            Get.lazyPut(() => UserController(), fenix: true);
-            Get.delete<ItemFormController>();
-            Get.lazyPut(() => ItemFormController(), fenix: true);
-            Get.offAll(() => MainActivity());
-          } else {
-            Get.offAll(
-              () => RegisterPage(
-                userId: credential.user!.uid,
-              ),
-            );
-          }
-        });
-      }
+    authService.login(email, password).then((value) {
+      Get.offAll(() => MainActivity());
     });
+  }
+
+  Future<void> debugLogin() async {
+    final tokenRes = await authService.login("016409637", "password");
+    if (tokenRes == null) {
+      return;
+    }
+    showToast("Debug Login");
+    authCon.setToken(tokenRes);
+    Get.offAll(() => MainActivity());
   }
 
   void forgotPasswordButtonClick() {}

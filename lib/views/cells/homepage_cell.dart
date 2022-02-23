@@ -25,7 +25,7 @@ class HomepageCell extends StatelessWidget {
             ClipRRect(
                 borderRadius: BorderRadius.all(Radius.circular(5)),
                 child: Image.network(
-                  item.images[0].imageUrl,
+                  item.images[0].imageUrl!,
                   width: 125,
                   height: 125,
                   fit: BoxFit.cover,
