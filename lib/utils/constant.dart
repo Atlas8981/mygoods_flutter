@@ -211,7 +211,7 @@ String? validatePhoneNumber(String? value) {
 
 checkImageProvider(DualImage image) {
   if (image.isNetworkImage) {
-    return CachedNetworkImageProvider(image.itemImage!.imageUrl!);
+    return CachedNetworkImageProvider(image.itemImage!.imageUrl);
   } else {
     return FileImage(File(image.imagePath!));
   }

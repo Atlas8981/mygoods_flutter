@@ -11,6 +11,7 @@ import 'package:mygoods_flutter/components/ItemForm.dart';
 import 'package:mygoods_flutter/controllers/ItemFormController.dart';
 import 'package:mygoods_flutter/models/image.dart' as myImageClass;
 import 'package:mygoods_flutter/models/item.dart';
+import 'package:mygoods_flutter/services/ImageService.dart';
 import 'package:mygoods_flutter/utils/constant.dart';
 
 class AddPage extends StatefulWidget {
@@ -22,29 +23,26 @@ class AddPage extends StatefulWidget {
 
 class _AddPageState extends State<AddPage> {
   final itemFormController = Get.put(ItemFormController());
-
-
+  final imageService = ImageService();
 
   void uploadItemInformation() async {
     itemFormController.isVisible.value = true;
     final listOfImage = itemFormController.getRawImageInFile();
-
-  }
-
-  @override
-  void initState() {
-    super.initState();
+    final result = await imageService.saveImage(listOfImage[0].path);
+    print(result);
+    itemFormController.isVisible.value = false;
   }
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-        body: ItemForm(
-      titleText: Text("Add Item"),
-      padding: EdgeInsets.all(10),
-      onConfirm: () {
-        uploadItemInformation();
-      },
-    ));
+      body: ItemForm(
+        titleText: Text("Add Item"),
+        padding: EdgeInsets.all(10),
+        onConfirm: () {
+          uploadItemInformation();
+        },
+      ),
+    );
   }
 }

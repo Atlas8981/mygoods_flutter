@@ -35,7 +35,7 @@ class ImageService {
     }
   }
 
-  Future<String?> saveImage() async {
+  Future<String?> saveImage(String path) async {
     try {
       const url = "http://$domain:$port/api/v1/image/save";
       final uri = Uri.parse(url);
@@ -46,12 +46,16 @@ class ImageService {
       request.headers.addAll({
         'Authorization': 'Bearer ${authCon.tokenRes!.value.accessToken}',
       });
-      request.files.add(await http.MultipartFile.fromPath("image", "filePath"));
+
+      request.files.add(await http.MultipartFile.fromPath("image", path));
       final response = await request.send();
 
       print("response.statusCode: ${response.statusCode}");
-
-      if (response.statusCode == 200) {}
+      final body = await response.stream.bytesToString();
+      print("response.body: $body");
+      if (response.statusCode == 200) {
+        return body;
+      }
       return null;
     } catch (e) {
       print(e);
