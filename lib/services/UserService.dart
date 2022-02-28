@@ -4,11 +4,11 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:firebase_storage/firebase_storage.dart';
 import 'package:flutter_firebase_chat_core/flutter_firebase_chat_core.dart';
-import 'package:mygoods_flutter/models/item.dart';
+import 'package:mygoods_flutter/models/my_item.dart';
 import 'package:mygoods_flutter/models/user.dart' as myUser;
 import 'package:mygoods_flutter/services/ItemService.dart';
 import 'package:mygoods_flutter/utils/constant.dart';
-import 'package:mygoods_flutter/models/image.dart' as myImage;
+import 'package:mygoods_flutter/models/my_image.dart' as myImage;
 import 'package:flutter_chat_types/flutter_chat_types.dart' as types;
 
 class UserService {
@@ -87,15 +87,15 @@ class UserService {
     return response;
   }
 
-  Future<myImage.Image> updateUserImage(
+  Future<myImage.MyImage> updateUserImage(
       File userImage, myUser.User user) async {
     final imageName = "${DateTime.now()}";
     final Reference storageReference =
         storage.ref('flutter/').child(imageName);
     await storageReference.putFile(userImage);
     final downloadedImageUrl = await storageReference.getDownloadURL();
-    final myImage.Image returnImage =
-        myImage.Image(imageName: imageName, imageUrl: downloadedImageUrl);
+    final myImage.MyImage returnImage =
+        myImage.MyImage(imageName: imageName, imageUrl: downloadedImageUrl);
     await firestore
         .collection(userCollection)
         .doc(auth.currentUser!.uid)
@@ -130,9 +130,9 @@ class UserService {
     return response;
   }
 
-  Future<List<Item>?> getUserItems() async {
+  Future<List<MyItem>?> getUserItems() async {
     try {
-      final List<Item> listOfItem = [];
+      final List<MyItem> listOfItem = [];
       await firestore
           .collection(itemCollection)
           .orderBy('date', descending: true)
@@ -144,7 +144,7 @@ class UserService {
         }
         for (int i = 0; i < value.docs.length; i++) {
           if (value.docs[i].exists) {
-            Item item = Item.fromJson(value.docs[i].data());
+            MyItem item = MyItem.fromJson(value.docs[i].data());
             listOfItem.add(item);
           }
         }
@@ -232,9 +232,9 @@ class UserService {
     }
   }
 
-  Future<List<Item>?> getUserSavedItem() async {
+  Future<List<MyItem>?> getUserSavedItem() async {
     final List<String> itemIds = [];
-    final List<Item> listOfItem = [];
+    final List<MyItem> listOfItem = [];
     final userId = auth.currentUser!.uid;
     try {
       final value = await firestore
@@ -262,11 +262,11 @@ class UserService {
     return null;
   }
 
-  Future<List<Item>> getSaveItems(List<String> itemIds) async {
-    final List<Item?> querySaveItems =
+  Future<List<MyItem>> getSaveItems(List<String> itemIds) async {
+    final List<MyItem?> querySaveItems =
         await Future.wait(itemIds.map((e) => itemService.getItemById(e)));
     querySaveItems.removeWhere((element) => element == null);
-    final List<Item> saveItems = querySaveItems.cast<Item>();
+    final List<MyItem> saveItems = querySaveItems.cast<MyItem>();
     return saveItems;
   }
 

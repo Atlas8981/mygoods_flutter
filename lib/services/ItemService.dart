@@ -1,14 +1,14 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
-import 'package:mygoods_flutter/models/item.dart';
+import 'package:mygoods_flutter/models/my_item.dart';
 import 'package:mygoods_flutter/models/user.dart' as myUser;
 import 'package:mygoods_flutter/utils/constant.dart';
 
 class ItemService {
   final firestore = FirebaseFirestore.instance;
 
-  Future<List<Item>> getItems(String mainCat, String subCat) async {
-    List<Item> response = [];
+  Future<List<MyItem>> getItems(String mainCat, String subCat) async {
+    List<MyItem> response = [];
     try {
       await firestore
           .collection(itemCollection)
@@ -19,7 +19,7 @@ class ItemService {
           .get()
           .then((value) => {
                 value.docs.forEach((element) {
-                  Item item = Item.fromJson(element.data());
+                  MyItem item = MyItem.fromJson(element.data());
                   response.add(item);
                 })
               });
@@ -86,11 +86,11 @@ class ItemService {
     });
   }
 
-  Future<Item?> getItemById(String itemId) async {
+  Future<MyItem?> getItemById(String itemId) async {
     final value =
           await firestore.collection(itemCollection).doc(itemId).get();
     if (value.exists) {
-      final Item saveItem = Item.fromJson(value.data()!);
+      final MyItem saveItem = MyItem.fromJson(value.data()!);
       return saveItem;
     }
   }

@@ -1,13 +1,13 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-import 'package:mygoods_flutter/models/item.dart';
+import 'package:mygoods_flutter/models/my_item.dart';
 import 'package:mygoods_flutter/views/ItemDetailPage.dart';
 
 class HomepageCell extends StatelessWidget {
   const HomepageCell(this.item, {Key? key}) : super(key: key);
 
-  final Item item;
+  final MyItem item;
 
   @override
   Widget build(BuildContext context) {

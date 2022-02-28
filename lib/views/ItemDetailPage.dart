@@ -5,8 +5,8 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:mygoods_flutter/components/ImageViews.dart';
 import 'package:mygoods_flutter/models/additionalInfo.dart';
-import 'package:mygoods_flutter/models/image.dart' as myImage;
-import 'package:mygoods_flutter/models/item.dart';
+import 'package:mygoods_flutter/models/my_image.dart' as myImage;
+import 'package:mygoods_flutter/models/my_item.dart';
 import 'package:mygoods_flutter/models/user.dart' as myUser;
 import 'package:mygoods_flutter/services/ItemService.dart';
 import 'package:mygoods_flutter/services/UserService.dart';
@@ -18,7 +18,7 @@ class ItemDetailPage extends StatefulWidget {
     required this.item,
   }) : super(key: key);
 
-  final Item item;
+  final MyItem item;
 
   @override
   State<ItemDetailPage> createState() => _ItemDetailPageState();
@@ -31,7 +31,7 @@ class _ItemDetailPageState extends State<ItemDetailPage> {
   final itemService = ItemService();
   final userService = UserService();
 
-  late final Item item = widget.item;
+  late final MyItem item = widget.item;
 
   bool isSaved = false;
 

@@ -1,7 +1,7 @@
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-import 'package:mygoods_flutter/models/image.dart' as myImage;
+import 'package:mygoods_flutter/models/my_image.dart' as myImage;
 import 'package:photo_view/photo_view.dart';
 
 class BigImagePage extends StatefulWidget {
@@ -11,7 +11,7 @@ class BigImagePage extends StatefulWidget {
     // required this.isNetworkImage,
   }) : super(key: key);
 
-  final myImage.Image image;
+  final myImage.MyImage image;
 
   // final bool isNetworkImage;
 

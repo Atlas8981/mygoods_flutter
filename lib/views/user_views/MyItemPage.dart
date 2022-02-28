@@ -4,10 +4,10 @@ import 'package:flutter/widgets.dart';
 import 'package:get/get.dart';
 import 'package:mygoods_flutter/components/CustomAlertDialog.dart';
 import 'package:mygoods_flutter/controllers/MyItemsController.dart';
-import 'package:mygoods_flutter/models/item.dart';
+import 'package:mygoods_flutter/models/my_item.dart';
 import 'package:mygoods_flutter/services/ItemService.dart';
 import 'package:mygoods_flutter/services/UserService.dart';
-import 'package:mygoods_flutter/views/EditItemPage.dart';
+import 'package:mygoods_flutter/views/user_views/EditItemPage.dart';
 import 'package:mygoods_flutter/views/OwnerItemDetailPage.dart';
 
 class MyItemsPage extends StatelessWidget {
@@ -33,7 +33,7 @@ class MyItemsPage extends StatelessWidget {
               );
             }
 
-            final List<Item> items = controller.items!.cast();
+            final List<MyItem> items = controller.items!.cast();
             if (items.isEmpty) {
               return Center(
                 child: Text("You have no items"),
@@ -66,13 +66,13 @@ class MyItemsPage extends StatelessWidget {
     );
   }
 
-  void onClickEditItem(Item item) {
+  void onClickEditItem(MyItem item) {
     Get.to(() => EditItemPage(
           item: item,
         ));
   }
 
-  void onClickDeleteItem(context, Item item) {
+  void onClickDeleteItem(context, MyItem item) {
     showCustomDialog(
       context,
       title: "Are you sure you want to delete this item ?",
@@ -92,7 +92,7 @@ class OwnerItemRow extends StatelessWidget {
     this.onEdit,
     this.onDelete,
   }) : super(key: key);
-  final Item item;
+  final MyItem item;
   final Function()? onTap;
   final Function()? onEdit;
   final Function()? onDelete;

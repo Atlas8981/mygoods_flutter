@@ -9,8 +9,8 @@ import 'package:get/get.dart';
 import 'package:mygoods_flutter/models/DualImage.dart';
 import 'package:mygoods_flutter/models/additionalInfo.dart';
 import 'package:mygoods_flutter/models/category.dart';
-import 'package:mygoods_flutter/models/item.dart';
-import 'package:mygoods_flutter/models/image.dart' as myImage;
+import 'package:mygoods_flutter/models/my_item.dart';
+import 'package:mygoods_flutter/models/my_image.dart' as myImage;
 import 'package:flutter_chat_types/flutter_chat_types.dart' as types;
 
 const String imageDir = "assets/images/";
@@ -21,11 +21,11 @@ const String saveItemCollection = "saveItems";
 const String recentViewItemCollection = "recentView";
 
 final dummyItemList = [
-  Item(
+  MyItem(
       date: Timestamp.now(),
       subCategory: "subCategory",
       images: [
-        myImage.Image(
+        myImage.MyImage(
           imageName: "imageName",
           imageUrl: dummyNetworkImage,
         )
@@ -41,11 +41,11 @@ final dummyItemList = [
       name: "name",
       mainCategory: "mainCategory",
       views: 0),
-  Item(
+  MyItem(
       date: Timestamp.now(),
       subCategory: "subCategory",
       images: [
-        myImage.Image(imageName: "imageName", imageUrl: dummyNetworkImage)
+        myImage.MyImage(imageName: "imageName", imageUrl: dummyNetworkImage)
       ],
       amount: 0,
       address: "address",
@@ -58,11 +58,11 @@ final dummyItemList = [
       name: "name",
       mainCategory: "mainCategory",
       views: 0),
-  Item(
+  MyItem(
       date: Timestamp.now(),
       subCategory: "subCategory",
       images: [
-        myImage.Image(imageName: "imageName", imageUrl: dummyNetworkImage)
+        myImage.MyImage(imageName: "imageName", imageUrl: dummyNetworkImage)
       ],
       amount: 0,
       address: "address",
@@ -75,11 +75,11 @@ final dummyItemList = [
       name: "name",
       mainCategory: "mainCategory",
       views: 0),
-  Item(
+  MyItem(
       date: Timestamp.now(),
       subCategory: "subCategory",
       images: [
-        myImage.Image(imageName: "imageName", imageUrl: dummyNetworkImage)
+        myImage.MyImage(imageName: "imageName", imageUrl: dummyNetworkImage)
       ],
       amount: 0,
       address: "address",
@@ -92,11 +92,11 @@ final dummyItemList = [
       name: "name",
       mainCategory: "mainCategory",
       views: 0),
-  Item(
+  MyItem(
       date: Timestamp.now(),
       subCategory: "subCategory",
       images: [
-        myImage.Image(imageName: "imageName", imageUrl: dummyNetworkImage)
+        myImage.MyImage(imageName: "imageName", imageUrl: dummyNetworkImage)
       ],
       amount: 0,
       address: "address",
@@ -109,11 +109,11 @@ final dummyItemList = [
       name: "name",
       mainCategory: "mainCategory",
       views: 0),
-  Item(
+  MyItem(
       date: Timestamp.now(),
       subCategory: "subCategory",
       images: [
-        myImage.Image(imageName: "imageName", imageUrl: dummyNetworkImage)
+        myImage.MyImage(imageName: "imageName", imageUrl: dummyNetworkImage)
       ],
       amount: 0,
       address: "address",
@@ -126,11 +126,11 @@ final dummyItemList = [
       name: "name",
       mainCategory: "mainCategory",
       views: 0),
-  Item(
+  MyItem(
       date: Timestamp.now(),
       subCategory: "subCategory",
       images: [
-        myImage.Image(imageName: "imageName", imageUrl: dummyNetworkImage)
+        myImage.MyImage(imageName: "imageName", imageUrl: dummyNetworkImage)
       ],
       amount: 0,
       address: "address",
@@ -143,11 +143,11 @@ final dummyItemList = [
       name: "name",
       mainCategory: "mainCategory",
       views: 0),
-  Item(
+  MyItem(
       date: Timestamp.now(),
       subCategory: "subCategory",
       images: [
-        myImage.Image(
+        myImage.MyImage(
           imageName: "imageName",
           imageUrl: dummyNetworkImage,
         )

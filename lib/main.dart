@@ -6,6 +6,7 @@ import 'package:flutter_localizations/flutter_localizations.dart';
 
 import 'package:get/get.dart';
 import 'package:mygoods_flutter/controllers/initial_binding.dart';
+import 'package:mygoods_flutter/views/LandingPage.dart';
 import 'package:mygoods_flutter/views/MainActivity.dart';
 import 'package:mygoods_flutter/views/SplashPage.dart';
 
@@ -28,10 +29,7 @@ class MyApp extends StatelessWidget {
   Widget build(BuildContext context) {
     return GetMaterialApp(
       title: 'MyGoods Flutter Using Amplify',
-      // home: SplashPage(),
-      home: MainActivity(),
-      // home: VerifyOTPPage(),
-      // defaultTransition: Transition.rightToLeft,
+      home: LandingPage(),
       initialBinding: InitialBinding(),
       localizationsDelegates: const [
         GlobalMaterialLocalizations.delegate,

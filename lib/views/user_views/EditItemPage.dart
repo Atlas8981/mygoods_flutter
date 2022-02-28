@@ -9,8 +9,8 @@ import 'package:mygoods_flutter/components/ItemForm.dart';
 import 'package:mygoods_flutter/controllers/ItemFormController.dart';
 import 'package:mygoods_flutter/controllers/MyItemsController.dart';
 import 'package:mygoods_flutter/models/DualImage.dart';
-import 'package:mygoods_flutter/models/item.dart';
-import 'package:mygoods_flutter/models/image.dart' as myImageClass;
+import 'package:mygoods_flutter/models/my_item.dart';
+import 'package:mygoods_flutter/models/my_image.dart' as myImageClass;
 import 'package:mygoods_flutter/utils/constant.dart';
 
 class EditItemPage extends StatefulWidget {
@@ -19,7 +19,7 @@ class EditItemPage extends StatefulWidget {
     required this.item,
   }) : super(key: key);
 
-  final Item? item;
+  final MyItem? item;
 
   @override
   _EditItemPageState createState() => _EditItemPageState();
@@ -31,12 +31,12 @@ class _EditItemPageState extends State<EditItemPage> {
   final FirebaseFirestore firestore = FirebaseFirestore.instance;
   final auth = FirebaseAuth.instance;
 
-  Future<List<myImageClass.Image>> uploadFiles(List<DualImage> _images) async {
+  Future<List<myImageClass.MyImage>> uploadFiles(List<DualImage> _images) async {
     var images = await Future.wait(_images.map((_image) => uploadFile(_image)));
     return images;
   }
 
-  Future<myImageClass.Image> uploadFile(DualImage _image) async {
+  Future<myImageClass.MyImage> uploadFile(DualImage _image) async {
     if (_image.isNetworkImage) {
       return _image.itemImage!;
     }
@@ -44,14 +44,14 @@ class _EditItemPageState extends State<EditItemPage> {
     final Reference storageReference = storage.ref('flutter/').child(imageName);
     await storageReference.putFile(File(_image.imagePath!));
     final imageUrl = await storageReference.getDownloadURL();
-    final image = myImageClass.Image(imageName: imageName, imageUrl: imageUrl);
+    final image = myImageClass.MyImage(imageName: imageName, imageUrl: imageUrl);
     return image;
   }
 
-  void uploadData(List<myImageClass.Image> images) {
+  void uploadData(List<myImageClass.MyImage> images) {
     final CollectionReference reference = firestore.collection(itemCollection);
 
-    final Item newItem = Item(
+    final MyItem newItem = MyItem(
         date: preItem.date,
         subCategory: itemFormController.subCat.value,
         images: images,
@@ -86,7 +86,7 @@ class _EditItemPageState extends State<EditItemPage> {
     });
   }
 
-  late final Item preItem;
+  late final MyItem preItem;
 
   void setDataIntoView() {
     preItem = widget.item!;

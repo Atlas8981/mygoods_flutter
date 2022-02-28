@@ -5,14 +5,14 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'dart:convert';
 
-import 'package:mygoods_flutter/models/image.dart';
+import 'package:mygoods_flutter/models/my_image.dart';
 
-Item itemFromJson(String str) => Item.fromJson(json.decode(str));
+MyItem itemFromJson(String str) => MyItem.fromJson(json.decode(str));
 
-String itemToJson(Item data) => json.encode(data.toJson());
+String itemToJson(MyItem data) => json.encode(data.toJson());
 
-class Item {
-  Item({
+class MyItem {
+  MyItem({
     required this.date,
     required this.subCategory,
     required this.images,
@@ -31,7 +31,7 @@ class Item {
 
   final Timestamp date;
   final String subCategory;
-  final List<Image> images;
+  final List<MyImage> images;
   final int amount;
   final String address;
   final String description;
@@ -44,10 +44,10 @@ class Item {
   final String mainCategory;
   final int views;
 
-  factory Item.fromJson(Map<String, dynamic> json) => Item(
+  factory MyItem.fromJson(Map<String, dynamic> json) => MyItem(
         date: json["date"],
         subCategory: json["subCategory"],
-        images: List<Image>.from(json["images"].map((x) => Image.fromJson(x))),
+        images: List<MyImage>.from(json["images"].map((x) => MyImage.fromJson(x))),
         amount: json["amount"],
         address: json["address"],
         description: json["description"],

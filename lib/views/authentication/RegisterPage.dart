@@ -7,7 +7,7 @@ import 'package:mygoods_flutter/components/TypeTextField.dart';
 import 'package:mygoods_flutter/controllers/UserController.dart';
 import 'package:mygoods_flutter/models/user.dart';
 import 'package:mygoods_flutter/services/UserService.dart';
-import 'package:mygoods_flutter/models/image.dart' as myImage;
+import 'package:mygoods_flutter/models/my_image.dart' as myImage;
 import 'package:mygoods_flutter/views/MainActivity.dart';
 import 'package:flutter_chat_types/flutter_chat_types.dart' as types;
 
@@ -177,7 +177,7 @@ class RegisterPage extends StatelessWidget {
         email: "",
         phoneNumber: phoneNumber!,
         address: address,
-        image: myImage.Image(imageName: "", imageUrl: ""),
+        image: myImage.MyImage(imageName: "", imageUrl: ""),
         preferenceId: []);
 
     await FirebaseChatCore.instance.createUserInFirestore(types.User(

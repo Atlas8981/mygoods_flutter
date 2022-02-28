@@ -9,8 +9,8 @@ import 'package:flutter/widgets.dart';
 import 'package:get/get.dart';
 import 'package:mygoods_flutter/components/ItemForm.dart';
 import 'package:mygoods_flutter/controllers/ItemFormController.dart';
-import 'package:mygoods_flutter/models/image.dart' as myImageClass;
-import 'package:mygoods_flutter/models/item.dart';
+import 'package:mygoods_flutter/models/my_image.dart' as myImageClass;
+import 'package:mygoods_flutter/models/my_item.dart';
 import 'package:mygoods_flutter/utils/constant.dart';
 
 class AddPage extends StatefulWidget {
@@ -26,29 +26,29 @@ class _AddPageState extends State<AddPage> {
   final auth = FirebaseAuth.instance;
   final itemFormController = Get.put(ItemFormController());
 
-  Future<List<myImageClass.Image>> uploadFiles(List<File> _images) async {
+  Future<List<myImageClass.MyImage>> uploadFiles(List<File> _images) async {
     var images = await Future.wait(_images.map((_image) => uploadFile(_image)));
     return images;
   }
 
-  Future<myImageClass.Image> uploadFile(File _image) async {
+  Future<myImageClass.MyImage> uploadFile(File _image) async {
     final imageName = "${DateTime.now()}";
     final Reference storageReference =
         storage.ref('flutter/').child(imageName);
     await storageReference.putFile(_image);
     final imageUrl = await storageReference.getDownloadURL();
-    final image = myImageClass.Image(imageName: imageName, imageUrl: imageUrl);
+    final image = myImageClass.MyImage(imageName: imageName, imageUrl: imageUrl);
     return image;
   }
 
-  void uploadData(List<myImageClass.Image> images) {
+  void uploadData(List<myImageClass.MyImage> images) {
     final CollectionReference reference =
         firestore.collection(itemCollection);
 
     final String id =
         reference.doc().path.toString().replaceAll("$itemCollection/", "");
 
-    final Item item = Item(
+    final MyItem item = MyItem(
         date: Timestamp.now(),
         subCategory: itemFormController.subCat.value,
         images: images,

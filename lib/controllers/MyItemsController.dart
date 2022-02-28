@@ -1,7 +1,7 @@
 import 'dart:async';
 
 import 'package:get/get.dart';
-import 'package:mygoods_flutter/models/item.dart';
+import 'package:mygoods_flutter/models/my_item.dart';
 import 'package:mygoods_flutter/services/UserService.dart';
 
 class MyItemsController extends GetxController {
@@ -29,7 +29,7 @@ class MyItemsController extends GetxController {
     });
   }
 
-  void updateUserItem(Item newItem) {
+  void updateUserItem(MyItem newItem) {
     if (items == null) {
       return;
     }
@@ -47,7 +47,7 @@ class MyItemsController extends GetxController {
       final tempList = [];
       for (int i = 0; i < value.docs.length; i++) {
         if (value.docs[i].exists) {
-          Item item = Item.fromJson(value.docs[i].data());
+          MyItem item = MyItem.fromJson(value.docs[i].data());
           tempList.add(item);
         }
       }
@@ -57,7 +57,7 @@ class MyItemsController extends GetxController {
     });
   }
 
-  Future<bool> deleteItems(Item item) async {
+  Future<bool> deleteItems(MyItem item) async {
     if (items == null) {
       return false;
     }

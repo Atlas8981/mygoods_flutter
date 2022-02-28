@@ -1,12 +1,12 @@
 
-import 'package:mygoods_flutter/models/image.dart';
+import 'package:mygoods_flutter/models/my_image.dart';
 
 class DualImage {
   DualImage(this.isNetworkImage, {this.imagePath, this.itemImage});
 
   bool isNetworkImage;
   String? imagePath;
-  Image? itemImage;
+  MyImage? itemImage;
 
   @override
   String toString() {

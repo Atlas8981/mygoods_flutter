@@ -8,7 +8,7 @@ import 'package:mygoods_flutter/controllers/UserController.dart';
 import 'package:mygoods_flutter/services/UserService.dart';
 import 'package:mygoods_flutter/utils/constant.dart';
 import 'package:mygoods_flutter/views/MainActivity.dart';
-import 'package:mygoods_flutter/views/RegisterPage.dart';
+import 'package:mygoods_flutter/views/authentication/RegisterPage.dart';
 import 'package:sms_autofill/sms_autofill.dart';
 
 class VerifyOTPPage extends StatefulWidget {

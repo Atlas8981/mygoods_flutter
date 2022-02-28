@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:mygoods_flutter/models/item.dart';
+import 'package:mygoods_flutter/models/my_item.dart';
 import 'package:mygoods_flutter/services/HomePageService.dart';
 import 'package:mygoods_flutter/views/cells/ListItemRow.dart';
 
@@ -9,7 +9,7 @@ class ViewAllPage extends StatelessWidget {
     this.smallListItem,
     this.title,
   }) : super(key: key);
-  final List<Item>? smallListItem;
+  final List<MyItem>? smallListItem;
   final String? title;
 
   final homePageService = HomePageService();
@@ -20,12 +20,12 @@ class ViewAllPage extends StatelessWidget {
       appBar: AppBar(
         title: Text(title ?? "View All Page"),
       ),
-      body: FutureBuilder<List<Item>>(
+      body: FutureBuilder<List<MyItem>>(
         future: homePageService.getAllTrendingItems(),
         initialData: smallListItem ?? [],
         builder: (context, snapshot) {
           if (snapshot.hasData) {
-            final List<Item> items = snapshot.data!;
+            final List<MyItem> items = snapshot.data!;
             return buildViewAllList(items);
           }
           return Center(
@@ -36,7 +36,7 @@ class ViewAllPage extends StatelessWidget {
     );
   }
 
-  Widget buildViewAllList(List<Item> items) {
+  Widget buildViewAllList(List<MyItem> items) {
     // ListItemRow(item: items[]);
     return Container(
       padding: EdgeInsets.only(

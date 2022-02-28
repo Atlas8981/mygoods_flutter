@@ -2,7 +2,7 @@ import 'package:cached_network_image/cached_network_image.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-import 'package:mygoods_flutter/models/item.dart';
+import 'package:mygoods_flutter/models/my_item.dart';
 import 'package:mygoods_flutter/services/ItemService.dart';
 import 'package:mygoods_flutter/views/ItemDetailPage.dart';
 
@@ -12,7 +12,7 @@ class ListItemRow extends StatefulWidget {
     required this.item,
     this.onTap,
   }) : super(key: key);
-  final Item item;
+  final MyItem item;
   final Function()? onTap;
 
   @override

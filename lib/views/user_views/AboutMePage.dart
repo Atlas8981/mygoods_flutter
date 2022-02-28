@@ -8,17 +8,18 @@ import 'package:mygoods_flutter/components/CustomAlertDialog.dart';
 import 'package:mygoods_flutter/controllers/BottomNavigationViewController.dart';
 import 'package:mygoods_flutter/controllers/UserController.dart';
 import 'package:mygoods_flutter/models/category.dart';
-import 'package:mygoods_flutter/models/image.dart' as myImage;
+import 'package:mygoods_flutter/models/my_image.dart' as myImage;
 import 'package:mygoods_flutter/models/user.dart' as myUser;
 import 'package:mygoods_flutter/models/user.dart';
 import 'package:mygoods_flutter/services/UserService.dart';
 import 'package:mygoods_flutter/utils/constant.dart';
-import 'package:mygoods_flutter/views/EditProfilePage.dart';
-import 'package:mygoods_flutter/views/SavedItemsPage.dart';
 import 'package:mygoods_flutter/views/authentication/ResetPasswordPage.dart';
 import 'package:mygoods_flutter/views/cells/category_item_row.dart';
-import 'package:mygoods_flutter/views/MyItemPage.dart';
+import 'package:mygoods_flutter/views/user_views/MyItemPage.dart';
 import 'package:mygoods_flutter/views/other/big_image.dart';
+
+import 'EditProfilePage.dart';
+import 'SavedItemsPage.dart';
 
 class AboutMePage extends StatefulWidget {
   const AboutMePage({Key? key}) : super(key: key);
@@ -50,9 +51,11 @@ class _AboutMePageState extends State<AboutMePage> {
             onSelected: (AccountMenuItems value) {
               switch (value) {
                 case AccountMenuItems.editProfile:
-                  Get.to(EditProfilePage(
-                    user: user,
-                  ));
+                  Get.to(
+                    () => EditProfilePage(
+                      user: user,
+                    ),
+                  );
                   break;
                 case AccountMenuItems.resetPassword:
                   Get.to(ResetPasswordPage());

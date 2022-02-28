@@ -2,7 +2,7 @@ import 'dart:io';
 
 import 'package:get/get.dart';
 import 'package:image_picker/image_picker.dart';
-import 'package:mygoods_flutter/models/image.dart';
+import 'package:mygoods_flutter/models/my_image.dart';
 import 'package:mygoods_flutter/models/user.dart';
 import 'package:mygoods_flutter/services/UserService.dart';
 
@@ -29,7 +29,7 @@ class UserController extends GetxController {
   }
 
   void changeProfilePicture(XFile image) {
-    user!.value.image = Image(imageName: "pending", imageUrl: "");
+    user!.value.image = MyImage(imageName: "pending", imageUrl: "");
     update();
     userService.updateUserImage(File(image.path),user!.value).then((value) {
       user!.value.image = value;

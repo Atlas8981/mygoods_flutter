@@ -4,17 +4,17 @@ import 'package:get/get.dart';
 import 'package:mygoods_flutter/components/ImageViews.dart';
 import 'package:mygoods_flutter/controllers/MyItemsController.dart';
 import 'package:mygoods_flutter/models/additionalInfo.dart';
-import 'package:mygoods_flutter/models/item.dart';
+import 'package:mygoods_flutter/models/my_item.dart';
 import 'package:mygoods_flutter/services/ItemService.dart';
 import 'package:mygoods_flutter/utils/constant.dart';
-import 'package:mygoods_flutter/views/EditItemPage.dart';
+import 'package:mygoods_flutter/views/user_views/EditItemPage.dart';
 
 class OwnerItemDetailPage extends StatefulWidget {
   const OwnerItemDetailPage({
     Key? key,
     required this.item,
   }) : super(key: key);
-  final Item? item;
+  final MyItem? item;
 
   @override
   State<OwnerItemDetailPage> createState() => _OwnerItemDetailPageState();
@@ -25,7 +25,7 @@ class _OwnerItemDetailPageState extends State<OwnerItemDetailPage> {
   final PageController pageController =
       PageController(initialPage: 0, viewportFraction: 1);
 
-  Widget additionalInfoView(Item item) {
+  Widget additionalInfoView(MyItem item) {
     final hasAdditionInfo = hasAdditionalInfoList.contains(item.subCategory);
     if (!hasAdditionInfo) {
       return Container();
@@ -85,7 +85,7 @@ class _OwnerItemDetailPageState extends State<OwnerItemDetailPage> {
       builder: (controller) {
         final index = controller.items!
             .indexWhere((element) => element.itemid == widget.item!.itemid);
-        final Item item = controller.items![index];
+        final MyItem item = controller.items![index];
         return Scaffold(
           appBar: AppBar(
             title: Text("Item Detail: ${item.itemid}"),

@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:mygoods_flutter/controllers/SavedItemsController.dart';
-import 'package:mygoods_flutter/models/item.dart';
+import 'package:mygoods_flutter/models/my_item.dart';
 import 'package:mygoods_flutter/views/ItemDetailPage.dart';
 import 'package:mygoods_flutter/views/cells/ListItemRow.dart';
 
@@ -25,7 +25,7 @@ class SavedItemsPage extends StatelessWidget {
               );
 
             }
-            final List<Item> items = controller.items!.cast();
+            final List<MyItem> items = controller.items!.cast();
             if (controller.items!.isEmpty) {
               return Center(
                 child: Text("No Saved Item"),

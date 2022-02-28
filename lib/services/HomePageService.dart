@@ -1,6 +1,6 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
-import 'package:mygoods_flutter/models/item.dart';
+import 'package:mygoods_flutter/models/my_item.dart';
 import 'package:mygoods_flutter/services/ItemService.dart';
 import 'package:mygoods_flutter/utils/constant.dart';
 
@@ -9,26 +9,26 @@ class HomePageService {
   final auth = FirebaseAuth.instance;
   final itemService = ItemService();
 
-  Future<List<Item>> getTrendingItems() async {
-    final List<Item> items = [];
+  Future<List<MyItem>> getTrendingItems() async {
+    final List<MyItem> items = [];
     final query = await firestore
         .collection(itemCollection)
         .orderBy("views", descending: true)
         .limit(10)
         .get();
     for (var element in query.docs) {
-      Item item = Item.fromJson(element.data());
+      MyItem item = MyItem.fromJson(element.data());
       items.add(item);
     }
     return items;
   }
 
-  Future<List<Item>> getRecentViewItems() async {
+  Future<List<MyItem>> getRecentViewItems() async {
     if(auth.currentUser == null){
       return [];
     }
     final List<String> itemIds = [];
-    final List<Item> listOfItem = [];
+    final List<MyItem> listOfItem = [];
     final userId = auth.currentUser!.uid;
     try {
       final value = await firestore
@@ -48,10 +48,10 @@ class HomePageService {
           itemIds.add(tempItemId);
         }
       }
-      final List<Item?> queryRecentItems =
+      final List<MyItem?> queryRecentItems =
           await Future.wait(itemIds.map((e) => itemService.getItemById(e)));
       queryRecentItems.removeWhere((element) => element == null);
-      final List<Item> recentItems = queryRecentItems.cast<Item>();
+      final List<MyItem> recentItems = queryRecentItems.cast<MyItem>();
       return recentItems;
 
     } on FirebaseException catch (e) {
@@ -61,25 +61,25 @@ class HomePageService {
     return listOfItem;
   }
 
-  Future<List<Item>> getAllTrendingItems() async {
-    final List<Item> items = [];
+  Future<List<MyItem>> getAllTrendingItems() async {
+    final List<MyItem> items = [];
     final query = await firestore
         .collection(itemCollection)
         .orderBy("views", descending: true)
         .get();
     for (var element in query.docs) {
-      Item item = Item.fromJson(element.data());
+      MyItem item = MyItem.fromJson(element.data());
       items.add(item);
     }
     return items;
   }
 
-  Future<List<Item>> getAllRecentViewItems() async {
+  Future<List<MyItem>> getAllRecentViewItems() async {
     if(auth.currentUser == null){
       return [];
     }
     final List<String> itemIds = [];
-    final List<Item> listOfItem = [];
+    final List<MyItem> listOfItem = [];
     final userId = auth.currentUser!.uid;
     try {
       final value = await firestore
@@ -98,10 +98,10 @@ class HomePageService {
           itemIds.add(tempItemId);
         }
       }
-      final List<Item?> queryRecentItems =
+      final List<MyItem?> queryRecentItems =
       await Future.wait(itemIds.map((e) => itemService.getItemById(e)));
       queryRecentItems.removeWhere((element) => element == null);
-      final List<Item> recentItems = queryRecentItems.cast<Item>();
+      final List<MyItem> recentItems = queryRecentItems.cast<MyItem>();
       return recentItems;
 
     } on FirebaseException catch (e) {

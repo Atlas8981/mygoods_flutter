@@ -1,12 +1,15 @@
+import 'package:amplify_datastore/amplify_datastore.dart';
+import 'package:amplify_flutter/amplify_flutter.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:mygoods_flutter/controllers/BottomNavigationViewController.dart';
-import 'package:mygoods_flutter/views/AboutMePage.dart';
+import 'package:mygoods_flutter/models/ModelProvider.dart';
+import 'package:mygoods_flutter/views/user_views/AboutMePage.dart';
 import 'package:mygoods_flutter/views/AddPage.dart';
 import 'package:mygoods_flutter/views/CategoryPage.dart';
 import 'package:mygoods_flutter/views/chat/ChatListPage.dart';
-
+import '../amplifyconfiguration.dart';
 import 'HomePage.dart';
 
 class MainActivity extends StatefulWidget {
@@ -17,11 +20,6 @@ class MainActivity extends StatefulWidget {
 }
 
 class _MainActivityState extends State<MainActivity> {
-  // final TextStyle unselectedLabelStyle = TextStyle(
-  //     color: Colors.white.withOpacity(0.5),
-  //     fontSize: 8);
-  // final TextStyle selectedLabelStyle =
-  //     TextStyle(color: Colors.white);
   final bottomNavigationController = Get.put(LandingPageController());
 
   buildBottomNavigationMenu(context, landingPageController) {
@@ -31,7 +29,7 @@ class _MainActivityState extends State<MainActivity> {
           type: BottomNavigationBarType.fixed,
           showUnselectedLabels: false,
           showSelectedLabels: true,
-        
+
           onTap: landingPageController.changeTabIndex,
           currentIndex: landingPageController.tabIndex.value,
           unselectedItemColor: Colors.black54,
@@ -78,23 +76,30 @@ class _MainActivityState extends State<MainActivity> {
     }
   }
 
+
+
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      body: Obx(() => IndexedStack(
-            index: bottomNavigationController.tabIndex.value,
-            children: [
-              HomePage(),
-              CategoryPage(),
-              AddPage(),
-              ChatListPage(),
-              AboutMePage(),
-            ],
-          )),
+      body: Obx(
+        () => IndexedStack(
+          index: bottomNavigationController.tabIndex.value,
+          children: [
+            HomePage(),
+            CategoryPage(),
+            AddPage(),
+            ChatListPage(),
+            AboutMePage(),
+          ],
+        ),
+      ),
       bottomNavigationBar: buildBottomNavigationMenu(
         context,
         bottomNavigationController,
       ),
     );
   }
+
+
 }

@@ -14,7 +14,7 @@ User _$UserFromJson(Map<String, dynamic> json) {
     email: json['email'] as String,
     phoneNumber: json['phoneNumber'] as String,
     address: json['address'],
-    image: myImage.Image.fromJson(json['image'] as Map<String, dynamic>),
+    image: myImage.MyImage.fromJson(json['image'] as Map<String, dynamic>),
     preferenceId: (json['preferenceid'] as List<dynamic>)
         .map((e) => e as String)
         .toList(),

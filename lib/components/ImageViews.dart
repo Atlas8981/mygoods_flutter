@@ -2,12 +2,12 @@ import 'package:cached_network_image/cached_network_image.dart';
 import 'package:carousel_slider/carousel_slider.dart';
 import 'package:dots_indicator/dots_indicator.dart';
 import 'package:flutter/material.dart';
-import 'package:mygoods_flutter/models/image.dart' as image;
+import 'package:mygoods_flutter/models/my_image.dart' as image;
 
 class ImagesView extends StatefulWidget {
   const ImagesView({Key? key, required this.images}) : super(key: key);
 
-  final List<image.Image> images;
+  final List<image.MyImage> images;
 
   @override
   _ImagesViewState createState() => _ImagesViewState();
@@ -19,7 +19,7 @@ class _ImagesViewState extends State<ImagesView> {
 
   @override
   Widget build(BuildContext context) {
-    final List<image.Image> images = widget.images;
+    final List<image.MyImage> images = widget.images;
     return Stack(
       alignment: Alignment.bottomCenter,
       children: [

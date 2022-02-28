@@ -2,7 +2,7 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
-import 'package:mygoods_flutter/models/item.dart';
+import 'package:mygoods_flutter/models/my_item.dart';
 import 'package:mygoods_flutter/services/ItemService.dart';
 import 'package:mygoods_flutter/views/cells/ListItemRow.dart';
 
@@ -29,7 +29,7 @@ class _ListItemState extends State<ListItem> {
         title: Text(widget.subCat),
       ),
       body: SafeArea(
-          child: FutureBuilder<List<Item>>(
+          child: FutureBuilder<List<MyItem>>(
         future: databaseService.getItems(widget.mainCat, widget.subCat),
         builder: (context, snapshot) {
           if (snapshot.hasError) {

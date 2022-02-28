@@ -1,6 +1,6 @@
 
-class Image {
-  Image({
+class MyImage {
+  MyImage({
     required this.imageName,
     required this.imageUrl,
   });
@@ -8,7 +8,7 @@ class Image {
   final String imageName;
   final String imageUrl;
 
-  factory Image.fromJson(Map<String, dynamic> json) => Image(
+  factory MyImage.fromJson(Map<String, dynamic> json) => MyImage(
     imageName: json["imageName"],
     imageUrl: json["imageURL"],
   );

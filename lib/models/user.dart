@@ -1,4 +1,4 @@
-import 'package:mygoods_flutter/models/image.dart' as myImage;
+import 'package:mygoods_flutter/models/my_image.dart' as myImage;
 import 'package:json_annotation/json_annotation.dart';
 
 part 'user.g.dart';
@@ -22,7 +22,7 @@ class User {
   String lastName;
   String? email;
   String phoneNumber;
-  myImage.Image? image;
+  myImage.MyImage? image;
   String address;
   List<String>? preferenceId;
 
