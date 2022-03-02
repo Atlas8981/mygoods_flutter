@@ -7,8 +7,6 @@ import 'package:flutter_localizations/flutter_localizations.dart';
 import 'package:get/get.dart';
 import 'package:mygoods_flutter/controllers/initial_binding.dart';
 import 'package:mygoods_flutter/views/LandingPage.dart';
-import 'package:mygoods_flutter/views/MainActivity.dart';
-import 'package:mygoods_flutter/views/SplashPage.dart';
 
 Future<void> main() async {
   WidgetsFlutterBinding.ensureInitialized();

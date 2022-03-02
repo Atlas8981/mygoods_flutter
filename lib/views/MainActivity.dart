@@ -1,15 +1,12 @@
-import 'package:amplify_datastore/amplify_datastore.dart';
-import 'package:amplify_flutter/amplify_flutter.dart';
+
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:mygoods_flutter/controllers/BottomNavigationViewController.dart';
-import 'package:mygoods_flutter/models/ModelProvider.dart';
 import 'package:mygoods_flutter/views/user_views/AboutMePage.dart';
 import 'package:mygoods_flutter/views/AddPage.dart';
 import 'package:mygoods_flutter/views/CategoryPage.dart';
 import 'package:mygoods_flutter/views/chat/ChatListPage.dart';
-import '../amplifyconfiguration.dart';
 import 'HomePage.dart';
 
 class MainActivity extends StatefulWidget {

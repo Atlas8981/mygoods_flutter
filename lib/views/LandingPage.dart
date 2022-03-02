@@ -1,5 +1,6 @@
 import 'dart:async';
 
+import 'package:amplify_api/amplify_api.dart';
 import 'package:amplify_datastore/amplify_datastore.dart';
 import 'package:amplify_flutter/amplify_flutter.dart';
 import 'package:flutter/cupertino.dart';
@@ -19,8 +20,9 @@ class LandingPage extends StatefulWidget {
 }
 
 class _LandingPageState extends State<LandingPage> {
-  final AmplifyDataStore _dataStorePlugin =
-      AmplifyDataStore(modelProvider: ModelProvider.instance);
+  final AmplifyDataStore _dataStorePlugin = AmplifyDataStore(
+    modelProvider: ModelProvider.instance,
+  );
 
   late StreamSubscription<QuerySnapshot<Item>> _subscription;
 
@@ -55,6 +57,12 @@ class _LandingPageState extends State<LandingPage> {
               style: TextStyle(color: Colors.white),
             ),
           ),
+          IconButton(
+            onPressed: () {
+              syncData();
+            },
+            icon: Icon(Icons.sync),
+          ),
         ],
       ),
       body: Container(
@@ -87,6 +95,7 @@ class _LandingPageState extends State<LandingPage> {
     _subscription = Amplify.DataStore.observeQuery(Item.classType)
         .listen((QuerySnapshot<Item> snapshot) {
       items = snapshot.items;
+      showToast(items.map((e) => e.name).toString());
       // setState(() {
       //   // if (_isLoading) _isLoading = false;
       //   _todos = snapshot.items;
@@ -98,7 +107,7 @@ class _LandingPageState extends State<LandingPage> {
     try {
       // add Amplify plugins
       await Amplify.addPlugins([_dataStorePlugin]);
-
+      await Amplify.addPlugin(AmplifyAPI(modelProvider: ModelProvider.instance));
       // configure Amplify
       //
       // note that Amplify cannot be configured more than once!
@@ -136,6 +145,7 @@ class _LandingPageState extends State<LandingPage> {
 
   Future<void> getAllItem() async {
     try {
+      // items = await Amplify.DataStore.query(Item.classType);
       Amplify.DataStore.observeQuery(Item.classType).listen((event) {
         for (var element in event.items) {
           print(element.name);
@@ -143,7 +153,7 @@ class _LandingPageState extends State<LandingPage> {
         items = event.items;
       });
     } catch (e) {
-      print('An error occurred while saving Todo: $e');
+      print('An error occurred while saving: $e');
     }
   }
 
@@ -155,5 +165,9 @@ class _LandingPageState extends State<LandingPage> {
     } catch (e) {
       print('An error occurred while saving Todo: $e');
     }
+  }
+
+  Future<void> syncData() async {
+    await Amplify.DataStore.start();
   }
 }

@@ -3,11 +3,12 @@
   "serviceConfiguration": {
     "apiName": "myGoods",
     "serviceName": "AppSync",
-    "gqlSchemaPath": "/tmp/amplify-0efaca9c-130b-4916-aeff-6de72c9e2c70/amplify/backend/api/myGoods/schema.graphql",
+    "gqlSchemaPath": "C:\\Users\\M\\Desktop\\mygoods_flutter\\amplify\\backend\\api\\myGoods\\schema.graphql",
     "defaultAuthType": {
       "mode": "API_KEY",
-      "keyDescription": "api key description",
-      "expirationTime": 30
+      "expirationTime": 30,
+      "apiKeyExpirationDate": "2022-03-31T06:42:26.179Z",
+      "keyDescription": "testing"
     },
     "additionalAuthTypes": [
       {
