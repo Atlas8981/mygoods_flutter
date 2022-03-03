@@ -6,7 +6,6 @@ import 'package:mygoods_flutter/views/AccountPage.dart';
 import 'package:mygoods_flutter/views/AddPage.dart';
 import 'package:mygoods_flutter/views/CategoryPage.dart';
 import 'package:mygoods_flutter/views/select_language_page.dart';
-// import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 
 import 'HomePage.dart';
 
@@ -22,8 +21,11 @@ class _MainActivityState extends State<MainActivity> {
       color: Colors.white.withOpacity(0.5),
       fontWeight: FontWeight.w500,
       fontSize: 12);
-  final TextStyle selectedLabelStyle =
-      TextStyle(color: Colors.white, fontWeight: FontWeight.w500, fontSize: 12);
+  final TextStyle selectedLabelStyle = TextStyle(
+    color: Colors.white,
+    fontWeight: FontWeight.w500,
+    fontSize: 12,
+  );
   final bottomNavigationController = Get.put(LandingPageController());
 
   buildBottomNavigationMenu(context, landingPageController) {
@@ -80,7 +82,7 @@ class _MainActivityState extends State<MainActivity> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title:  Obx(
+        title: Obx(
           () {
             return Text(
               appTitle(bottomNavigationController),

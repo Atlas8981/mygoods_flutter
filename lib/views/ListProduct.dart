@@ -1,4 +1,3 @@
-
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/foundation.dart';
@@ -15,21 +14,13 @@ class ListProduct extends StatefulWidget {
   _ListProductState createState() => _ListProductState();
 }
 
-
-
 class _ListProductState extends State<ListProduct> {
   // final Future<FirebaseApp> _initialization = Firebase.initializeApp();
 
-  FirebaseFirestore firestore = FirebaseFirestore.instance;
-
-  @override
-  void initState() {
-    super.initState();
-  }
+  final firestore = FirebaseFirestore.instance;
 
   @override
   Widget build(BuildContext context) {
-
     DatabaseService databaseService = DatabaseService();
 
     return Scaffold(
@@ -37,66 +28,66 @@ class _ListProductState extends State<ListProduct> {
         title: Text(Get.arguments[1]),
       ),
       body: SafeArea(
-        child: FutureBuilder<List<Item>>(
-          future: databaseService.getItems(Get.arguments[0].toString(),Get.arguments[1].toString()),
-          builder: (context, snapshot) {
-            if (snapshot.hasError) {
-              return const Center(
-                child: Text('An error has occurred!'),
-              );
-            } else if (snapshot.hasData) {
-              if(snapshot.data != null) {
-                return Container(
-                  padding: const EdgeInsets.all(10),
-                  child: ListView.builder(
-                    itemCount: snapshot.data!.length,
-                    itemBuilder: (context, index) {
-                      return ListItemRow(item: snapshot.data![index]);
-                    },
-                  ),
-                );
-              }return Text("n error has occurred");
-
-            } else {
-              return const Center(
-                child: CircularProgressIndicator(),
+          child: FutureBuilder<List<Item>>(
+        future: databaseService.getItems(
+            Get.arguments[0].toString(), Get.arguments[1].toString()),
+        builder: (context, snapshot) {
+          if (snapshot.hasError) {
+            return const Center(
+              child: Text('An error has occurred!'),
+            );
+          } else if (snapshot.hasData) {
+            if (snapshot.data != null) {
+              return Container(
+                padding: const EdgeInsets.all(10),
+                child: ListView.builder(
+                  itemCount: snapshot.data!.length,
+                  itemBuilder: (context, index) {
+                    return ListItemRow(item: snapshot.data![index]);
+                  },
+                ),
               );
             }
-          },
-        )
+            return Text("n error has occurred");
+          } else {
+            return const Center(
+              child: CircularProgressIndicator(),
+            );
+          }
+        },
+      )
 
-
-        // FutureBuilder<QuerySnapshot>(
-        //   future: itemsCollection.limit(1).get(),
-        //   builder: (BuildContext context,AsyncSnapshot<QuerySnapshot> snapshot) {
-        //     String result = "";
-        //     if (snapshot.hasError) {
-        //       return Text("Something went wrong");
-        //     }
-        //
-        //     if (snapshot.connectionState == ConnectionState.done) {
-        //       snapshot.data!.docs.forEach((doc) {
-        //         result += "${doc["name"]}\n";
-        //       });
-        //     }
-        //
-        //     //
-        //     //
-        //     // itemsCollection.get().then((QuerySnapshot querySnapshot) {
-        //     //   // return querySnapshot;
-        //     //   querySnapshot.docs.forEach((doc) {
-        //     //     Text(doc["name"]);
-        //     //   });
-        //     //   return querySnapshot;
-        //     // });
-        //     return Text(
-        //         result.isEmpty ?
-        //             "Loading"
-        //             : result
-        //     );
-        //   },
-        // ),
-      ),
+          // FutureBuilder<QuerySnapshot>(
+          //   future: itemsCollection.limit(1).get(),
+          //   builder: (BuildContext context,AsyncSnapshot<QuerySnapshot> snapshot) {
+          //     String result = "";
+          //     if (snapshot.hasError) {
+          //       return Text("Something went wrong");
+          //     }
+          //
+          //     if (snapshot.connectionState == ConnectionState.done) {
+          //       snapshot.data!.docs.forEach((doc) {
+          //         result += "${doc["name"]}\n";
+          //       });
+          //     }
+          //
+          //     //
+          //     //
+          //     // itemsCollection.get().then((QuerySnapshot querySnapshot) {
+          //     //   // return querySnapshot;
+          //     //   querySnapshot.docs.forEach((doc) {
+          //     //     Text(doc["name"]);
+          //     //   });
+          //     //   return querySnapshot;
+          //     // });
+          //     return Text(
+          //         result.isEmpty ?
+          //             "Loading"
+          //             : result
+          //     );
+          //   },
+          // ),
+          ),
     );
   }
 }
