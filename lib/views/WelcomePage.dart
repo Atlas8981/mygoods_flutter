@@ -97,6 +97,6 @@ class WelcomePage extends StatelessWidget {
   }
 
   void loginWithPhoneButtonClick() {
-    Get.to(() => LoginWithPhoneNumberPage());
+    // Get.to(() => LoginWithPhoneNumberPage());
   }
 }

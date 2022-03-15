@@ -17,27 +17,20 @@ class MainActivity extends StatefulWidget {
 }
 
 class _MainActivityState extends State<MainActivity> {
-  // final TextStyle unselectedLabelStyle = TextStyle(
-  //     color: Colors.white.withOpacity(0.5),
-  //     fontSize: 8);
-  // final TextStyle selectedLabelStyle =
-  //     TextStyle(color: Colors.white);
   final bottomNavigationController = Get.put(LandingPageController());
 
   buildBottomNavigationMenu(context, landingPageController) {
-    return Obx(() => MediaQuery(
+    return Obx(
+      () => MediaQuery(
         data: MediaQuery.of(context).copyWith(textScaleFactor: 1.0),
         child: BottomNavigationBar(
           type: BottomNavigationBarType.fixed,
           showUnselectedLabels: false,
           showSelectedLabels: true,
-        
           onTap: landingPageController.changeTabIndex,
           currentIndex: landingPageController.tabIndex.value,
           unselectedItemColor: Colors.black54,
           selectedItemColor: Colors.blue,
-          // unselectedLabelStyle: unselectedLabelStyle,
-          // selectedLabelStyle: selectedLabelStyle,
           items: const [
             BottomNavigationBarItem(
               icon: Icon(
@@ -62,7 +55,9 @@ class _MainActivityState extends State<MainActivity> {
               label: 'Account',
             ),
           ],
-        )));
+        ),
+      ),
+    );
   }
 
   String appTitle(landingPageController) {

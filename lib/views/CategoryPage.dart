@@ -1,20 +1,21 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-import 'package:mygoods_flutter/models/category.dart';
+import 'package:mygoods_flutter/models/item/category.dart';
 import 'package:mygoods_flutter/utils/constant.dart';
+import 'package:mygoods_flutter/views/AboutMePage.dart';
 import 'package:mygoods_flutter/views/cells/category_item_row.dart';
 import 'package:mygoods_flutter/views/cells/popular_category_item.dart';
 
 import 'SubCategoryPage.dart';
 
 class CategoryPage extends StatelessWidget {
-  final List<Category> popularCategory = [
-    Category(name: "Phone", image: "${imageDir}phonepicture.jpg"),
-    Category(name: "Bicycle", image: "${imageDir}bikepicture.jpg"),
-    Category(name: "Cars", image: "${imageDir}carpic.png"),
-    Category(name: "Parts & Accessories", image: "${imageDir}pc.jpg"),
-    Category(name: "Laptop", image: "${imageDir}laptoppicture.jpg"),
-    Category(name: "Desktop", image: "${imageDir}desktoppic.png"),
+  final List<MenuItem> popularCategory = [
+    MenuItem(name: "Phone", image: "${imageDir}phonepicture.jpg"),
+    MenuItem(name: "Bicycle", image: "${imageDir}bikepicture.jpg"),
+    MenuItem(name: "Cars", image: "${imageDir}carpic.png"),
+    MenuItem(name: "Parts & Accessories", image: "${imageDir}pc.jpg"),
+    MenuItem(name: "Laptop", image: "${imageDir}laptoppicture.jpg"),
+    MenuItem(name: "Desktop", image: "${imageDir}desktoppic.png"),
   ];
 
   CategoryPage({Key? key}) : super(key: key);
@@ -94,20 +95,19 @@ class CategoryPage extends StatelessWidget {
                       ListView.builder(
                         physics: ScrollPhysics(),
                         shrinkWrap: true,
-                        itemCount: mainCategories.length,
+                        itemCount: 1,
                         itemBuilder: (context, index) {
                           return InkWell(
-                              onTap: () {
-                                Get.to(
-                                  () => SubCategoryPage(
-                                    title: mainCategories[index].name,
-                                  ),
-                                );
-                              },
-                              child: CategoryItemRow(
-                                name: mainCategories[index].name,
-                                assetImage: mainCategories[index].image,
-                              ));
+                            onTap: () {
+                              Get.to(
+                                () => SubCategoryPage(),
+                              );
+                            },
+                            child: CategoryItemRow(
+                              name: "Electronic",
+                              assetImage: "${imageDir}accessory.png",
+                            ),
+                          );
                         },
                       )
                       //  Put Column

@@ -31,7 +31,7 @@ class MyApp extends StatelessWidget {
       home: MainActivity(),
       initialBinding: InitialBinding(),
       localizationsDelegates: const [
-        GlobalMaterialLocalizations.delegate,
+        ...GlobalMaterialLocalizations.delegates,
         GlobalWidgetsLocalizations.delegate,
         GlobalCupertinoLocalizations.delegate,
       ],

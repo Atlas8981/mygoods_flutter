@@ -4,12 +4,17 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:firebase_storage/firebase_storage.dart';
 import 'package:flutter_firebase_chat_core/flutter_firebase_chat_core.dart';
-import 'package:mygoods_flutter/models/item.dart';
+import 'package:get/get.dart';
+import 'package:mygoods_flutter/controllers/AuthenticationController.dart';
+import 'package:mygoods_flutter/models/item/item.dart';
+import 'package:mygoods_flutter/models/item/item_dto.dart';
 import 'package:mygoods_flutter/models/user.dart' as myUser;
 import 'package:mygoods_flutter/services/ItemService.dart';
+import 'package:mygoods_flutter/utils/api_route.dart';
 import 'package:mygoods_flutter/utils/constant.dart';
 import 'package:mygoods_flutter/models/image.dart' as myImage;
 import 'package:flutter_chat_types/flutter_chat_types.dart' as types;
+import 'package:http/http.dart' as http;
 
 class UserService {
   final auth = FirebaseAuth.instance;
@@ -30,9 +35,10 @@ class UserService {
         showToast('Wrong password provided for that user.');
       }
     }
+    return null;
   }
 
-  Future<bool> isUserHaveData(String id) async{
+  Future<bool> isUserHaveData(String id) async {
     final response = await FirebaseFirestore.instance
         .collection(userCollection)
         .doc(id)
@@ -61,49 +67,21 @@ class UserService {
   }
 
   Future<void> registerUser(myUser.User user) async {
-    return await firestore
-        .collection(userCollection)
-        .doc(user.userId)
-        .set(user.toJson());
+
   }
 
   Future<myUser.User?> getOwnerInfo() async {
-    if (auth.currentUser == null) {
-      return null;
-    }
-    myUser.User? response;
-    try {
-      await firestore
-          .collection(userCollection)
-          .doc(auth.currentUser!.uid)
-          .get()
-          .then((value) {
-        response = myUser.User.fromJson(value.data()!);
-        // print(response.toString());
-      });
-    } catch (e) {
-      print(e.toString());
-    }
-    return response;
+    return null;
+
+
+
   }
 
-  Future<myImage.Image> updateUserImage(
+  Future<myImage.Image?> updateUserImage(
       File userImage, myUser.User user) async {
-    final imageName = "${DateTime.now()}";
-    final Reference storageReference =
-        storage.ref('flutter/').child(imageName);
-    await storageReference.putFile(userImage);
-    final downloadedImageUrl = await storageReference.getDownloadURL();
-    final myImage.Image returnImage =
-        myImage.Image(imageName: imageName, imageUrl: downloadedImageUrl);
-    await firestore
-        .collection(userCollection)
-        .doc(auth.currentUser!.uid)
-        .update({'image': returnImage.toJson()});
-    final tempUser = user;
-    tempUser.image = returnImage;
-    await createUserInChatUser(tempUser);
-    return returnImage;
+        return null;
+
+
   }
 
   Future<void> createUserInChatUser(myUser.User user) async {
@@ -116,44 +94,16 @@ class UserService {
   }
 
   Future<myUser.User?> updateUserInfo(myUser.User newUserInfo) async {
-    await createUserInChatUser(newUserInfo);
-    final myUser.User response = await firestore
-        .collection(userCollection)
-        .doc(newUserInfo.userId)
-        .update(newUserInfo.toJson())
-        .then((value) {
-      return newUserInfo;
-    }).catchError((onError) {
-      print(onError);
-    });
+    return null;
 
-    return response;
+
+
   }
 
   Future<List<Item>?> getUserItems() async {
-    try {
-      final List<Item> listOfItem = [];
-      await firestore
-          .collection(itemCollection)
-          .orderBy('date', descending: true)
-          .where('userid', isEqualTo: auth.currentUser!.uid)
-          .get()
-          .then((value) {
-        if (value.docs.isEmpty) {
-          return listOfItem;
-        }
-        for (int i = 0; i < value.docs.length; i++) {
-          if (value.docs[i].exists) {
-            Item item = Item.fromJson(value.docs[i].data());
-            listOfItem.add(item);
-          }
-        }
-      });
-      return listOfItem;
-    } on FirebaseException catch (e) {
-      print('Failed with error code: ${e.code}');
-      print(e.message);
-    }
+    return null;
+
+
   }
 
   Stream<QuerySnapshot<Map<String, dynamic>>> listenForUserItemChange() {
@@ -262,12 +212,10 @@ class UserService {
     return null;
   }
 
-  Future<List<Item>> getSaveItems(List<String> itemIds) async {
-    final List<Item?> querySaveItems =
-        await Future.wait(itemIds.map((e) => itemService.getItemById(e)));
-    querySaveItems.removeWhere((element) => element == null);
-    final List<Item> saveItems = querySaveItems.cast<Item>();
-    return saveItems;
+  Future<List<Item>?> getSaveItems(List<String> itemIds) async {
+    return null;
+
+
   }
 
   Future<void> addToRecentView(String itemId) async {
@@ -283,6 +231,65 @@ class UserService {
       'date': Timestamp.now(),
       'itemID': itemId,
     });
+  }
+
+  Future<String?> addItem(ItemDto item, List<String> imagePaths) async {
+    try {
+      const url = "http://$domain:$port/api/v1/item";
+      final uri = Uri.parse(url);
+
+      final authCon = Get.find<AuthenticationController>();
+      if (authCon.tokenRes == null) {
+        return "Unauthenticated";
+      }
+      final request = http.MultipartRequest("POST", uri);
+
+      request.headers.addAll({
+        'Authorization': 'Bearer ${authCon.tokenRes?.value.accessToken}',
+      });
+
+      // request.files.add(await http.MultipartFile.fromPath("image", imagePaths));
+
+      final files = await Future.wait(
+        imagePaths.map(
+          (e) => http.MultipartFile.fromPath(
+            "images",
+            e,
+          ),
+        ),
+      );
+
+      request.fields.addAll({
+        'item': '{"name": "${item.name}",'
+            '"address": "${item.address}",'
+            '"categoryId":6,'
+            '"description": "${item.description}",'
+            '"userid": "${item.userid}",'
+            '"phone": "${item.phone}",'
+            '"amount": ${item.amount},'
+            '"price": ${item.price}'
+            '}'
+      });
+      // request.fields.addAll({
+      //   'item': '{\n    "name": "LaptopCategory",\n    "address": "Something is address2",\n    "categoryId":6,\n    "description": "this is description",\n    "userid": "thisIsUserId",\n    "phone": "012345678",\n    "amount": 3,\n    "price": 133.0\n}'
+      // });
+      request.files.addAll(files);
+
+      final response = await request.send();
+
+      print("response.statusCode: ${response.statusCode}");
+      final body = await response.stream.bytesToString();
+      print("response.body: $body");
+      if (response.statusCode == 200) {
+        print(body);
+        return body;
+      }
+
+      return null;
+    } catch (e) {
+      print(e);
+      return null;
+    }
   }
 
 // Future<Item?> getSaveItem(String itemId) async {

@@ -1,18 +1,11 @@
-import 'dart:io';
-
-import 'package:cloud_firestore/cloud_firestore.dart';
-import 'package:firebase_auth/firebase_auth.dart';
-import 'package:firebase_storage/firebase_storage.dart';
-import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter/widgets.dart';
 import 'package:get/get.dart';
 import 'package:mygoods_flutter/components/ItemForm.dart';
 import 'package:mygoods_flutter/controllers/ItemFormController.dart';
 import 'package:mygoods_flutter/models/image.dart' as myImageClass;
-import 'package:mygoods_flutter/models/item.dart';
-import 'package:mygoods_flutter/services/ImageService.dart';
-import 'package:mygoods_flutter/utils/constant.dart';
+import 'package:mygoods_flutter/models/item/item.dart';
+import 'package:mygoods_flutter/models/item/item_dto.dart';
+import 'package:mygoods_flutter/services/UserService.dart';
 
 class AddPage extends StatefulWidget {
   const AddPage({Key? key}) : super(key: key);
@@ -23,13 +16,30 @@ class AddPage extends StatefulWidget {
 
 class _AddPageState extends State<AddPage> {
   final itemFormController = Get.put(ItemFormController());
-  final imageService = ImageService();
+
+  // final imageService = ImageService();
+  final userService = UserService();
 
   void uploadItemInformation() async {
     itemFormController.isVisible.value = true;
     final listOfImage = itemFormController.getRawImageInFile();
-    final result = await imageService.saveImage(listOfImage[0].path);
-    print(result);
+    final ItemDto item = ItemDto(
+      date: DateTime.now(),
+      subCategory: itemFormController.subCat.value,
+      amount: 0,
+      address: itemFormController.addressCon.text,
+      description: itemFormController.descriptionCon.text,
+      userid: "auth.currentUser!.uid",
+      viewers: [],
+      phone: itemFormController.phoneCon.text,
+      price: double.parse(itemFormController.priceCon.text),
+      name: itemFormController.nameCon.text,
+      mainCategory: itemFormController.mainCat.value,
+    );
+    final paths = listOfImage.map((e) => e.path).toList();
+    print("paths: $paths");
+    final result = await userService.addItem(item, paths);
+    print("result: $result");
     itemFormController.isVisible.value = false;
   }
 

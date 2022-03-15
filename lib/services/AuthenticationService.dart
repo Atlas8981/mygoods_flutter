@@ -31,5 +31,6 @@ class AuthenticationService {
       print(e);
       return null;
     }
+    return null;
   }
 }

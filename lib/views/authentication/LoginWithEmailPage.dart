@@ -3,14 +3,10 @@ import 'package:flutter/services.dart';
 import 'package:get/get.dart';
 import 'package:mygoods_flutter/components/TypeTextField.dart';
 import 'package:mygoods_flutter/controllers/AuthenticationController.dart';
-import 'package:mygoods_flutter/controllers/ItemFormController.dart';
-import 'package:mygoods_flutter/controllers/UserController.dart';
-import 'package:mygoods_flutter/models/token_response.dart';
 import 'package:mygoods_flutter/services/AuthenticationService.dart';
 import 'package:mygoods_flutter/services/UserService.dart';
 import 'package:mygoods_flutter/utils/constant.dart';
 import 'package:mygoods_flutter/views/MainActivity.dart';
-import 'package:mygoods_flutter/views/RegisterPage.dart';
 import 'package:mygoods_flutter/views/authentication/LoginWithPhoneNumberPage.dart';
 
 class LoginWithEmailPage extends StatefulWidget {
@@ -102,8 +98,9 @@ class _LoginWithEmailPageState extends State<LoginWithEmailPage> {
                       // width: double.infinity,
                       height: 50,
                       child: TextButton(
-                          onPressed: forgotPasswordButtonClick,
-                          child: Text("Forgot Password".toUpperCase())),
+                        onPressed: forgotPasswordButtonClick,
+                        child: Text("Forgot Password".toUpperCase()),
+                      ),
                     ),
                   ),
                   Column(
@@ -112,9 +109,10 @@ class _LoginWithEmailPageState extends State<LoginWithEmailPage> {
                         width: double.infinity,
                         height: 50,
                         child: ElevatedButton(
-                            onPressed: signInButtonClick,
-                            onLongPress: debugLogin,
-                            child: Text("Sign In".toUpperCase())),
+                          onPressed: signInButtonClick,
+                          onLongPress: debugLogin,
+                          child: Text("Sign In".toUpperCase()),
+                        ),
                       ),
                       SizedBox(
                         height: 20,
@@ -167,11 +165,16 @@ class _LoginWithEmailPageState extends State<LoginWithEmailPage> {
     }
 
     authService.login(email, password).then((value) {
+      if (value == null) {
+        showToast("Auth Failed");
+        return;
+      }
       Get.offAll(() => MainActivity());
     });
   }
 
   Future<void> debugLogin() async {
+
     final tokenRes = await authService.login("016409637", "password");
     if (tokenRes == null) {
       return;
@@ -184,7 +187,7 @@ class _LoginWithEmailPageState extends State<LoginWithEmailPage> {
   void forgotPasswordButtonClick() {}
 
   void signInWithPhoneNumberButtonClick() {
-    Get.to(() => LoginWithPhoneNumberPage());
+    // Get.to(() => LoginWithPhoneNumberPage());
   }
 }
 //jack_atlas59@yahoo.com

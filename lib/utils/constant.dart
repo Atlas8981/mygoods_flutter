@@ -8,8 +8,8 @@ import 'package:fluttertoast/fluttertoast.dart';
 import 'package:get/get.dart';
 import 'package:mygoods_flutter/models/DualImage.dart';
 import 'package:mygoods_flutter/models/additionalInfo.dart';
-import 'package:mygoods_flutter/models/category.dart';
-import 'package:mygoods_flutter/models/item.dart';
+import 'package:mygoods_flutter/models/item/category.dart';
+import 'package:mygoods_flutter/models/item/item.dart';
 import 'package:mygoods_flutter/models/image.dart' as myImage;
 import 'package:flutter_chat_types/flutter_chat_types.dart' as types;
 
@@ -20,177 +20,8 @@ const String additionalCollection = "additionInfo";
 const String saveItemCollection = "saveItems";
 const String recentViewItemCollection = "recentView";
 
-final dummyItemList = [
-  Item(
-      date: Timestamp.now(),
-      subCategory: "subCategory",
-      images: [
-        myImage.Image(
-          imageName: "imageName",
-          imageUrl: dummyNetworkImage,
-        )
-      ],
-      amount: 0,
-      address: "address",
-      description: "description",
-      userid: "userid",
-      itemid: "itemid",
-      viewers: [],
-      phone: "phone",
-      price: 123,
-      name: "name",
-      mainCategory: "mainCategory",
-      views: 0),
-  Item(
-      date: Timestamp.now(),
-      subCategory: "subCategory",
-      images: [
-        myImage.Image(imageName: "imageName", imageUrl: dummyNetworkImage)
-      ],
-      amount: 0,
-      address: "address",
-      description: "description",
-      userid: "userid",
-      itemid: "itemid",
-      viewers: [],
-      phone: "phone",
-      price: 123,
-      name: "name",
-      mainCategory: "mainCategory",
-      views: 0),
-  Item(
-      date: Timestamp.now(),
-      subCategory: "subCategory",
-      images: [
-        myImage.Image(imageName: "imageName", imageUrl: dummyNetworkImage)
-      ],
-      amount: 0,
-      address: "address",
-      description: "description",
-      userid: "userid",
-      itemid: "itemid",
-      viewers: [],
-      phone: "phone",
-      price: 123,
-      name: "name",
-      mainCategory: "mainCategory",
-      views: 0),
-  Item(
-      date: Timestamp.now(),
-      subCategory: "subCategory",
-      images: [
-        myImage.Image(imageName: "imageName", imageUrl: dummyNetworkImage)
-      ],
-      amount: 0,
-      address: "address",
-      description: "description",
-      userid: "userid",
-      itemid: "itemid",
-      viewers: [],
-      phone: "phone",
-      price: 123,
-      name: "name",
-      mainCategory: "mainCategory",
-      views: 0),
-  Item(
-      date: Timestamp.now(),
-      subCategory: "subCategory",
-      images: [
-        myImage.Image(imageName: "imageName", imageUrl: dummyNetworkImage)
-      ],
-      amount: 0,
-      address: "address",
-      description: "description",
-      userid: "userid",
-      itemid: "itemid",
-      viewers: [],
-      phone: "phone",
-      price: 123,
-      name: "name",
-      mainCategory: "mainCategory",
-      views: 0),
-  Item(
-      date: Timestamp.now(),
-      subCategory: "subCategory",
-      images: [
-        myImage.Image(imageName: "imageName", imageUrl: dummyNetworkImage)
-      ],
-      amount: 0,
-      address: "address",
-      description: "description",
-      userid: "userid",
-      itemid: "itemid",
-      viewers: [],
-      phone: "phone",
-      price: 123,
-      name: "name",
-      mainCategory: "mainCategory",
-      views: 0),
-  Item(
-      date: Timestamp.now(),
-      subCategory: "subCategory",
-      images: [
-        myImage.Image(imageName: "imageName", imageUrl: dummyNetworkImage)
-      ],
-      amount: 0,
-      address: "address",
-      description: "description",
-      userid: "userid",
-      itemid: "itemid",
-      viewers: [],
-      phone: "phone",
-      price: 123,
-      name: "name",
-      mainCategory: "mainCategory",
-      views: 0),
-  Item(
-      date: Timestamp.now(),
-      subCategory: "subCategory",
-      images: [
-        myImage.Image(
-          imageName: "imageName",
-          imageUrl: dummyNetworkImage,
-        )
-      ],
-      amount: 0,
-      address: "address",
-      description: "description",
-      userid: "userid",
-      itemid: "itemid",
-      viewers: [],
-      phone: "phone",
-      price: 123,
-      name: "name",
-      mainCategory: "mainCategory",
-      views: 0),
-];
 
-final List<Category> mainCategories = [
-  Category(name: "Electronic", image: "${imageDir}electronic.png"),
-  Category(name: "Car & Vehicle", image: "${imageDir}car.png"),
-  Category(name: "Furniture & Decors", image: "${imageDir}furniture.png"),
-];
 
-final List<Category> electronicSubCategories = [
-  Category(name: "Phone", image: "${imageDir}phone.png"),
-  Category(name: "Desktop", image: "${imageDir}electronic.png"),
-  Category(name: "Laptop", image: "${imageDir}laptop.png"),
-  Category(name: "Parts & Accessories", image: "${imageDir}accessory.png"),
-  Category(name: "Other", image: "${imageDir}other.png"),
-];
-
-final List<Category> carSubCategories = [
-  Category(name: "Cars", image: "${imageDir}car.png"),
-  Category(name: "Motorbikes", image: "${imageDir}moto.png"),
-  Category(name: "Bicycle", image: "${imageDir}bike.png"),
-  Category(name: "Other", image: "${imageDir}other.png"),
-];
-final List<Category> furnitureSubCategories = [
-  Category(name: "Table & Desk", image: "${imageDir}table.png"),
-  Category(name: "Chair & Sofa", image: "${imageDir}sofa.png"),
-  Category(name: "Household Item", image: "${imageDir}household.png"),
-  Category(name: "Other", image: "${imageDir}other.png"),
-];
 
 final redColor = Color.fromARGB(255, 236, 0, 0);
 
@@ -253,13 +84,7 @@ String? processAdditionalInfo(AdditionalInfo additionalInfo) {
   return processedData;
 }
 
-final List<String> hasAdditionalInfoList = [
-  electronicSubCategories[0].name,
-  electronicSubCategories[3].name,
-  carSubCategories[0].name,
-  carSubCategories[1].name,
-  carSubCategories[2].name,
-];
+
 
 Color getUserAvatarNameColor(types.User user) {
   final index = user.id.hashCode % colors.length;

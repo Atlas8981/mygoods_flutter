@@ -1,7 +1,7 @@
 import 'dart:async';
 
 import 'package:get/get.dart';
-import 'package:mygoods_flutter/models/item.dart';
+import 'package:mygoods_flutter/models/item/item.dart';
 import 'package:mygoods_flutter/services/UserService.dart';
 
 class MyItemsController extends GetxController {
@@ -40,32 +40,8 @@ class MyItemsController extends GetxController {
   }
 
   void listenForItemChange() {
-    if (items == null) {
-      return;
-    }
-    userService.listenForUserItemChange().listen((value) {
-      final tempList = [];
-      for (int i = 0; i < value.docs.length; i++) {
-        if (value.docs[i].exists) {
-          Item item = Item.fromJson(value.docs[i].data());
-          tempList.add(item);
-        }
-      }
-      items!.clear();
-      items!.addAll(tempList);
-      update();
-    });
+
   }
 
-  Future<bool> deleteItems(Item item) async {
-    if (items == null) {
-      return false;
-    }
-    final isDeleted = await userService.deleteUserItem(item.itemid);
-    if (isDeleted) {
-      items!.remove(item);
-      update();
-    }
-    return isDeleted;
-  }
+
 }

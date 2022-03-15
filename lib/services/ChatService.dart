@@ -11,20 +11,7 @@ class ChatService {
 
   Future<List<myUser.User>> getAllAuthenticatedUsers() async {
     final List<myUser.User> listOfUser = [];
-    final query = await firestore
-        .collection(userCollection)
-        .where("userId", isNotEqualTo: "")
-        .get();
-    for (var element in query.docs) {
-      try {
-        final user = myUser.User.fromJson(element.data());
-        if (user.userId != auth.currentUser!.uid) {
-          listOfUser.add(user);
-        }
-      } catch (e) {
-        print(e.toString());
-      }
-    }
+
     return listOfUser;
   }
 }

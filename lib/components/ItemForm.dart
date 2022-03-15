@@ -37,7 +37,7 @@ class _ItemFormState extends State<ItemForm> {
   final ImagePicker _imagePicker = ImagePicker();
 
   bool showAdditionInfoForm(String subCat) {
-    return hasAdditionalInfoList.contains(subCat);
+    return false;
   }
 
   void carProcedure() async {
@@ -162,25 +162,25 @@ class _ItemFormState extends State<ItemForm> {
   }
 
   void processAdditionalInformation() {
-    if (itemFormCon.subCat.value.capitalize == hasAdditionalInfoList[0]) {
-      // phoneProcedure();
-      showToast("Mok Dol Luv Hz");
-    } else if (itemFormCon.subCat.value.capitalize ==
-        hasAdditionalInfoList[1]) {
-      // partAccessoriesComputerProcedure();
-      showToast("Mok Dol Luv Hz");
-    } else if (itemFormCon.subCat.value.capitalize ==
-        hasAdditionalInfoList[2]) {
-      carProcedure();
-    } else if (itemFormCon.subCat.value.capitalize ==
-        hasAdditionalInfoList[3]) {
-      // motoProcedure();
-      showToast("Mok Dol Luv Hz");
-    } else if (itemFormCon.subCat.value.capitalize ==
-        hasAdditionalInfoList[4]) {
-      // bikeProcedure();
-      showToast("Mok Dol Luv Hz");
-    }
+    // if (itemFormCon.subCat.value.capitalize == hasAdditionalInfoList[0]) {
+    //   // phoneProcedure();
+    //   showToast("Mok Dol Luv Hz");
+    // } else if (itemFormCon.subCat.value.capitalize ==
+    //     hasAdditionalInfoList[1]) {
+    //   // partAccessoriesComputerProcedure();
+    //   showToast("Mok Dol Luv Hz");
+    // } else if (itemFormCon.subCat.value.capitalize ==
+    //     hasAdditionalInfoList[2]) {
+    //   carProcedure();
+    // } else if (itemFormCon.subCat.value.capitalize ==
+    //     hasAdditionalInfoList[3]) {
+    //   // motoProcedure();
+    //   showToast("Mok Dol Luv Hz");
+    // } else if (itemFormCon.subCat.value.capitalize ==
+    //     hasAdditionalInfoList[4]) {
+    //   // bikeProcedure();
+    //   showToast("Mok Dol Luv Hz");
+    // }
   }
 
   void _imageFromGallery(index) async {
@@ -307,6 +307,7 @@ class _ItemFormState extends State<ItemForm> {
                         if (!GetUtils.isNum(value)) {
                           return "Not a Number";
                         }
+                        return null;
                       },
                     ),
                   ),

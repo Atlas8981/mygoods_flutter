@@ -1,13 +1,12 @@
 import 'package:avatars/avatars.dart';
 import 'package:cached_network_image/cached_network_image.dart';
-import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:image_picker/image_picker.dart';
 import 'package:mygoods_flutter/components/CustomAlertDialog.dart';
 import 'package:mygoods_flutter/controllers/BottomNavigationViewController.dart';
 import 'package:mygoods_flutter/controllers/UserController.dart';
-import 'package:mygoods_flutter/models/category.dart';
+import 'package:mygoods_flutter/models/item/category.dart';
 import 'package:mygoods_flutter/models/image.dart' as myImage;
 import 'package:mygoods_flutter/models/user.dart' as myUser;
 import 'package:mygoods_flutter/models/user.dart';
@@ -30,11 +29,11 @@ class AboutMePage extends StatefulWidget {
 class _AboutMePageState extends State<AboutMePage> {
   final userService = UserService();
 
-  late final List<Category> bottomListItems = [
-    Category(name: "My Item", image: "${imageDir}myitem.png"),
-    Category(name: "Saved", image: "${imageDir}saved.png"),
-    Category(name: "About Our App", image: "${imageDir}aboutus.png"),
-    Category(name: "Terms & Conditions", image: "${imageDir}term.png"),
+  late final List<MenuItem> bottomListItems = [
+    MenuItem(name: "My Item", image: "${imageDir}myitem.png"),
+    MenuItem(name: "Saved", image: "${imageDir}saved.png"),
+    MenuItem(name: "About Our App", image: "${imageDir}aboutus.png"),
+    MenuItem(name: "Terms & Conditions", image: "${imageDir}term.png"),
   ];
 
   late myUser.User user;
@@ -233,10 +232,10 @@ class _AboutMePageState extends State<AboutMePage> {
             onTap: () {
               switch (index) {
                 case 0:
-                  Get.to(() => MyItemsPage());
+                  // Get.to(() => MyItemsPage());
                   break;
                 case 1:
-                  Get.to(() => SavedItemsPage());
+                  // Get.to(() => SavedItemsPage());
                   break;
                 // case 2:
                 //   Get.to(()=>MyItemsPage());
@@ -281,6 +280,16 @@ class _AboutMePageState extends State<AboutMePage> {
       },
     );
   }
+}
+
+class MenuItem {
+  const MenuItem({
+    required this.name,
+    required this.image,
+  });
+
+  final String name;
+  final String image;
 }
 
 enum AccountMenuItems {

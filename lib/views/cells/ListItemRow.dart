@@ -1,10 +1,10 @@
+import 'dart:convert';
+
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
-import 'package:get/get.dart';
-import 'package:mygoods_flutter/models/item.dart';
+import 'package:mygoods_flutter/models/item/item.dart';
 import 'package:mygoods_flutter/services/ItemService.dart';
-import 'package:mygoods_flutter/views/ItemDetailPage.dart';
 
 class ListItemRow extends StatefulWidget {
   const ListItemRow({
@@ -64,22 +64,22 @@ class _ListItemRowState extends State<ListItemRow> {
       // padding: const EdgeInsets.only(left: 10,right: 10),
       child: Column(children: [
         InkWell(
-          onTap: widget.onTap ??
-              () {
-                Get.to(() => ItemDetailPage(
-                      item: item,
-                    ));
-              },
+          onTap: widget.onTap ?? () {},
           child: Row(
             children: [
               ClipRRect(
                 borderRadius: BorderRadius.all(Radius.circular(10)),
-                child: CachedNetworkImage(
+                child: Image.memory(
+                  base64Decode(item.images[0].imageUrl),
+                  width: 125,
+                  height: 125,
+                  fit: BoxFit.cover,
+                ), /*CachedNetworkImage(
                   imageUrl: item.images[0].imageUrl,
                   width: 125,
                   height: 125,
                   fit: BoxFit.cover,
-                ),
+                )*/
               ),
               SizedBox(
                 width: 15,
@@ -90,7 +90,10 @@ class _ListItemRowState extends State<ListItemRow> {
                 children: [
                   Text(
                     item.name,
-                    style: TextStyle(fontSize: 13, fontWeight: FontWeight.bold),
+                    style: TextStyle(
+                      fontSize: 13,
+                      fontWeight: FontWeight.bold,
+                    ),
                   ),
                   Divider(
                     height: 12,
@@ -98,9 +101,10 @@ class _ListItemRowState extends State<ListItemRow> {
                   Text(
                     "USD \$${item.price}",
                     style: TextStyle(
-                        color: Colors.red,
-                        fontSize: 16,
-                        fontWeight: FontWeight.bold),
+                      color: Colors.red,
+                      fontSize: 16,
+                      fontWeight: FontWeight.bold,
+                    ),
                   ),
                   Divider(
                     height: 12,
@@ -125,7 +129,7 @@ class _ListItemRowState extends State<ListItemRow> {
                     height: 2,
                   ),
                   Text(
-                    "Posted ${calDate(item.date)}",
+                    "Posted ${calDate(Timestamp.fromDate(item.date))}",
                     style: TextStyle(fontSize: 12),
                   ),
                   Divider(

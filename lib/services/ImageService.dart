@@ -25,8 +25,8 @@ class ImageService {
       print("response.statusCode: ${response.statusCode}");
 
       if (response.statusCode == 200) {
-        final listOfImage = getAllImageFromMap(response.body);
-        return listOfImage;
+        // final listOfImage = getAllImageFromMap(response.body);
+        // return listOfImage;
       }
       return null;
     } catch (e) {
@@ -62,4 +62,5 @@ class ImageService {
       return null;
     }
   }
+
 }

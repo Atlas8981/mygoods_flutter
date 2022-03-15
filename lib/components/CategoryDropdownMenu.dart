@@ -1,11 +1,13 @@
-
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-import 'package:mygoods_flutter/models/category.dart';
+import 'package:mygoods_flutter/models/item/category.dart';
 import 'package:mygoods_flutter/utils/constant.dart';
 
 class CategoryDropdownMenu extends StatefulWidget {
-  const CategoryDropdownMenu({Key? key, this.onConfirm}) : super(key: key);
+  const CategoryDropdownMenu({
+    Key? key,
+    this.onConfirm,
+  }) : super(key: key);
 
   final Function(String main, String sub)? onConfirm;
 
@@ -14,29 +16,29 @@ class CategoryDropdownMenu extends StatefulWidget {
 }
 
 class _CategoryDropdownMenuState extends State<CategoryDropdownMenu> {
-  String mainCategory = mainCategories[0].name;
+  String? mainCategory;
 
   // String? subCategory;
   String? subCategory;
   List<Category>? subCategories;
 
   findSubCategory() {
-    if (mainCategory == mainCategories[0].name) {
-      subCategories = electronicSubCategories;
-      subCategory = electronicSubCategories[0].name;
-    } else if (mainCategory == mainCategories[1].name) {
-      subCategories = carSubCategories;
-      subCategory = carSubCategories[0].name;
-    } else {
-      subCategories = furnitureSubCategories;
-      subCategory = furnitureSubCategories[0].name;
-    }
+    // if (mainCategory == mainCategories[0].name) {
+    //   subCategories = electronicSubCategories;
+    //   subCategory = electronicSubCategories[0].name;
+    // } else if (mainCategory == mainCategories[1].name) {
+    //   subCategories = carSubCategories;
+    //   subCategory = carSubCategories[0].name;
+    // } else {
+    //   subCategories = furnitureSubCategories;
+    //   subCategory = furnitureSubCategories[0].name;
+    // }
   }
 
   @override
   Widget build(BuildContext context) {
-    subCategories ??= electronicSubCategories;
-    subCategory ??= electronicSubCategories[0].name;
+    // subCategories ??= electronicSubCategories;
+    // subCategory ??= electronicSubCategories[0].name;
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
       mainAxisSize: MainAxisSize.min,
@@ -45,12 +47,12 @@ class _CategoryDropdownMenuState extends State<CategoryDropdownMenu> {
         DropdownButton<String>(
           value: mainCategory,
           isExpanded: true,
-          items: mainCategories.map((value) {
+          items: /*mainCategories.map((value) {
             return DropdownMenuItem<String>(
               value: value.name,
               child: Text(value.name),
             );
-          }).toList(),
+          }).toList()*/const [],
           onChanged: (value) {
             setState(() {
               mainCategory = value!;
@@ -62,12 +64,12 @@ class _CategoryDropdownMenuState extends State<CategoryDropdownMenu> {
         DropdownButton<String>(
           value: subCategory,
           isExpanded: true,
-          items: subCategories!.map((value) {
+          items: []/*subCategories!.map((value) {
             return DropdownMenuItem<String>(
               value: value.name,
               child: Text(value.name),
             );
-          }).toList(),
+          }).toList()*/,
           onChanged: (value) {
             if (value != null) {
               setState(() {
@@ -87,11 +89,11 @@ class _CategoryDropdownMenuState extends State<CategoryDropdownMenu> {
             TextButton(
               onPressed: () {
                 Get.back();
-                if (widget.onConfirm != null) {
-                  if (subCategory != null) {
-                    widget.onConfirm!(mainCategory, subCategory!);
-                  }
-                }
+                // if (widget.onConfirm != null) {
+                //   if (subCategory != null) {
+                //     widget.onConfirm!(mainCategory, subCategory!);
+                //   }
+                // }
               },
               child: Text("Confirm"),
             ),
