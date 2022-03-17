@@ -1,7 +1,13 @@
+import 'dart:async';
+import 'dart:io';
+
+import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:firebase_messaging/firebase_messaging.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:mygoods_flutter/controllers/BottomNavigationViewController.dart';
+import 'package:mygoods_flutter/services/notification_service.dart';
 import 'package:mygoods_flutter/views/AboutMePage.dart';
 import 'package:mygoods_flutter/views/AddPage.dart';
 import 'package:mygoods_flutter/views/CategoryPage.dart';
@@ -31,7 +37,7 @@ class _MainActivityState extends State<MainActivity> {
           type: BottomNavigationBarType.fixed,
           showUnselectedLabels: false,
           showSelectedLabels: true,
-        
+
           onTap: landingPageController.changeTabIndex,
           currentIndex: landingPageController.tabIndex.value,
           unselectedItemColor: Colors.black54,
@@ -96,5 +102,93 @@ class _MainActivityState extends State<MainActivity> {
         bottomNavigationController,
       ),
     );
+  }
+
+  @override
+  void didChangeDependencies() async {
+    super.didChangeDependencies();
+    NotificationSettings settings = await _fcm.requestPermission(
+      alert: true,
+      announcement: false,
+      badge: true,
+      carPlay: false,
+      criticalAlert: false,
+      provisional: false,
+      sound: true,
+    );
+    if (settings.authorizationStatus == AuthorizationStatus.authorized) {
+      print('User granted permission');
+    } else if (settings.authorizationStatus ==
+        AuthorizationStatus.provisional) {
+      print('User granted provisional permission');
+    } else {
+      print('User declined or has not accepted permission');
+    }
+    setupInteractedMessage();
+  }
+
+  late StreamSubscription iosSubscription;
+  @override
+  void initState() {
+    super.initState();
+    if (Platform.isIOS) {
+      // iosSubscription = _fcm.requestPermission();
+      // _fcm.requestPermission(());
+    } else {
+      saveDeviceToken();
+    }
+
+    NotificationService.init();
+    FirebaseMessaging.onMessage.listen((RemoteMessage message) {
+      print('Got a message whilst in the foreground!');
+      print('Message data: ${message.data}');
+
+      if (message.notification != null &&
+          message.notification!.android != null) {
+        print(
+            'Message also contained a notification: ${message.notification!.title}');
+        print(message.notification!.title);
+        NotificationService.showNotification(
+            title: '${message.notification!.title}',
+            body: "${message.notification!.body}",
+            payload: "this is payload");
+      }
+    });
+  }
+
+  final FirebaseMessaging _fcm = FirebaseMessaging.instance;
+  final FirebaseFirestore _db = FirebaseFirestore.instance;
+
+  Future<void> saveDeviceToken() async {
+    String? fcmToken = await _fcm.getToken();
+    if (fcmToken != null) {
+      var tokenRef = _db.collection("devices").doc(fcmToken);
+      await tokenRef.set({
+        'token': fcmToken,
+        'createdAt': FieldValue.serverTimestamp(),
+        'platform': Platform.operatingSystem
+      });
+    }
+  }
+
+  Future<void> setupInteractedMessage() async {
+    RemoteMessage? initialMessage =
+    await FirebaseMessaging.instance.getInitialMessage();
+
+    if (initialMessage != null) {
+      _handleMessage(initialMessage);
+    }
+
+    FirebaseMessaging.onMessageOpenedApp.listen(_handleMessage);
+  }
+
+  void _handleMessage(RemoteMessage message) {
+    print(message.toString());
+    print(message.messageId);
+    // if (message.data['type'] == 'chat') {
+    //   Navigator.pushNamed(context, '/chat',
+    //     arguments: (message),
+    //   );
+    // }
   }
 }
