@@ -7,7 +7,7 @@ import 'package:get/get.dart';
 import 'package:mygoods_flutter/controllers/UserController.dart';
 import 'package:mygoods_flutter/services/ChatService.dart';
 import 'package:mygoods_flutter/utils/constant.dart';
-import 'package:mygoods_flutter/models/user.dart' as myUser;
+import 'package:mygoods_flutter/models/user/user.dart' as myUser;
 
 class UserListPage extends StatefulWidget {
   const UserListPage({Key? key}) : super(key: key);

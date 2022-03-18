@@ -8,8 +8,8 @@ import 'package:mygoods_flutter/controllers/BottomNavigationViewController.dart'
 import 'package:mygoods_flutter/controllers/UserController.dart';
 import 'package:mygoods_flutter/models/item/category.dart';
 import 'package:mygoods_flutter/models/image.dart' as myImage;
-import 'package:mygoods_flutter/models/user.dart' as myUser;
-import 'package:mygoods_flutter/models/user.dart';
+import 'package:mygoods_flutter/models/user/user.dart' as myUser;
+import 'package:mygoods_flutter/models/user/user.dart';
 import 'package:mygoods_flutter/services/UserService.dart';
 import 'package:mygoods_flutter/utils/constant.dart';
 import 'package:mygoods_flutter/views/EditProfilePage.dart';

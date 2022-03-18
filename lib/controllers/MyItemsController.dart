@@ -39,9 +39,5 @@ class MyItemsController extends GetxController {
     update();
   }
 
-  void listenForItemChange() {
-
-  }
-
-
+  void listenForItemChange() {}
 }

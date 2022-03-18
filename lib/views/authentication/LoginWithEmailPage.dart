@@ -28,7 +28,6 @@ class _LoginWithEmailPageState extends State<LoginWithEmailPage> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      // resizeToAvoidBottomInset: false,
       appBar: AppBar(
         title: Text("Log In"),
       ),

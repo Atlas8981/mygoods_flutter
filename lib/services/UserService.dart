@@ -8,7 +8,7 @@ import 'package:get/get.dart';
 import 'package:mygoods_flutter/controllers/AuthenticationController.dart';
 import 'package:mygoods_flutter/models/item/item.dart';
 import 'package:mygoods_flutter/models/item/item_dto.dart';
-import 'package:mygoods_flutter/models/user.dart' as myUser;
+import 'package:mygoods_flutter/models/user/user.dart' as myUser;
 import 'package:mygoods_flutter/services/ItemService.dart';
 import 'package:mygoods_flutter/utils/api_route.dart';
 import 'package:mygoods_flutter/utils/constant.dart';

@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:mygoods_flutter/components/TypeTextField.dart';
 import 'package:mygoods_flutter/controllers/UserController.dart';
-import 'package:mygoods_flutter/models/user.dart';
+import 'package:mygoods_flutter/models/user/user.dart';
 import 'package:mygoods_flutter/services/UserService.dart';
 import 'package:mygoods_flutter/utils/constant.dart';
 

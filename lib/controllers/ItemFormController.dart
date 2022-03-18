@@ -104,7 +104,7 @@ class ItemFormController extends GetxController {
     return "";
   }
 
-  void changeProgressBarVisibility(){
+  void changeProgressBarVisibility() {
     isVisible.value = !isVisible.value;
     update();
   }

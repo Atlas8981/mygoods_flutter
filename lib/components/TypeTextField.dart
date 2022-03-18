@@ -39,46 +39,52 @@ class TypeTextField extends StatefulWidget {
 class _TypeTextFieldState extends State<TypeTextField> {
   @override
   Widget build(BuildContext context) {
-    return TextFormField(
-      autofillHints: widget.autoFillHints,
-      controller: widget.controller,
-      maxLength: widget.maxLength,
-      autovalidateMode: AutovalidateMode.onUserInteraction,
-      style: TextStyle(
-        fontSize: 16,
-        color: Colors.black,
-      ),
-      buildCounter: widget.buildCounter,
-      obscureText: widget.obscureText ?? false,
-      keyboardType:
-          widget.inputType ?? TextInputType.name,
-      cursorHeight: 24,
-      decoration: InputDecoration(
-        contentPadding:
-            EdgeInsets.only(top: 20, bottom: 20, left: 10, right: 10),
-        labelStyle: TextStyle(
+    return Padding(
+      padding: EdgeInsets.only(top: 10),
+      child: TextFormField(
+        autofillHints: widget.autoFillHints,
+        controller: widget.controller,
+        maxLength: widget.maxLength,
+        autovalidateMode: AutovalidateMode.onUserInteraction,
+        style: TextStyle(
           fontSize: 16,
+          color: Colors.black,
         ),
-        labelText: widget.labelText,
-        prefixText: widget.prefix,
-        prefixStyle: TextStyle(fontSize: 16, letterSpacing: 2),
-        border: OutlineInputBorder(),
-        prefixIcon: widget.prefixIcon,
-        suffixIcon: widget.suffixIcon,
-        counterStyle: TextStyle(fontSize: 12, height: 1),
-        hintText: widget.hint,
+        buildCounter: widget.buildCounter,
+        obscureText: widget.obscureText ?? false,
+        keyboardType: widget.inputType ?? TextInputType.name,
+        cursorHeight: 24,
+        decoration: InputDecoration(
+          contentPadding: EdgeInsets.only(
+            top: 20,
+            bottom: 20,
+            left: 10,
+            right: 10,
+          ),
+          labelStyle: TextStyle(
+            fontSize: 16,
+          ),
+          labelText: widget.labelText,
+          prefixText: widget.prefix,
+          prefixStyle: TextStyle(fontSize: 16, letterSpacing: 2),
+          border: OutlineInputBorder(),
+          prefixIcon: widget.prefixIcon,
+          suffixIcon: widget.suffixIcon,
+          counterStyle: TextStyle(fontSize: 12, height: 1),
+          hintText: widget.hint,
+        ),
+        validator: widget.validator ??
+            (value) {
+              if (value != null && value.isEmpty) {
+                return 'Empty Field';
+              }
+              return null;
+            },
+        onEditingComplete: () {
+          FocusScope.of(context).requestFocus(FocusNode());
+          widget.onEditingComplete;
+        },
       ),
-      validator: widget.validator ??
-          (value) {
-            if (value != null && value.isEmpty) {
-              return 'Empty Field';
-            }
-            return null;
-          },
-      onEditingComplete: () {
-        FocusScope.of(context).requestFocus(FocusNode());
-        widget.onEditingComplete;
-      },
     );
   }
 }

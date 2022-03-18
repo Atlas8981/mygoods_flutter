@@ -1,9 +1,6 @@
-import 'dart:io';
-
 import 'package:get/get.dart';
 import 'package:image_picker/image_picker.dart';
-import 'package:mygoods_flutter/models/image.dart';
-import 'package:mygoods_flutter/models/user.dart';
+import 'package:mygoods_flutter/models/user/user.dart';
 import 'package:mygoods_flutter/services/UserService.dart';
 
 class UserController extends GetxController {
@@ -28,9 +25,7 @@ class UserController extends GetxController {
     });
   }
 
-  void changeProfilePicture(XFile image) {
-
-  }
+  void changeProfilePicture(XFile image) {}
 
   Future<bool> updateUserInfo(User newUserInfo) async {
     final response = await userService.updateUserInfo(newUserInfo);
