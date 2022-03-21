@@ -10,14 +10,14 @@ import 'package:mygoods_flutter/services/RegisterService.dart';
 import 'package:mygoods_flutter/utils/constant.dart';
 import 'package:mygoods_flutter/views/authentication/VerifyEmailPage.dart';
 
-class SignUpPage extends StatefulWidget {
-  const SignUpPage({Key? key}) : super(key: key);
+class EmailSignUpPage extends StatefulWidget {
+  const EmailSignUpPage({Key? key}) : super(key: key);
 
   @override
-  State<SignUpPage> createState() => _SignUpPageState();
+  State<EmailSignUpPage> createState() => _EmailSignUpPageState();
 }
 
-class _SignUpPageState extends State<SignUpPage> {
+class _EmailSignUpPageState extends State<EmailSignUpPage> {
   final registerService = RegisterService();
 
   final emailCon = TextEditingController();

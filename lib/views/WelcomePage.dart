@@ -4,7 +4,7 @@ import 'package:get/get.dart';
 import 'package:mygoods_flutter/utils/constant.dart';
 import 'package:mygoods_flutter/views/authentication/LoginWithEmailPage.dart';
 import 'package:mygoods_flutter/views/authentication/LoginWithPhoneNumberPage.dart';
-import 'package:mygoods_flutter/views/authentication/SignUpPage.dart';
+import 'package:mygoods_flutter/views/authentication/EmailSignUpPage.dart';
 
 class WelcomePage extends StatelessWidget {
   const WelcomePage({Key? key}) : super(key: key);
@@ -89,7 +89,7 @@ class WelcomePage extends StatelessWidget {
   }
 
   void signUpButtonClick() {
-    Get.to(() => SignUpPage());
+    Get.to(() => EmailSignUpPage());
   }
 
   void loginButtonClick() {
@@ -97,6 +97,6 @@ class WelcomePage extends StatelessWidget {
   }
 
   void loginWithPhoneButtonClick() {
-    // Get.to(() => LoginWithPhoneNumberPage());
+    Get.to(() => LoginWithPhoneNumberPage());
   }
 }
