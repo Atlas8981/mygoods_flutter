@@ -24,7 +24,7 @@ class HomePageService {
   }
 
   Future<List<Item>> getRecentViewItems() async {
-    if(auth.currentUser == null){
+    if (auth.currentUser == null) {
       return [];
     }
     final List<String> itemIds = [];
@@ -53,7 +53,6 @@ class HomePageService {
       queryRecentItems.removeWhere((element) => element == null);
       final List<Item> recentItems = queryRecentItems.cast<Item>();
       return recentItems;
-
     } on FirebaseException catch (e) {
       print('Failed with error code: ${e.code}');
       print(e.message);
@@ -75,7 +74,7 @@ class HomePageService {
   }
 
   Future<List<Item>> getAllRecentViewItems() async {
-    if(auth.currentUser == null){
+    if (auth.currentUser == null) {
       return [];
     }
     final List<String> itemIds = [];
@@ -99,11 +98,10 @@ class HomePageService {
         }
       }
       final List<Item?> queryRecentItems =
-      await Future.wait(itemIds.map((e) => itemService.getItemById(e)));
+          await Future.wait(itemIds.map((e) => itemService.getItemById(e)));
       queryRecentItems.removeWhere((element) => element == null);
       final List<Item> recentItems = queryRecentItems.cast<Item>();
       return recentItems;
-
     } on FirebaseException catch (e) {
       print('Failed with error code: ${e.code}');
       print(e.message);
@@ -111,17 +109,17 @@ class HomePageService {
     return listOfItem;
   }
 
-  // Future<List<Item>> getPreferenceItems() async {
-  //   final List<Item> items = [];
-  //   final query = await firestore
-  //       .collection("$itemCollection")
-  //       .orderBy("views", descending: true)
-  //       .limit(10)
-  //       .get();
-  //   query.docs.forEach((element) {
-  //     Item item = Item.fromJson(element.data());
-  //     items.add(item);
-  //   });
-  //   return items;
-  // }
+// Future<List<Item>> getPreferenceItems() async {
+//   final List<Item> items = [];
+//   final query = await firestore
+//       .collection("$itemCollection")
+//       .orderBy("views", descending: true)
+//       .limit(10)
+//       .get();
+//   query.docs.forEach((element) {
+//     Item item = Item.fromJson(element.data());
+//     items.add(item);
+//   });
+//   return items;
+// }
 }

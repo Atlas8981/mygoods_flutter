@@ -28,7 +28,7 @@ class ViewAllPage extends StatelessWidget {
             final List<Item> items = snapshot.data!;
             return buildViewAllList(items);
           }
-          return Center(
+          return const Center(
             child: CircularProgressIndicator(),
           );
         },
@@ -37,9 +37,8 @@ class ViewAllPage extends StatelessWidget {
   }
 
   Widget buildViewAllList(List<Item> items) {
-    // ListItemRow(item: items[]);
     return Container(
-      padding: EdgeInsets.only(
+      padding: const EdgeInsets.only(
         left: 10,
         right: 10,
         top: 10,

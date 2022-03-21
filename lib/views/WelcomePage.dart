@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:flutter/widgets.dart';
 import 'package:get/get.dart';
 import 'package:mygoods_flutter/utils/constant.dart';
 import 'package:mygoods_flutter/views/authentication/LoginWithEmailPage.dart';
@@ -18,7 +17,7 @@ class WelcomePage extends StatelessWidget {
       },
       child: Scaffold(
         appBar: AppBar(
-          title: Text("Welcome"),
+          title: const Text("Welcome"),
         ),
         body: SafeArea(
           child: Center(
@@ -32,30 +31,34 @@ class WelcomePage extends StatelessWidget {
                   height: 125,
                   width: 125,
                 ),
-                SizedBox(
+                const SizedBox(
                   height: 10,
                 ),
-                Text(
+                const Text(
                   "Millions Little Things. \nMillions of Buyer.",
                   style: TextStyle(
-                      fontWeight: FontWeight.bold, fontSize: 24, height: 1.5),
+                    fontWeight: FontWeight.bold,
+                    fontSize: 24,
+                    height: 1.5,
+                  ),
                   textAlign: TextAlign.center,
                 ),
-                SizedBox(
+                const SizedBox(
                   height: 30,
                 ),
                 Padding(
-                  padding: EdgeInsets.only(left: 20, right: 20),
+                  padding: const EdgeInsets.only(left: 20, right: 20),
                   child: Column(
                     children: [
                       SizedBox(
                         width: double.infinity,
                         height: 50,
                         child: ElevatedButton(
-                            onPressed: signUpButtonClick,
-                            child: Text("Sign Up".toUpperCase())),
+                          onPressed: signUpButtonClick,
+                          child: Text("Sign Up".toUpperCase()),
+                        ),
                       ),
-                      SizedBox(
+                      const SizedBox(
                         height: 20,
                       ),
                       SizedBox(
@@ -66,7 +69,7 @@ class WelcomePage extends StatelessWidget {
                           child: Text("Log In With Email".toUpperCase()),
                         ),
                       ),
-                      SizedBox(
+                      const SizedBox(
                         height: 20,
                       ),
                       SizedBox(
@@ -93,7 +96,7 @@ class WelcomePage extends StatelessWidget {
   }
 
   void loginButtonClick() {
-    Get.to(() => LoginWithEmailPage());
+    Get.to(() => const LoginWithEmailPage());
   }
 
   void loginWithPhoneButtonClick() {

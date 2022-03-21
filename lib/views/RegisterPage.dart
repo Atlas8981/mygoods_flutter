@@ -1,5 +1,3 @@
-import 'dart:ui';
-
 import 'package:flutter/material.dart';
 import 'package:flutter_firebase_chat_core/flutter_firebase_chat_core.dart';
 import 'package:get/get.dart';
@@ -36,15 +34,19 @@ class RegisterPage extends StatelessWidget {
       },
       child: Scaffold(
         appBar: AppBar(
-          title: Text("Register Data"),
+          title: const Text("Register Data"),
         ),
         body: SingleChildScrollView(
           child: Container(
-            padding: EdgeInsets.only(left: 20, right: 20, top: 5),
+            padding: const EdgeInsets.only(
+              left: 20,
+              right: 20,
+              top: 5,
+            ),
             child: Column(
               children: [
                 topTextViews(),
-                SizedBox(
+                const SizedBox(
                   height: 20,
                 ),
                 registerForm(),
@@ -62,7 +64,10 @@ class RegisterPage extends StatelessWidget {
       children: const [
         Text(
           "Create an Account",
-          style: TextStyle(fontWeight: FontWeight.bold, fontSize: 24),
+          style: TextStyle(
+            fontWeight: FontWeight.bold,
+            fontSize: 24,
+          ),
         ),
         SizedBox(
           height: 5,
@@ -82,27 +87,30 @@ class RegisterPage extends StatelessWidget {
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
           TypeTextField(
-              labelText: "Firstname",
-              inputType: TextInputType.name,
-              controller: firstnameCon),
-          SizedBox(
+            labelText: "Firstname",
+            inputType: TextInputType.name,
+            controller: firstnameCon,
+          ),
+          const SizedBox(
             height: 20,
           ),
           TypeTextField(
-              labelText: "Lastname",
-              inputType: TextInputType.name,
-              controller: lastnameCon),
-          SizedBox(
+            labelText: "Lastname",
+            inputType: TextInputType.name,
+            controller: lastnameCon,
+          ),
+          const SizedBox(
             height: 20,
           ),
           TypeTextField(
-              labelText: "Username",
-              inputType: TextInputType.name,
-              controller: usernameCon),
+            labelText: "Username",
+            inputType: TextInputType.name,
+            controller: usernameCon,
+          ),
           (phoneNumber == null)
               ? Column(
                   children: [
-                    SizedBox(
+                    const SizedBox(
                       height: 20,
                     ),
                     TypeTextField(
@@ -111,14 +119,16 @@ class RegisterPage extends StatelessWidget {
                       inputType: TextInputType.phone,
                       prefix: "0",
                       maxLength: 9,
-                      buildCounter: (context,
-                          {required currentLength,
-                          required isFocused,
-                          maxLength}) {
+                      buildCounter: (
+                        context, {
+                        required currentLength,
+                        required isFocused,
+                        maxLength,
+                      }) {
                         return Text(
                           '${currentLength + 1}/${maxLength! + 1}',
                           semanticsLabel: 'character count',
-                          style: TextStyle(fontSize: 12, height: 1),
+                          style: const TextStyle(fontSize: 12, height: 1),
                         );
                       },
                       validator: (value) {
@@ -134,7 +144,7 @@ class RegisterPage extends StatelessWidget {
                   ],
                 )
               : Container(),
-          SizedBox(
+          const SizedBox(
             height: 20,
           ),
           TypeTextField(
@@ -143,7 +153,7 @@ class RegisterPage extends StatelessWidget {
             inputType: TextInputType.streetAddress,
             hint: "Address (City or Province Name)",
           ),
-          SizedBox(
+          const SizedBox(
             height: 20,
           ),
           SizedBox(
@@ -170,27 +180,30 @@ class RegisterPage extends StatelessWidget {
     final address = addressCon.text.trim();
     phoneNumber ??= phoneCon.text.trim();
     final User user = User(
-        userId: userId,
-        username: username,
-        firstName: firstname,
-        lastName: lastname,
-        email: "",
-        phoneNumber: phoneNumber!,
-        address: address,
-        image: myImage.Image(imageName: "", imageUrl: ""),
-        preferenceId: []);
+      userId: userId,
+      username: username,
+      firstName: firstname,
+      lastName: lastname,
+      email: "",
+      phoneNumber: phoneNumber!,
+      address: address,
+      image: myImage.Image(imageName: "", imageUrl: ""),
+      preferenceId: [],
+    );
 
-    await FirebaseChatCore.instance.createUserInFirestore(types.User(
-      id: user.userId,
-      firstName: user.firstName,
-      imageUrl: user.image?.imageUrl,
-      lastName: user.lastName,
-    ));
+    await FirebaseChatCore.instance.createUserInFirestore(
+      types.User(
+        id: user.userId,
+        firstName: user.firstName,
+        imageUrl: user.image?.imageUrl,
+        lastName: user.lastName,
+      ),
+    );
 
     await userService.registerUser(user).then((value) {
       Get.delete<UserController>();
       Get.lazyPut(() => UserController(), fenix: true);
-      Get.offAll(() => MainActivity());
+      Get.offAll(() => const MainActivity());
     });
   }
 }

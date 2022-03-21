@@ -30,25 +30,28 @@ class _LoginWithEmailPageState extends State<LoginWithEmailPage> {
     return Scaffold(
       // resizeToAvoidBottomInset: false,
       appBar: AppBar(
-        title: Text("Log In"),
+        title: const Text("Log In"),
       ),
       body: SafeArea(
         child: Center(
           child: SingleChildScrollView(
             child: Container(
               // color: Colors.red,
-              padding: EdgeInsets.all(10),
+              padding: const EdgeInsets.all(10),
               child: Column(
                 mainAxisSize: MainAxisSize.max,
                 mainAxisAlignment: MainAxisAlignment.center,
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
-                  Text(
+                  const Text(
                     "Welcome Back",
                     textAlign: TextAlign.start,
-                    style: TextStyle(fontSize: 24, fontWeight: FontWeight.bold),
+                    style: TextStyle(
+                      fontSize: 24,
+                      fontWeight: FontWeight.bold,
+                    ),
                   ),
-                  SizedBox(
+                  const SizedBox(
                     height: 30,
                   ),
                   Form(
@@ -58,11 +61,11 @@ class _LoginWithEmailPageState extends State<LoginWithEmailPage> {
                         TypeTextField(
                           labelText: "Email",
                           controller: emailCon,
-                          prefixIcon: Icon(Icons.email_outlined),
+                          prefixIcon: const Icon(Icons.email_outlined),
                           inputType: TextInputType.emailAddress,
                           autoFillHints: const [AutofillHints.email],
                         ),
-                        SizedBox(
+                        const SizedBox(
                           height: 40,
                         ),
                         TypeTextField(
@@ -70,7 +73,7 @@ class _LoginWithEmailPageState extends State<LoginWithEmailPage> {
                           controller: passwordCon,
                           autoFillHints: const [AutofillHints.password],
                           inputType: TextInputType.visiblePassword,
-                          prefixIcon: Icon(Icons.password),
+                          prefixIcon: const Icon(Icons.password),
                           suffixIcon: IconButton(
                             onPressed: () {
                               setState(() {
@@ -83,9 +86,6 @@ class _LoginWithEmailPageState extends State<LoginWithEmailPage> {
                           ),
                           obscureText: isObscure,
                         ),
-                        // SizedBox(
-                        //   height: 40,
-                        // ),
                       ],
                     ),
                   ),
@@ -95,8 +95,9 @@ class _LoginWithEmailPageState extends State<LoginWithEmailPage> {
                       // width: double.infinity,
                       height: 50,
                       child: TextButton(
-                          onPressed: forgotPasswordButtonClick,
-                          child: Text("Forgot Password".toUpperCase())),
+                        onPressed: forgotPasswordButtonClick,
+                        child: Text("Forgot Password".toUpperCase()),
+                      ),
                     ),
                   ),
                   Column(
@@ -105,21 +106,22 @@ class _LoginWithEmailPageState extends State<LoginWithEmailPage> {
                         width: double.infinity,
                         height: 50,
                         child: ElevatedButton(
-                            onPressed: signInButtonClick,
-                            child: Text("Sign In".toUpperCase())),
+                          onPressed: signInButtonClick,
+                          child: Text("Sign In".toUpperCase()),
+                        ),
                       ),
-                      SizedBox(
+                      const SizedBox(
                         height: 20,
                       ),
                     ],
                   ),
-                  Center(
+                  const Center(
                     child: Text(
                       "Or",
                       style: TextStyle(fontSize: 18),
                     ),
                   ),
-                  SizedBox(
+                  const SizedBox(
                     height: 20,
                   ),
                   Column(
@@ -128,11 +130,12 @@ class _LoginWithEmailPageState extends State<LoginWithEmailPage> {
                         width: double.infinity,
                         height: 50,
                         child: TextButton(
-                            onPressed: signInWithPhoneNumberButtonClick,
-                            child: Text(
-                                "Sign In With Phone Number".toUpperCase())),
+                          onPressed: signInWithPhoneNumberButtonClick,
+                          child:
+                              Text("Sign In With Phone Number".toUpperCase()),
+                        ),
                       ),
-                      SizedBox(
+                      const SizedBox(
                         height: 20,
                       ),
                     ],
@@ -154,18 +157,18 @@ class _LoginWithEmailPageState extends State<LoginWithEmailPage> {
       return;
     }
 
-    userService
-        .loginWithEmailPassword(email, password)
-        .then((credential) async {
-      if (credential != null) {
-        showToast("Login Success");
-        userService.isUserHaveData(credential.user!.uid).then((value) {
-          if (value) {
+    userService.loginWithEmailPassword(email, password).then(
+      (credential) async {
+        if (credential != null) {
+          showToast("Login Success");
+          final userData =
+              await userService.isUserHaveData(credential.user!.uid);
+          if (userData) {
             Get.delete<UserController>();
             Get.lazyPut(() => UserController(), fenix: true);
             Get.delete<ItemFormController>();
             Get.lazyPut(() => ItemFormController(), fenix: true);
-            Get.offAll(() => MainActivity());
+            Get.offAll(() => const MainActivity());
           } else {
             Get.offAll(
               () => RegisterPage(
@@ -173,9 +176,9 @@ class _LoginWithEmailPageState extends State<LoginWithEmailPage> {
               ),
             );
           }
-        });
-      }
-    });
+        }
+      },
+    );
   }
 
   void forgotPasswordButtonClick() {}

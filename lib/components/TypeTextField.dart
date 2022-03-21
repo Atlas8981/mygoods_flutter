@@ -42,28 +42,31 @@ class _TypeTextFieldState extends State<TypeTextField> {
       controller: widget.controller,
       maxLength: widget.maxLength,
       autovalidateMode: AutovalidateMode.onUserInteraction,
-      style: TextStyle(
+      style: const TextStyle(
         fontSize: 16,
         color: Colors.black,
       ),
       buildCounter: widget.buildCounter,
       obscureText: widget.obscureText ?? false,
-      keyboardType:
-          widget.inputType ?? TextInputType.name,
+      keyboardType: widget.inputType ?? TextInputType.name,
       cursorHeight: 24,
       decoration: InputDecoration(
-        contentPadding:
-            EdgeInsets.only(top: 20, bottom: 20, left: 10, right: 10),
-        labelStyle: TextStyle(
+        contentPadding: const EdgeInsets.only(
+          top: 20,
+          bottom: 20,
+          left: 10,
+          right: 10,
+        ),
+        labelStyle: const TextStyle(
           fontSize: 16,
         ),
         labelText: widget.labelText,
         prefixText: widget.prefix,
-        prefixStyle: TextStyle(fontSize: 16, letterSpacing: 2),
-        border: OutlineInputBorder(),
+        prefixStyle: const TextStyle(fontSize: 16, letterSpacing: 2),
+        border: const OutlineInputBorder(),
         prefixIcon: widget.prefixIcon,
         suffixIcon: widget.suffixIcon,
-        counterStyle: TextStyle(fontSize: 12, height: 1),
+        counterStyle: const TextStyle(fontSize: 12, height: 1),
         hintText: widget.hint,
       ),
       validator: widget.validator ??

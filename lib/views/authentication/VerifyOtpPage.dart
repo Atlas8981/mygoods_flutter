@@ -1,5 +1,4 @@
 import 'package:firebase_auth/firebase_auth.dart';
-import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_countdown_timer/flutter_countdown_timer.dart';
 import 'package:get/get.dart';
@@ -39,7 +38,7 @@ class _VerifyOTPPageState extends State<VerifyOTPPage> with CodeAutoFill {
 
   Widget otpTextField() {
     return PinFieldAutoFill(
-      decoration: UnderlineDecoration(
+      decoration: const UnderlineDecoration(
         textStyle: TextStyle(fontSize: 16, color: Colors.black),
         colorBuilder: FixedColorBuilder(Colors.blue),
         gapSpace: 24,
@@ -58,22 +57,6 @@ class _VerifyOTPPageState extends State<VerifyOTPPage> with CodeAutoFill {
         smsCode = code;
       },
     );
-    // return OTPTextField(
-    //   length: 6,
-    //   width: MediaQuery.of(context).size.width,
-    //   textFieldAlignment: MainAxisAlignment.spaceAround,
-    //   fieldWidth: 35,
-    //   fieldStyle: FieldStyle.underline,
-    //   outlineBorderRadius: 15,
-    //   style: TextStyle(fontSize: 16),
-    //   onCompleted: (pin) {
-    //     smsCode = pin;
-    //     signInWithPhoneNumber(pin);
-    //   },
-    //   onChanged: (value) {
-    //     smsCode = value;
-    //   },
-    // );
   }
 
   @override
@@ -81,7 +64,7 @@ class _VerifyOTPPageState extends State<VerifyOTPPage> with CodeAutoFill {
     setState(() {
       smsCode = code;
       messageText = "$code";
-      print(code);
+      // print(code);
     });
   }
 
@@ -113,85 +96,48 @@ class _VerifyOTPPageState extends State<VerifyOTPPage> with CodeAutoFill {
         height: double.maxFinite,
         child: Column(
           children: [
-            // Container(
-            //   width: double.maxFinite,
-            //   height: statusBarHeight,
-            //   color: Colors.blue,
-            // ),
-
             Expanded(
               child: Column(
                 crossAxisAlignment: CrossAxisAlignment.center,
                 mainAxisAlignment: MainAxisAlignment.center,
                 children: [
                   CountdownTimer(
-                    // countdownController: countdownController,
-                    // controller: countdownController,
                     endTime: endTime,
-                    endWidget: Text(
+                    endWidget: const Text(
                       "00:00",
                       style: TextStyle(fontSize: 18),
                     ),
-                    textStyle: TextStyle(fontSize: 18),
+                    textStyle: const TextStyle(fontSize: 18),
                     onEnd: () {
                       isTimerEnd = true;
                     },
                   ),
-                  // Container(
-                  //   padding: EdgeInsets.all(20),
-                  //   child: otpTextField(),
-                  // ),
-                  SizedBox(
+                  const SizedBox(
                     height: 20,
                   ),
                   ElevatedButton(
                     onPressed: () {
                       resendCode();
                     },
-                    child: Text("Resend Code"),
+                    child: const Text("Resend Code"),
                   ),
-                  SizedBox(
+                  const SizedBox(
                     height: 20,
                   ),
                   Text(
                     "Tap Below".toUpperCase(),
-                    style: TextStyle(fontSize: 14),
+                    style: const TextStyle(fontSize: 14),
                   ),
-                  SizedBox(
+                  const SizedBox(
                     height: 5,
                   ),
-                  RotatedBox(
+                  const RotatedBox(
                     quarterTurns: 1,
                     child: Icon(Icons.double_arrow),
                   ),
-                  SizedBox(
+                  const SizedBox(
                     height: 10,
                   ),
-                  // Container(
-                  //   padding: EdgeInsets.all(20),
-                  //   child: SizedBox(
-                  //     height: 40,
-                  //     width: double.infinity,
-                  //     child: ElevatedButton(
-                  //       style: ButtonStyle(),
-                  //       onPressed: () {
-                  //         FocusScope.of(context).requestFocus(FocusNode());
-                  //         if (smsCode == null) {
-                  //           showToast("Wrong SMS Code");
-                  //           return;
-                  //         }
-                  //         signInWithPhoneNumber(smsCode!);
-                  //         // Get.to(()=>HomePage());
-                  //
-                  //         // showToast("Verification Complete");
-                  //       },
-                  //       child: Text(
-                  //         "Verify",
-                  //         style: TextStyle(fontSize: 14),
-                  //       ),
-                  //     ),
-                  //   ),
-                  // ),
                   SizedBox(
                     width: double.maxFinite,
                     child: TextButton(
@@ -211,7 +157,8 @@ class _VerifyOTPPageState extends State<VerifyOTPPage> with CodeAutoFill {
                       ),
                       style: ButtonStyle(
                         backgroundColor: MaterialStateProperty.all(
-                            Color.fromARGB(100, 197, 209, 223)),
+                          const Color.fromARGB(100, 197, 209, 223),
+                        ),
                       ),
                     ),
                   )
@@ -244,7 +191,7 @@ class _VerifyOTPPageState extends State<VerifyOTPPage> with CodeAutoFill {
             Get.lazyPut(() => UserController(), fenix: true);
             Get.delete<ItemFormController>();
             Get.lazyPut(() => ItemFormController(), fenix: true);
-            Get.offAll(() => MainActivity());
+            Get.offAll(() => const MainActivity());
           } else {
             Get.offAll(
               () => RegisterPage(
@@ -289,7 +236,7 @@ class _VerifyOTPPageState extends State<VerifyOTPPage> with CodeAutoFill {
           verificationId = vId;
         },
         codeAutoRetrievalTimeout: (String verificationId) {},
-        timeout: Duration(seconds: 60),
+        timeout: const Duration(seconds: 60),
       );
     }
   }

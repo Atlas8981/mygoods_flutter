@@ -1,4 +1,3 @@
-
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:mygoods_flutter/models/category.dart';
@@ -41,7 +40,7 @@ class _CategoryDropdownMenuState extends State<CategoryDropdownMenu> {
       crossAxisAlignment: CrossAxisAlignment.start,
       mainAxisSize: MainAxisSize.min,
       children: [
-        Text("Main Category"),
+        const Text("Main Category"),
         DropdownButton<String>(
           value: mainCategory,
           isExpanded: true,
@@ -58,7 +57,7 @@ class _CategoryDropdownMenuState extends State<CategoryDropdownMenu> {
             });
           },
         ),
-        Text("Sub Category"),
+        const Text("Sub Category"),
         DropdownButton<String>(
           value: subCategory,
           isExpanded: true,
@@ -80,10 +79,11 @@ class _CategoryDropdownMenuState extends State<CategoryDropdownMenu> {
           mainAxisAlignment: MainAxisAlignment.end,
           children: [
             TextButton(
-                onPressed: () {
-                  Get.back();
-                },
-                child: Text("Cancel")),
+              onPressed: () {
+                Get.back();
+              },
+              child: const Text("Cancel"),
+            ),
             TextButton(
               onPressed: () {
                 Get.back();
@@ -93,7 +93,7 @@ class _CategoryDropdownMenuState extends State<CategoryDropdownMenu> {
                   }
                 }
               },
-              child: Text("Confirm"),
+              child: const Text("Confirm"),
             ),
           ],
         )

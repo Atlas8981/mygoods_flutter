@@ -2,7 +2,8 @@ import 'dart:core';
 import 'package:flutter/material.dart';
 
 class DropdownTextField extends StatefulWidget {
-  const DropdownTextField({Key? key,
+  const DropdownTextField({
+    Key? key,
     required this.labelText,
     this.controller,
     this.icon,
@@ -56,46 +57,48 @@ class _DropdownTextFieldState extends State<DropdownTextField> {
   @override
   Widget build(BuildContext context) {
     return SizedBox(
-        height: 58,
-        width: double.infinity,
-        child: DropdownButtonFormField(
-          // onTap: widget.onClickTextField,
-          onTap: () {
-            FocusScope.of(context).requestFocus(FocusNode());
-          },
-          focusNode: _focus,
-          decoration: InputDecoration(
-              labelStyle: TextStyle(
-                fontSize: 16,
-                color: Colors.yellow,
-                // color: CompanyColors.yellow,
-              ),
-              labelText: widget.labelText,
-              prefixText: widget.prefixText,
-              border: OutlineInputBorder(),
-              enabledBorder: OutlineInputBorder(
-                borderSide: BorderSide(color: Colors.blue, width: 1.0),
-              ),
-              prefixIcon: widget.icon == null
-                  ? null
-                  : Icon(
-                      widget.icon,
-                      color: Colors.yellow,
-                    ),
-              counterStyle: TextStyle(fontSize: 12, height: 1)),
-          isExpanded: true,
-          value: widget.currentSelectedValue,
-          items: widget.listString.map((String value) {
-            return DropdownMenuItem<String>(
-              value: value,
-              child: Text(
-                value,
-                style: TextStyle(color: Colors.black),
-              ),
-            );
-          }).toList(),
-          onChanged: widget.onChange,
-        ));
+      height: 58,
+      width: double.infinity,
+      child: DropdownButtonFormField(
+        // onTap: widget.onClickTextField,
+        onTap: () {
+          FocusScope.of(context).requestFocus(FocusNode());
+        },
+        focusNode: _focus,
+        decoration: InputDecoration(
+          labelStyle: const TextStyle(
+            fontSize: 16,
+            color: Colors.yellow,
+            // color: CompanyColors.yellow,
+          ),
+          labelText: widget.labelText,
+          prefixText: widget.prefixText,
+          border: const OutlineInputBorder(),
+          enabledBorder: const OutlineInputBorder(
+            borderSide: BorderSide(color: Colors.blue, width: 1.0),
+          ),
+          prefixIcon: widget.icon == null
+              ? null
+              : Icon(
+                  widget.icon,
+                  color: Colors.yellow,
+                ),
+          counterStyle: const TextStyle(fontSize: 12, height: 1),
+        ),
+        isExpanded: true,
+        value: widget.currentSelectedValue,
+        items: widget.listString.map((String value) {
+          return DropdownMenuItem<String>(
+            value: value,
+            child: Text(
+              value,
+              style: const TextStyle(color: Colors.black),
+            ),
+          );
+        }).toList(),
+        onChanged: widget.onChange,
+      ),
+    );
   }
 }
 

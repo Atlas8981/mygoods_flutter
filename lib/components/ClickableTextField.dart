@@ -29,32 +29,29 @@ class _ClickableTextFieldState extends State<ClickableTextField> {
   @override
   Widget build(BuildContext context) {
     return TextFormField(
+      key: widget.key,
       enableInteractiveSelection: false,
       autovalidateMode: AutovalidateMode.onUserInteraction,
       controller: widget.controller,
       maxLength: (widget.maxLength != null) ? widget.maxLength : null,
-      style: TextStyle(
+      style: const TextStyle(
         fontSize: 16,
         color: Colors.black,
       ),
       onTap: widget.onTap,
       focusNode: AlwaysDisabledFocusNode(),
       decoration: InputDecoration(
-        contentPadding: EdgeInsets.only(
-            top: 20,
-            bottom: 20,
-            left: 10,
-            right: 10
-        ),
-        labelStyle: TextStyle(
+        contentPadding:
+            const EdgeInsets.only(top: 20, bottom: 20, left: 10, right: 10),
+        labelStyle: const TextStyle(
           fontSize: 16,
         ),
         labelText: widget.labelText,
         prefixText: widget.prefix,
-        border: OutlineInputBorder(),
+        border: const OutlineInputBorder(),
         prefixIcon: widget.prefixIcon,
         suffixIcon: widget.suffixIcon,
-        counterStyle: TextStyle(fontSize: 12, height: 1),
+        counterStyle: const TextStyle(fontSize: 12, height: 1),
       ),
       validator: (value) {
         if (value != null && value.isEmpty) {

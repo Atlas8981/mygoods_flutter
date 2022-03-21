@@ -20,7 +20,7 @@ class _SelectLanguagePageState extends State<SelectLanguagePage> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: Text("Select Language"),
+        title: const Text("Select Language"),
         centerTitle: true,
       ),
       body: ListView.builder(

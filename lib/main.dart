@@ -7,18 +7,19 @@ import 'package:flutter_localizations/flutter_localizations.dart';
 import 'package:get/get.dart';
 import 'package:mygoods_flutter/controllers/initial_binding.dart';
 import 'package:mygoods_flutter/views/MainActivity.dart';
-import 'package:mygoods_flutter/views/SplashPage.dart';
 
 Future<void> main() async {
   WidgetsFlutterBinding.ensureInitialized();
   await Firebase.initializeApp();
-  SystemChrome.setSystemUIOverlayStyle(SystemUiOverlayStyle(
-    statusBarColor: Colors.transparent,
-  ));
-  FirebaseChatCore.instance.setConfig(
-    FirebaseChatCoreConfig("rooms", "chatUsers"),
+  SystemChrome.setSystemUIOverlayStyle(
+    const SystemUiOverlayStyle(
+      statusBarColor: Colors.transparent,
+    ),
   );
-  runApp(MyApp());
+  FirebaseChatCore.instance.setConfig(
+    const FirebaseChatCoreConfig("rooms", "chatUsers"),
+  );
+  runApp(const MyApp());
 }
 
 class MyApp extends StatelessWidget {
@@ -29,9 +30,7 @@ class MyApp extends StatelessWidget {
     return GetMaterialApp(
       title: 'MyGoods Flutter From Window @.20',
       // home: SplashPage(),
-      home: MainActivity(),
-      // home: VerifyOTPPage(),
-      // defaultTransition: Transition.rightToLeft,
+      home: const MainActivity(),
       initialBinding: InitialBinding(),
       localizationsDelegates: const [
         GlobalMaterialLocalizations.delegate,
@@ -49,7 +48,6 @@ class MyApp extends StatelessWidget {
           color: Colors.black,
         ),
       ),
-      darkTheme: ThemeData.dark(),
     );
   }
 }

@@ -57,8 +57,10 @@ class ItemService {
     return response;
   }
 
-  Future<DocumentSnapshot<Map<String, dynamic>>?> getAdditionalInfo(
-      {required String itemId, required String subCat}) async {
+  Future<DocumentSnapshot<Map<String, dynamic>>?> getAdditionalInfo({
+    required String itemId,
+    required String subCat,
+  }) async {
     try {
       return await firestore
           .collection(itemCollection)
@@ -69,11 +71,12 @@ class ItemService {
     } catch (e) {
       print(e.toString());
     }
+    return null;
   }
 
-  Future<void> addViewToItem (String itemId,List<String> viewers) async {
+  Future<void> addViewToItem(String itemId, List<String> viewers) async {
     final auth = FirebaseAuth.instance;
-    if(auth.currentUser == null){
+    if (auth.currentUser == null) {
       return;
     }
     viewers.add(auth.currentUser!.uid);
@@ -81,37 +84,35 @@ class ItemService {
     await firestore
         .collection(itemCollection)
         .doc(itemId)
-        .update({
-      'viewers': newViewers
-    });
+        .update({'viewers': newViewers});
   }
 
   Future<Item?> getItemById(String itemId) async {
-    final value =
-          await firestore.collection(itemCollection).doc(itemId).get();
+    final value = await firestore.collection(itemCollection).doc(itemId).get();
     if (value.exists) {
       final Item saveItem = Item.fromJson(value.data()!);
       return saveItem;
     }
+    return null;
   }
 
-  // Future<List<Item>> getTrendingItems() async{
-  //   List<Item> itemList = [];
-  //   try {
-  //     await firestore
-  //         .collection("$itemCollection")
-  //         .limit(10)
-  //         .orderBy("views", descending: true)
-  //         .get()
-  //         .then((value) => {
-  //       value.docs.forEach((element) {
-  //         Item item = Item.fromJson(element.data());
-  //         itemList.add(item);
-  //       })
-  //     });
-  //   } catch (e) {
-  //     print(e.toString());
-  //   }
-  //   return itemList;
-  // }
+// Future<List<Item>> getTrendingItems() async{
+//   List<Item> itemList = [];
+//   try {
+//     await firestore
+//         .collection("$itemCollection")
+//         .limit(10)
+//         .orderBy("views", descending: true)
+//         .get()
+//         .then((value) => {
+//       value.docs.forEach((element) {
+//         Item item = Item.fromJson(element.data());
+//         itemList.add(item);
+//       })
+//     });
+//   } catch (e) {
+//     print(e.toString());
+//   }
+//   return itemList;
+// }
 }

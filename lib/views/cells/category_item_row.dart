@@ -1,4 +1,3 @@
-import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 
 class CategoryItemRow extends StatelessWidget {
@@ -8,7 +7,6 @@ class CategoryItemRow extends StatelessWidget {
     required this.assetImage,
   }) : super(key: key);
 
-  // final Category category;
   final String name;
   final String assetImage;
 
@@ -22,7 +20,6 @@ class CategoryItemRow extends StatelessWidget {
         children: [
           Row(
             mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-            // crossAxisAlignment: CrossAxisAlignment.center,
             children: [
               Image.asset(
                 assetImage,
@@ -30,18 +27,19 @@ class CategoryItemRow extends StatelessWidget {
                 height: 25,
                 fit: BoxFit.cover,
               ),
-              SizedBox(
+              const SizedBox(
                 width: 10,
               ),
               Expanded(
-                  child: Text(
-                name,
-                style: TextStyle(fontSize: 13),
-              )),
-              Icon(Icons.arrow_forward_ios),
-              SizedBox(
+                child: Text(
+                  name,
+                  style: const TextStyle(fontSize: 13),
+                ),
+              ),
+              const Icon(Icons.arrow_forward_ios),
+              const SizedBox(
                 width: 10,
-              )
+              ),
             ],
           ),
           Container(

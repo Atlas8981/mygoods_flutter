@@ -16,14 +16,12 @@ Future<void> showCustomDialog(
       child: Material(
         color: Colors.transparent,
         child: Container(
-          margin: EdgeInsets.only(top: 20, left: 20, right: 20),
+          margin: const EdgeInsets.only(top: 20, left: 20, right: 20),
           // color: Colors.transparent,
-          decoration: BoxDecoration(
-              // border: Border.all(
-              //   color: Colors.red,
-              // ),
-              color: Colors.white,
-              borderRadius: BorderRadius.all(Radius.circular(5))),
+          decoration: const BoxDecoration(
+            color: Colors.white,
+            borderRadius: BorderRadius.all(Radius.circular(5)),
+          ),
           width: double.infinity,
           height: 120,
           // color: Colors.white,
@@ -32,12 +30,12 @@ Future<void> showCustomDialog(
             children: [
               Expanded(
                 child: Container(
-                  padding: EdgeInsets.only(top: 20, left: 20),
+                  padding: const EdgeInsets.only(top: 20, left: 20),
                   // color: Colors.red,
                   child: Text(
                     // "Are you sure you want to sign out ?",
                     title ?? "Do you want to that ?",
-                    style: TextStyle(
+                    style: const TextStyle(
                       fontSize: 16,
                       color: Colors.black,
                       fontWeight: FontWeight.w500,
@@ -49,17 +47,13 @@ Future<void> showCustomDialog(
                 mainAxisAlignment: MainAxisAlignment.end,
                 children: [
                   TextButton(
-                      onPressed: onCancel ?? () => Get.back(),
-                      // onPressed: () {
-                      //   Get.back();
-                      // },
-                      child: Text("No")),
+                    onPressed: onCancel ?? () => Get.back(),
+                    child: const Text("No"),
+                  ),
                   TextButton(
-                      onPressed: onConfirm ?? () => Get.back(),
-                      // onPressed: () {
-                      //   Get.offAll(() => SplashPage());
-                      // },
-                      child: Text("Yes")),
+                    onPressed: onConfirm ?? () => Get.back(),
+                    child: const Text("Yes"),
+                  ),
                 ],
               ),
             ],

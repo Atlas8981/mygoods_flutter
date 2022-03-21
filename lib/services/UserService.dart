@@ -30,6 +30,7 @@ class UserService {
         showToast('Wrong password provided for that user.');
       }
     }
+    return null;
   }
 
   Future<bool> isUserHaveData(String id) async{
@@ -154,6 +155,7 @@ class UserService {
       print('Failed with error code: ${e.code}');
       print(e.message);
     }
+    return null;
   }
 
   Stream<QuerySnapshot<Map<String, dynamic>>> listenForUserItemChange() {

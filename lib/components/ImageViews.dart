@@ -25,7 +25,7 @@ class _ImagesViewState extends State<ImagesView> {
       children: [
         CarouselSlider.builder(
           options: CarouselOptions(
-            scrollPhysics: BouncingScrollPhysics(),
+            scrollPhysics: const BouncingScrollPhysics(),
             height: 300,
             // aspectRatio: 1 / 1,
             viewportFraction: 1,
@@ -45,18 +45,18 @@ class _ImagesViewState extends State<ImagesView> {
             return CachedNetworkImage(
               imageUrl: images[index].imageUrl,
               fit: BoxFit.cover,
-              fadeInDuration: Duration(milliseconds: 100),
-              fadeOutDuration: Duration(milliseconds: 100),
+              fadeInDuration: const Duration(milliseconds: 100),
+              fadeOutDuration: const Duration(milliseconds: 100),
               width: double.infinity,
               progressIndicatorBuilder: (context, url, progress) {
                 if (progress.progress == null) {
                   return Container();
                 }
-                return Center(
+                return const Center(
                   child: CircularProgressIndicator(),
                 );
               },
-              errorWidget: (context, url, error) => Icon(Icons.error),
+              errorWidget: (context, url, error) => const Icon(Icons.error),
             );
           },
         ),

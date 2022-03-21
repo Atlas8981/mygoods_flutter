@@ -12,36 +12,37 @@ class SavedItemsPage extends StatelessWidget {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: Text("Saved Item(s)"),
+        title: const Text("Saved Item(s)"),
       ),
       body: Container(
-        padding: EdgeInsets.only(left: 10, right: 10),
+        padding: const EdgeInsets.only(left: 10, right: 10),
         child: GetBuilder<SavedItemsController>(
           init: SavedItemsController(),
           builder: (controller) {
             if (controller.items == null) {
-              return Center(
+              return const Center(
                 child: CircularProgressIndicator(),
               );
-
             }
             final List<Item> items = controller.items!.cast();
             if (controller.items!.isEmpty) {
-              return Center(
+              return const Center(
                 child: Text("No Saved Item"),
               );
             }
             return Padding(
-              padding: EdgeInsets.only(top: 10),
+              padding: const EdgeInsets.only(top: 10),
               child: ListView.builder(
                 itemCount: items.length,
                 itemBuilder: (context, index) {
                   return ListItemRow(
                     item: items[index],
                     onTap: () {
-                      Get.to(() => ItemDetailPage(
-                            item: items[index],
-                          ));
+                      Get.to(
+                        () => ItemDetailPage(
+                          item: items[index],
+                        ),
+                      );
                     },
                   );
                 },

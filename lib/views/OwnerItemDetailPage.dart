@@ -49,24 +49,25 @@ class _OwnerItemDetailPageState extends State<OwnerItemDetailPage> {
           // print(additionalInfo.toString());
 
           return Column(
-              crossAxisAlignment: CrossAxisAlignment.start,
-              children: [
-                Text(
-                  "Additional Information",
-                  style: TextStyle(fontSize: 14, fontWeight: FontWeight.w600),
-                ),
-                SizedBox(
-                  height: 20,
-                ),
-                Text(additionalInfoText),
-                Divider(
-                  height: 20,
-                  thickness: 1.5,
-                  color: Colors.grey,
-                ),
-              ]);
+            crossAxisAlignment: CrossAxisAlignment.start,
+            children: [
+              const Text(
+                "Additional Information",
+                style: TextStyle(fontSize: 14, fontWeight: FontWeight.w600),
+              ),
+              const SizedBox(
+                height: 20,
+              ),
+              Text(additionalInfoText),
+              const Divider(
+                height: 20,
+                thickness: 1.5,
+                color: Colors.grey,
+              ),
+            ],
+          );
         } else {
-          return Center(
+          return const Center(
             child: CircularProgressIndicator(),
           );
         }
@@ -91,7 +92,7 @@ class _OwnerItemDetailPageState extends State<OwnerItemDetailPage> {
             title: Text("Item Detail: ${item.itemid}"),
             actions: [
               PopupMenuButton<OwnerItemMenu>(
-                icon: Icon(Icons.more_vert),
+                icon: const Icon(Icons.more_vert),
                 onSelected: (OwnerItemMenu result) async {
                   switch (result) {
                     case OwnerItemMenu.editItem:
@@ -99,36 +100,31 @@ class _OwnerItemDetailPageState extends State<OwnerItemDetailPage> {
                       break;
                     case OwnerItemMenu.deleteItem:
                       {
-                        Get.find<MyItemsController>()
-                            .deleteItems(item)
-                            .then((value) {
-                          if (value) {
-                            Get.back();
-                          } else {
-                            showToast("Delete unsuccessfully");
-                          }
-                        });
+                        Get.find<MyItemsController>().deleteItems(item).then(
+                          (value) {
+                            if (value) {
+                              Get.back();
+                            } else {
+                              showToast("Delete unsuccessfully");
+                            }
+                          },
+                        );
                       }
                       break;
                   }
                 },
                 itemBuilder: (BuildContext context) =>
                     <PopupMenuEntry<OwnerItemMenu>>[
-                  PopupMenuItem(
+                  const PopupMenuItem(
                     value: OwnerItemMenu.editItem,
                     child: Text("Edit Item"),
                   ),
-                  PopupMenuItem(
+                  const PopupMenuItem(
                     value: OwnerItemMenu.deleteItem,
                     child: Text('Delete Item'),
                   ),
                 ],
               ),
-              // IconButton(
-              //     onPressed: () {
-              //
-              //     },
-              //     icon: Icon(Icons.edit))
             ],
           ),
           body: SafeArea(
@@ -136,67 +132,79 @@ class _OwnerItemDetailPageState extends State<OwnerItemDetailPage> {
               width: double.maxFinite,
               height: double.maxFinite,
               child: SingleChildScrollView(
-                physics: BouncingScrollPhysics(),
+                physics: const BouncingScrollPhysics(),
                 child: Column(
                   children: [
                     ImagesView(images: item.images),
                     Container(
                       width: double.infinity,
-                      padding: EdgeInsets.only(left: 20, right: 20, top: 20),
-                      margin: EdgeInsets.only(bottom: 50),
+                      padding:
+                          const EdgeInsets.only(left: 20, right: 20, top: 20),
+                      margin: const EdgeInsets.only(bottom: 50),
                       child: Column(
                         crossAxisAlignment: CrossAxisAlignment.start,
                         children: [
                           Text(
                             item.name,
-                            style: TextStyle(
-                                fontSize: 18, fontWeight: FontWeight.w600),
+                            style: const TextStyle(
+                              fontSize: 18,
+                              fontWeight: FontWeight.w600,
+                            ),
                           ),
-                          SizedBox(
+                          const SizedBox(
                             height: 20,
                           ),
                           Text(
                             "USD: ${item.price.toString()}",
-                            style: TextStyle(
-                                color: Colors.red,
-                                fontSize: 16,
-                                fontWeight: FontWeight.w600),
+                            style: const TextStyle(
+                              color: Colors.red,
+                              fontSize: 16,
+                              fontWeight: FontWeight.w600,
+                            ),
                           ),
-                          SizedBox(
+                          const SizedBox(
                             height: 10,
                           ),
-                          Text(
+                          const Text(
                             "Item Detail",
                             style: TextStyle(
-                                fontSize: 14, fontWeight: FontWeight.w600),
+                              fontSize: 14,
+                              fontWeight: FontWeight.w600,
+                            ),
                           ),
-                          SizedBox(
+                          const SizedBox(
                             height: 20,
                           ),
                           Text(
                             "Views ${item.views}",
-                            style: TextStyle(
-                                fontSize: 14, fontWeight: FontWeight.w600),
+                            style: const TextStyle(
+                              fontSize: 14,
+                              fontWeight: FontWeight.w600,
+                            ),
                           ),
-                          Divider(
+                          const Divider(
                             height: 20,
                             thickness: 1.5,
                             color: Colors.grey,
                           ),
-                          Text(
+                          const Text(
                             "Description",
                             style: TextStyle(
-                                fontSize: 14, fontWeight: FontWeight.w600),
+                              fontSize: 14,
+                              fontWeight: FontWeight.w600,
+                            ),
                           ),
-                          SizedBox(
+                          const SizedBox(
                             height: 20,
                           ),
                           Text(
                             item.description,
-                            style: TextStyle(
-                                fontSize: 14, fontWeight: FontWeight.w600),
+                            style: const TextStyle(
+                              fontSize: 14,
+                              fontWeight: FontWeight.w600,
+                            ),
                           ),
-                          Divider(
+                          const Divider(
                             height: 20,
                             thickness: 1.5,
                             color: Colors.grey,

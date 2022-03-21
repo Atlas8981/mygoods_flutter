@@ -1,6 +1,5 @@
 import 'package:avatars/avatars.dart';
 import 'package:cached_network_image/cached_network_image.dart';
-import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:image_picker/image_picker.dart';
@@ -8,7 +7,6 @@ import 'package:mygoods_flutter/components/CustomAlertDialog.dart';
 import 'package:mygoods_flutter/controllers/BottomNavigationViewController.dart';
 import 'package:mygoods_flutter/controllers/UserController.dart';
 import 'package:mygoods_flutter/models/category.dart';
-import 'package:mygoods_flutter/models/image.dart' as myImage;
 import 'package:mygoods_flutter/models/user.dart' as myUser;
 import 'package:mygoods_flutter/models/user.dart';
 import 'package:mygoods_flutter/services/UserService.dart';
@@ -43,10 +41,10 @@ class _AboutMePageState extends State<AboutMePage> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: Text("About Me"),
+        title: const Text("About Me"),
         actions: [
           PopupMenuButton<AccountMenuItems>(
-            icon: Icon(Icons.more_vert),
+            icon: const Icon(Icons.more_vert),
             onSelected: (AccountMenuItems value) {
               switch (value) {
                 case AccountMenuItems.editProfile:
@@ -55,17 +53,17 @@ class _AboutMePageState extends State<AboutMePage> {
                   ));
                   break;
                 case AccountMenuItems.resetPassword:
-                  Get.to(ResetPasswordPage());
+                  Get.to(const ResetPasswordPage());
                   break;
               }
             },
             itemBuilder: (BuildContext context) => [
-              PopupMenuItem<AccountMenuItems>(
+              const PopupMenuItem<AccountMenuItems>(
                 value: AccountMenuItems.editProfile,
                 child: Text("Edit Profile"),
                 // child: Text('setting'.tr),
               ),
-              PopupMenuItem<AccountMenuItems>(
+              const PopupMenuItem<AccountMenuItems>(
                 value: AccountMenuItems.resetPassword,
                 child: Text('Reset Password'),
               ),
@@ -76,7 +74,7 @@ class _AboutMePageState extends State<AboutMePage> {
       body: SafeArea(
         child: SingleChildScrollView(
           child: Container(
-            padding: EdgeInsets.only(
+            padding: const EdgeInsets.only(
               top: 20,
             ),
             child: Column(
@@ -90,20 +88,20 @@ class _AboutMePageState extends State<AboutMePage> {
                   color: Colors.grey.withOpacity(0.3),
                 ),
                 bottomListWidgets(),
-                Divider(
+                const Divider(
                   height: 100,
                 ),
                 Container(
                   width: double.infinity,
                   height: 50,
-                  padding: EdgeInsets.only(left: 20, right: 20),
+                  padding: const EdgeInsets.only(left: 20, right: 20),
                   child: ElevatedButton(
                     onPressed: () {
                       onSignOutButtonClick(context);
                     },
                     child: Text(
                       "Sign Out".toUpperCase(),
-                      style: TextStyle(letterSpacing: 1.1),
+                      style: const TextStyle(letterSpacing: 1.1),
                     ),
                     style: ButtonStyle(
                         backgroundColor: MaterialStateProperty.all(redColor)),
@@ -138,7 +136,7 @@ class _AboutMePageState extends State<AboutMePage> {
             ),
             child: Visibility(
               visible: user.image!.imageUrl.isEmpty,
-              child: Center(
+              child: const Center(
                 child: CircularProgressIndicator(),
               ),
             ),
@@ -175,7 +173,7 @@ class _AboutMePageState extends State<AboutMePage> {
           ),
           Visibility(
               visible: user.image!.imageName == "pending",
-              child: Center(
+              child: const Center(
                 child: CircularProgressIndicator(),
               )),
         ],
@@ -196,21 +194,21 @@ class _AboutMePageState extends State<AboutMePage> {
           return Column(
             children: [
               checkUserImage(controller, user),
-              SizedBox(
+              const SizedBox(
                 height: 10,
               ),
               Text(
                 "${user.firstName} ${user.lastName}",
-                style: TextStyle(
+                style: const TextStyle(
                   fontSize: 16,
                   fontWeight: FontWeight.bold,
                 ),
               ),
-              SizedBox(
+              const SizedBox(
                 height: 10,
               ),
               Text(user.address),
-              SizedBox(
+              const SizedBox(
                 height: 10,
               ),
               Text(user.phoneNumber),
@@ -223,10 +221,10 @@ class _AboutMePageState extends State<AboutMePage> {
 
   bottomListWidgets() {
     return Padding(
-      padding: EdgeInsets.only(left: 20, right: 20),
+      padding: const EdgeInsets.only(left: 20, right: 20),
       child: ListView.builder(
         shrinkWrap: true,
-        physics: NeverScrollableScrollPhysics(),
+        physics: const NeverScrollableScrollPhysics(),
         itemCount: bottomListItems.length,
         itemBuilder: (context, index) {
           return InkWell(
@@ -236,7 +234,7 @@ class _AboutMePageState extends State<AboutMePage> {
                   Get.to(() => MyItemsPage());
                   break;
                 case 1:
-                  Get.to(() => SavedItemsPage());
+                  Get.to(() => const SavedItemsPage());
                   break;
                 // case 2:
                 //   Get.to(()=>MyItemsPage());

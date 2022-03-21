@@ -1,14 +1,13 @@
-
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 
 class CustomBottomSheetWithSearch extends StatefulWidget {
   const CustomBottomSheetWithSearch(
       {Key? key,
-        this.scrollController,
-        this.bottomSheetOffset,
-        required this.onTapItem,
-        required this.items})
+      this.scrollController,
+      this.bottomSheetOffset,
+      required this.onTapItem,
+      required this.items})
       : super(key: key);
 
   final ScrollController? scrollController;
@@ -31,36 +30,37 @@ class _CustomBottomSheetWithSearchState
   @override
   Widget build(BuildContext context) {
     return DraggableScrollableSheet(
-        expand: false,
-        // initialChildSize: 0.5,
-        maxChildSize: 0.9,
-        // minChildSize: 0.5,
-
-        builder: (BuildContext context, ScrollController scrollController) {
-          return Container(
-            padding: EdgeInsets.all(20),
-            child: Column(children: <Widget>[
-              Row(children: <Widget>[
-                Expanded(
+      expand: false,
+      maxChildSize: 0.9,
+      builder: (BuildContext context, ScrollController scrollController) {
+        return Container(
+          padding: const EdgeInsets.all(20),
+          child: Column(
+            children: <Widget>[
+              Row(
+                children: <Widget>[
+                  Expanded(
                     child: TextField(
-                        controller: searchFieldCon,
-                        decoration: InputDecoration(
-                          contentPadding: EdgeInsets.all(8),
-                          border: OutlineInputBorder(
-                            borderRadius: BorderRadius.circular(15.0),
-                            borderSide: BorderSide(),
-                          ),
-                          prefixIcon: Icon(Icons.search),
+                      controller: searchFieldCon,
+                      decoration: InputDecoration(
+                        contentPadding: const EdgeInsets.all(8),
+                        border: OutlineInputBorder(
+                          borderRadius: BorderRadius.circular(15.0),
+                          borderSide: const BorderSide(),
                         ),
-                        onChanged: (value) {
-                          //4
-                          setState(() {
-                            _tempList = _buildSearchList(value);
-                          });
-                        })),
-                IconButton(
-                    padding: EdgeInsets.all(0),
-                    icon: Icon(
+                        prefixIcon: const Icon(Icons.search),
+                      ),
+                      onChanged: (value) {
+                        //4
+                        setState(() {
+                          _tempList = _buildSearchList(value);
+                        });
+                      },
+                    ),
+                  ),
+                  IconButton(
+                    padding: const EdgeInsets.all(0),
+                    icon: const Icon(
                       Icons.close,
                       size: 28,
                     ),
@@ -70,48 +70,50 @@ class _CustomBottomSheetWithSearchState
                         searchFieldCon.clear();
                         _tempList.clear();
                       });
-                    }),
-              ]),
+                    },
+                  ),
+                ],
+              ),
               Expanded(
                 child: ListView.builder(
-                    controller: scrollController,
-                    // physics: const NeverScrollableScrollPhysics(),
-                    //5
-                    shrinkWrap: true,
-                    itemCount: (_tempList.isNotEmpty)
-                        ? _tempList.length
-                        : _listOfItems.length,
-                    // separatorBuilder: (context, int) {
-                    //   return Divider();
-                    // },
-                    itemBuilder: (context, index) {
-                      return InkWell(
-
-                        //6
-                          child: (_tempList.isNotEmpty)
-                              ? _showBottomSheetWithSearch(index, _tempList)
-                              : _showBottomSheetWithSearch(
-                              index, _listOfItems),
-                          onTap: () {
-                            widget.onTapItem((_tempList.isNotEmpty)
-                                ? _tempList[index]
-                                : _listOfItems[index]);
-                          });
-                    }),
+                  controller: scrollController,
+                  shrinkWrap: true,
+                  itemCount: (_tempList.isNotEmpty)
+                      ? _tempList.length
+                      : _listOfItems.length,
+                  itemBuilder: (context, index) {
+                    return InkWell(
+                      child: (_tempList.isNotEmpty)
+                          ? _showBottomSheetWithSearch(index, _tempList)
+                          : _showBottomSheetWithSearch(index, _listOfItems),
+                      onTap: () {
+                        widget.onTapItem((_tempList.isNotEmpty)
+                            ? _tempList[index]
+                            : _listOfItems[index]);
+                      },
+                    );
+                  },
+                ),
               ),
-            ]),
-          );
-        });
+            ],
+          ),
+        );
+      },
+    );
   }
 
   //8
   Widget _showBottomSheetWithSearch(int index, List<String> listOfCities) {
     return Container(
-      padding: EdgeInsets.only(top: 10, bottom: 10),
-      child: Text(listOfCities[index],
-          style: TextStyle(fontSize: 16, fontFamily: 'KhmerOSBattambang'),
-          // style: TextStyle(color: Colors.black, fontSize: 18),
-          textAlign: TextAlign.start),
+      padding: const EdgeInsets.only(top: 10, bottom: 10),
+      child: Text(
+        listOfCities[index],
+        style: const TextStyle(
+          fontSize: 16,
+          fontFamily: 'KhmerOSBattambang',
+        ),
+        textAlign: TextAlign.start,
+      ),
     );
   }
 
@@ -147,7 +149,7 @@ class _ListButtonSheetState extends State<ListButtonSheet> {
   @override
   Widget build(BuildContext context) {
     return Container(
-      padding: EdgeInsets.all(20),
+      padding: const EdgeInsets.all(20),
       child: ListView.builder(
         shrinkWrap: true,
         itemCount: widget.items.length,
@@ -158,10 +160,10 @@ class _ListButtonSheetState extends State<ListButtonSheet> {
               Get.back();
             },
             child: Container(
-              padding: EdgeInsets.all(10),
+              padding: const EdgeInsets.all(10),
               child: Text(
                 widget.items[index],
-                style: TextStyle(fontSize: 16, height: 1.5),
+                style: const TextStyle(fontSize: 16, height: 1.5),
               ),
             ),
           );

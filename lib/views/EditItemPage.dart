@@ -119,8 +119,8 @@ class _EditItemPageState extends State<EditItemPage> {
   Widget build(BuildContext context) {
     return Scaffold(
         body: ItemForm(
-      titleText: Text("Edit Item"),
-      padding: EdgeInsets.all(10),
+      titleText: const Text("Edit Item"),
+      padding: const EdgeInsets.all(10),
       onConfirm: () {
         uploadItemInformation();
       },

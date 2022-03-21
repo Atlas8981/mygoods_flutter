@@ -16,7 +16,7 @@ class LandingPageController extends GetxController {
   Future<void> checkLogin(int preTabIndex) async {
     final auth = FirebaseAuth.instance;
     if (auth.currentUser == null) {
-      final bool isLogin = await Get.to(() => WelcomePage());
+      final bool isLogin = await Get.to(() => const WelcomePage());
       if (!isLogin) {
         Get.find<LandingPageController>().changeTabIndex(preTabIndex);
       }

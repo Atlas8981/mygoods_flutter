@@ -11,33 +11,32 @@ class SignUpPage extends StatelessWidget {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: Text("Sign Up"),
+        title: const Text("Sign Up"),
       ),
       body: SafeArea(
         child: Center(
           child: SingleChildScrollView(
             child: Container(
-              // color: Colors.red,
-              padding: EdgeInsets.all(10),
+              padding: const EdgeInsets.all(10),
               child: Column(
                 mainAxisSize: MainAxisSize.max,
                 mainAxisAlignment: MainAxisAlignment.center,
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
-                  Text(
+                  const Text(
                     "Please Enter Your Email",
                     textAlign: TextAlign.start,
                     style: TextStyle(fontSize: 24, fontWeight: FontWeight.bold),
                   ),
-                  SizedBox(
+                  const SizedBox(
                     height: 30,
                   ),
-                  Text(
+                  const Text(
                     "Welcome to MyGoods, please enter your email and we will get started",
                     textAlign: TextAlign.start,
                     style: TextStyle(fontSize: 18),
                   ),
-                  SizedBox(
+                  const SizedBox(
                     height: 30,
                   ),
                   Form(
@@ -47,10 +46,10 @@ class SignUpPage extends StatelessWidget {
                         TypeTextField(
                           labelText: "Email",
                           controller: emailCon,
-                          prefixIcon: Icon(Icons.email_outlined),
+                          prefixIcon: const Icon(Icons.email_outlined),
                           autoFillHints: const [AutofillHints.email],
                         ),
-                        SizedBox(
+                        const SizedBox(
                           height: 30,
                         ),
                       ],
@@ -62,8 +61,9 @@ class SignUpPage extends StatelessWidget {
                         width: double.infinity,
                         height: 50,
                         child: ElevatedButton(
-                            onPressed: signInButtonClick,
-                            child: Text("Sign In".toUpperCase())),
+                          onPressed: signInButtonClick,
+                          child: Text("Sign In".toUpperCase()),
+                        ),
                       ),
                     ],
                   )

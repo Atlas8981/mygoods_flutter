@@ -1,5 +1,4 @@
 import 'package:firebase_auth/firebase_auth.dart';
-import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:mygoods_flutter/components/TypeTextField.dart';
@@ -20,11 +19,10 @@ class LoginWithPhoneNumberPage extends StatelessWidget {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: Text("Login With Phone Number"),
+        title: const Text("Login With Phone Number"),
       ),
       body: Container(
-        padding: EdgeInsets.all(20),
-        // color: Colors.red,
+        padding: const EdgeInsets.all(20),
         child: Column(
           mainAxisAlignment: MainAxisAlignment.center,
           children: [
@@ -34,12 +32,16 @@ class LoginWithPhoneNumberPage extends StatelessWidget {
               inputType: TextInputType.phone,
               prefix: "0",
               maxLength: 9,
-              buildCounter: (context,
-                  {required currentLength, required isFocused, maxLength}) {
+              buildCounter: (
+                context, {
+                required currentLength,
+                required isFocused,
+                maxLength,
+              }) {
                 return Text(
                   '${currentLength + 1}/${maxLength! + 1}',
                   semanticsLabel: 'character count',
-                  style: TextStyle(fontSize: 12, height: 1),
+                  style: const TextStyle(fontSize: 12, height: 1),
                 );
               },
               validator: (value) {
@@ -56,7 +58,7 @@ class LoginWithPhoneNumberPage extends StatelessWidget {
               onPressed: () {
                 loginWithPhoneNumber();
               },
-              child: Text("Confirm"),
+              child: const Text("Confirm"),
             )
           ],
         ),
@@ -97,7 +99,7 @@ class LoginWithPhoneNumberPage extends StatelessWidget {
         );
       },
       codeAutoRetrievalTimeout: (String verificationId) {},
-      timeout: Duration(seconds: 60),
+      timeout: const Duration(seconds: 60),
     );
   }
 
@@ -113,7 +115,7 @@ class LoginWithPhoneNumberPage extends StatelessWidget {
           Get.lazyPut(() => UserController(), fenix: true);
           Get.delete<ItemFormController>();
           Get.lazyPut(() => ItemFormController(), fenix: true);
-          Get.offAll(() => MainActivity());
+          Get.offAll(() => const MainActivity());
         } else {
           Get.offAll(
             () => RegisterPage(

@@ -8,6 +8,10 @@ import 'package:mygoods_flutter/views/cells/popular_category_item.dart';
 import 'SubCategoryPage.dart';
 
 class CategoryPage extends StatelessWidget {
+  CategoryPage({
+    Key? key,
+  }) : super(key: key);
+
   final List<Category> popularCategory = [
     Category(name: "Phone", image: "${imageDir}phonepicture.jpg"),
     Category(name: "Bicycle", image: "${imageDir}bikepicture.jpg"),
@@ -17,45 +21,40 @@ class CategoryPage extends StatelessWidget {
     Category(name: "Desktop", image: "${imageDir}desktoppic.png"),
   ];
 
-  CategoryPage({Key? key}) : super(key: key);
-
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: Text("Category"),
+        title: const Text("Category"),
       ),
       body: SafeArea(
         child: SizedBox(
           width: double.maxFinite,
           height: double.maxFinite,
-          // color: Colors.yellow,
           child: SingleChildScrollView(
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
                 Container(
-                  padding: EdgeInsets.all(20),
+                  padding: const EdgeInsets.all(20),
                   child: Column(
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
-                      Text(
+                      const Text(
                         "Popular Category",
                         style: TextStyle(
-                            fontSize: 18, fontWeight: FontWeight.bold),
+                          fontSize: 18,
+                          fontWeight: FontWeight.bold,
+                        ),
                       ),
-                      SizedBox(
+                      const SizedBox(
                         height: 8,
                       ),
                       GridView.count(
                         scrollDirection: Axis.vertical,
-                        //Very Important Line to make grid view scroll
-                        // physics: ScrollPhysics(),
                         childAspectRatio: (85 / 90),
                         shrinkWrap: true,
-                        // primary: true,
                         crossAxisCount: 3,
-                        //1.0
                         crossAxisSpacing: 4.0,
                         children: List.generate(
                           popularCategory.length,
@@ -72,45 +71,47 @@ class CategoryPage extends StatelessWidget {
                   height: 5,
                   color: Colors.black.withOpacity(0.2),
                 ),
-                SizedBox(
+                const SizedBox(
                   width: double.maxFinite,
                   height: 10,
                 ),
                 Padding(
-                  padding: EdgeInsets.all(20),
+                  padding: const EdgeInsets.all(20),
                   child: Column(
                     crossAxisAlignment: CrossAxisAlignment.stretch,
                     mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                     children: [
-                      Text(
+                      const Text(
                         "More Categories",
                         style: TextStyle(
-                            fontSize: 18, fontWeight: FontWeight.bold),
+                          fontSize: 18,
+                          fontWeight: FontWeight.bold,
+                        ),
                       ),
-                      SizedBox(
+                      const SizedBox(
                         width: double.infinity,
                         height: 20,
                       ),
                       ListView.builder(
-                        physics: ScrollPhysics(),
+                        physics: const ScrollPhysics(),
                         shrinkWrap: true,
                         itemCount: mainCategories.length,
                         itemBuilder: (context, index) {
                           return InkWell(
-                              onTap: () {
-                                Get.to(
-                                  () => SubCategoryPage(
-                                    title: mainCategories[index].name,
-                                  ),
-                                );
-                              },
-                              child: CategoryItemRow(
-                                name: mainCategories[index].name,
-                                assetImage: mainCategories[index].image,
-                              ));
+                            onTap: () {
+                              Get.to(
+                                () => SubCategoryPage(
+                                  title: mainCategories[index].name,
+                                ),
+                              );
+                            },
+                            child: CategoryItemRow(
+                              name: mainCategories[index].name,
+                              assetImage: mainCategories[index].image,
+                            ),
+                          );
                         },
                       )
-                      //  Put Column
                     ],
                   ),
                 ),

@@ -61,91 +61,97 @@ class _ListItemRowState extends State<ListItemRow> {
   Widget build(BuildContext context) {
     return SizedBox(
       width: double.maxFinite,
-      // padding: const EdgeInsets.only(left: 10,right: 10),
-      child: Column(children: [
-        InkWell(
-          onTap: widget.onTap ??
-              () {
-                Get.to(() => ItemDetailPage(
+      child: Column(
+        children: [
+          InkWell(
+            onTap: widget.onTap ??
+                () {
+                  Get.to(
+                    () => ItemDetailPage(
                       item: item,
-                    ));
-              },
-          child: Row(
-            children: [
-              ClipRRect(
-                borderRadius: BorderRadius.all(Radius.circular(10)),
-                child: CachedNetworkImage(
-                  imageUrl: item.images[0].imageUrl,
-                  width: 125,
-                  height: 125,
-                  fit: BoxFit.cover,
+                    ),
+                  );
+                },
+            child: Row(
+              children: [
+                ClipRRect(
+                  borderRadius: const BorderRadius.all(Radius.circular(10)),
+                  child: CachedNetworkImage(
+                    imageUrl: item.images[0].imageUrl,
+                    width: 125,
+                    height: 125,
+                    fit: BoxFit.cover,
+                  ),
                 ),
-              ),
-              SizedBox(
-                width: 15,
-              ),
-              Column(
-                mainAxisSize: MainAxisSize.min,
-                crossAxisAlignment: CrossAxisAlignment.start,
-                children: [
-                  Text(
-                    item.name,
-                    style: TextStyle(fontSize: 13, fontWeight: FontWeight.bold),
-                  ),
-                  Divider(
-                    height: 12,
-                  ),
-                  Text(
-                    "USD \$${item.price}",
-                    style: TextStyle(
+                const SizedBox(
+                  width: 15,
+                ),
+                Column(
+                  mainAxisSize: MainAxisSize.min,
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: [
+                    Text(
+                      item.name,
+                      style: const TextStyle(
+                        fontSize: 13,
+                        fontWeight: FontWeight.bold,
+                      ),
+                    ),
+                    const Divider(
+                      height: 12,
+                    ),
+                    Text(
+                      "USD \$${item.price}",
+                      style: const TextStyle(
                         color: Colors.red,
                         fontSize: 16,
-                        fontWeight: FontWeight.bold),
-                  ),
-                  Divider(
-                    height: 12,
-                  ),
-                  FutureBuilder<String>(
-                    future: database.getItemOwnerName(item.userid),
-                    builder: (context, snapshot) {
-                      if (snapshot.hasData) {
-                        return Text(
-                          "Post By ${snapshot.data}",
-                          style: TextStyle(fontSize: 12),
-                        );
-                      } else {
-                        return Text(
-                          "Post By someone",
-                          style: TextStyle(fontSize: 12),
-                        );
-                      }
-                    },
-                  ),
-                  Divider(
-                    height: 2,
-                  ),
-                  Text(
-                    "Posted ${calDate(item.date)}",
-                    style: TextStyle(fontSize: 12),
-                  ),
-                  Divider(
-                    height: 2,
-                  ),
-                  Text(
-                    "Views: ${item.views}",
-                    style: TextStyle(fontSize: 12),
-                  ),
-                ],
-              ),
-            ],
+                        fontWeight: FontWeight.bold,
+                      ),
+                    ),
+                    const Divider(
+                      height: 12,
+                    ),
+                    FutureBuilder<String>(
+                      future: database.getItemOwnerName(item.userid),
+                      builder: (context, snapshot) {
+                        if (snapshot.hasData) {
+                          return Text(
+                            "Post By ${snapshot.data}",
+                            style: const TextStyle(fontSize: 12),
+                          );
+                        } else {
+                          return const Text(
+                            "Post By someone",
+                            style: TextStyle(fontSize: 12),
+                          );
+                        }
+                      },
+                    ),
+                    const Divider(
+                      height: 2,
+                    ),
+                    Text(
+                      "Posted ${calDate(item.date)}",
+                      style: const TextStyle(fontSize: 12),
+                    ),
+                    const Divider(
+                      height: 2,
+                    ),
+                    Text(
+                      "Views: ${item.views}",
+                      style: const TextStyle(fontSize: 12),
+                    ),
+                  ],
+                ),
+              ],
+            ),
           ),
-        ),
-        const Divider(
-          // height: 2,
-          thickness: 2,
-          color: Colors.blueGrey,
-        )
-      ]),
+          const Divider(
+            thickness: 2,
+            color: Colors.blueGrey,
+          )
+        ],
+      ),
     );
   }
 }

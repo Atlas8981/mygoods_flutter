@@ -3,7 +3,6 @@ import 'dart:io';
 
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_messaging/firebase_messaging.dart';
-import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:mygoods_flutter/controllers/BottomNavigationViewController.dart';
@@ -87,16 +86,18 @@ class _MainActivityState extends State<MainActivity> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      body: Obx(() => IndexedStack(
-            index: bottomNavigationController.tabIndex.value,
-            children: [
-              HomePage(),
-              CategoryPage(),
-              AddPage(),
-              ChatListPage(),
-              AboutMePage(),
-            ],
-          )),
+      body: Obx(
+        () => IndexedStack(
+          index: bottomNavigationController.tabIndex.value,
+          children: [
+            HomePage(),
+            CategoryPage(),
+            const AddPage(),
+            const ChatListPage(),
+            const AboutMePage(),
+          ],
+        ),
+      ),
       bottomNavigationBar: buildBottomNavigationMenu(
         context,
         bottomNavigationController,
@@ -128,6 +129,7 @@ class _MainActivityState extends State<MainActivity> {
   }
 
   late StreamSubscription iosSubscription;
+
   @override
   void initState() {
     super.initState();
@@ -149,9 +151,10 @@ class _MainActivityState extends State<MainActivity> {
             'Message also contained a notification: ${message.notification!.title}');
         print(message.notification!.title);
         NotificationService.showNotification(
-            title: '${message.notification!.title}',
-            body: "${message.notification!.body}",
-            payload: "this is payload");
+          title: '${message.notification!.title}',
+          body: "${message.notification!.body}",
+          payload: "this is payload",
+        );
       }
     });
   }
@@ -173,7 +176,7 @@ class _MainActivityState extends State<MainActivity> {
 
   Future<void> setupInteractedMessage() async {
     RemoteMessage? initialMessage =
-    await FirebaseMessaging.instance.getInitialMessage();
+        await FirebaseMessaging.instance.getInitialMessage();
 
     if (initialMessage != null) {
       _handleMessage(initialMessage);

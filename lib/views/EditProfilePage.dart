@@ -10,7 +10,6 @@ class EditProfilePage extends StatefulWidget {
   const EditProfilePage({
     Key? key,
     required this.user,
-    // this.user,
   }) : super(key: key);
 
   final User? user;
@@ -56,12 +55,11 @@ class _EditProfilePageState extends State<EditProfilePage> {
     newUserInfo.lastName = lastnameCon.text.trim();
     newUserInfo.username = usernameCon.text.trim();
     newUserInfo.address = addressCon.text.trim();
-    newUserInfo.phoneNumber = "0"+phoneNumberCon.text.trim();
+    newUserInfo.phoneNumber = "0" + phoneNumberCon.text.trim();
 
     setState(() {
       isVisible = true;
     });
-
 
     Get.find<UserController>().updateUserInfo(newUserInfo).then((value) {
       setState(() {
@@ -80,13 +78,13 @@ class _EditProfilePageState extends State<EditProfilePage> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: Text("Edit Profile"),
+        title: const Text("Edit Profile"),
       ),
       body: Stack(
         children: [
           SingleChildScrollView(
             child: Container(
-              padding: EdgeInsets.all(20),
+              padding: const EdgeInsets.all(20),
               child: Form(
                 key: formKey,
                 child: Column(
@@ -96,7 +94,7 @@ class _EditProfilePageState extends State<EditProfilePage> {
                       controller: firstnameCon,
                       inputType: TextInputType.name,
                     ),
-                    Divider(
+                    const Divider(
                       height: 20,
                     ),
                     TypeTextField(
@@ -104,21 +102,21 @@ class _EditProfilePageState extends State<EditProfilePage> {
                       controller: lastnameCon,
                       inputType: TextInputType.name,
                     ),
-                    Divider(
+                    const Divider(
                       height: 20,
                     ),
                     TypeTextField(
                       labelText: "Username",
                       controller: usernameCon,
                     ),
-                    Divider(
+                    const Divider(
                       height: 20,
                     ),
                     TypeTextField(
                       labelText: "Address",
                       controller: addressCon,
                     ),
-                    Divider(
+                    const Divider(
                       height: 20,
                     ),
                     TypeTextField(
@@ -131,7 +129,7 @@ class _EditProfilePageState extends State<EditProfilePage> {
                         return validatePhoneNumber(value);
                       },
                     ),
-                    Divider(
+                    const Divider(
                       height: 20,
                     ),
                     SizedBox(
@@ -148,10 +146,11 @@ class _EditProfilePageState extends State<EditProfilePage> {
             ),
           ),
           Visibility(
-              visible: isVisible,
-              child: Center(
-                child: CircularProgressIndicator(),
-              )),
+            visible: isVisible,
+            child: const Center(
+              child: CircularProgressIndicator(),
+            ),
+          ),
         ],
       ),
     );

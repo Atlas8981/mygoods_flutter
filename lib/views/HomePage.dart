@@ -1,7 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:mygoods_flutter/controllers/HomePageController.dart';
-import 'package:mygoods_flutter/models/image.dart' as myImage;
 import 'package:mygoods_flutter/models/item.dart';
 import 'package:mygoods_flutter/services/HomePageService.dart';
 import 'package:mygoods_flutter/utils/constant.dart';
@@ -26,7 +25,10 @@ class HomePage extends StatelessWidget {
           children: [
             Text(
               title,
-              style: TextStyle(fontSize: 18, fontWeight: FontWeight.bold),
+              style: const TextStyle(
+                fontSize: 18,
+                fontWeight: FontWeight.bold,
+              ),
             ),
             TextButton(
               onPressed: () {
@@ -37,7 +39,7 @@ class HomePage extends StatelessWidget {
                   ),
                 );
               },
-              child: Text("View All"),
+              child: const Text("View All"),
             ),
           ],
         ),
@@ -46,16 +48,12 @@ class HomePage extends StatelessWidget {
           child: SizedBox(
             width: (items.length <= 3) ? Get.width : null,
             child: Row(
-              children:
-                  // [
-                  //   HomepageCell(items[0]),
-                  // ]
-                  items
-                      .map((e) {
-                        return HomepageCell(e);
-                      })
-                      .toList()
-                      .cast(),
+              children: items
+                  .map((e) {
+                    return HomepageCell(e);
+                  })
+                  .toList()
+                  .cast(),
             ),
           ),
         ),
@@ -67,23 +65,24 @@ class HomePage extends StatelessWidget {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: Text("Home"),
+        title: const Text("Home"),
         actions: [
           IconButton(
-              onPressed: () {
-                showToast("In Development");
-              },
-              icon: Icon(Icons.search))
+            onPressed: () {
+              showToast("In Development");
+            },
+            icon: const Icon(Icons.search),
+          )
         ],
       ),
       body: SafeArea(
         child: Container(
           height: double.infinity,
           width: double.infinity,
-          padding: EdgeInsets.only(left: 10, right: 10),
+          padding: const EdgeInsets.only(left: 10, right: 10),
           child: ListView(
             children: [
-              SizedBox(
+              const SizedBox(
                 height: 10,
               ),
               Image.asset(
@@ -95,17 +94,20 @@ class HomePage extends StatelessWidget {
               GetBuilder<HomePageController>(
                 builder: (controller) {
                   if (controller.trendingItems == null) {
-                    return Center(
+                    return const Center(
                       child: CircularProgressIndicator(),
                     );
                   }
                   final List<Item> trendingItems =
                       controller.trendingItems!.cast();
                   if (trendingItems.isNotEmpty) {
-                    return homePageListView("Trending", items: trendingItems,
-                        onTap: () {
-                      showToast("In Development");
-                    });
+                    return homePageListView(
+                      "Trending",
+                      items: trendingItems,
+                      onTap: () {
+                        showToast("In Development");
+                      },
+                    );
                   } else {
                     return Container();
                   }
@@ -114,7 +116,7 @@ class HomePage extends StatelessWidget {
               GetBuilder<HomePageController>(
                 builder: (controller) {
                   if (controller.recentViewItems == null) {
-                    return Center(
+                    return const Center(
                       child: CircularProgressIndicator(),
                     );
                   }
@@ -130,25 +132,6 @@ class HomePage extends StatelessWidget {
                   }
                 },
               ),
-              // FutureBuilder<List<Item>>(
-              //   future: homePageService.getRecentViewItems(),
-              //   builder: (context, snapshot) {
-              //     if (!snapshot.hasData) {
-              //       return Center(
-              //         child: CircularProgressIndicator(),
-              //       );
-              //     }
-              //     final List<Item> recentItems = snapshot.data!;
-              //     if (recentItems.length != 0) {
-              //       return homePageListView("Recently View", items: recentItems,
-              //           onTap: () {
-              //         showToast("In Development");
-              //       });
-              //     } else {
-              //       return Container();
-              //     }
-              //   },
-              // ),
             ],
           ),
         ),

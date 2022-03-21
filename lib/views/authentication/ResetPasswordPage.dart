@@ -24,60 +24,64 @@ class _ResetPasswordPageState extends State<ResetPasswordPage> {
         title: Text("resetPassword".tr),
         actions: [
           IconButton(
-              onPressed: () {
-                if (!resetPasswordFormKey.currentState!.validate()) {
-                  return;
-                }
-                if (newPasswordController.text !=
-                    confirmNewPasswordController.text) {
-                  showToast('passwordNotMatch'.tr);
-                  return;
-                }
-                Get.back();
-              },
-              icon: Icon(Icons.check))
+            onPressed: () {
+              if (!resetPasswordFormKey.currentState!.validate()) {
+                return;
+              }
+              if (newPasswordController.text !=
+                  confirmNewPasswordController.text) {
+                showToast('passwordNotMatch'.tr);
+                return;
+              }
+              Get.back();
+            },
+            icon: const Icon(Icons.check),
+          )
         ],
       ),
       body: Container(
-        padding: EdgeInsets.all(20),
+        padding: const EdgeInsets.all(20),
         child: Form(
           key: resetPasswordFormKey,
           child: Column(
             children: [
-              //Title
               Align(
-                  alignment: Alignment.topLeft,
-                  child: Text(
-                    "resetPasswordTitle".tr,
-                    // "Something",
-                    style: TextStyle(
-                        fontSize: 24, color: Colors.black, height: 1.5),
-                  )),
-              SizedBox(
+                alignment: Alignment.topLeft,
+                child: Text(
+                  "resetPasswordTitle".tr,
+                  // "Something",
+                  style: const TextStyle(
+                    fontSize: 24,
+                    color: Colors.black,
+                    height: 1.5,
+                  ),
+                ),
+              ),
+              const SizedBox(
                 height: 20,
               ),
               TypeTextField(
                 controller: currentPasswordController,
-                prefixIcon: Icon(Icons.password),
+                prefixIcon: const Icon(Icons.password),
                 labelText: "currentPassword".tr,
                 obscureText: true,
               ),
-              Padding(padding: EdgeInsets.only(right: 10)),
-              SizedBox(
+              const Padding(padding: EdgeInsets.only(right: 10)),
+              const SizedBox(
                 height: 20,
               ),
               TypeTextField(
                 controller: newPasswordController,
-                prefixIcon: Icon(Icons.password),
+                prefixIcon: const Icon(Icons.password),
                 labelText: "newPassword".tr,
                 obscureText: true,
               ),
-              SizedBox(
+              const SizedBox(
                 height: 20,
               ),
               TypeTextField(
                 controller: confirmNewPasswordController,
-                prefixIcon: Icon(Icons.password),
+                prefixIcon: const Icon(Icons.password),
                 labelText: "confirmNewPassword".tr,
                 obscureText: true,
               ),
