@@ -2,14 +2,17 @@ import 'dart:io';
 
 import 'package:extended_image/extended_image.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_native_image/flutter_native_image.dart';
+import 'package:get/get.dart';
 import 'package:image_picker/image_picker.dart';
+import 'package:mygoods_flutter/views/ImageViewer.dart';
 
 class CropImagePage extends StatefulWidget {
   const CropImagePage({
     Key? key,
-    required this.image,
+    required this.userImage,
   }) : super(key: key);
-  final XFile image;
+  final XFile userImage;
 
   @override
   State<CropImagePage> createState() => _CropImagePageState();
@@ -26,9 +29,23 @@ class _CropImagePageState extends State<CropImagePage> {
         title: Text("Crop Image"),
         actions: [
           IconButton(
-            onPressed: () {
-              final rect = editorKey.currentState?.getCropRect();
-              print("rect: $rect" );
+            onPressed: () async {
+              final Rect? rect = editorKey.currentState?.getCropRect();
+              if (rect != null) {
+                final File cropImage = await FlutterNativeImage.cropImage(
+                  widget.userImage.path,
+                  rect.left.toInt(),
+                  rect.top.toInt(),
+                  rect.width.toInt(),
+                  rect.height.toInt(),
+                );
+                Get.back(result: cropImage);
+                // Get.to(
+                //   () => ImageViewer(
+                //     file: cropImage,
+                //   ),
+                // );
+              }
             },
             icon: Icon(Icons.check),
           ),
@@ -40,20 +57,21 @@ class _CropImagePageState extends State<CropImagePage> {
           ),
         ],
       ),
-      body: ExtendedImage.file(
-        File(widget.image.path),
-        fit: BoxFit.contain,
-        mode: ExtendedImageMode.editor,
-        extendedImageEditorKey: editorKey,
-        initEditorConfigHandler: (state) {
-          return EditorConfig(
-            maxScale: 8.0,
-            cropRectPadding: EdgeInsets.all(20.0),
-            hitTestSize: 20.0,
-            cropAspectRatio: 1.0,
-          );
-        },
-
+      body: SafeArea(
+        child: ExtendedImage.file(
+          File(widget.userImage.path),
+          fit: BoxFit.contain,
+          mode: ExtendedImageMode.editor,
+          extendedImageEditorKey: editorKey,
+          initEditorConfigHandler: (state) {
+            return EditorConfig(
+              maxScale: 8.0,
+              cropRectPadding: EdgeInsets.all(20.0),
+              hitTestSize: 20.0,
+              cropAspectRatio: 1.0,
+            );
+          },
+        ),
       ),
     );
   }

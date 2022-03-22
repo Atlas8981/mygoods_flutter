@@ -34,7 +34,7 @@ class UserService {
     return null;
   }
 
-  Future<bool> isUserHaveData(String id) async{
+  Future<bool> isUserHaveData(String id) async {
     final response = await FirebaseFirestore.instance
         .collection(userCollection)
         .doc(id)
@@ -81,7 +81,6 @@ class UserService {
           .get()
           .then((value) {
         response = myUser.User.fromJson(value.data()!);
-        // print(response.toString());
       });
     } catch (e) {
       if (kDebugMode) {
@@ -92,14 +91,20 @@ class UserService {
   }
 
   Future<myImage.Image> updateUserImage(
-      File userImage, myUser.User user) async {
+    File userImage,
+    myUser.User user,
+  ) async {
+    //Set image name
     final imageName = "${DateTime.now()}";
-    final Reference storageReference =
-        storage.ref('flutter/').child(imageName);
+    //set reference/path to the image
+    final Reference storageReference = storage.ref('flutter/').child(imageName);
     await storageReference.putFile(userImage);
+    //Get imageUrl
     final downloadedImageUrl = await storageReference.getDownloadURL();
-    final myImage.Image returnImage =
-        myImage.Image(imageName: imageName, imageUrl: downloadedImageUrl);
+    final myImage.Image returnImage = myImage.Image(
+      imageName: imageName,
+      imageUrl: downloadedImageUrl,
+    );
     await firestore
         .collection(userCollection)
         .doc(auth.currentUser!.uid)
@@ -161,7 +166,6 @@ class UserService {
         print('Failed with error code: ${e.code}');
         print(e.message);
       }
-
     }
     return null;
   }
@@ -276,7 +280,6 @@ class UserService {
         print('Failed with error code: ${e.code}');
         print(e.message);
       }
-
     }
     return null;
   }

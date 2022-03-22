@@ -1,3 +1,5 @@
+import 'dart:io';
+
 import 'package:avatars/avatars.dart';
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
@@ -13,6 +15,7 @@ import 'package:mygoods_flutter/services/UserService.dart';
 import 'package:mygoods_flutter/utils/constant.dart';
 import 'package:mygoods_flutter/views/CropImagePage.dart';
 import 'package:mygoods_flutter/views/EditProfilePage.dart';
+import 'package:mygoods_flutter/views/ImageViewer.dart';
 import 'package:mygoods_flutter/views/SavedItemsPage.dart';
 import 'package:mygoods_flutter/views/authentication/ResetPasswordPage.dart';
 import 'package:mygoods_flutter/views/cells/category_item_row.dart';
@@ -122,15 +125,21 @@ class _AboutMePageState extends State<AboutMePage> {
 
   Widget userImage(UserController controller, User user) {
     if (user.image != null && user.image!.imageUrl.isNotEmpty) {
+      final tag = "${user.image!.imageName} ${DateTime.now()}";
       return InkWell(
         onLongPress: () async {
           changeProfile(controller);
         },
         onTap: () {
-          Get.to(() => BigImagePage(image: user.image!));
+          Get.to(
+            () => BigImagePage(
+              image: user.image!,
+              tag: tag,
+            ),
+          );
         },
         child: Hero(
-          tag: user.image!.imageName,
+          tag: tag,
           child: CircleAvatar(
             backgroundImage: CachedNetworkImageProvider(
               user.image!.imageUrl,
@@ -172,20 +181,26 @@ class _AboutMePageState extends State<AboutMePage> {
     }
   }
 
-  Future<void> changeProfile(controller) async {
+  Future<void> changeProfile(UserController controller) async {
     final XFile? pickedImage = await pickImage();
     if (pickedImage == null) {
       return;
     }
 
-    await Get.to(
+    final File? cropImage = await Get.to(
       () => CropImagePage(
-        image: pickedImage,
+        userImage: pickedImage,
       ),
     );
-
-    //TODO: Uncomment
-    // controller.changeProfilePicture(pickedImage);
+    if (cropImage != null) {
+      final bool acceptable = await Get.to(
+        () => ImageViewer(file: cropImage),
+        fullscreenDialog: true,
+      );
+      if (acceptable) {
+        controller.changeProfilePicture(XFile(cropImage.path));
+      }
+    }
   }
 
   centerProfile() {

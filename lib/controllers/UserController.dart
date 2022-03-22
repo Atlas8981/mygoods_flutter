@@ -31,7 +31,7 @@ class UserController extends GetxController {
   void changeProfilePicture(XFile image) {
     user!.value.image = Image(imageName: "pending", imageUrl: "");
     update();
-    userService.updateUserImage(File(image.path),user!.value).then((value) {
+    userService.updateUserImage(File(image.path), user!.value).then((value) {
       user!.value.image = value;
       update();
     });
