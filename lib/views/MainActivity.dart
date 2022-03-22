@@ -3,6 +3,7 @@ import 'dart:io';
 
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_messaging/firebase_messaging.dart';
+import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:mygoods_flutter/controllers/BottomNavigationViewController.dart';
@@ -118,12 +119,18 @@ class _MainActivityState extends State<MainActivity> {
       sound: true,
     );
     if (settings.authorizationStatus == AuthorizationStatus.authorized) {
-      print('User granted permission');
+      if (kDebugMode) {
+        print('User granted permission');
+      }
     } else if (settings.authorizationStatus ==
         AuthorizationStatus.provisional) {
-      print('User granted provisional permission');
+      if (kDebugMode) {
+        print('User granted provisional permission');
+      }
     } else {
-      print('User declined or has not accepted permission');
+      if (kDebugMode) {
+        print('User declined or has not accepted permission');
+      }
     }
     setupInteractedMessage();
   }
@@ -142,14 +149,19 @@ class _MainActivityState extends State<MainActivity> {
 
     NotificationService.init();
     FirebaseMessaging.onMessage.listen((RemoteMessage message) {
-      print('Got a message whilst in the foreground!');
-      print('Message data: ${message.data}');
+      if (kDebugMode) {
+        print('Got a message whilst in the foreground!');
+        print('Message data: ${message.data}');
+      }
 
       if (message.notification != null &&
           message.notification!.android != null) {
-        print(
-            'Message also contained a notification: ${message.notification!.title}');
-        print(message.notification!.title);
+        if (kDebugMode) {
+          print(
+              'Message also contained a notification: ${message.notification!.title}');
+          print(message.notification!.title);
+        }
+
         NotificationService.showNotification(
           title: '${message.notification!.title}',
           body: "${message.notification!.body}",
@@ -186,8 +198,11 @@ class _MainActivityState extends State<MainActivity> {
   }
 
   void _handleMessage(RemoteMessage message) {
-    print(message.toString());
-    print(message.messageId);
+    if (kDebugMode) {
+      print(message.toString());
+      print(message.messageId);
+    }
+
     // if (message.data['type'] == 'chat') {
     //   Navigator.pushNamed(context, '/chat',
     //     arguments: (message),

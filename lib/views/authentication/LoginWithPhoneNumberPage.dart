@@ -1,4 +1,5 @@
 import 'package:firebase_auth/firebase_auth.dart';
+import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:mygoods_flutter/components/TypeTextField.dart';
@@ -87,8 +88,10 @@ class LoginWithPhoneNumberPage extends StatelessWidget {
         } else if (e.code == "too-many-requests") {
           showToast("Too Many Request");
         }
-        print(e.message);
-        print(e.code);
+        if (kDebugMode) {
+          print(e.message);
+          print(e.code);
+        }
       },
       codeSent: (String verificationId, int? resendToken) async {
         Get.to(

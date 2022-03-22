@@ -3,6 +3,7 @@ import 'dart:io';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:firebase_storage/firebase_storage.dart';
+import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:mygoods_flutter/components/ItemForm.dart';
@@ -67,7 +68,9 @@ class _AddPageState extends State<AddPage> {
       itemFormController.clearData();
     }).catchError((error) {
       itemFormController.isVisible.value = true;
-      print("Failed with error: $error");
+      if (kDebugMode) {
+        print("Failed with error: $error");
+      }
     });
   }
 

@@ -8,12 +8,9 @@ class BigImagePage extends StatefulWidget {
   const BigImagePage({
     Key? key,
     required this.image,
-    // required this.isNetworkImage,
   }) : super(key: key);
 
   final myImage.Image image;
-
-  // final bool isNetworkImage;
 
   @override
   _BigImagePageState createState() => _BigImagePageState();
@@ -47,32 +44,19 @@ class _BigImagePageState extends State<BigImagePage> {
               top: 30,
               left: 5,
               child: IconButton(
-                  onPressed: () {
-                    Get.back();
-                  },
-                  icon: Icon(
-                    Icons.arrow_back,
-                    size: 32,
-                    color: Colors.blue,
-                  )),
+                onPressed: () {
+                  Get.back();
+                },
+                icon: const Icon(
+                  Icons.arrow_back,
+                  size: 32,
+                  color: Colors.blue,
+                ),
+              ),
             ),
           ],
         ),
       ),
     );
   }
-
-// ImageProvider decideTypeOfImage() {
-//   if (widget.isNetworkImage) {
-//     return NetworkImage(widget.image);
-//   }else{
-//     return FileImage(
-//       File(widget.image),
-//       // width: 80,
-//       // height: 80,
-//       // fit: BoxFit.cover,
-//     );
-//   }
-//
-// }
 }

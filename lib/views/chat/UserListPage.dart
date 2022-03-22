@@ -32,14 +32,16 @@ class _UserListPageState extends State<UserListPage> {
         .get();
     if (!currentUser.exists) {
       final currentUser = Get.find<UserController>().user!.value;
-      await fireChatCore.createUserInFirestore(types.User(
-        id: currentUser.userId,
-        firstName: currentUser.firstName,
-        lastName: currentUser.lastName,
-        imageUrl: (currentUser.image == null)
-            ? dummyNetworkImage
-            : currentUser.image!.imageUrl,
-      ));
+      await fireChatCore.createUserInFirestore(
+        types.User(
+          id: currentUser.userId,
+          firstName: currentUser.firstName,
+          lastName: currentUser.lastName,
+          imageUrl: (currentUser.image == null)
+              ? dummyNetworkImage
+              : currentUser.image!.imageUrl,
+        ),
+      );
     }
   }
 
@@ -61,7 +63,6 @@ class _UserListPageState extends State<UserListPage> {
         checkCurrentUserHaveChatData();
 
         await fireChatCore.createUserInFirestore(otherUser);
-
         await fireChatCore.createRoom(otherUser).then((value) {
           setState(() {
             isShow = true;
@@ -87,18 +88,19 @@ class _UserListPageState extends State<UserListPage> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: Text("Click on user to start chat"),
+        title: const Text("Click on user to start chat"),
       ),
       body: Stack(
         children: [
           Center(
             child: Visibility(
-                maintainSize: false,
-                visible: isShow,
-                child: CircularProgressIndicator()),
+              maintainSize: false,
+              visible: isShow,
+              child: const CircularProgressIndicator(),
+            ),
           ),
           Container(
-            padding: EdgeInsets.only(top: 8, bottom: 8),
+            padding: const EdgeInsets.only(top: 8, bottom: 8),
             child: FutureBuilder<List<myUser.User>>(
               future: chatService.getAllAuthenticatedUsers(),
               initialData: const [],
@@ -106,23 +108,23 @@ class _UserListPageState extends State<UserListPage> {
                 if (snapshot.hasData) {
                   final listOfUsers = snapshot.data!;
                   return ListView.separated(
-                      itemCount: listOfUsers.length,
-                      separatorBuilder: (context, index) {
-                        return SizedBox(
-                          height: 8,
-                        );
-                      },
-                      itemBuilder: (context, index) {
-                        final user = listOfUsers[index];
-                        return authenticatedUserRow(user);
-                      });
+                    itemCount: listOfUsers.length,
+                    separatorBuilder: (context, index) {
+                      return const SizedBox(
+                        height: 8,
+                      );
+                    },
+                    itemBuilder: (context, index) {
+                      final user = listOfUsers[index];
+                      return authenticatedUserRow(user);
+                    },
+                  );
                 } else if (snapshot.hasError) {
-                  return Center(
+                  return const Center(
                     child: Text("Error"),
                   );
                 }
-
-                return Center(
+                return const Center(
                   child: CircularProgressIndicator(),
                 );
               },

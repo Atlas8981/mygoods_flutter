@@ -9,7 +9,7 @@ import 'package:mygoods_flutter/models/image.dart' as myImage;
 import 'package:mygoods_flutter/views/MainActivity.dart';
 import 'package:flutter_chat_types/flutter_chat_types.dart' as types;
 
-class RegisterPage extends StatelessWidget {
+class RegisterPage extends StatefulWidget {
   RegisterPage({
     Key? key,
     required this.userId,
@@ -17,14 +17,21 @@ class RegisterPage extends StatelessWidget {
   }) : super(key: key);
 
   final String userId;
-  String? phoneNumber;
+  final String? phoneNumber;
 
+  @override
+  State<RegisterPage> createState() => _RegisterPageState();
+}
+
+class _RegisterPageState extends State<RegisterPage> {
   final firstnameCon = TextEditingController(),
       lastnameCon = TextEditingController(),
       usernameCon = TextEditingController(),
       phoneCon = TextEditingController(),
       addressCon = TextEditingController();
+
   final GlobalKey formKey = GlobalKey<FormState>();
+  late String? phoneNumber = widget.phoneNumber;
 
   @override
   Widget build(BuildContext context) {
@@ -180,7 +187,7 @@ class RegisterPage extends StatelessWidget {
     final address = addressCon.text.trim();
     phoneNumber ??= phoneCon.text.trim();
     final User user = User(
-      userId: userId,
+      userId: widget.userId,
       username: username,
       firstName: firstname,
       lastName: lastname,

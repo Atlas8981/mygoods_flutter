@@ -16,7 +16,7 @@ class PopularCategoryCell extends StatelessWidget {
       child: Column(
         children: [
           Container(
-            padding: EdgeInsets.all(10),
+            padding: const EdgeInsets.all(10),
             width: 85,
             height: 85,
             decoration: BoxDecoration(
@@ -24,7 +24,9 @@ class PopularCategoryCell extends StatelessWidget {
                 image: AssetImage(category.image),
                 fit: BoxFit.cover,
               ),
-              borderRadius: BorderRadius.all(Radius.circular(100)),
+              borderRadius: const BorderRadius.all(
+                Radius.circular(100),
+              ),
             ),
           ),
           Expanded(
@@ -35,7 +37,7 @@ class PopularCategoryCell extends StatelessWidget {
                 maxLines: 2,
                 textAlign: TextAlign.center,
                 overflow: TextOverflow.ellipsis,
-                style: TextStyle(fontSize: 14),
+                style: const TextStyle(fontSize: 14),
               ),
             ),
           ),

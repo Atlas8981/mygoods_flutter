@@ -1,4 +1,5 @@
 import 'package:firebase_auth/firebase_auth.dart';
+import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_countdown_timer/flutter_countdown_timer.dart';
 import 'package:get/get.dart';
@@ -205,8 +206,11 @@ class _VerifyOTPPageState extends State<VerifyOTPPage> with CodeAutoFill {
         showToast("Login Failed");
       }
     } on FirebaseAuthException catch (e) {
-      print(e.message);
-      print(e.code);
+      if (kDebugMode) {
+        print(e.message);
+        print(e.code);
+      }
+
       if (e.code == "invalid-verification-code") {
         showToast("Invalid OTP");
       }
@@ -229,8 +233,11 @@ class _VerifyOTPPageState extends State<VerifyOTPPage> with CodeAutoFill {
           } else if (e.code == "too-many-requests") {
             showToast("Too Many Request");
           }
-          print(e.message);
-          print(e.code);
+          if (kDebugMode) {
+            print(e.message);
+            print(e.code);
+          }
+
         },
         codeSent: (String vId, int? resendToken) async {
           verificationId = vId;

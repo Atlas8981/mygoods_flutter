@@ -1,5 +1,6 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
+import 'package:flutter/foundation.dart';
 import 'package:mygoods_flutter/models/item.dart';
 import 'package:mygoods_flutter/models/user.dart' as myUser;
 import 'package:mygoods_flutter/utils/constant.dart';
@@ -10,21 +11,21 @@ class ItemService {
   Future<List<Item>> getItems(String mainCat, String subCat) async {
     List<Item> response = [];
     try {
-      await firestore
+      final querySnapshot = await firestore
           .collection(itemCollection)
           .limit(10)
           .where("mainCategory", isEqualTo: mainCat)
           .where("subCategory", isEqualTo: subCat)
           .orderBy("date", descending: true)
-          .get()
-          .then((value) => {
-                value.docs.forEach((element) {
-                  Item item = Item.fromJson(element.data());
-                  response.add(item);
-                })
-              });
+          .get();
+      for (var element in querySnapshot.docs) {
+        final Item item = Item.fromJson(element.data());
+        response.add(item);
+      }
     } catch (e) {
-      print(e.toString());
+      if (kDebugMode) {
+        print(e.toString());
+      }
     }
     return response;
   }
@@ -38,7 +39,9 @@ class ItemService {
           .get()
           .then((value) => {response = value.get("username")});
     } catch (e) {
-      print(e.toString());
+      if (kDebugMode) {
+        print(e.toString());
+      }
     }
     return response;
   }
@@ -52,7 +55,9 @@ class ItemService {
           .get()
           .then((value) => {response = myUser.User.fromJson(value.data()!)});
     } catch (e) {
-      print(e.toString());
+      if (kDebugMode) {
+        print(e.toString());
+      }
     }
     return response;
   }
@@ -69,7 +74,9 @@ class ItemService {
           .doc(subCat)
           .get();
     } catch (e) {
-      print(e.toString());
+      if (kDebugMode) {
+        print(e.toString());
+      }
     }
     return null;
   }

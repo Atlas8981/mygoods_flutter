@@ -2,8 +2,8 @@ import 'package:avatars/avatars.dart';
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/cupertino.dart';
+import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter/widgets.dart';
 import 'package:flutter_firebase_chat_core/flutter_firebase_chat_core.dart';
 import 'package:get/get.dart';
 import 'package:intl/intl.dart';
@@ -29,28 +29,28 @@ class _ChatListPageState extends State<ChatListPage> {
         return CupertinoActionSheet(
           actions: [
             CupertinoActionSheetAction(
-              child: Text("All"),
+              child: const Text("All"),
               onPressed: () {},
             ),
             CupertinoActionSheetAction(
-              child: Text("Buy"),
+              child: const Text("Buy"),
               onPressed: () {},
             ),
             CupertinoActionSheetAction(
-              child: Text("Sell"),
+              child: const Text("Sell"),
               onPressed: () {},
             ),
             CupertinoActionSheetAction(
-              child: Text("Unread"),
+              child: const Text("Unread"),
               onPressed: () {},
             ),
             CupertinoActionSheetAction(
-              child: Text("Block User"),
+              child: const Text("Block User"),
               onPressed: () {},
             ),
           ],
           cancelButton: CupertinoActionSheetAction(
-            child: Text("Cancel"),
+            child: const Text("Cancel"),
             onPressed: () {
               Get.back();
             },
@@ -64,19 +64,19 @@ class _ChatListPageState extends State<ChatListPage> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: Text("Chat List"),
+        title: const Text("Chat List"),
         actions: [
           IconButton(
             onPressed: () {
               showFilterDialog();
             },
-            icon: Icon(Icons.filter_list),
+            icon: const Icon(Icons.filter_list),
           ),
           IconButton(
             onPressed: () {
-              Get.to(() => UserListPage());
+              Get.to(() => const UserListPage());
             },
-            icon: Icon(Icons.person_add),
+            icon: const Icon(Icons.person_add),
           ),
         ],
       ),
@@ -125,10 +125,6 @@ class _ChatRoomRowState extends State<ChatRoomRow> {
   late final types.User _user = types.User(id: auth.currentUser!.uid);
 
   Future<String> getLastMessage(types.Room room) async {
-    // final query = await FirebaseFirestore.instance.collection("rooms")
-    //     .doc(room.id)
-    //     .get();
-    // final selectRoom = types.Room.fromJson(query.data()!);
     if (room.lastMessages == null) {
       return "";
     }
@@ -151,6 +147,9 @@ class _ChatRoomRowState extends State<ChatRoomRow> {
 
         color = getUserAvatarNameColor(otherUser);
       } catch (e) {
+        if (kDebugMode) {
+          print(e);
+        }
         // Do nothing if other user is not found
       }
     }
@@ -175,15 +174,11 @@ class _ChatRoomRowState extends State<ChatRoomRow> {
                 shape: AvatarShape(
                   width: 60,
                   height: 60,
-                  shapeBorder: RoundedRectangleBorder(
+                  shapeBorder: const RoundedRectangleBorder(
                     borderRadius: BorderRadius.all(Radius.circular(30)),
                   ),
                 ),
               )
-            // Text(
-            //         name.isEmpty ? '' : name[0].toUpperCase(),
-            //         style: const TextStyle(color: Colors.white),
-            //       )
             : null,
       ),
     );
@@ -213,9 +208,9 @@ class _ChatRoomRowState extends State<ChatRoomRow> {
                 children: [
                   Text(
                     widget.room.name ?? '',
-                    style: TextStyle(fontSize: 14),
+                    style: const TextStyle(fontSize: 14),
                   ),
-                  SizedBox(
+                  const SizedBox(
                     height: 5,
                   ),
                   FutureBuilder<String>(
@@ -239,7 +234,9 @@ class _ChatRoomRowState extends State<ChatRoomRow> {
                 ],
               ),
             ),
-            Text(formatDate(widget.room)),
+            Text(
+              formatDate(widget.room),
+            ),
           ],
         ),
       ),

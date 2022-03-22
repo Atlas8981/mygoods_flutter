@@ -1,5 +1,6 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
+import 'package:flutter/foundation.dart';
 import 'package:mygoods_flutter/models/item.dart';
 import 'package:mygoods_flutter/services/ItemService.dart';
 import 'package:mygoods_flutter/utils/constant.dart';
@@ -54,8 +55,11 @@ class HomePageService {
       final List<Item> recentItems = queryRecentItems.cast<Item>();
       return recentItems;
     } on FirebaseException catch (e) {
-      print('Failed with error code: ${e.code}');
-      print(e.message);
+      if (kDebugMode) {
+        print('Failed with error code: ${e.code}');
+        print(e.message);
+      }
+
     }
     return listOfItem;
   }
@@ -103,8 +107,11 @@ class HomePageService {
       final List<Item> recentItems = queryRecentItems.cast<Item>();
       return recentItems;
     } on FirebaseException catch (e) {
-      print('Failed with error code: ${e.code}');
-      print(e.message);
+      if (kDebugMode) {
+        print('Failed with error code: ${e.code}');
+        print(e.message);
+      }
+
     }
     return listOfItem;
   }

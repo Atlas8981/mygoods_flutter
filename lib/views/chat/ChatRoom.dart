@@ -216,7 +216,7 @@ class _ChatRoomState extends State<ChatRoom> {
                   isAttachmentUploading: _isAttachmentUploading,
                   messages: snapshot.data ?? [],
                   onAvatarTap: (user) {
-                    print(user);
+                    // print(user);
                   },
                   showUserAvatars: true,
                   showUserNames: true,
@@ -228,7 +228,7 @@ class _ChatRoomState extends State<ChatRoom> {
                   user: types.User(
                     id: FirebaseChatCore.instance.firebaseUser?.uid ?? '',
                   ),
-                  theme: DarkChatTheme(
+                  theme: const DarkChatTheme(
                     primaryColor: Colors.blue,
                   ),
                 ),

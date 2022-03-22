@@ -3,6 +3,7 @@ import 'dart:io';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:firebase_storage/firebase_storage.dart';
+import 'package:flutter/foundation.dart';
 import 'package:flutter_firebase_chat_core/flutter_firebase_chat_core.dart';
 import 'package:mygoods_flutter/models/item.dart';
 import 'package:mygoods_flutter/models/user.dart' as myUser;
@@ -83,7 +84,9 @@ class UserService {
         // print(response.toString());
       });
     } catch (e) {
-      print(e.toString());
+      if (kDebugMode) {
+        print(e.toString());
+      }
     }
     return response;
   }
@@ -125,7 +128,9 @@ class UserService {
         .then((value) {
       return newUserInfo;
     }).catchError((onError) {
-      print(onError);
+      if (kDebugMode) {
+        print(onError);
+      }
     });
 
     return response;
@@ -152,8 +157,11 @@ class UserService {
       });
       return listOfItem;
     } on FirebaseException catch (e) {
-      print('Failed with error code: ${e.code}');
-      print(e.message);
+      if (kDebugMode) {
+        print('Failed with error code: ${e.code}');
+        print(e.message);
+      }
+
     }
     return null;
   }
@@ -198,7 +206,9 @@ class UserService {
         response = false;
       }
     } catch (e) {
-      print(e.toString());
+      if (kDebugMode) {
+        print(e.toString());
+      }
     }
     return response;
   }
@@ -216,7 +226,9 @@ class UserService {
         'itemid': itemId,
       });
     } catch (e) {
-      print(e.toString());
+      if (kDebugMode) {
+        print(e.toString());
+      }
     }
   }
 
@@ -230,7 +242,9 @@ class UserService {
           .doc(itemId)
           .delete();
     } catch (e) {
-      print(e.toString());
+      if (kDebugMode) {
+        print(e.toString());
+      }
     }
   }
 
@@ -258,8 +272,11 @@ class UserService {
       }
       return await getSaveItems(itemIds);
     } on FirebaseException catch (e) {
-      print('Failed with error code: ${e.code}');
-      print(e.message);
+      if (kDebugMode) {
+        print('Failed with error code: ${e.code}');
+        print(e.message);
+      }
+
     }
     return null;
   }
