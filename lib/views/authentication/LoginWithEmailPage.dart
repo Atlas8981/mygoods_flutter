@@ -28,7 +28,6 @@ class _LoginWithEmailPageState extends State<LoginWithEmailPage> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      // resizeToAvoidBottomInset: false,
       appBar: AppBar(
         title: const Text("Log In"),
       ),
@@ -36,7 +35,6 @@ class _LoginWithEmailPageState extends State<LoginWithEmailPage> {
         child: Center(
           child: SingleChildScrollView(
             child: Container(
-              // color: Colors.red,
               padding: const EdgeInsets.all(10),
               child: Column(
                 mainAxisSize: MainAxisSize.max,
@@ -56,43 +54,46 @@ class _LoginWithEmailPageState extends State<LoginWithEmailPage> {
                   ),
                   Form(
                     key: formKey,
-                    child: Column(
-                      children: [
-                        TypeTextField(
-                          labelText: "Email",
-                          controller: emailCon,
-                          prefixIcon: const Icon(Icons.email_outlined),
-                          inputType: TextInputType.emailAddress,
-                          autoFillHints: const [AutofillHints.email],
-                        ),
-                        const SizedBox(
-                          height: 40,
-                        ),
-                        TypeTextField(
-                          labelText: "Password",
-                          controller: passwordCon,
-                          autoFillHints: const [AutofillHints.password],
-                          inputType: TextInputType.visiblePassword,
-                          prefixIcon: const Icon(Icons.password),
-                          suffixIcon: IconButton(
-                            onPressed: () {
-                              setState(() {
-                                isObscure = !isObscure;
-                              });
-                            },
-                            icon: Icon((isObscure)
-                                ? Icons.visibility
-                                : Icons.visibility_off),
+                    child: AutofillGroup(
+                      child: Column(
+                        children: [
+                          TypeTextField(
+                            labelText: "Email",
+                            controller: emailCon,
+                            prefixIcon: const Icon(Icons.email_outlined),
+                            inputType: TextInputType.emailAddress,
+                            autoFillHints: const [AutofillHints.email],
                           ),
-                          obscureText: isObscure,
-                        ),
-                      ],
+                          const SizedBox(
+                            height: 40,
+                          ),
+                          TypeTextField(
+                            labelText: "Password",
+                            controller: passwordCon,
+                            autoFillHints: const [AutofillHints.password],
+                            inputType: TextInputType.visiblePassword,
+                            prefixIcon: const Icon(Icons.password),
+                            suffixIcon: IconButton(
+                              onPressed: () {
+                                setState(() {
+                                  isObscure = !isObscure;
+                                });
+                              },
+                              icon: Icon(
+                                (isObscure)
+                                    ? Icons.visibility
+                                    : Icons.visibility_off,
+                              ),
+                            ),
+                            obscureText: isObscure,
+                          ),
+                        ],
+                      ),
                     ),
                   ),
                   Align(
                     alignment: Alignment.centerRight,
                     child: SizedBox(
-                      // width: double.infinity,
                       height: 50,
                       child: TextButton(
                         onPressed: forgotPasswordButtonClick,

@@ -11,6 +11,7 @@ import 'package:mygoods_flutter/models/user.dart' as myUser;
 import 'package:mygoods_flutter/models/user.dart';
 import 'package:mygoods_flutter/services/UserService.dart';
 import 'package:mygoods_flutter/utils/constant.dart';
+import 'package:mygoods_flutter/views/CropImagePage.dart';
 import 'package:mygoods_flutter/views/EditProfilePage.dart';
 import 'package:mygoods_flutter/views/SavedItemsPage.dart';
 import 'package:mygoods_flutter/views/authentication/ResetPasswordPage.dart';
@@ -43,32 +44,7 @@ class _AboutMePageState extends State<AboutMePage> {
       appBar: AppBar(
         title: const Text("About Me"),
         actions: [
-          PopupMenuButton<AccountMenuItems>(
-            icon: const Icon(Icons.more_vert),
-            onSelected: (AccountMenuItems value) {
-              switch (value) {
-                case AccountMenuItems.editProfile:
-                  Get.to(EditProfilePage(
-                    user: user,
-                  ));
-                  break;
-                case AccountMenuItems.resetPassword:
-                  Get.to(const ResetPasswordPage());
-                  break;
-              }
-            },
-            itemBuilder: (BuildContext context) => [
-              const PopupMenuItem<AccountMenuItems>(
-                value: AccountMenuItems.editProfile,
-                child: Text("Edit Profile"),
-                // child: Text('setting'.tr),
-              ),
-              const PopupMenuItem<AccountMenuItems>(
-                value: AccountMenuItems.resetPassword,
-                child: Text('Reset Password'),
-              ),
-            ],
-          ),
+          popUpMenu(),
         ],
       ),
       body: SafeArea(
@@ -104,7 +80,8 @@ class _AboutMePageState extends State<AboutMePage> {
                       style: const TextStyle(letterSpacing: 1.1),
                     ),
                     style: ButtonStyle(
-                        backgroundColor: MaterialStateProperty.all(redColor)),
+                      backgroundColor: MaterialStateProperty.all(redColor),
+                    ),
                   ),
                 ),
               ],
@@ -115,15 +92,39 @@ class _AboutMePageState extends State<AboutMePage> {
     );
   }
 
-  Widget checkUserImage(UserController controller, User user) {
+  Widget popUpMenu() {
+    return PopupMenuButton<AccountMenuItems>(
+      icon: const Icon(Icons.more_vert),
+      onSelected: (AccountMenuItems value) {
+        switch (value) {
+          case AccountMenuItems.editProfile:
+            Get.to(EditProfilePage(
+              user: user,
+            ));
+            break;
+          case AccountMenuItems.resetPassword:
+            Get.to(const ResetPasswordPage());
+            break;
+        }
+      },
+      itemBuilder: (BuildContext context) => [
+        const PopupMenuItem<AccountMenuItems>(
+          value: AccountMenuItems.editProfile,
+          child: Text("Edit Profile"),
+        ),
+        const PopupMenuItem<AccountMenuItems>(
+          value: AccountMenuItems.resetPassword,
+          child: Text('Reset Password'),
+        ),
+      ],
+    );
+  }
+
+  Widget userImage(UserController controller, User user) {
     if (user.image != null && user.image!.imageUrl.isNotEmpty) {
       return InkWell(
         onLongPress: () async {
-          final XFile? pickedImage = await pickImage();
-          if (pickedImage == null) {
-            return;
-          }
-          controller.changeProfilePicture(pickedImage);
+          changeProfile(controller);
         },
         onTap: () {
           Get.to(() => BigImagePage(image: user.image!));
@@ -146,39 +147,45 @@ class _AboutMePageState extends State<AboutMePage> {
         ),
       );
     } else {
-      String fullName = "${user.firstName} ${user.lastName}";
+      final String fullName = "${user.firstName} ${user.lastName}";
       return Stack(
         alignment: Alignment.center,
         children: [
           InkWell(
             onLongPress: () async {
-              final XFile? pickedImage = await pickImage();
-              if (pickedImage == null) {
-                return;
-              }
-              controller.changeProfilePicture(pickedImage);
+              changeProfile(controller);
             },
-            child:
-                // SvgPicture.network(
-                //   "https://avatars.dicebear.com/api/identicon/name.svg",
-                //   height: 120,
-                //   fit: BoxFit.cover,
-                //   key: UniqueKey(),
-                // ),
-                Avatar(
+            child: Avatar(
               name: fullName,
               onTap: () {},
               value: fullName,
             ),
           ),
           Visibility(
-              visible: user.image!.imageName == "pending",
-              child: const Center(
-                child: CircularProgressIndicator(),
-              )),
+            visible: user.image!.imageName == "pending",
+            child: const Center(
+              child: CircularProgressIndicator(),
+            ),
+          ),
         ],
       );
     }
+  }
+
+  Future<void> changeProfile(controller) async {
+    final XFile? pickedImage = await pickImage();
+    if (pickedImage == null) {
+      return;
+    }
+
+    await Get.to(
+      () => CropImagePage(
+        image: pickedImage,
+      ),
+    );
+
+    //TODO: Uncomment
+    // controller.changeProfilePicture(pickedImage);
   }
 
   centerProfile() {
@@ -193,7 +200,7 @@ class _AboutMePageState extends State<AboutMePage> {
           user = controller.user!.value;
           return Column(
             children: [
-              checkUserImage(controller, user),
+              userImage(controller, user),
               const SizedBox(
                 height: 10,
               ),
@@ -259,6 +266,7 @@ class _AboutMePageState extends State<AboutMePage> {
   Future<XFile?> pickImage() async {
     final XFile? picture =
         await imagePicker.pickImage(source: ImageSource.gallery);
+
     return picture;
   }
 
