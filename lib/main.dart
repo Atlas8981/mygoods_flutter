@@ -17,7 +17,7 @@ Future<void> main() async {
     ),
   );
   FirebaseChatCore.instance.setConfig(
-    const FirebaseChatCoreConfig("rooms", "chatUsers"),
+    FirebaseChatCoreConfig(Firebase.app().name,"rooms", "chatUsers"),
   );
   runApp(const MyApp());
 }
