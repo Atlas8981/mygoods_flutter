@@ -41,7 +41,7 @@ dependencies:
   fluttertoast: ^8.0.8
   carousel_slider: ^4.0.0
   dots_indicator: ^2.0.0
-  cached_network_image: 3.2.0
+#  cached_network_image: 3.2.0
   json_serializable: ^6.0.1
   json_annotation: ^4.3.0
   photo_view: ^0.13.0

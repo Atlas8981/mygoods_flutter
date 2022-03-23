@@ -1,5 +1,5 @@
 import 'package:avatars/avatars.dart';
-import 'package:cached_network_image/cached_network_image.dart';
+import 'package:extended_image/extended_image.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/foundation.dart';
@@ -163,7 +163,13 @@ class _ChatRoomRowState extends State<ChatRoomRow> {
       child: CircleAvatar(
         backgroundColor: hasImage ? Colors.transparent : color,
         backgroundImage: hasImage
-            ? CachedNetworkImageProvider(room.imageUrl ?? dummyNetworkImage)
+            ? ExtendedResizeImage(
+                ExtendedNetworkImageProvider(
+                  room.imageUrl ?? dummyNetworkImage,
+                  cache: true,
+                ),
+                compressionRatio: 1 / 3,
+              )
             : null,
         radius: 30,
         child: !hasImage

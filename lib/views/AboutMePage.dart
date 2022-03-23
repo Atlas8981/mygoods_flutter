@@ -1,7 +1,7 @@
 import 'dart:io';
 
 import 'package:avatars/avatars.dart';
-import 'package:cached_network_image/cached_network_image.dart';
+import 'package:extended_image/extended_image.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:image_picker/image_picker.dart';
@@ -13,17 +13,19 @@ import 'package:mygoods_flutter/models/user.dart' as myUser;
 import 'package:mygoods_flutter/models/user.dart';
 import 'package:mygoods_flutter/services/UserService.dart';
 import 'package:mygoods_flutter/utils/constant.dart';
-import 'package:mygoods_flutter/views/CropImagePage.dart';
+import 'package:mygoods_flutter/views/other/CropImagePage.dart';
 import 'package:mygoods_flutter/views/EditProfilePage.dart';
-import 'package:mygoods_flutter/views/ImageViewer.dart';
+import 'package:mygoods_flutter/views/other/ImagePreviewerPage.dart';
 import 'package:mygoods_flutter/views/SavedItemsPage.dart';
 import 'package:mygoods_flutter/views/authentication/ResetPasswordPage.dart';
 import 'package:mygoods_flutter/views/cells/category_item_row.dart';
 import 'package:mygoods_flutter/views/MyItemPage.dart';
-import 'package:mygoods_flutter/views/other/big_image.dart';
+import 'package:mygoods_flutter/views/other/ImageViewerPage.dart';
 
 class AboutMePage extends StatefulWidget {
-  const AboutMePage({Key? key}) : super(key: key);
+  const AboutMePage({
+    Key? key,
+  }) : super(key: key);
 
   @override
   State<AboutMePage> createState() => _AboutMePageState();
@@ -132,8 +134,8 @@ class _AboutMePageState extends State<AboutMePage> {
         },
         onTap: () {
           Get.to(
-            () => BigImagePage(
-              image: user.image!,
+            () => ImageViewerPage(
+              image: user.image!.imageUrl,
               tag: tag,
             ),
           );
@@ -141,17 +143,11 @@ class _AboutMePageState extends State<AboutMePage> {
         child: Hero(
           tag: tag,
           child: CircleAvatar(
-            backgroundImage: CachedNetworkImageProvider(
-              user.image!.imageUrl,
-            ),
-            child: Visibility(
-              visible: user.image!.imageUrl.isEmpty,
-              child: const Center(
-                child: CircularProgressIndicator(),
-              ),
-            ),
             backgroundColor: Colors.white,
             radius: 65,
+            backgroundImage: ExtendedNetworkImageProvider(
+              user.image!.imageUrl,
+            ),
           ),
         ),
       );
@@ -194,7 +190,7 @@ class _AboutMePageState extends State<AboutMePage> {
     );
     if (cropImage != null) {
       final bool acceptable = await Get.to(
-        () => ImageViewer(file: cropImage),
+        () => ImagePreviewerPage(image: cropImage),
         fullscreenDialog: true,
       );
       if (acceptable) {

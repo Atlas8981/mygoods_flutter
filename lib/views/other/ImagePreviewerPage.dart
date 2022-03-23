@@ -4,20 +4,21 @@ import 'package:extended_image/extended_image.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 
-class ImageViewer extends StatefulWidget {
-  const ImageViewer({
+class ImagePreviewerPage extends StatefulWidget {
+  const ImagePreviewerPage({
     Key? key,
-    required this.file,
+    required this.image,
   }) : super(key: key);
-  final File file;
+  final dynamic image;
 
   @override
-  State<ImageViewer> createState() => _ImageViewerState();
+  State<ImagePreviewerPage> createState() => _ImagePreviewerPageState();
 }
 
-class _ImageViewerState extends State<ImageViewer> {
+class _ImagePreviewerPageState extends State<ImagePreviewerPage> {
   @override
   Widget build(BuildContext context) {
+    print(widget.image.runtimeType);
     return Scaffold(
       appBar: AppBar(
         title: Text("Preview Image"),
@@ -34,12 +35,17 @@ class _ImageViewerState extends State<ImageViewer> {
         width: double.infinity,
         height: double.infinity,
         color: Colors.black,
-        child: ExtendedImage.file(
-          widget.file,
-          mode: ExtendedImageMode.gesture,
-          width: 100,
-          height: 100,
-        ),
+        child: (widget.image is File)
+            ? ExtendedImage.file(
+                widget.image,
+                mode: ExtendedImageMode.gesture,
+                scale: 0.1,
+              )
+            : ExtendedImage.network(
+                widget.image,
+                mode: ExtendedImageMode.gesture,
+                scale: 0.1,
+              ),
       ),
     );
   }

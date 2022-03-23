@@ -1,5 +1,5 @@
-import 'package:cached_network_image/cached_network_image.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:extended_image/extended_image.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:mygoods_flutter/models/item.dart';
@@ -76,8 +76,8 @@ class _ListItemRowState extends State<ListItemRow> {
               children: [
                 ClipRRect(
                   borderRadius: const BorderRadius.all(Radius.circular(10)),
-                  child: CachedNetworkImage(
-                    imageUrl: item.images[0].imageUrl,
+                  child: ExtendedImage.network(
+                    item.images[0].imageUrl,
                     width: 125,
                     height: 125,
                     fit: BoxFit.cover,

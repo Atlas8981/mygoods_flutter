@@ -1,5 +1,5 @@
-import 'package:cached_network_image/cached_network_image.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:extended_image/extended_image.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:mygoods_flutter/components/ImageViews.dart';
@@ -111,8 +111,12 @@ class _ItemDetailPageState extends State<ItemDetailPage> {
               children: [
                 CircleAvatar(
                   radius: 35,
-                  backgroundImage:
-                      CachedNetworkImageProvider(user.image!.imageUrl),
+                  backgroundImage: ExtendedNetworkImageProvider(
+                    user.image!.imageUrl,
+                    cache: true,
+                    cacheRawData: true,
+                    scale: 1/2,
+                  ),
                 ),
                 const SizedBox(
                   width: 10,

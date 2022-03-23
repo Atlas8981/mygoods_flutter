@@ -1,7 +1,7 @@
 import 'dart:io';
 
-import 'package:cached_network_image/cached_network_image.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:extended_image/extended_image.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_chat_ui/flutter_chat_ui.dart';
 import 'package:fluttertoast/fluttertoast.dart';
@@ -211,7 +211,9 @@ String? validatePhoneNumber(String? value) {
 
 checkImageProvider(DualImage image) {
   if (image.isNetworkImage) {
-    return CachedNetworkImageProvider(image.itemImage!.imageUrl);
+    return ExtendedImage.network(
+      image.itemImage!.imageUrl,
+    );
   } else {
     return FileImage(File(image.imagePath!));
   }

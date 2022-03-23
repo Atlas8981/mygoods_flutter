@@ -1,6 +1,6 @@
-import 'package:cached_network_image/cached_network_image.dart';
 import 'package:carousel_slider/carousel_slider.dart';
 import 'package:dots_indicator/dots_indicator.dart';
+import 'package:extended_image/extended_image.dart';
 import 'package:flutter/material.dart';
 import 'package:mygoods_flutter/models/image.dart' as image;
 
@@ -42,21 +42,22 @@ class _ImagesViewState extends State<ImagesView> {
           carouselController: carouselController,
           itemCount: images.length,
           itemBuilder: (context, index, realIndex) {
-            return CachedNetworkImage(
-              imageUrl: images[index].imageUrl,
+            return ExtendedImage.network(
+              images[index].imageUrl,
               fit: BoxFit.cover,
-              fadeInDuration: const Duration(milliseconds: 100),
-              fadeOutDuration: const Duration(milliseconds: 100),
+              // fadeInDuration: const Duration(milliseconds: 100),
+              // fadeOutDuration: const Duration(milliseconds: 100),
               width: double.infinity,
-              progressIndicatorBuilder: (context, url, progress) {
-                if (progress.progress == null) {
-                  return Container();
-                }
-                return const Center(
-                  child: CircularProgressIndicator(),
-                );
-              },
-              errorWidget: (context, url, error) => const Icon(Icons.error),
+              clearMemoryCacheIfFailed: true,
+              // progressIndicatorBuilder: (context, url, progress) {
+              //   if (progress.progress == null) {
+              //     return Container();
+              //   }
+              //   return const Center(
+              //     child: CircularProgressIndicator(),
+              //   );
+              // },
+              // errorWidget: (context, url, error) => const Icon(Icons.error),
             );
           },
         ),

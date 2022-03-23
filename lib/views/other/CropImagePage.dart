@@ -5,7 +5,6 @@ import 'package:flutter/material.dart';
 import 'package:flutter_native_image/flutter_native_image.dart';
 import 'package:get/get.dart';
 import 'package:image_picker/image_picker.dart';
-import 'package:mygoods_flutter/views/ImageViewer.dart';
 
 class CropImagePage extends StatefulWidget {
   const CropImagePage({
@@ -40,11 +39,6 @@ class _CropImagePageState extends State<CropImagePage> {
                   rect.height.toInt(),
                 );
                 Get.back(result: cropImage);
-                // Get.to(
-                //   () => ImageViewer(
-                //     file: cropImage,
-                //   ),
-                // );
               }
             },
             icon: Icon(Icons.check),
