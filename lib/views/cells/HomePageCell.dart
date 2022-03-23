@@ -4,8 +4,8 @@ import 'package:get/get.dart';
 import 'package:mygoods_flutter/models/item.dart';
 import 'package:mygoods_flutter/views/ItemDetailPage.dart';
 
-class HomepageCell extends StatelessWidget {
-  const HomepageCell(this.item, {Key? key}) : super(key: key);
+class HomePageCell extends StatelessWidget {
+  const HomePageCell(this.item, {Key? key}) : super(key: key);
 
   final Item item;
 
@@ -24,7 +24,7 @@ class HomepageCell extends StatelessWidget {
               width: 125,
               height: 125,
               fit: BoxFit.cover,
-              cacheHeight: 500,
+              cacheHeight: 300,
             ),
             // CachedNetworkImage(
             //   imageUrl: item.images[0].imageUrl,

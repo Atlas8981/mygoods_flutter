@@ -2,6 +2,8 @@ import 'dart:io';
 
 import 'package:extended_image/extended_image.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter/widgets.dart';
+import 'package:get/get.dart';
 
 class ImageViewerPage extends StatelessWidget {
   const ImageViewerPage({
@@ -15,30 +17,42 @@ class ImageViewerPage extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      extendBodyBehindAppBar: true,
-      appBar: AppBar(
-        backgroundColor: Colors.transparent,
-      ),
-      body: Container(
-        color: Colors.black,
-        width: double.infinity,
-        height: double.infinity,
-        child: Hero(
-          tag: tag,
-          child: (image is File)
-              ? ExtendedImage.file(
-                  image,
-                  mode: ExtendedImageMode.gesture,
-                  scale: 0.1,
-                  enableMemoryCache: true,
-                )
-              : ExtendedImage.network(
-                  image,
-                  mode: ExtendedImageMode.gesture,
-                  scale: 0.1,
-                  enableMemoryCache: true,
-                ),
+    return ExtendedImageSlidePage(
+      slideAxis: SlideAxis.both,
+      slideType: SlideType.onlyImage,
+      resetPageDuration: Duration(milliseconds: 100),
+      child: Scaffold(
+        extendBodyBehindAppBar: true,
+        appBar: AppBar(
+          backgroundColor: Colors.transparent,
+          shadowColor: Colors.transparent,
+        ),
+        body: Container(
+          color: Colors.black,
+          width: double.infinity,
+          height: double.infinity,
+          child: ExtendedImageSlidePageHandler(
+            child: Hero(
+              tag: tag,
+              child: (image is File)
+                  ? ExtendedImage.file(
+                      image,
+                      mode: ExtendedImageMode.gesture,
+                      scale: 0.1,
+                      enableMemoryCache: true,
+                      cacheRawData: true,
+                      enableSlideOutPage: true,
+                    )
+                  : ExtendedImage.network(
+                      image,
+                      mode: ExtendedImageMode.gesture,
+                      scale: 0.1,
+                      enableMemoryCache: true,
+                      cache: true,
+                      enableSlideOutPage: true,
+                    ),
+            ),
+          ),
         ),
       ),
     );

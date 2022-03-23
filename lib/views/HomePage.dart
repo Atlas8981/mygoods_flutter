@@ -7,7 +7,7 @@ import 'package:mygoods_flutter/services/HomePageService.dart';
 import 'package:mygoods_flutter/utils/constant.dart';
 import 'package:mygoods_flutter/views/ItemDetailPage.dart';
 import 'package:mygoods_flutter/views/ViewAllPage.dart';
-import 'package:mygoods_flutter/views/cells/homepage_cell.dart';
+import 'package:mygoods_flutter/views/cells/HomePageCell.dart';
 
 class HomePage extends StatelessWidget {
   final homePageService = HomePageService();
@@ -54,7 +54,7 @@ class HomePage extends StatelessWidget {
                   .map((Item i) {
                     return OpenContainer(
                       closedBuilder: (context, action) {
-                        return HomepageCell(i);
+                        return HomePageCell(i);
                       },
                       openBuilder: (context, action) {
                         return ItemDetailPage(item: i);

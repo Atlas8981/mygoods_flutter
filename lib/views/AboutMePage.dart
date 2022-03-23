@@ -18,7 +18,7 @@ import 'package:mygoods_flutter/views/EditProfilePage.dart';
 import 'package:mygoods_flutter/views/other/ImagePreviewerPage.dart';
 import 'package:mygoods_flutter/views/SavedItemsPage.dart';
 import 'package:mygoods_flutter/views/authentication/ResetPasswordPage.dart';
-import 'package:mygoods_flutter/views/cells/category_item_row.dart';
+import 'package:mygoods_flutter/views/cells/CategoryItemRow.dart';
 import 'package:mygoods_flutter/views/MyItemPage.dart';
 import 'package:mygoods_flutter/views/other/ImageViewerPage.dart';
 
@@ -147,7 +147,10 @@ class _AboutMePageState extends State<AboutMePage> {
             radius: 65,
             backgroundImage: ExtendedNetworkImageProvider(
               user.image!.imageUrl,
+              cache: true,
+              cacheRawData: true,
             ),
+
           ),
         ),
       );
