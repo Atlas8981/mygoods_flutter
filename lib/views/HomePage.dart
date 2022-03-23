@@ -1,9 +1,11 @@
+import 'package:animations/animations.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:mygoods_flutter/controllers/HomePageController.dart';
 import 'package:mygoods_flutter/models/item.dart';
 import 'package:mygoods_flutter/services/HomePageService.dart';
 import 'package:mygoods_flutter/utils/constant.dart';
+import 'package:mygoods_flutter/views/ItemDetailPage.dart';
 import 'package:mygoods_flutter/views/ViewAllPage.dart';
 import 'package:mygoods_flutter/views/cells/homepage_cell.dart';
 
@@ -49,8 +51,16 @@ class HomePage extends StatelessWidget {
             width: (items.length <= 3) ? Get.width : null,
             child: Row(
               children: items
-                  .map((e) {
-                    return HomepageCell(e);
+                  .map((Item i) {
+                    return OpenContainer(
+                      closedBuilder: (context, action) {
+                        return HomepageCell(i);
+                      },
+                      openBuilder: (context, action) {
+                        return ItemDetailPage(item: i);
+                      },
+                      transitionType: ContainerTransitionType.fade,
+                    );
                   })
                   .toList()
                   .cast(),

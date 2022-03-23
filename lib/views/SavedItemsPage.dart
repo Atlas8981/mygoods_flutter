@@ -1,3 +1,4 @@
+import 'package:animations/animations.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:mygoods_flutter/controllers/SavedItemsController.dart';
@@ -35,16 +36,25 @@ class SavedItemsPage extends StatelessWidget {
               child: ListView.builder(
                 itemCount: items.length,
                 itemBuilder: (context, index) {
-                  return ListItemRow(
-                    item: items[index],
-                    onTap: () {
-                      Get.to(
-                        () => ItemDetailPage(
-                          item: items[index],
-                        ),
+                  return OpenContainer(
+                    closedBuilder: (context, action) =>
+                        ListItemRow(item: items[index]),
+                    openBuilder: (context, action) {
+                      return ItemDetailPage(
+                        item: items[index],
                       );
                     },
                   );
+                  // return ListItemRow(
+                  //   item: items[index],
+                  //   onTap: () {
+                  //     Get.to(
+                  //       () => ItemDetailPage(
+                  //         item: items[index],
+                  //       ),
+                  //     );
+                  //   },
+                  // );
                 },
               ),
             );

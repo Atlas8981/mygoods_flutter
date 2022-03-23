@@ -1,6 +1,9 @@
+import 'package:animations/animations.dart';
 import 'package:flutter/material.dart';
+import 'package:get/get.dart';
 import 'package:mygoods_flutter/models/item.dart';
 import 'package:mygoods_flutter/services/ItemService.dart';
+import 'package:mygoods_flutter/views/ItemDetailPage.dart';
 import 'package:mygoods_flutter/views/cells/ListItemRow.dart';
 
 class ListItem extends StatefulWidget {
@@ -27,7 +30,10 @@ class _ListItemState extends State<ListItem> {
       ),
       body: SafeArea(
         child: FutureBuilder<List<Item>>(
-          future: databaseService.getItems(widget.mainCat, widget.subCat),
+          future: databaseService.getItems(
+            widget.mainCat,
+            widget.subCat,
+          ),
           builder: (context, snapshot) {
             if (snapshot.hasError) {
               return const Center(
@@ -41,7 +47,16 @@ class _ListItemState extends State<ListItem> {
                     physics: const BouncingScrollPhysics(),
                     itemCount: snapshot.data!.length,
                     itemBuilder: (context, index) {
-                      return ListItemRow(item: snapshot.data![index]);
+                      return OpenContainer(
+                        closedBuilder: (context, action) =>
+                            ListItemRow(item: snapshot.data![index]),
+                        openBuilder: (context, action) {
+                          return ItemDetailPage(
+                            item: snapshot.data![index],
+                          );
+                        },
+                        transitionType: ContainerTransitionType.fade,
+                      );
                     },
                   ),
                 );

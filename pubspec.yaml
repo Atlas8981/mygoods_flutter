@@ -63,6 +63,7 @@ dependencies:
   firebase_analytics: ^9.1.2
   extended_image: ^6.0.2+1
   flutter_native_image: ^0.0.6+1
+  animations: ^2.0.2
 #  flutter_native_splash: ^1.3.2
 
 dev_dependencies:
@@ -85,64 +86,64 @@ flutter:
   generate: true
   # To add assets to your application, add an assets section, like this:
   assets:
-    - assets/images/banner1.png
-    - assets/images/aboutus.png
-    - assets/images/accessory.png
-    - assets/images/account.png
-    - assets/images/add.png
-    - assets/images/appicon.png
-    - assets/images/appicon3x.png
-    - assets/images/bike.png
-    - assets/images/bikeicon.png
-    - assets/images/bikepicture.jpg
-    - assets/images/car.png
-    - assets/images/caricon.png
-    - assets/images/carpic.png
-    - assets/images/desk.jpg
-    - assets/images/deskicon.png
-    - assets/images/desktoppic.png
-    - assets/images/electronic.png
-    - assets/images/electronicicon.png
-    - assets/images/electronicpic.png
-    - assets/images/emailverification.png
-    - assets/images/furniture.png
-    - assets/images/furnitureicon.png
-    - assets/images/furnitures.jpg
-    - assets/images/home.png
-    - assets/images/household.png
-    - assets/images/householdicon.png
-    - assets/images/householdpic.png
-    - assets/images/laptop.png
-    - assets/images/laptoppicture.jpg
-    - assets/images/list.png
-    - assets/images/loading.jpg
-    - assets/images/manitou.jpg
-    - assets/images/minus_box.png
-    - assets/images/moto.png
-    - assets/images/motoicon.png
-    - assets/images/myitem.png
-    - assets/images/motopic.png
-    - assets/images/nointernet.jpg
-    - assets/images/other.png
-    - assets/images/othericon.png
-    - assets/images/particon.png
-    - assets/images/pc.jpg
-    - assets/images/pccom.png
-    - assets/images/phone.png
-    - assets/images/phoneicon.png
-    - assets/images/phonepicture.jpg
-    - assets/images/plastic.jpg
-    - assets/images/poster.png
-    - assets/images/saved.png
-    - assets/images/seller.png
-    - assets/images/sofa.png
-    - assets/images/sofaicon.png
-    - assets/images/sofapic.png
-    - assets/images/synchronize.png
-    - assets/images/table.png
-    - assets/images/term.png
-    - assets/images/watch.png
-    - assets/images/watches.jpg
+    - assets/images/
+#    - assets/images/aboutus.png
+#    - assets/images/accessory.png
+#    - assets/images/account.png
+#    - assets/images/add.png
+#    - assets/images/appicon.png
+#    - assets/images/appicon3x.png
+#    - assets/images/bike.png
+#    - assets/images/bikeicon.png
+#    - assets/images/bikepicture.jpg
+#    - assets/images/car.png
+#    - assets/images/caricon.png
+#    - assets/images/carpic.png
+#    - assets/images/desk.jpg
+#    - assets/images/deskicon.png
+#    - assets/images/desktoppic.png
+#    - assets/images/electronic.png
+#    - assets/images/electronicicon.png
+#    - assets/images/electronicpic.png
+#    - assets/images/emailverification.png
+#    - assets/images/furniture.png
+#    - assets/images/furnitureicon.png
+#    - assets/images/furnitures.jpg
+#    - assets/images/home.png
+#    - assets/images/household.png
+#    - assets/images/householdicon.png
+#    - assets/images/householdpic.png
+#    - assets/images/laptop.png
+#    - assets/images/laptoppicture.jpg
+#    - assets/images/list.png
+#    - assets/images/loading.jpg
+#    - assets/images/manitou.jpg
+#    - assets/images/minus_box.png
+#    - assets/images/moto.png
+#    - assets/images/motoicon.png
+#    - assets/images/myitem.png
+#    - assets/images/motopic.png
+#    - assets/images/nointernet.jpg
+#    - assets/images/other.png
+#    - assets/images/othericon.png
+#    - assets/images/particon.png
+#    - assets/images/pc.jpg
+#    - assets/images/pccom.png
+#    - assets/images/phone.png
+#    - assets/images/phoneicon.png
+#    - assets/images/phonepicture.jpg
+#    - assets/images/plastic.jpg
+#    - assets/images/poster.png
+#    - assets/images/saved.png
+#    - assets/images/seller.png
+#    - assets/images/sofa.png
+#    - assets/images/sofaicon.png
+#    - assets/images/sofapic.png
+#    - assets/images/synchronize.png
+#    - assets/images/table.png
+#    - assets/images/term.png
+#    - assets/images/watch.png
+#    - assets/images/watches.jpg
     - assets/messages.json
 
   # An image asset can refer to one or more resolution-specific "variants", see
