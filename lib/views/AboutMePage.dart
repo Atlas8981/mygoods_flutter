@@ -53,26 +53,29 @@ class _AboutMePageState extends State<AboutMePage> {
         ],
       ),
       body: SafeArea(
-        child: SingleChildScrollView(
-          child: Container(
-            padding: const EdgeInsets.only(
-              top: 20,
-            ),
-            child: Column(
-              crossAxisAlignment: CrossAxisAlignment.stretch,
-              mainAxisSize: MainAxisSize.max,
-              children: [
-                centerProfile(),
-                Divider(
-                  height: 70,
-                  thickness: 10,
-                  color: Colors.grey.withOpacity(0.3),
-                ),
-                bottomListWidgets(),
-                const Divider(
-                  height: 100,
-                ),
-                Container(
+        child: Container(
+          padding: const EdgeInsets.only(
+            top: 8,
+          ),
+          child: Column(
+            crossAxisAlignment: CrossAxisAlignment.stretch,
+            mainAxisAlignment: MainAxisAlignment.spaceBetween,
+            mainAxisSize: MainAxisSize.max,
+            children: [
+              Column(
+                children: [
+                  centerProfile(),
+                  Divider(
+                    height: 70,
+                    thickness: 10,
+                    color: Colors.grey.withOpacity(0.3),
+                  ),
+                  bottomListWidgets(),
+                ],
+              ),
+              Padding(
+                padding: EdgeInsets.only(bottom: 8),
+                child: Container(
                   width: double.infinity,
                   height: 50,
                   padding: const EdgeInsets.only(left: 20, right: 20),
@@ -89,8 +92,8 @@ class _AboutMePageState extends State<AboutMePage> {
                     ),
                   ),
                 ),
-              ],
-            ),
+              ),
+            ],
           ),
         ),
       ),
@@ -150,7 +153,6 @@ class _AboutMePageState extends State<AboutMePage> {
               cache: true,
               cacheRawData: true,
             ),
-
           ),
         ),
       );
@@ -202,7 +204,7 @@ class _AboutMePageState extends State<AboutMePage> {
     }
   }
 
-  centerProfile() {
+  Widget centerProfile() {
     return Center(
       child: GetBuilder<UserController>(
         builder: (controller) {

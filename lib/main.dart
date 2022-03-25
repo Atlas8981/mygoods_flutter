@@ -17,7 +17,7 @@ Future<void> main() async {
     ),
   );
   FirebaseChatCore.instance.setConfig(
-    FirebaseChatCoreConfig(Firebase.app().name,"rooms", "chatUsers"),
+    FirebaseChatCoreConfig(Firebase.app().name, "rooms", "chatUsers"),
   );
   runApp(const MyApp());
 }
@@ -41,11 +41,18 @@ class MyApp extends StatelessWidget {
         Locale('en'),
         Locale('km'),
       ],
+      defaultTransition: Transition.cupertino,
       themeMode: ThemeMode.light,
       theme: ThemeData.light().copyWith(
         primaryColor: Colors.blue,
         iconTheme: IconTheme.of(context).copyWith(
           color: Colors.black,
+        ),
+        pageTransitionsTheme: PageTransitionsTheme(
+          builders: {
+            TargetPlatform.android: CupertinoPageTransitionsBuilder(),
+            TargetPlatform.iOS: CupertinoPageTransitionsBuilder(),
+          },
         ),
       ),
     );
