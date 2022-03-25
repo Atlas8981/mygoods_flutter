@@ -1,8 +1,6 @@
 import 'package:extended_image/extended_image.dart';
 import 'package:flutter/material.dart';
-import 'package:get/get.dart';
 import 'package:mygoods_flutter/models/item.dart';
-import 'package:mygoods_flutter/views/ItemDetailPage.dart';
 
 class HomePageCell extends StatelessWidget {
   const HomePageCell(this.item, {Key? key}) : super(key: key);

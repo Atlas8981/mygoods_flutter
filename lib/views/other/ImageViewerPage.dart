@@ -2,9 +2,6 @@ import 'dart:io';
 
 import 'package:extended_image/extended_image.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter/widgets.dart';
-import 'package:get/get.dart';
-
 class ImageViewerPage extends StatelessWidget {
   const ImageViewerPage({
     Key? key,
