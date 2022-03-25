@@ -10,7 +10,7 @@ import 'package:mygoods_flutter/views/MainActivity.dart';
 import 'package:flutter_chat_types/flutter_chat_types.dart' as types;
 
 class RegisterPage extends StatefulWidget {
-  RegisterPage({
+  const RegisterPage({
     Key? key,
     required this.userId,
     this.phoneNumber,

@@ -2,6 +2,7 @@ import 'dart:io';
 
 import 'package:extended_image/extended_image.dart';
 import 'package:flutter/material.dart';
+
 class ImageViewerPage extends StatelessWidget {
   const ImageViewerPage({
     Key? key,
@@ -17,7 +18,7 @@ class ImageViewerPage extends StatelessWidget {
     return ExtendedImageSlidePage(
       slideAxis: SlideAxis.both,
       slideType: SlideType.onlyImage,
-      resetPageDuration: Duration(milliseconds: 100),
+      resetPageDuration: const Duration(milliseconds: 100),
       child: Scaffold(
         extendBodyBehindAppBar: true,
         appBar: AppBar(

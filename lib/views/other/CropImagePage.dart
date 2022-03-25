@@ -25,7 +25,7 @@ class _CropImagePageState extends State<CropImagePage> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: Text("Crop Image"),
+        title: const Text("Crop Image"),
         actions: [
           IconButton(
             onPressed: () async {
@@ -41,13 +41,13 @@ class _CropImagePageState extends State<CropImagePage> {
                 Get.back(result: cropImage);
               }
             },
-            icon: Icon(Icons.check),
+            icon: const Icon(Icons.check),
           ),
           IconButton(
             onPressed: () {
               editorKey.currentState?.reset();
             },
-            icon: Icon(Icons.refresh),
+            icon: const Icon(Icons.refresh),
           ),
         ],
       ),
@@ -60,7 +60,7 @@ class _CropImagePageState extends State<CropImagePage> {
           initEditorConfigHandler: (state) {
             return EditorConfig(
               maxScale: 8.0,
-              cropRectPadding: EdgeInsets.all(20.0),
+              cropRectPadding: const EdgeInsets.all(20.0),
               hitTestSize: 20.0,
               cropAspectRatio: 1.0,
             );

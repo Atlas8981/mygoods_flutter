@@ -21,13 +21,13 @@ class _ImagePreviewerPageState extends State<ImagePreviewerPage> {
     print(widget.image.runtimeType);
     return Scaffold(
       appBar: AppBar(
-        title: Text("Preview Image"),
+        title: const Text("Preview Image"),
         actions: [
           IconButton(
             onPressed: () {
               Get.back(result: true);
             },
-            icon: Icon(Icons.check),
+            icon: const Icon(Icons.check),
           ),
         ],
       ),

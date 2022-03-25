@@ -1,10 +1,8 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:extended_image/extended_image.dart';
 import 'package:flutter/material.dart';
-import 'package:get/get.dart';
 import 'package:mygoods_flutter/models/item.dart';
 import 'package:mygoods_flutter/services/ItemService.dart';
-import 'package:mygoods_flutter/views/ItemDetailPage.dart';
 
 class ListItemRow extends StatefulWidget {
   const ListItemRow({
