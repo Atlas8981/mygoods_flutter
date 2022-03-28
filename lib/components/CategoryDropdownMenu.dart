@@ -4,7 +4,10 @@ import 'package:mygoods_flutter/models/category.dart';
 import 'package:mygoods_flutter/utils/constant.dart';
 
 class CategoryDropdownMenu extends StatefulWidget {
-  const CategoryDropdownMenu({Key? key, this.onConfirm}) : super(key: key);
+  const CategoryDropdownMenu({
+    Key? key,
+    this.onConfirm,
+  }) : super(key: key);
 
   final Function(String main, String sub)? onConfirm;
 
@@ -14,12 +17,10 @@ class CategoryDropdownMenu extends StatefulWidget {
 
 class _CategoryDropdownMenuState extends State<CategoryDropdownMenu> {
   String mainCategory = mainCategories[0].name;
-
-  // String? subCategory;
   String? subCategory;
   List<Category>? subCategories;
 
-  findSubCategory() {
+  void findSubCategory() {
     if (mainCategory == mainCategories[0].name) {
       subCategories = electronicSubCategories;
       subCategory = electronicSubCategories[0].name;

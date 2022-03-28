@@ -9,67 +9,19 @@ import 'package:mygoods_flutter/views/ItemDetailPage.dart';
 import 'package:mygoods_flutter/views/ViewAllPage.dart';
 import 'package:mygoods_flutter/views/cells/HomePageCell.dart';
 
-class HomePage extends StatelessWidget {
+class HomePage extends StatefulWidget {
+  const HomePage({
+    Key? key,
+  }) : super(key: key);
+
+  @override
+  State<HomePage> createState() => _HomePageState();
+}
+
+class _HomePageState extends State<HomePage> {
   final homePageService = HomePageService();
+
   final homePageController = Get.put(HomePageController());
-
-  HomePage({Key? key}) : super(key: key);
-
-  Widget homePageListView(
-    String title, {
-    required Function() onTap,
-    required List<Item> items,
-  }) {
-    return Column(
-      children: [
-        Row(
-          mainAxisAlignment: MainAxisAlignment.spaceBetween,
-          children: [
-            Text(
-              title,
-              style: const TextStyle(
-                fontSize: 18,
-                fontWeight: FontWeight.bold,
-              ),
-            ),
-            TextButton(
-              onPressed: () {
-                Get.to(
-                  () => ViewAllPage(
-                    title: title,
-                    smallListItem: items,
-                  ),
-                );
-              },
-              child: const Text("View All"),
-            ),
-          ],
-        ),
-        SingleChildScrollView(
-          scrollDirection: Axis.horizontal,
-          child: SizedBox(
-            width: (items.length <= 3) ? Get.width : null,
-            child: Row(
-              children: items
-                  .map((Item i) {
-                    return OpenContainer(
-                      closedBuilder: (context, action) {
-                        return HomePageCell(i);
-                      },
-                      openBuilder: (context, action) {
-                        return ItemDetailPage(item: i);
-                      },
-                      transitionType: ContainerTransitionType.fade,
-                    );
-                  })
-                  .toList()
-                  .cast(),
-            ),
-          ),
-        ),
-      ],
-    );
-  }
 
   @override
   Widget build(BuildContext context) {
@@ -89,12 +41,10 @@ class HomePage extends StatelessWidget {
         child: Container(
           height: double.infinity,
           width: double.infinity,
-          padding: const EdgeInsets.only(left: 10, right: 10),
+          padding: const EdgeInsets.symmetric(horizontal: 8),
           child: ListView(
             children: [
-              const SizedBox(
-                height: 10,
-              ),
+              const SizedBox(height: 10),
               Image.asset(
                 "assets/images/banner1.png",
                 fit: BoxFit.cover,
@@ -133,10 +83,13 @@ class HomePage extends StatelessWidget {
                   final List<Item> recentViewItems =
                       controller.recentViewItems!.cast();
                   if (recentViewItems.isNotEmpty) {
-                    return homePageListView("Recently View",
-                        items: recentViewItems, onTap: () {
-                      showToast("In Development");
-                    });
+                    return homePageListView(
+                      "Recently View",
+                      items: recentViewItems,
+                      onTap: () {
+                        showToast("In Development");
+                      },
+                    );
                   } else {
                     return Container();
                   }
@@ -146,6 +99,66 @@ class HomePage extends StatelessWidget {
           ),
         ),
       ),
+    );
+  }
+
+  Widget homePageListView(
+    String title, {
+    required Function() onTap,
+    required List<Item> items,
+  }) {
+    return Column(
+      children: [
+        Row(
+          mainAxisAlignment: MainAxisAlignment.spaceBetween,
+          children: [
+            Text(
+              title,
+              style: const TextStyle(
+                fontSize: 18,
+                fontWeight: FontWeight.bold,
+              ),
+            ),
+            TextButton(
+              onPressed: () {
+                Get.to(
+                  () => ViewAllPage(
+                    title: title,
+                    smallListItem: items,
+                  ),
+                );
+              },
+              child: const Text("View All"),
+            ),
+          ],
+        ),
+        SingleChildScrollView(
+          scrollDirection: Axis.horizontal,
+          child: SizedBox(
+            width: (items.length <= 3) ? Get.width : null,
+            child: Row(
+              children: items
+                  .map((Item i) {
+                    return Padding(
+                      padding: EdgeInsets.only(right: 16),
+                      child: OpenContainer(
+                        closedBuilder: (context, action) {
+                          return HomePageCell(i);
+                        },
+                        openBuilder: (context, action) {
+                          return ItemDetailPage(item: i);
+                        },
+                        closedElevation: 3,
+                        closedColor: Theme.of(context).scaffoldBackgroundColor,
+                      ),
+                    );
+                  })
+                  .toList()
+                  .cast(),
+            ),
+          ),
+        ),
+      ],
     );
   }
 }

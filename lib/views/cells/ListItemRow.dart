@@ -8,10 +8,8 @@ class ListItemRow extends StatefulWidget {
   const ListItemRow({
     Key? key,
     required this.item,
-    // this.onTap,
   }) : super(key: key);
   final Item item;
-  // final Function()? onTap;
 
   @override
   _ListItemRowState createState() => _ListItemRowState();
@@ -64,7 +62,9 @@ class _ListItemRowState extends State<ListItemRow> {
           Row(
             children: [
               ClipRRect(
-                borderRadius: const BorderRadius.all(Radius.circular(10)),
+                borderRadius: const BorderRadius.all(
+                  Radius.circular(10),
+                ),
                 child: ExtendedImage.network(
                   item.images[0].imageUrl,
                   width: 125,
@@ -134,10 +134,6 @@ class _ListItemRowState extends State<ListItemRow> {
               ),
             ],
           ),
-          const Divider(
-            thickness: 2,
-            color: Colors.blueGrey,
-          )
         ],
       ),
     );

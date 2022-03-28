@@ -46,7 +46,7 @@ class _TypeTextFieldState extends State<TypeTextField> {
       autovalidateMode: AutovalidateMode.onUserInteraction,
       style: const TextStyle(
         fontSize: 16,
-        color: Colors.black,
+        // color: Colors.black,
       ),
       buildCounter: widget.buildCounter,
       obscureText: widget.obscureText ?? false,
@@ -64,11 +64,17 @@ class _TypeTextFieldState extends State<TypeTextField> {
         ),
         labelText: widget.labelText,
         prefixText: widget.prefix,
-        prefixStyle: const TextStyle(fontSize: 16, letterSpacing: 2),
+        prefixStyle: const TextStyle(
+          fontSize: 16,
+          letterSpacing: 2,
+        ),
         border: const OutlineInputBorder(),
         prefixIcon: widget.prefixIcon,
         suffixIcon: widget.suffixIcon,
-        counterStyle: const TextStyle(fontSize: 12, height: 1),
+        counterStyle: const TextStyle(
+          fontSize: 12,
+          height: 1,
+        ),
         hintText: widget.hint,
       ),
       validator: widget.validator ??

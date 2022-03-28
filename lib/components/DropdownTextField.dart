@@ -60,7 +60,6 @@ class _DropdownTextFieldState extends State<DropdownTextField> {
       height: 58,
       width: double.infinity,
       child: DropdownButtonFormField(
-        // onTap: widget.onClickTextField,
         onTap: () {
           FocusScope.of(context).requestFocus(FocusNode());
         },
@@ -69,7 +68,6 @@ class _DropdownTextFieldState extends State<DropdownTextField> {
           labelStyle: const TextStyle(
             fontSize: 16,
             color: Colors.yellow,
-            // color: CompanyColors.yellow,
           ),
           labelText: widget.labelText,
           prefixText: widget.prefixText,
@@ -83,7 +81,10 @@ class _DropdownTextFieldState extends State<DropdownTextField> {
                   widget.icon,
                   color: Colors.yellow,
                 ),
-          counterStyle: const TextStyle(fontSize: 12, height: 1),
+          counterStyle: const TextStyle(
+            fontSize: 12,
+            height: 1,
+          ),
         ),
         isExpanded: true,
         value: widget.currentSelectedValue,

@@ -23,11 +23,6 @@ class MainActivity extends StatefulWidget {
 }
 
 class _MainActivityState extends State<MainActivity> {
-  // final TextStyle unselectedLabelStyle = TextStyle(
-  //     color: Colors.white.withOpacity(0.5),
-  //     fontSize: 8);
-  // final TextStyle selectedLabelStyle =
-  //     TextStyle(color: Colors.white);
   final bottomNavigationController = Get.put(LandingPageController());
 
   buildBottomNavigationMenu(context, landingPageController) {

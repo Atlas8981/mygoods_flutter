@@ -13,14 +13,15 @@ import 'package:mygoods_flutter/models/user.dart' as myUser;
 import 'package:mygoods_flutter/models/user.dart';
 import 'package:mygoods_flutter/services/UserService.dart';
 import 'package:mygoods_flutter/utils/constant.dart';
-import 'package:mygoods_flutter/views/other/CropImagePage.dart';
+import 'package:mygoods_flutter/views/utils/CropImagePage.dart';
 import 'package:mygoods_flutter/views/EditProfilePage.dart';
-import 'package:mygoods_flutter/views/other/ImagePreviewerPage.dart';
+import 'package:mygoods_flutter/views/utils/ImagePreviewerPage.dart';
 import 'package:mygoods_flutter/views/SavedItemsPage.dart';
 import 'package:mygoods_flutter/views/authentication/ResetPasswordPage.dart';
 import 'package:mygoods_flutter/views/cells/CategoryItemRow.dart';
 import 'package:mygoods_flutter/views/MyItemPage.dart';
-import 'package:mygoods_flutter/views/other/ImageViewerPage.dart';
+import 'package:mygoods_flutter/views/utils/ImageViewerPage.dart';
+import 'package:mygoods_flutter/views/utils/SettingPage.dart';
 
 class AboutMePage extends StatefulWidget {
   const AboutMePage({
@@ -49,6 +50,12 @@ class _AboutMePageState extends State<AboutMePage> {
       appBar: AppBar(
         title: const Text("About Me"),
         actions: [
+          IconButton(
+            onPressed: () {
+              Get.to(() => SettingPage());
+            },
+            icon: Icon(Icons.settings),
+          ),
           popUpMenu(),
         ],
       ),
@@ -78,7 +85,10 @@ class _AboutMePageState extends State<AboutMePage> {
                 child: Container(
                   width: double.infinity,
                   height: 50,
-                  padding: const EdgeInsets.only(left: 20, right: 20),
+                  padding: const EdgeInsets.only(
+                    left: 20,
+                    right: 20,
+                  ),
                   child: ElevatedButton(
                     onPressed: () {
                       onSignOutButtonClick(context);

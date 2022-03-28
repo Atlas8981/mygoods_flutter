@@ -76,7 +76,6 @@ class _ItemFormState extends State<ItemForm> {
             selectModel = value;
             Get.back();
             setState(() {});
-            // print(value);
           },
         );
       },
@@ -190,7 +189,7 @@ class _ItemFormState extends State<ItemForm> {
   }
 
   void _imageFromGallery(index) async {
-    List<XFile>? rawXfile = await _imagePicker.pickMultiImage();
+    final List<XFile>? rawXfile = await _imagePicker.pickMultiImage();
     if (rawXfile == null) {
       showToast("Image not picked");
     }
@@ -561,7 +560,6 @@ class _ItemFormState extends State<ItemForm> {
                   const SizedBox(
                     height: 10,
                   ),
-
                   //Forms
                   buildTextInputForm(),
                 ],

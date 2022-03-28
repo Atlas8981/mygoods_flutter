@@ -33,10 +33,17 @@ class SavedItemsPage extends StatelessWidget {
             }
             return Padding(
               padding: const EdgeInsets.only(top: 10),
-              child: ListView.builder(
+              child: ListView.separated(
                 itemCount: items.length,
+                separatorBuilder: (context, index) {
+                  return Divider(
+                    thickness: 2,
+                    color: Colors.grey,
+                  );
+                },
                 itemBuilder: (context, index) {
                   return OpenContainer(
+                    closedElevation: 0,
                     closedBuilder: (context, action) =>
                         ListItemRow(item: items[index]),
                     openBuilder: (context, action) {
@@ -44,17 +51,8 @@ class SavedItemsPage extends StatelessWidget {
                         item: items[index],
                       );
                     },
+                    closedColor: Theme.of(context).scaffoldBackgroundColor,
                   );
-                  // return ListItemRow(
-                  //   item: items[index],
-                  //   onTap: () {
-                  //     Get.to(
-                  //       () => ItemDetailPage(
-                  //         item: items[index],
-                  //       ),
-                  //     );
-                  //   },
-                  // );
                 },
               ),
             );

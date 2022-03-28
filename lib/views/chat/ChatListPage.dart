@@ -13,7 +13,9 @@ import 'package:flutter_chat_types/flutter_chat_types.dart' as types;
 import 'UserListPage.dart';
 
 class ChatListPage extends StatefulWidget {
-  const ChatListPage({Key? key}) : super(key: key);
+  const ChatListPage({
+    Key? key,
+  }) : super(key: key);
 
   @override
   State<ChatListPage> createState() => _ChatListPageState();
@@ -98,7 +100,6 @@ class _ChatListPageState extends State<ChatListPage> {
             itemCount: snapshot.data!.length,
             itemBuilder: (context, index) {
               final room = snapshot.data![index];
-
               return ChatRoomRow(room: room);
             },
           );
@@ -181,7 +182,9 @@ class _ChatRoomRowState extends State<ChatRoomRow> {
                   width: 60,
                   height: 60,
                   shapeBorder: const RoundedRectangleBorder(
-                    borderRadius: BorderRadius.all(Radius.circular(30)),
+                    borderRadius: BorderRadius.all(
+                      Radius.circular(30),
+                    ),
                   ),
                 ),
               )
@@ -222,27 +225,24 @@ class _ChatRoomRowState extends State<ChatRoomRow> {
                   FutureBuilder<String>(
                     future: getLastMessage(widget.room),
                     builder: (context, snapshot) {
-                      final textStyle = TextStyle(
-                          color: Colors.black.withOpacity(0.8), fontSize: 12);
+                      // final textStyle = TextStyle(
+                      //   color: Colors.black.withOpacity(0.8),
+                      //   fontSize: 12,
+                      // );
                       if (snapshot.hasData) {
                         final message = snapshot.data;
                         if (message == null || message.isEmpty) {
-                          return Text("(No Message)", style: textStyle);
+                          return Text("(No Message)");
                         }
-                        return Text(
-                          snapshot.data!,
-                          style: textStyle,
-                        );
+                        return Text(snapshot.data!);
                       }
-                      return Text("...", style: textStyle);
+                      return Text("...");
                     },
                   )
                 ],
               ),
             ),
-            Text(
-              formatDate(widget.room),
-            ),
+            Text(formatDate(widget.room)),
           ],
         ),
       ),

@@ -2,13 +2,13 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 
 class CustomBottomSheetWithSearch extends StatefulWidget {
-  const CustomBottomSheetWithSearch(
-      {Key? key,
-      this.scrollController,
-      this.bottomSheetOffset,
-      required this.onTapItem,
-      required this.items})
-      : super(key: key);
+  const CustomBottomSheetWithSearch({
+    Key? key,
+    this.scrollController,
+    this.bottomSheetOffset,
+    required this.onTapItem,
+    required this.items,
+  }) : super(key: key);
 
   final ScrollController? scrollController;
   final double? bottomSheetOffset;
@@ -51,7 +51,6 @@ class _CustomBottomSheetWithSearchState
                         prefixIcon: const Icon(Icons.search),
                       ),
                       onChanged: (value) {
-                        //4
                         setState(() {
                           _tempList = _buildSearchList(value);
                         });
@@ -64,7 +63,6 @@ class _CustomBottomSheetWithSearchState
                       Icons.close,
                       size: 28,
                     ),
-                    // color: Color(0xFF1F91E7),
                     onPressed: () {
                       setState(() {
                         searchFieldCon.clear();
@@ -87,9 +85,11 @@ class _CustomBottomSheetWithSearchState
                           ? _showBottomSheetWithSearch(index, _tempList)
                           : _showBottomSheetWithSearch(index, _listOfItems),
                       onTap: () {
-                        widget.onTapItem((_tempList.isNotEmpty)
-                            ? _tempList[index]
-                            : _listOfItems[index]);
+                        widget.onTapItem(
+                          (_tempList.isNotEmpty)
+                              ? _tempList[index]
+                              : _listOfItems[index],
+                        );
                       },
                     );
                   },

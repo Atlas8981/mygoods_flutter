@@ -5,7 +5,10 @@ import 'package:flutter/material.dart';
 import 'package:mygoods_flutter/models/image.dart' as image;
 
 class ImagesView extends StatefulWidget {
-  const ImagesView({Key? key, required this.images}) : super(key: key);
+  const ImagesView({
+    Key? key,
+    required this.images,
+  }) : super(key: key);
 
   final List<image.Image> images;
 
@@ -27,7 +30,6 @@ class _ImagesViewState extends State<ImagesView> {
           options: CarouselOptions(
             scrollPhysics: const BouncingScrollPhysics(),
             height: 300,
-            // aspectRatio: 1 / 1,
             viewportFraction: 1,
             initialPage: 0,
             pageSnapping: true,

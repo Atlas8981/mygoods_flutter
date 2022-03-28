@@ -6,7 +6,9 @@ import 'package:mygoods_flutter/views/authentication/LoginWithPhoneNumberPage.da
 import 'package:mygoods_flutter/views/authentication/SignUpPage.dart';
 
 class WelcomePage extends StatelessWidget {
-  const WelcomePage({Key? key}) : super(key: key);
+  const WelcomePage({
+    Key? key,
+  }) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
@@ -24,7 +26,6 @@ class WelcomePage extends StatelessWidget {
             child: Column(
               mainAxisSize: MainAxisSize.max,
               mainAxisAlignment: MainAxisAlignment.center,
-              // crossAxisAlignment: CrossAxisAlignment.center,
               children: [
                 Image.asset(
                   "${imageDir}appicon.png",
@@ -47,7 +48,10 @@ class WelcomePage extends StatelessWidget {
                   height: 30,
                 ),
                 Padding(
-                  padding: const EdgeInsets.only(left: 20, right: 20),
+                  padding: const EdgeInsets.only(
+                    left: 20,
+                    right: 20,
+                  ),
                   child: Column(
                     children: [
                       SizedBox(

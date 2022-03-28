@@ -219,6 +219,16 @@ checkImageProvider(DualImage image) {
   }
 }
 
+ThemeMode determineThemeMode(String? selectedMode) {
+  if (selectedMode == "Light") {
+    return ThemeMode.light;
+  } else if (selectedMode == "Dark") {
+    return ThemeMode.dark;
+  } else {
+    return ThemeMode.system;
+  }
+}
+
 String? processAdditionalInfo(AdditionalInfo additionalInfo) {
   String processedData = "";
   if (additionalInfo.car != null) {

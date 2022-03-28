@@ -41,8 +41,12 @@ class _ClickableTextFieldState extends State<ClickableTextField> {
       onTap: widget.onTap,
       focusNode: AlwaysDisabledFocusNode(),
       decoration: InputDecoration(
-        contentPadding:
-            const EdgeInsets.only(top: 20, bottom: 20, left: 10, right: 10),
+        contentPadding: const EdgeInsets.only(
+          top: 20,
+          bottom: 20,
+          left: 10,
+          right: 10,
+        ),
         labelStyle: const TextStyle(
           fontSize: 16,
         ),
@@ -51,7 +55,10 @@ class _ClickableTextFieldState extends State<ClickableTextField> {
         border: const OutlineInputBorder(),
         prefixIcon: widget.prefixIcon,
         suffixIcon: widget.suffixIcon,
-        counterStyle: const TextStyle(fontSize: 12, height: 1),
+        counterStyle: const TextStyle(
+          fontSize: 12,
+          height: 1,
+        ),
       ),
       validator: (value) {
         if (value != null && value.isEmpty) {

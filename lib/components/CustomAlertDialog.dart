@@ -24,14 +24,15 @@ Future<void> showCustomDialog(
           ),
           width: double.infinity,
           height: 120,
-          // color: Colors.white,
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
               Expanded(
                 child: Container(
-                  padding: const EdgeInsets.only(top: 20, left: 20),
-                  // color: Colors.red,
+                  padding: const EdgeInsets.only(
+                    top: 20,
+                    left: 20,
+                  ),
                   child: Text(
                     // "Are you sure you want to sign out ?",
                     title ?? "Do you want to that ?",
@@ -109,5 +110,4 @@ void showSingleChoiceAlertDialog(
       },
     );
   }
-  // show the dialog
 }
