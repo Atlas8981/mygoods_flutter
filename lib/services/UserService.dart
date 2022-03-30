@@ -18,50 +18,6 @@ class UserService {
   final storage = FirebaseStorage.instance;
   final itemService = ItemService();
 
-  Future<UserCredential?> loginWithEmailPassword(
-      String email, String password) async {
-    try {
-      final response = await auth.signInWithEmailAndPassword(
-          email: email, password: password);
-      return response;
-    } on FirebaseAuthException catch (e) {
-      if (e.code == 'user-not-found') {
-        showToast('No user found for that email.');
-      } else if (e.code == 'wrong-password') {
-        showToast('Wrong password provided for that user.');
-      }
-    }
-    return null;
-  }
-
-  Future<bool> isUserHaveData(String id) async {
-    final response = await FirebaseFirestore.instance
-        .collection(userCollection)
-        .doc(id)
-        .get();
-    if (response.exists &&
-        response.data() != null &&
-        response.data()!.isNotEmpty) {
-      return true;
-    }
-    return false;
-  }
-
-  Future<bool> signOut() async {
-    bool isSignOut = false;
-    try {
-      await auth.signOut().then((value) => isSignOut = true);
-      return isSignOut;
-    } on FirebaseAuthException catch (e) {
-      if (e.code == 'user-not-found') {
-        showToast('No user found for that email.');
-      } else if (e.code == 'wrong-password') {
-        showToast('Wrong password provided for that user.');
-      }
-      return isSignOut;
-    }
-  }
-
   Future<void> registerUser(myUser.User user) async {
     return await firestore
         .collection(userCollection)
@@ -306,29 +262,4 @@ class UserService {
       'itemID': itemId,
     });
   }
-
-// Future<Item?> getSaveItem(String itemId) async {
-//   final value =
-//       await firestore.collection("$itemCollection").doc(itemId).get();
-//   if (value.exists) {
-//     final Item saveItem = Item.fromJson(value.data()!);
-//     return saveItem;
-//   }
-//   return null;
-// }
-
-// Future<List<myImageClass.Image>> uploadFiles(List<File> _images) async {
-//   var images = await Future.wait(_images.map((_image) => uploadFile(_image)));
-//   return images;
-// }
-//
-// Future<myImageClass.Image> uploadFile(File _image) async {
-//   final imageName = "${DateTime.now()}";
-//   final Reference storageReference =
-//       storage.ref('flutter/').child("$imageName");
-//   await storageReference.putFile(_image);
-//   final imageUrl = await storageReference.getDownloadURL();
-//   final image = myImageClass.Image(imageName: imageName, imageUrl: imageUrl);
-//   return image;
-// }
 }

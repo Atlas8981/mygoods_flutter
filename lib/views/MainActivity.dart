@@ -7,7 +7,7 @@ import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:mygoods_flutter/controllers/BottomNavigationViewController.dart';
-import 'package:mygoods_flutter/services/notification_service.dart';
+import 'package:mygoods_flutter/services/NotificationService.dart';
 import 'package:mygoods_flutter/views/AboutMePage.dart';
 import 'package:mygoods_flutter/views/AddPage.dart';
 import 'package:mygoods_flutter/views/CategoryPage.dart';

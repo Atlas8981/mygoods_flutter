@@ -11,6 +11,7 @@ import 'package:mygoods_flutter/controllers/UserController.dart';
 import 'package:mygoods_flutter/models/category.dart';
 import 'package:mygoods_flutter/models/user.dart' as myUser;
 import 'package:mygoods_flutter/models/user.dart';
+import 'package:mygoods_flutter/services/AuthenticationService.dart';
 import 'package:mygoods_flutter/services/UserService.dart';
 import 'package:mygoods_flutter/utils/constant.dart';
 import 'package:mygoods_flutter/views/utils/CropImagePage.dart';
@@ -33,7 +34,7 @@ class AboutMePage extends StatefulWidget {
 }
 
 class _AboutMePageState extends State<AboutMePage> {
-  final userService = UserService();
+  final authService = AuthenticationService();
 
   late final List<Category> bottomListItems = [
     Category(name: "My Item", image: "${imageDir}myitem.png"),
@@ -301,7 +302,7 @@ class _AboutMePageState extends State<AboutMePage> {
       context,
       title: "Are your sure you want to sign out ?",
       onConfirm: () {
-        userService.signOut().then((value) {
+        authService.signOut().then((value) {
           if (value) {
             showToast("Sign Out Successfully");
             Get.back();

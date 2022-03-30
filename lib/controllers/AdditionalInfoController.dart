@@ -1,5 +1,5 @@
 import 'package:get/get.dart';
-import 'package:mygoods_flutter/services/additional_data_service.dart';
+import 'package:mygoods_flutter/services/AdditionalDataService.dart';
 
 class AdditionalInfoController extends GetxController {
   final AdditionalDataService additionalDataService = AdditionalDataService();

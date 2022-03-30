@@ -3,6 +3,7 @@ import 'package:get/get.dart';
 import 'package:mygoods_flutter/components/TypeTextField.dart';
 import 'package:mygoods_flutter/controllers/ItemFormController.dart';
 import 'package:mygoods_flutter/controllers/UserController.dart';
+import 'package:mygoods_flutter/services/AuthenticationService.dart';
 import 'package:mygoods_flutter/services/UserService.dart';
 import 'package:mygoods_flutter/utils/constant.dart';
 import 'package:mygoods_flutter/views/MainActivity.dart';
@@ -10,7 +11,9 @@ import 'package:mygoods_flutter/views/RegisterPage.dart';
 import 'package:mygoods_flutter/views/authentication/LoginWithPhoneNumberPage.dart';
 
 class LoginWithEmailPage extends StatefulWidget {
-  const LoginWithEmailPage({Key? key}) : super(key: key);
+  const LoginWithEmailPage({
+    Key? key,
+  }) : super(key: key);
 
   @override
   State<LoginWithEmailPage> createState() => _LoginWithEmailPageState();
@@ -24,6 +27,7 @@ class _LoginWithEmailPageState extends State<LoginWithEmailPage> {
 
   final formKey = GlobalKey<FormState>();
   final userService = UserService();
+  final authService = AuthenticationService();
 
   @override
   Widget build(BuildContext context) {
@@ -49,9 +53,7 @@ class _LoginWithEmailPageState extends State<LoginWithEmailPage> {
                       fontWeight: FontWeight.bold,
                     ),
                   ),
-                  const SizedBox(
-                    height: 30,
-                  ),
+                  const SizedBox(height: 30),
                   Form(
                     key: formKey,
                     child: AutofillGroup(
@@ -158,12 +160,12 @@ class _LoginWithEmailPageState extends State<LoginWithEmailPage> {
       return;
     }
 
-    userService.loginWithEmailPassword(email, password).then(
+    authService.loginWithEmailPassword(email, password).then(
       (credential) async {
         if (credential != null) {
           showToast("Login Success");
           final userData =
-              await userService.isUserHaveData(credential.user!.uid);
+              await authService.isUserHaveData(credential.user!.uid);
           if (userData) {
             Get.delete<UserController>();
             Get.lazyPut(() => UserController(), fenix: true);

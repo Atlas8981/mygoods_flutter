@@ -5,6 +5,7 @@ import 'package:flutter_countdown_timer/flutter_countdown_timer.dart';
 import 'package:get/get.dart';
 import 'package:mygoods_flutter/controllers/ItemFormController.dart';
 import 'package:mygoods_flutter/controllers/UserController.dart';
+import 'package:mygoods_flutter/services/AuthenticationService.dart';
 import 'package:mygoods_flutter/services/UserService.dart';
 import 'package:mygoods_flutter/utils/constant.dart';
 import 'package:mygoods_flutter/views/MainActivity.dart';
@@ -172,7 +173,7 @@ class _VerifyOTPPageState extends State<VerifyOTPPage> with CodeAutoFill {
     );
   }
 
-  final userService = UserService();
+  final authService = AuthenticationService();
 
   Future<void> signInWithPhoneNumber(String pin) async {
     if (verificationId == null) {
@@ -186,7 +187,7 @@ class _VerifyOTPPageState extends State<VerifyOTPPage> with CodeAutoFill {
       final authCredential = await auth.signInWithCredential(credential);
       if (authCredential.user != null) {
         showToast("Login Success");
-        userService.isUserHaveData(authCredential.user!.uid).then((value) {
+        authService.isUserHaveData(authCredential.user!.uid).then((value) {
           if (value) {
             Get.delete<UserController>();
             Get.lazyPut(() => UserController(), fenix: true);
