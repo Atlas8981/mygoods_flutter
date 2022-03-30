@@ -9,7 +9,6 @@ import 'package:get_storage/get_storage.dart';
 import 'package:mygoods_flutter/controllers/initial_binding.dart';
 import 'package:mygoods_flutter/utils/constant.dart';
 import 'package:mygoods_flutter/views/MainActivity.dart';
-import 'package:mygoods_flutter/views/utils/SettingPage.dart';
 
 Future<void> main() async {
   await GetStorage.init();
