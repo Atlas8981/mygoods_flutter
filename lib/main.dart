@@ -88,7 +88,10 @@ class MyGoods extends StatelessWidget {
         appBarTheme: AppBarTheme(
           color: Colors.blue.shade600,
         ),
-        primaryColor: Colors.blue,
+        colorScheme: ColorScheme.dark(
+          primary: Colors.blue,
+          secondary: Colors.blue,
+        ),
         iconTheme: IconTheme.of(context).copyWith(
           color: Colors.white,
         ),
@@ -107,9 +110,13 @@ class MyGoods extends StatelessWidget {
             color: Colors.white,
           ),
         ),
+
       ),
       theme: ThemeData.light().copyWith(
-        primaryColor: Colors.blue,
+        colorScheme: ColorScheme.light(
+          primary: Colors.blue,
+          secondary: Colors.blue,
+        ),
         iconTheme: IconTheme.of(context).copyWith(
           color: Colors.black,
         ),

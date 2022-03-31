@@ -55,7 +55,7 @@ class _ListItemRowState extends State<ListItemRow> {
 
   @override
   Widget build(BuildContext context) {
-    return SizedBox(
+    return Container(
       width: double.maxFinite,
       child: Column(
         children: [
@@ -72,9 +72,7 @@ class _ListItemRowState extends State<ListItemRow> {
                   fit: BoxFit.cover,
                 ),
               ),
-              const SizedBox(
-                width: 15,
-              ),
+              const SizedBox(width: 15),
               Column(
                 mainAxisSize: MainAxisSize.min,
                 crossAxisAlignment: CrossAxisAlignment.start,

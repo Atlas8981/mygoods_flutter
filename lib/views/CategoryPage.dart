@@ -3,7 +3,7 @@ import 'package:get/get.dart';
 import 'package:mygoods_flutter/models/category.dart';
 import 'package:mygoods_flutter/utils/constant.dart';
 import 'package:mygoods_flutter/views/cells/CategoryItemRow.dart';
-import 'package:mygoods_flutter/views/cells/popular_category_item.dart';
+import 'package:mygoods_flutter/views/cells/PopularCategoryCell.dart';
 
 import 'SubCategoryPage.dart';
 

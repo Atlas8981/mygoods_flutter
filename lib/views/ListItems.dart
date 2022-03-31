@@ -42,9 +42,15 @@ class _ListItemState extends State<ListItem> {
               if (snapshot.data != null) {
                 return Container(
                   padding: const EdgeInsets.all(10),
-                  child: ListView.builder(
+                  child: ListView.separated(
                     physics: const BouncingScrollPhysics(),
                     itemCount: snapshot.data!.length,
+                    separatorBuilder: (context,index){
+                      return Divider(
+                        thickness: 1,
+                        color: Colors.transparent,
+                      );
+                    },
                     itemBuilder: (context, index) {
                       return OpenContainer(
                         closedBuilder: (context, action) =>
@@ -55,6 +61,7 @@ class _ListItemState extends State<ListItem> {
                           );
                         },
                         transitionType: ContainerTransitionType.fade,
+                        closedColor: Theme.of(context).scaffoldBackgroundColor,
                       );
                     },
                   ),
