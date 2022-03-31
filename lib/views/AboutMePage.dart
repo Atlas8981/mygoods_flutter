@@ -48,6 +48,7 @@ class _AboutMePageState extends State<AboutMePage> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      resizeToAvoidBottomInset: false,
       appBar: AppBar(
         title: const Text("About Me"),
         actions: [
@@ -62,9 +63,7 @@ class _AboutMePageState extends State<AboutMePage> {
       ),
       body: SafeArea(
         child: Container(
-          padding: const EdgeInsets.only(
-            top: 8,
-          ),
+          padding: const EdgeInsets.only(top: 8),
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.stretch,
             mainAxisAlignment: MainAxisAlignment.spaceBetween,
@@ -168,7 +167,7 @@ class _AboutMePageState extends State<AboutMePage> {
         ),
       );
     } else {
-      final String fullName = "${user.firstName} ${user.lastName}";
+      final String fullName = "${user.firstname} ${user.lastname}";
       return Stack(
         alignment: Alignment.center,
         children: [
@@ -232,7 +231,7 @@ class _AboutMePageState extends State<AboutMePage> {
                 height: 10,
               ),
               Text(
-                "${user.firstName} ${user.lastName}",
+                "${user.firstname} ${user.lastname}",
                 style: const TextStyle(
                   fontSize: 16,
                   fontWeight: FontWeight.bold,
@@ -253,7 +252,7 @@ class _AboutMePageState extends State<AboutMePage> {
     );
   }
 
-  bottomListWidgets() {
+  Widget bottomListWidgets() {
     return Padding(
       padding: const EdgeInsets.only(left: 20, right: 20),
       child: ListView.builder(

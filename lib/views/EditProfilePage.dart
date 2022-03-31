@@ -38,8 +38,8 @@ class _EditProfilePageState extends State<EditProfilePage> {
   late final User currentUser = widget.user!;
 
   void setDataIntoViews() {
-    firstnameCon.text = currentUser.firstName;
-    lastnameCon.text = currentUser.lastName;
+    firstnameCon.text = currentUser.firstname;
+    lastnameCon.text = currentUser.lastname;
     usernameCon.text = currentUser.username;
     addressCon.text = currentUser.address;
     phoneNumberCon.text = currentUser.phoneNumber.substring(1);
@@ -51,8 +51,8 @@ class _EditProfilePageState extends State<EditProfilePage> {
     }
 
     final User newUserInfo = currentUser;
-    newUserInfo.firstName = firstnameCon.text.trim();
-    newUserInfo.lastName = lastnameCon.text.trim();
+    newUserInfo.firstname = firstnameCon.text.trim();
+    newUserInfo.lastname = lastnameCon.text.trim();
     newUserInfo.username = usernameCon.text.trim();
     newUserInfo.address = addressCon.text.trim();
     newUserInfo.phoneNumber = "0" + phoneNumberCon.text.trim();

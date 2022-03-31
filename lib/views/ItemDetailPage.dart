@@ -45,10 +45,17 @@ class _ItemDetailPageState extends State<ItemDetailPage> {
       future: itemService.getAdditionalInfo(
           itemId: item.itemid, subCat: item.subCategory),
       builder: (context, snapshot) {
-        if (snapshot.hasData) {
+        if (snapshot.connectionState == ConnectionState.waiting) {
+          return const Center(
+            child: CircularProgressIndicator(),
+          );
+        }
+        if (snapshot.hasData && snapshot.data != null) {
           final data = snapshot.data!.data();
           if (data == null) {
-            return Container();
+            return const Center(
+              child: Text("Data is null"),
+            );
           }
           String additionalInfoText = "";
           final AdditionalInfo additionalInfo =
@@ -71,11 +78,11 @@ class _ItemDetailPageState extends State<ItemDetailPage> {
               Text(additionalInfoText)
             ],
           );
-        } else {
-          return const Center(
-            child: CircularProgressIndicator(),
-          );
         }
+
+        return const Center(
+          child: Text("No Data"),
+        );
       },
     );
   }
@@ -84,14 +91,14 @@ class _ItemDetailPageState extends State<ItemDetailPage> {
     return FutureBuilder<myUser.User?>(
       future: itemService.getItemOwner(item.userid),
       builder: (context, snapshot) {
-        if (!snapshot.hasData) {
+        if (snapshot.connectionState == ConnectionState.waiting) {
           return const Center(
             child: CircularProgressIndicator(),
           );
         }
         if (snapshot.data == null) {
           return const Center(
-            child: Text("Something went wrong"),
+            child: Text("No Data"),
           );
         }
         final myUser.User user = snapshot.data!;
@@ -100,7 +107,10 @@ class _ItemDetailPageState extends State<ItemDetailPage> {
           children: [
             const Text(
               "About this seller",
-              style: TextStyle(fontSize: 14, fontWeight: FontWeight.w600),
+              style: TextStyle(
+                fontSize: 14,
+                fontWeight: FontWeight.w600,
+              ),
             ),
             const SizedBox(
               height: 20,
@@ -115,12 +125,10 @@ class _ItemDetailPageState extends State<ItemDetailPage> {
                     user.image!.imageUrl,
                     cache: true,
                     cacheRawData: true,
-                    scale: 1/2,
+                    scale: 1 / 2,
                   ),
                 ),
-                const SizedBox(
-                  width: 10,
-                ),
+                const SizedBox(width: 10),
                 Text(
                   user.username,
                   style: const TextStyle(fontSize: 14),
@@ -131,9 +139,7 @@ class _ItemDetailPageState extends State<ItemDetailPage> {
               height: 10,
             ),
             Text("Tel: ${user.phoneNumber}"),
-            const SizedBox(
-              height: 5,
-            ),
+            const SizedBox(height: 5),
             Text("Address: ${user.address}")
           ],
         );

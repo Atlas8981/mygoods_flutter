@@ -26,18 +26,17 @@ class UserService {
   }
 
   Future<myUser.User?> getOwnerInfo() async {
+    print("auth.currentUser: ${auth.currentUser}");
     if (auth.currentUser == null) {
       return null;
     }
     myUser.User? response;
     try {
-      await firestore
+      final docSnapshot = await firestore
           .collection(userCollection)
-          .doc(auth.currentUser!.uid)
-          .get()
-          .then((value) {
-        response = myUser.User.fromJson(value.data()!);
-      });
+          .doc(auth.currentUser?.uid)
+          .get();
+      response = myUser.User.fromJson(docSnapshot.data()!);
     } catch (e) {
       if (kDebugMode) {
         print(e.toString());
@@ -64,7 +63,9 @@ class UserService {
     await firestore
         .collection(userCollection)
         .doc(auth.currentUser!.uid)
-        .update({'image': returnImage.toJson()});
+        .update({
+      'image': returnImage.toJson(),
+    });
     final tempUser = user;
     tempUser.image = returnImage;
     await createUserInChatUser(tempUser);
@@ -74,9 +75,9 @@ class UserService {
   Future<void> createUserInChatUser(myUser.User user) async {
     await FirebaseChatCore.instance.createUserInFirestore(types.User(
       id: user.userId,
-      firstName: user.firstName,
+      firstName: user.firstname,
       imageUrl: user.image?.imageUrl,
-      lastName: user.lastName,
+      lastName: user.lastname,
     ));
   }
 

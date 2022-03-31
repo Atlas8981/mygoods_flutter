@@ -1,8 +1,12 @@
+import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:firebase_messaging/firebase_messaging.dart';
+import 'package:flutter/foundation.dart';
 import 'package:flutter_local_notifications/flutter_local_notifications.dart';
+import 'package:mygoods_flutter/models/device.dart';
 import 'package:rxdart/rxdart.dart';
 
 class NotificationService {
-  static final notifications = FlutterLocalNotificationsPlugin();
+  static final localNotifications = FlutterLocalNotificationsPlugin();
   static final onNotifications = BehaviorSubject<String>();
 
   static Future showNotification({
@@ -22,7 +26,7 @@ class NotificationService {
     //   iOS: initializationSettingsIOS,
     // );
     // await notifications.initialize(initializationSettings,);
-    await notifications.show(
+    await localNotifications.show(
       id,
       title,
       body,
@@ -41,7 +45,7 @@ class NotificationService {
       android: androidSetting,
       iOS: iosSetting,
     );
-    await notifications.initialize(
+    await localNotifications.initialize(
       settings,
       onSelectNotification: (payload) {
         // if(payload!=null){
@@ -57,8 +61,49 @@ class NotificationService {
         'channel id',
         'channel name',
         importance: Importance.high,
+        channelShowBadge: true,
+        priority: Priority.high,
       ),
       iOS: IOSNotificationDetails(),
     );
   }
+
+  final FirebaseMessaging _fcm = FirebaseMessaging.instance;
+  final FirebaseFirestore _db = FirebaseFirestore.instance;
+
+  Future<void> saveDeviceToken(
+      String userId, List<Device> devices, String? deviceToken) async {
+    print("fcmToken: $deviceToken");
+    print("userId: $userId");
+    if (deviceToken != null) {
+      var userRef = _db.collection("users").doc(userId);
+      await userRef.update({
+        "devices": devices.map((e) => e.toJson()).toList(),
+      });
+    }
+  }
+
+  Future<void> setupInteractedMessage() async {
+    RemoteMessage? initialMessage = await _fcm.getInitialMessage();
+
+    if (initialMessage != null) {
+      _handleMessage(initialMessage);
+    }
+
+    FirebaseMessaging.onMessageOpenedApp.listen(_handleMessage);
+  }
+
+  void _handleMessage(RemoteMessage message) {
+    if (kDebugMode) {
+      print(message.toString());
+      print(message.messageId);
+    }
+
+    // if (message.data['type'] == 'chat') {
+    //   Navigator.pushNamed(context, '/chat',
+    //     arguments: (message),
+    //   );
+    // }
+  }
+
 }

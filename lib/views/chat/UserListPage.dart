@@ -35,8 +35,8 @@ class _UserListPageState extends State<UserListPage> {
       await fireChatCore.createUserInFirestore(
         types.User(
           id: currentUser.userId,
-          firstName: currentUser.firstName,
-          lastName: currentUser.lastName,
+          firstName: currentUser.firstname,
+          lastName: currentUser.lastname,
           imageUrl: (currentUser.image == null)
               ? dummyNetworkImage
               : currentUser.image!.imageUrl,
@@ -54,8 +54,8 @@ class _UserListPageState extends State<UserListPage> {
 
         final otherUser = types.User(
           id: user.userId,
-          firstName: user.firstName,
-          lastName: user.lastName,
+          firstName: user.firstname,
+          lastName: user.lastname,
           imageUrl:
               (user.image == null) ? dummyNetworkImage : user.image!.imageUrl,
         );
@@ -72,7 +72,7 @@ class _UserListPageState extends State<UserListPage> {
       },
       child: ListTile(
         title: Text(
-          "${user.firstName} ${user.lastName}",
+          "${user.firstname} ${user.lastname}",
         ),
         leading: CircleAvatar(
           backgroundImage: ExtendedNetworkImageProvider(

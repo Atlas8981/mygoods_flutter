@@ -1,11 +1,11 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
+import 'package:firebase_messaging/firebase_messaging.dart';
 import 'package:firebase_storage/firebase_storage.dart';
 
 import '../utils/constant.dart';
 
 class AuthenticationService {
-
   final auth = FirebaseAuth.instance;
   final firestore = FirebaseFirestore.instance;
   final storage = FirebaseStorage.instance;
@@ -13,9 +13,12 @@ class AuthenticationService {
   Future<UserCredential?> loginWithEmailPassword(
       String email, String password) async {
     try {
-      final response = await auth.signInWithEmailAndPassword(
-          email: email, password: password);
-      return response;
+      final userCredential = await auth.signInWithEmailAndPassword(
+        email: email,
+        password: password,
+      );
+
+      return userCredential;
     } on FirebaseAuthException catch (e) {
       if (e.code == 'user-not-found') {
         showToast('No user found for that email.');
@@ -27,10 +30,10 @@ class AuthenticationService {
   }
 
   Future<bool> isUserHaveData(String id) async {
-    final response = await FirebaseFirestore.instance
-        .collection(userCollection)
+    final response = await firestore.collection(userCollection)
         .doc(id)
         .get();
+    print("Response: ${response.data()}");
     if (response.exists &&
         response.data() != null &&
         response.data()!.isNotEmpty) {
@@ -40,6 +43,7 @@ class AuthenticationService {
   }
 
   Future<bool> signOut() async {
+    //TODO:remove device token from database
     bool isSignOut = false;
     try {
       await auth.signOut().then((value) => isSignOut = true);

@@ -9,8 +9,8 @@ class User {
   User({
     required this.userId,
     required this.username,
-    required this.firstName,
-    required this.lastName,
+    required this.firstname,
+    required this.lastname,
     required this.email,
     required this.phoneNumber,
     required this.address,
@@ -21,8 +21,8 @@ class User {
 
   String userId;
   String username;
-  String firstName;
-  String lastName;
+  String firstname;
+  String lastname;
   String? email;
   String phoneNumber;
   myImage.Image? image;

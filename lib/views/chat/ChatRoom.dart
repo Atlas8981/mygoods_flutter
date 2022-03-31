@@ -1,6 +1,7 @@
 import 'dart:io';
 
 import 'package:file_picker/file_picker.dart';
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:firebase_storage/firebase_storage.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
@@ -28,6 +29,8 @@ class ChatRoom extends StatefulWidget {
 
 class _ChatRoomState extends State<ChatRoom> {
   bool _isAttachmentUploading = false;
+
+  final firebaseChatCore = FirebaseChatCore.instance;
 
   void _handleAttachmentPressed() {
     showModalBottomSheet<void>(
@@ -144,7 +147,7 @@ class _ChatRoomState extends State<ChatRoom> {
     }
   }
 
-  void _handleMessageTap(BuildContext context,types.Message message) async {
+  void _handleMessageTap(BuildContext context, types.Message message) async {
     if (message is types.FileMessage) {
       var localPath = message.uri;
 
@@ -171,12 +174,29 @@ class _ChatRoomState extends State<ChatRoom> {
   ) {
     final updatedMessage = message.copyWith(previewData: previewData);
 
-    FirebaseChatCore.instance.updateMessage(updatedMessage, widget.room.id);
+    firebaseChatCore.updateMessage(
+      updatedMessage,
+      widget.room.id,
+    );
   }
 
+  final auth = FirebaseAuth.instance;
+
   void _handleSendPressed(types.PartialText message) {
-    FirebaseChatCore.instance.sendMessage(
-      message,
+    final currentRoom = widget.room;
+
+    final String receiverId = currentRoom.users
+        .firstWhere((element) => element.id != (auth.currentUser?.uid ?? ""))
+        .id;
+
+    types.PartialText updatedMessage = types.PartialText(
+      metadata: {
+        "receiverId": receiverId,
+      },
+      text: message.text,
+    );
+    firebaseChatCore.sendMessage(
+      updatedMessage,
       widget.room.id,
     );
   }
@@ -196,15 +216,15 @@ class _ChatRoomState extends State<ChatRoom> {
             ? SizedBox(
                 height: 100,
                 child: Marquee(
-                  text: 'Chat with ${widget.room.name})',
+                  text: 'Chat with ${widget.room.name}',
                   blankSpace: 100,
                 ),
               )
-            : Text('Chat with ${widget.room.name})'),
+            : Text('Chat with ${widget.room.name}'),
       ),
       body: StreamBuilder<types.Room>(
         initialData: widget.room,
-        stream: FirebaseChatCore.instance.room(widget.room.id),
+        stream: firebaseChatCore.room(widget.room.id),
         builder: (context, snapshot) {
           return StreamBuilder<List<types.Message>>(
             initialData: const [],
@@ -226,7 +246,7 @@ class _ChatRoomState extends State<ChatRoom> {
                   onPreviewDataFetched: _handlePreviewDataFetched,
                   onSendPressed: _handleSendPressed,
                   user: types.User(
-                    id: FirebaseChatCore.instance.firebaseUser?.uid ?? '',
+                    id: firebaseChatCore.firebaseUser?.uid ?? '',
                   ),
                   theme: const DarkChatTheme(
                     primaryColor: Colors.blue,

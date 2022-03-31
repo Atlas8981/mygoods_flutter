@@ -189,8 +189,8 @@ class _RegisterPageState extends State<RegisterPage> {
     final User user = User(
       userId: widget.userId,
       username: username,
-      firstName: firstname,
-      lastName: lastname,
+      firstname: firstname,
+      lastname: lastname,
       email: "",
       phoneNumber: phoneNumber!,
       address: address,
@@ -201,9 +201,9 @@ class _RegisterPageState extends State<RegisterPage> {
     await FirebaseChatCore.instance.createUserInFirestore(
       types.User(
         id: user.userId,
-        firstName: user.firstName,
+        firstName: user.firstname,
         imageUrl: user.image?.imageUrl,
-        lastName: user.lastName,
+        lastName: user.lastname,
       ),
     );
 

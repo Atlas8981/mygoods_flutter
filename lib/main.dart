@@ -1,4 +1,8 @@
+import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:cloud_functions/cloud_functions.dart';
 import 'package:firebase_core/firebase_core.dart';
+import 'package:firebase_messaging/firebase_messaging.dart';
+import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_firebase_chat_core/flutter_firebase_chat_core.dart';
@@ -7,18 +11,31 @@ import 'package:flutter_localizations/flutter_localizations.dart';
 import 'package:get/get.dart';
 import 'package:get_storage/get_storage.dart';
 import 'package:mygoods_flutter/controllers/initial_binding.dart';
+import 'package:mygoods_flutter/services/NotificationService.dart';
 import 'package:mygoods_flutter/utils/constant.dart';
 import 'package:mygoods_flutter/views/MainActivity.dart';
 
 Future<void> main() async {
   await GetStorage.init();
   WidgetsFlutterBinding.ensureInitialized();
-  await Firebase.initializeApp();
   SystemChrome.setSystemUIOverlayStyle(
     const SystemUiOverlayStyle(
       statusBarColor: Colors.transparent,
     ),
   );
+  await Firebase.initializeApp();
+  // if (kDebugMode) {
+  // FirebaseFunctions.instance.useFunctionsEmulator(
+  //   'localhost',
+  //   5001,
+  // );
+  //
+  // FirebaseFirestore.instance.useFirestoreEmulator(
+  //   'localhost',
+  //   8080,
+  // );
+  // }
+  FirebaseMessaging.onBackgroundMessage(_firebaseMessagingBackgroundHandler);
   FirebaseChatCore.instance.setConfig(
     FirebaseChatCoreConfig(
       Firebase.app().name, //AppName
@@ -26,7 +43,22 @@ Future<void> main() async {
       "chatUsers", //userCollection
     ),
   );
-  runApp(MyGoods());
+
+  runApp(const MyGoods());
+}
+
+Future<void> _firebaseMessagingBackgroundHandler(RemoteMessage message) async {
+  // If you're going to use other Firebase services in the background, such as Firestore,
+  // make sure you call `initializeApp` before using other Firebase services.
+  // await Firebase.initializeApp();
+
+  print("Handling a background message: ${message.data.keys.toList()}");
+  print("Background From : ${message.messageId}");
+  NotificationService.init();
+  NotificationService.showNotification(
+    body: message.data['body'],
+    title: "Ort toun mean",
+  );
 }
 
 class MyGoods extends StatelessWidget {

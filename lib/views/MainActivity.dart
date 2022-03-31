@@ -1,7 +1,6 @@
 import 'dart:async';
 import 'dart:io';
 
-import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_messaging/firebase_messaging.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
@@ -16,7 +15,9 @@ import 'package:mygoods_flutter/views/chat/ChatListPage.dart';
 import 'HomePage.dart';
 
 class MainActivity extends StatefulWidget {
-  const MainActivity({Key? key}) : super(key: key);
+  const MainActivity({
+    Key? key,
+  }) : super(key: key);
 
   @override
   _MainActivityState createState() => _MainActivityState();
@@ -24,21 +25,21 @@ class MainActivity extends StatefulWidget {
 
 class _MainActivityState extends State<MainActivity> {
   final bottomNavigationController = Get.put(LandingPageController());
+  final FirebaseMessaging _fcm = FirebaseMessaging.instance;
+  final notificationService = NotificationService();
 
-  buildBottomNavigationMenu(context, landingPageController) {
-    return Obx(() => MediaQuery(
+  Widget buildBottomNavigationMenu(context, landingPageController) {
+    return Obx(
+      () => MediaQuery(
         data: MediaQuery.of(context).copyWith(textScaleFactor: 1.0),
         child: BottomNavigationBar(
           type: BottomNavigationBarType.fixed,
           showUnselectedLabels: false,
           showSelectedLabels: true,
-
           onTap: landingPageController.changeTabIndex,
           currentIndex: landingPageController.tabIndex.value,
           unselectedItemColor: Colors.black54,
           selectedItemColor: Colors.blue,
-          // unselectedLabelStyle: unselectedLabelStyle,
-          // selectedLabelStyle: selectedLabelStyle,
           items: const [
             BottomNavigationBarItem(
               icon: Icon(
@@ -63,7 +64,9 @@ class _MainActivityState extends State<MainActivity> {
               label: 'Account',
             ),
           ],
-        )));
+        ),
+      ),
+    );
   }
 
   String appTitle(landingPageController) {
@@ -104,9 +107,9 @@ class _MainActivityState extends State<MainActivity> {
   @override
   void didChangeDependencies() async {
     super.didChangeDependencies();
-    NotificationSettings settings = await _fcm.requestPermission(
+    final NotificationSettings settings = await _fcm.requestPermission(
       alert: true,
-      announcement: false,
+      announcement: true,
       badge: true,
       carPlay: false,
       criticalAlert: false,
@@ -127,7 +130,7 @@ class _MainActivityState extends State<MainActivity> {
         print('User declined or has not accepted permission');
       }
     }
-    setupInteractedMessage();
+    notificationService.setupInteractedMessage();
   }
 
   late StreamSubscription iosSubscription;
@@ -139,10 +142,11 @@ class _MainActivityState extends State<MainActivity> {
       // iosSubscription = _fcm.requestPermission();
       // _fcm.requestPermission(());
     } else {
-      saveDeviceToken();
+      // notificationService.saveDeviceToken();
     }
 
     NotificationService.init();
+
     FirebaseMessaging.onMessage.listen((RemoteMessage message) {
       if (kDebugMode) {
         print('Got a message whilst in the foreground!');
@@ -164,44 +168,5 @@ class _MainActivityState extends State<MainActivity> {
         );
       }
     });
-  }
-
-  final FirebaseMessaging _fcm = FirebaseMessaging.instance;
-  final FirebaseFirestore _db = FirebaseFirestore.instance;
-
-  Future<void> saveDeviceToken() async {
-    String? fcmToken = await _fcm.getToken();
-    if (fcmToken != null) {
-      var tokenRef = _db.collection("devices").doc(fcmToken);
-      await tokenRef.set({
-        'token': fcmToken,
-        'createdAt': FieldValue.serverTimestamp(),
-        'platform': Platform.operatingSystem
-      });
-    }
-  }
-
-  Future<void> setupInteractedMessage() async {
-    RemoteMessage? initialMessage =
-        await FirebaseMessaging.instance.getInitialMessage();
-
-    if (initialMessage != null) {
-      _handleMessage(initialMessage);
-    }
-
-    FirebaseMessaging.onMessageOpenedApp.listen(_handleMessage);
-  }
-
-  void _handleMessage(RemoteMessage message) {
-    if (kDebugMode) {
-      print(message.toString());
-      print(message.messageId);
-    }
-
-    // if (message.data['type'] == 'chat') {
-    //   Navigator.pushNamed(context, '/chat',
-    //     arguments: (message),
-    //   );
-    // }
   }
 }
