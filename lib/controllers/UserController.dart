@@ -38,9 +38,9 @@ class UserController extends GetxController {
   Future<void> checkDeviceToken() async {
     List<Device>? devices = user?.value.devices ?? [];
     final String? deviceToken = await fcm.getToken();
-    final firstoreTokens = devices.map((e) => e.token).toList();
+    final firestoreTokens = devices.map((e) => e.token).toList();
 
-    if ((devices.isEmpty || !firstoreTokens.contains(deviceToken)) &&
+    if ((devices.isEmpty || !firestoreTokens.contains(deviceToken)) &&
         deviceToken != null) {
       devices.add(
         Device(
@@ -60,7 +60,12 @@ class UserController extends GetxController {
   void changeProfilePicture(XFile image) {
     user!.value.image = Image(imageName: "pending", imageUrl: "");
     update();
-    userService.updateUserImage(File(image.path), user!.value,).then((value) {
+    userService
+        .updateUserImage(
+      File(image.path),
+      user!.value,
+    )
+        .then((value) {
       user!.value.image = value;
       update();
     });

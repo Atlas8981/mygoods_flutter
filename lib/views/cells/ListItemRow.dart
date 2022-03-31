@@ -55,7 +55,7 @@ class _ListItemRowState extends State<ListItemRow> {
 
   @override
   Widget build(BuildContext context) {
-    return Container(
+    return SizedBox(
       width: double.maxFinite,
       child: Column(
         children: [

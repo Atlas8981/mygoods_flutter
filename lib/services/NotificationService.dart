@@ -73,8 +73,6 @@ class NotificationService {
 
   Future<void> saveDeviceToken(
       String userId, List<Device> devices, String? deviceToken) async {
-    print("fcmToken: $deviceToken");
-    print("userId: $userId");
     if (deviceToken != null) {
       var userRef = _db.collection("users").doc(userId);
       await userRef.update({
@@ -105,5 +103,4 @@ class NotificationService {
     //   );
     // }
   }
-
 }

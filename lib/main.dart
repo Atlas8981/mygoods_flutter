@@ -1,5 +1,3 @@
-import 'package:cloud_firestore/cloud_firestore.dart';
-import 'package:cloud_functions/cloud_functions.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:firebase_messaging/firebase_messaging.dart';
 import 'package:flutter/foundation.dart';
@@ -52,8 +50,11 @@ Future<void> _firebaseMessagingBackgroundHandler(RemoteMessage message) async {
   // make sure you call `initializeApp` before using other Firebase services.
   // await Firebase.initializeApp();
 
-  print("Handling a background message: ${message.data.keys.toList()}");
-  print("Background From : ${message.messageId}");
+  if (kDebugMode) {
+    print("Handling a background message: ${message.data.keys.toList()}");
+    print("Background From : ${message.messageId}");
+  }
+
   NotificationService.init();
   NotificationService.showNotification(
     body: message.data['body'],
@@ -88,7 +89,7 @@ class MyGoods extends StatelessWidget {
         appBarTheme: AppBarTheme(
           color: Colors.blue.shade600,
         ),
-        colorScheme: ColorScheme.dark(
+        colorScheme: const ColorScheme.dark(
           primary: Colors.blue,
           secondary: Colors.blue,
         ),
@@ -99,13 +100,13 @@ class MyGoods extends StatelessWidget {
               bodyColor: Colors.white,
               displayColor: Colors.white,
             ),
-        pageTransitionsTheme: PageTransitionsTheme(
+        pageTransitionsTheme: const PageTransitionsTheme(
           builders: {
             TargetPlatform.android: CupertinoPageTransitionsBuilder(),
             TargetPlatform.iOS: CupertinoPageTransitionsBuilder(),
           },
         ),
-        bottomNavigationBarTheme: BottomNavigationBarThemeData(
+        bottomNavigationBarTheme: const BottomNavigationBarThemeData(
           unselectedIconTheme: IconThemeData(
             color: Colors.white,
           ),
@@ -113,7 +114,7 @@ class MyGoods extends StatelessWidget {
 
       ),
       theme: ThemeData.light().copyWith(
-        colorScheme: ColorScheme.light(
+        colorScheme: const ColorScheme.light(
           primary: Colors.blue,
           secondary: Colors.blue,
         ),
@@ -123,7 +124,7 @@ class MyGoods extends StatelessWidget {
         textTheme: Theme.of(context).textTheme.apply(
               bodyColor: Colors.black,
             ),
-        pageTransitionsTheme: PageTransitionsTheme(
+        pageTransitionsTheme: const PageTransitionsTheme(
           builders: {
             TargetPlatform.android: CupertinoPageTransitionsBuilder(),
             TargetPlatform.iOS: CupertinoPageTransitionsBuilder(),

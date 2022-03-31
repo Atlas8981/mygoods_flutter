@@ -18,7 +18,6 @@ class ImagePreviewerPage extends StatefulWidget {
 class _ImagePreviewerPageState extends State<ImagePreviewerPage> {
   @override
   Widget build(BuildContext context) {
-    print(widget.image.runtimeType);
     return Scaffold(
       appBar: AppBar(
         title: const Text("Preview Image"),

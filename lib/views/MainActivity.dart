@@ -89,7 +89,7 @@ class _MainActivityState extends State<MainActivity> {
         () => IndexedStack(
           index: bottomNavigationController.tabIndex.value,
           children: [
-            HomePage(),
+            const HomePage(),
             CategoryPage(),
             const AddPage(),
             const ChatListPage(),

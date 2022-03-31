@@ -36,7 +36,7 @@ class SavedItemsPage extends StatelessWidget {
               child: ListView.separated(
                 itemCount: items.length,
                 separatorBuilder: (context, index) {
-                  return Divider(
+                  return const Divider(
                     thickness: 2,
                     color: Colors.grey,
                   );

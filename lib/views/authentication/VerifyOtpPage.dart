@@ -6,7 +6,6 @@ import 'package:get/get.dart';
 import 'package:mygoods_flutter/controllers/ItemFormController.dart';
 import 'package:mygoods_flutter/controllers/UserController.dart';
 import 'package:mygoods_flutter/services/AuthenticationService.dart';
-import 'package:mygoods_flutter/services/UserService.dart';
 import 'package:mygoods_flutter/utils/constant.dart';
 import 'package:mygoods_flutter/views/MainActivity.dart';
 import 'package:mygoods_flutter/views/RegisterPage.dart';
@@ -37,29 +36,6 @@ class _VerifyOTPPageState extends State<VerifyOTPPage> with CodeAutoFill {
   final int endTime = DateTime.now().millisecondsSinceEpoch + 1000 * 60;
   bool isTimerEnd = false;
   final auth = FirebaseAuth.instance;
-
-  Widget otpTextField() {
-    return PinFieldAutoFill(
-      decoration: const UnderlineDecoration(
-        textStyle: TextStyle(fontSize: 16, color: Colors.black),
-        colorBuilder: FixedColorBuilder(Colors.blue),
-        gapSpace: 24,
-        // gapSpaces: [10,24,10,24,10]
-      ),
-      cursor: Cursor(color: Colors.black, height: 24, enabled: true),
-      controller: otpCon,
-      codeLength: 6,
-      currentCode: smsCode,
-      onCodeSubmitted: (code) {
-        if (code.length == 6) {
-          signInWithPhoneNumber(code);
-        }
-      },
-      onCodeChanged: (code) {
-        smsCode = code;
-      },
-    );
-  }
 
   @override
   void codeUpdated() {
@@ -155,7 +131,9 @@ class _VerifyOTPPageState extends State<VerifyOTPPage> with CodeAutoFill {
                         maxLines: 2,
                         textAlign: TextAlign.center,
                         style: TextStyle(
-                            color: Colors.black.withOpacity(0.5), height: 1.2),
+                          color: Colors.black.withOpacity(0.5),
+                          height: 1.2,
+                        ),
                       ),
                       style: ButtonStyle(
                         backgroundColor: MaterialStateProperty.all(
@@ -238,7 +216,6 @@ class _VerifyOTPPageState extends State<VerifyOTPPage> with CodeAutoFill {
             print(e.message);
             print(e.code);
           }
-
         },
         codeSent: (String vId, int? resendToken) async {
           verificationId = vId;

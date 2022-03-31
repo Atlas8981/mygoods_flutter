@@ -46,7 +46,7 @@ class _ListItemState extends State<ListItem> {
                     physics: const BouncingScrollPhysics(),
                     itemCount: snapshot.data!.length,
                     separatorBuilder: (context,index){
-                      return Divider(
+                      return const Divider(
                         thickness: 1,
                         color: Colors.transparent,
                       );

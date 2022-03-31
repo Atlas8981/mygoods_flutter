@@ -26,7 +26,7 @@ class _SettingPageState extends State<SettingPage> {
     selectedThemeMode = storage.read("themeMode") ?? "System";
     return Scaffold(
       appBar: AppBar(
-        title: Text("Setting"),
+        title: const Text("Setting"),
       ),
       body: SafeArea(
         child: Container(
@@ -36,7 +36,7 @@ class _SettingPageState extends State<SettingPage> {
           child: Column(
             children: [
               ListTile(
-                title: Text("Theme"),
+                title: const Text("Theme"),
                 trailing: DropdownButton(
                   isDense: true,
                   value: selectedThemeMode,
@@ -50,7 +50,7 @@ class _SettingPageState extends State<SettingPage> {
                           const SizedBox(width: 10),
                           Text(
                             value,
-                            style: TextStyle(fontSize: 16),
+                            style: const TextStyle(fontSize: 16),
                           ),
                         ],
                       ),
@@ -60,7 +60,6 @@ class _SettingPageState extends State<SettingPage> {
                     final selectMode = value.toString();
                     storage.write("themeMode", selectMode);
                     Get.changeThemeMode(determineThemeMode(selectMode));
-                    print(storage.read("themeMode"));
                     setState(() {
                       selectedThemeMode = selectMode;
                     });

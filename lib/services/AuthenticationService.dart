@@ -1,6 +1,5 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
-import 'package:firebase_messaging/firebase_messaging.dart';
 import 'package:firebase_storage/firebase_storage.dart';
 
 import '../utils/constant.dart';
@@ -30,10 +29,7 @@ class AuthenticationService {
   }
 
   Future<bool> isUserHaveData(String id) async {
-    final response = await firestore.collection(userCollection)
-        .doc(id)
-        .get();
-    print("Response: ${response.data()}");
+    final response = await firestore.collection(userCollection).doc(id).get();
     if (response.exists &&
         response.data() != null &&
         response.data()!.isNotEmpty) {

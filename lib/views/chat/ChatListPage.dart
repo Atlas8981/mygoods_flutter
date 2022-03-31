@@ -232,11 +232,11 @@ class _ChatRoomRowState extends State<ChatRoomRow> {
                       if (snapshot.hasData) {
                         final message = snapshot.data;
                         if (message == null || message.isEmpty) {
-                          return Text("(No Message)");
+                          return const Text("(No Message)");
                         }
                         return Text(snapshot.data!);
                       }
-                      return Text("...");
+                      return const Text("...");
                     },
                   )
                 ],

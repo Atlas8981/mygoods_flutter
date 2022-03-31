@@ -22,9 +22,10 @@ linter:
   # `// ignore_for_file: name_of_lint` syntax on the line or in the file
   # producing the lint.
   rules:
-    prefer_const_constructors: false
+    prefer_const_constructors: true
     file_names: false
     library_prefixes: false
-    prefer_const_constructors_in_immutables: false
-    avoid_print: false
-    prefer_const_literals_to_create_immutables: false
+    prefer_const_constructors_in_immutables: true
+    avoid_print: true
+    prefer_const_literals_to_create_immutables: true
+

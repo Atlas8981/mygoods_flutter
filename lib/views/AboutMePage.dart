@@ -12,7 +12,6 @@ import 'package:mygoods_flutter/models/category.dart';
 import 'package:mygoods_flutter/models/user.dart' as myUser;
 import 'package:mygoods_flutter/models/user.dart';
 import 'package:mygoods_flutter/services/AuthenticationService.dart';
-import 'package:mygoods_flutter/services/UserService.dart';
 import 'package:mygoods_flutter/utils/constant.dart';
 import 'package:mygoods_flutter/views/utils/CropImagePage.dart';
 import 'package:mygoods_flutter/views/EditProfilePage.dart';
@@ -54,9 +53,9 @@ class _AboutMePageState extends State<AboutMePage> {
         actions: [
           IconButton(
             onPressed: () {
-              Get.to(() => SettingPage());
+              Get.to(() => const SettingPage());
             },
-            icon: Icon(Icons.settings),
+            icon: const Icon(Icons.settings),
           ),
           popUpMenu(),
         ],
@@ -81,7 +80,7 @@ class _AboutMePageState extends State<AboutMePage> {
                 ],
               ),
               Padding(
-                padding: EdgeInsets.only(bottom: 8),
+                padding: const EdgeInsets.only(bottom: 8),
                 child: Container(
                   width: double.infinity,
                   height: 50,

@@ -6,14 +6,15 @@ import 'package:mygoods_flutter/components/TypeTextField.dart';
 import 'package:mygoods_flutter/controllers/ItemFormController.dart';
 import 'package:mygoods_flutter/controllers/UserController.dart';
 import 'package:mygoods_flutter/services/AuthenticationService.dart';
-import 'package:mygoods_flutter/services/UserService.dart';
 import 'package:mygoods_flutter/utils/constant.dart';
 import 'package:mygoods_flutter/views/MainActivity.dart';
 import 'package:mygoods_flutter/views/RegisterPage.dart';
 import 'package:mygoods_flutter/views/authentication/VerifyOtpPage.dart';
 
 class LoginWithPhoneNumberPage extends StatelessWidget {
-  LoginWithPhoneNumberPage({Key? key}) : super(key: key);
+  LoginWithPhoneNumberPage({
+    Key? key,
+  }) : super(key: key);
 
   final phoneCon = TextEditingController();
 

@@ -140,7 +140,7 @@ class _HomePageState extends State<HomePage> {
               children: items
                   .map((Item i) {
                     return Padding(
-                      padding: EdgeInsets.only(right: 16),
+                      padding: const EdgeInsets.only(right: 16),
                       child: OpenContainer(
                         closedBuilder: (context, action) {
                           return HomePageCell(i);

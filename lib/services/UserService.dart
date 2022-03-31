@@ -26,7 +26,6 @@ class UserService {
   }
 
   Future<myUser.User?> getOwnerInfo() async {
-    print("auth.currentUser: ${auth.currentUser}");
     if (auth.currentUser == null) {
       return null;
     }
