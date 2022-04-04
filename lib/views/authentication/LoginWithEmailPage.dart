@@ -6,7 +6,7 @@ import 'package:mygoods_flutter/controllers/UserController.dart';
 import 'package:mygoods_flutter/services/AuthenticationService.dart';
 import 'package:mygoods_flutter/services/UserService.dart';
 import 'package:mygoods_flutter/utils/constant.dart';
-import 'package:mygoods_flutter/views/MainActivity.dart';
+import 'package:mygoods_flutter/views/LandingPage.dart';
 import 'package:mygoods_flutter/views/RegisterPage.dart';
 import 'package:mygoods_flutter/views/authentication/LoginWithPhoneNumberPage.dart';
 
@@ -171,7 +171,7 @@ class _LoginWithEmailPageState extends State<LoginWithEmailPage> {
             Get.lazyPut(() => UserController(), fenix: true);
             Get.delete<ItemFormController>();
             Get.lazyPut(() => ItemFormController(), fenix: true);
-            Get.offAll(() => const MainActivity());
+            Get.offAll(() => const LandingPage());
           } else {
             Get.offAll(
               () => RegisterPage(

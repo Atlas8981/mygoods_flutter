@@ -6,7 +6,7 @@ import 'package:mygoods_flutter/controllers/UserController.dart';
 import 'package:mygoods_flutter/models/user.dart';
 import 'package:mygoods_flutter/services/UserService.dart';
 import 'package:mygoods_flutter/models/image.dart' as myImage;
-import 'package:mygoods_flutter/views/MainActivity.dart';
+import 'package:mygoods_flutter/views/LandingPage.dart';
 import 'package:flutter_chat_types/flutter_chat_types.dart' as types;
 
 class RegisterPage extends StatefulWidget {
@@ -210,7 +210,7 @@ class _RegisterPageState extends State<RegisterPage> {
     await userService.registerUser(user).then((value) {
       Get.delete<UserController>();
       Get.lazyPut(() => UserController(), fenix: true);
-      Get.offAll(() => const MainActivity());
+      Get.offAll(() => const LandingPage());
     });
   }
 }

@@ -10,7 +10,7 @@ import 'package:get_storage/get_storage.dart';
 import 'package:mygoods_flutter/controllers/initial_binding.dart';
 import 'package:mygoods_flutter/services/LocalizationSerivce.dart';
 import 'package:mygoods_flutter/utils/constant.dart';
-import 'package:mygoods_flutter/views/MainActivity.dart';
+import 'package:mygoods_flutter/views/LandingPage.dart';
 
 Future<void> main() async {
   SystemChrome.setSystemUIOverlayStyle(
@@ -83,7 +83,7 @@ class _MyGoodsState extends State<MyGoods> {
     final storage = GetStorage();
     return GetMaterialApp(
       title: 'MyGoods Flutter From Window @.20',
-      home: const MainActivity(),
+      home: const LandingPage(),
       locale: Get.locale,
       fallbackLocale: LocalizationService.fallbackLocale,
       translations: LocalizationService(),

@@ -10,16 +10,16 @@ import 'package:mygoods_flutter/views/chat/ChatListPage.dart';
 
 import 'HomePage.dart';
 
-class MainActivity extends StatefulWidget {
-  const MainActivity({
+class LandingPage extends StatefulWidget {
+  const LandingPage({
     Key? key,
   }) : super(key: key);
 
   @override
-  _MainActivityState createState() => _MainActivityState();
+  _LandingPageState createState() => _LandingPageState();
 }
 
-class _MainActivityState extends State<MainActivity> {
+class _LandingPageState extends State<LandingPage> {
   final bottomNavigationController = Get.put(LandingPageController());
   final notificationService = NotificationService();
 
