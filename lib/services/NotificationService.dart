@@ -15,17 +15,7 @@ class NotificationService {
     String? body,
     String? payload,
   }) async {
-    // final AndroidInitializationSettings initializationSettingsAndroid =
-    // AndroidInitializationSettings('@mipmap/ic_launcher');
-    // final IOSInitializationSettings initializationSettingsIOS =
-    // IOSInitializationSettings();
-    // final MacOSInitializationSettings initializationSettingsMacOS =
-    // MacOSInitializationSettings();
-    // final InitializationSettings initializationSettings = InitializationSettings(
-    //   android: initializationSettingsAndroid,
-    //   iOS: initializationSettingsIOS,
-    // );
-    // await notifications.initialize(initializationSettings,);
+
     await localNotifications.show(
       id,
       title,
@@ -33,8 +23,6 @@ class NotificationService {
       await notificationDetails(),
       payload: payload,
     );
-
-    onNotifications.stream.listen((payload) {});
   }
 
   static Future init({bool initScheduled = false}) async {
@@ -60,9 +48,9 @@ class NotificationService {
       android: AndroidNotificationDetails(
         'channel id',
         'channel name',
-        importance: Importance.high,
+        importance: Importance.max,
         channelShowBadge: true,
-        priority: Priority.high,
+        priority: Priority.max,
       ),
       iOS: IOSNotificationDetails(),
     );
@@ -89,6 +77,29 @@ class NotificationService {
     }
 
     FirebaseMessaging.onMessageOpenedApp.listen(_handleMessage);
+  }
+
+  void setUpOnMessage() {
+    FirebaseMessaging.onMessage.listen((RemoteMessage message) {
+      NotificationService.showNotification(
+        title: '${message.notification!.title}',
+        body: "${message.notification!.body}",
+        payload: "this is payload",
+      );
+      if (kDebugMode) {
+        print('Got a message whilst in the foreground!');
+        print('Message data: ${message.data}');
+      }
+
+      if (message.notification != null &&
+          message.notification!.android != null) {
+        if (kDebugMode) {
+          print(
+              'Message also contained a notification: ${message.notification!.title}');
+          print(message.notification!.title);
+        }
+      }
+    });
   }
 
   void _handleMessage(RemoteMessage message) {

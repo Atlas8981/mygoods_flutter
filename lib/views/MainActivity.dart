@@ -1,8 +1,4 @@
-import 'dart:async';
-import 'dart:io';
 
-import 'package:firebase_messaging/firebase_messaging.dart';
-import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:mygoods_flutter/controllers/BottomNavigationViewController.dart';
@@ -25,7 +21,6 @@ class MainActivity extends StatefulWidget {
 
 class _MainActivityState extends State<MainActivity> {
   final bottomNavigationController = Get.put(LandingPageController());
-  final FirebaseMessaging _fcm = FirebaseMessaging.instance;
   final notificationService = NotificationService();
 
   Widget buildBottomNavigationMenu(context, landingPageController) {
@@ -105,68 +100,10 @@ class _MainActivityState extends State<MainActivity> {
   }
 
   @override
-  void didChangeDependencies() async {
-    super.didChangeDependencies();
-    final NotificationSettings settings = await _fcm.requestPermission(
-      alert: true,
-      announcement: true,
-      badge: true,
-      carPlay: false,
-      criticalAlert: false,
-      provisional: false,
-      sound: true,
-    );
-    if (settings.authorizationStatus == AuthorizationStatus.authorized) {
-      if (kDebugMode) {
-        print('User granted permission');
-      }
-    } else if (settings.authorizationStatus ==
-        AuthorizationStatus.provisional) {
-      if (kDebugMode) {
-        print('User granted provisional permission');
-      }
-    } else {
-      if (kDebugMode) {
-        print('User declined or has not accepted permission');
-      }
-    }
-    notificationService.setupInteractedMessage();
-  }
-
-  late StreamSubscription iosSubscription;
-
-  @override
   void initState() {
     super.initState();
-    if (Platform.isIOS) {
-      // iosSubscription = _fcm.requestPermission();
-      // _fcm.requestPermission(());
-    } else {
-      // notificationService.saveDeviceToken();
-    }
-
     NotificationService.init();
-
-    FirebaseMessaging.onMessage.listen((RemoteMessage message) {
-      if (kDebugMode) {
-        print('Got a message whilst in the foreground!');
-        print('Message data: ${message.data}');
-      }
-
-      if (message.notification != null &&
-          message.notification!.android != null) {
-        if (kDebugMode) {
-          print(
-              'Message also contained a notification: ${message.notification!.title}');
-          print(message.notification!.title);
-        }
-
-        NotificationService.showNotification(
-          title: '${message.notification!.title}',
-          body: "${message.notification!.body}",
-          payload: "this is payload",
-        );
-      }
-    });
+    notificationService.setupInteractedMessage();
+    notificationService.setUpOnMessage();
   }
 }

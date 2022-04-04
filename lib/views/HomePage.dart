@@ -1,4 +1,6 @@
 import 'package:animations/animations.dart';
+import 'package:cloud_functions/cloud_functions.dart';
+import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:mygoods_flutter/controllers/HomePageController.dart';
@@ -22,6 +24,24 @@ class _HomePageState extends State<HomePage> {
   final homePageService = HomePageService();
 
   final homePageController = Get.put(HomePageController());
+  final functions = FirebaseFunctions.instance;
+
+  Future<void> callCloudFunction() async {
+    final HttpsCallable callable =
+        functions.httpsCallable('sendHttpCallablePushNotification');
+
+    try {
+      final results = await callable();
+      if (kDebugMode) {
+        print(results);
+      }
+    } on FirebaseFunctionsException catch (e) {
+      if (kDebugMode) {
+        print(e.message);
+        print(e.code);
+      }
+    }
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -29,12 +49,19 @@ class _HomePageState extends State<HomePage> {
       appBar: AppBar(
         title: const Text("Home"),
         actions: [
+          if (kDebugMode)
+            IconButton(
+              onPressed: () {
+                callCloudFunction();
+              },
+              icon: const Icon(Icons.send),
+            ),
           IconButton(
             onPressed: () {
               showToast("In Development");
             },
             icon: const Icon(Icons.search),
-          )
+          ),
         ],
       ),
       body: SafeArea(
