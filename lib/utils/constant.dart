@@ -209,6 +209,14 @@ String? validatePhoneNumber(String? value) {
   return null;
 }
 
+String getFont() {
+  if (Get.locale == const Locale('en', 'US')) {
+    return 'Roboto';
+  } else {
+    return 'KhmerOSBattambang';
+  }
+}
+
 checkImageProvider(DualImage image) {
   if (image.isNetworkImage) {
     return ExtendedImage.network(

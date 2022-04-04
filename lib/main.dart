@@ -8,6 +8,7 @@ import 'package:flutter_localizations/flutter_localizations.dart';
 import 'package:get/get.dart';
 import 'package:get_storage/get_storage.dart';
 import 'package:mygoods_flutter/controllers/initial_binding.dart';
+import 'package:mygoods_flutter/services/LocalizationSerivce.dart';
 import 'package:mygoods_flutter/utils/constant.dart';
 import 'package:mygoods_flutter/views/MainActivity.dart';
 
@@ -61,10 +62,21 @@ Future<void> main() async {
 
 Future<void> _firebaseMessagingBackgroundHandler(RemoteMessage message) async {}
 
-class MyGoods extends StatelessWidget {
+class MyGoods extends StatefulWidget {
   const MyGoods({
     Key? key,
   }) : super(key: key);
+
+  @override
+  State<MyGoods> createState() => _MyGoodsState();
+}
+
+class _MyGoodsState extends State<MyGoods> {
+  @override
+  void initState() {
+    super.initState();
+    LocalizationService().getLocale();
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -72,6 +84,9 @@ class MyGoods extends StatelessWidget {
     return GetMaterialApp(
       title: 'MyGoods Flutter From Window @.20',
       home: const MainActivity(),
+      locale: Get.locale,
+      fallbackLocale: LocalizationService.fallbackLocale,
+      translations: LocalizationService(),
       initialBinding: InitialBinding(),
       localizationsDelegates: const [
         GlobalMaterialLocalizations.delegate,
@@ -98,6 +113,7 @@ class MyGoods extends StatelessWidget {
         textTheme: Theme.of(context).textTheme.apply(
               bodyColor: Colors.white,
               displayColor: Colors.white,
+              fontFamily: getFont(),
             ),
         pageTransitionsTheme: const PageTransitionsTheme(
           builders: {
@@ -121,6 +137,7 @@ class MyGoods extends StatelessWidget {
         ),
         textTheme: Theme.of(context).textTheme.apply(
               bodyColor: Colors.black,
+              fontFamily: getFont(),
             ),
         pageTransitionsTheme: const PageTransitionsTheme(
           builders: {

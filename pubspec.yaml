@@ -131,6 +131,19 @@ flutter:
     #    - assets/images/watch.png
     #    - assets/images/watches.jpg
     - assets/messages.json
+  fonts:
+    - family: Moul
+      fonts:
+        - asset: assets/fonts/Moul-Regular.ttf
+    - family: KhmerOSBattambang
+      fonts:
+        - asset: assets/fonts/KhmerOS_battambang.ttf
+    - family: Roboto
+      fonts:
+        - asset: assets/fonts/Roboto-Bold.ttf
+        - asset: assets/fonts/Roboto-Light.ttf
+        - asset: assets/fonts/Roboto-Medium.ttf
+        - asset: assets/fonts/Roboto-Regular.ttf
 
   # An image asset can refer to one or more resolution-specific "variants", see
   # https://flutter.dev/assets-and-images/#resolution-aware.
