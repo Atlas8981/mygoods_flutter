@@ -2,9 +2,20 @@
 //Language Code: km
 
 const Map<String, String> kmKH = {
-  'splashText': 'ចូលកម្មវិធី',
-  'appName': 'ប្រព័ន្ធគ្រប់គ្រងស៊ីមកាត',
-  'checkBack': 'ចុចម្តងទៀតដើម្បីចាកចេញ',
+  //For MyGoods
+
+  'home':"ទំព័រដើម",
+  'trending':"ផលិតផលពេញនិយម",
+  'recentlyView':"បានមើលនាពេលថ្មីៗនេះ",
+  'recommendation':'ផលិតផលអ្នកនឹងចូលចិត្ត',
+  'viewAll':"មើលទាំងអស់",
+  'seller': 'អ្នកលក់',
+  'buyer':'អ្នកទិញ',
+  'gender': 'ភេទ',
+  'male': 'ប្រុស',
+  'female': 'ស្រី',
+
+  //Common Phrase
   'second': 'វិនាទី',
   'minute': 'នាទី',
   'hour': 'ម៉ោង',
@@ -18,31 +29,36 @@ const Map<String, String> kmKH = {
   'no': 'ទេ',
   'openCamera': 'បើកកាមេរ៉ា',
   'openGallery': 'បើកវិចិត្រសាល',
-  'qrScanner': 'ស្កេនលេខកូដ QR',
-  'invalidQr': 'រូបភាពកូដ Qr មិនត្រឹមត្រូវ',
   'signOut': 'ចាកចេញ',
-  'signOutTitle': "តើអ្នកពិតជាចង់ចាកចេញមែនទេ?",
-  'deleteTitle': "តើអ្នកប្រាកដទេថាអ្នកចង់លុប",
   'delete': "លុបចេាល",
-  'noInternetTitle': 'មិនមានការតភ្ជាប់អ៊ីនធឺណិត',
-  'noInternetSubtitle':
-      'សូមពិនិត្យមើលការតភ្ជាប់អ៊ីនធឺណិតរបស់អ្នក ហើយព្យាយាមម្តងទៀត',
-  'okButtonText': 'បាទ/ចាស',
-
-  //SETTING PAGE
   'setting': 'ការកំណត់',
   'language': 'ភាសា',
-  'setBiometric': 'កំណត់ការផ្ទៀងផ្ទាត់ជីវមាត្រ',
-  'turnOffBiometric': 'បញ្ជាក់ដើម្បីបិទការផ្ទៀងផ្ទាត់ជីវមាត្រ',
-  'turnOnBiometric': 'បញ្ជាក់ដើម្បីបើកការផ្ទៀងផ្ទាត់ជីវមាត្រ',
-
-  //BUTTON TEXT
   'login': 'ចូល',
   'next': 'បន្ទាប់',
   'back': 'ត្រលប់ក្រោយ',
   'verify': 'ផ្ទៀងផ្ទាត់',
   'confirm': 'យល់ព្រម',
   'cancel': 'បោះបង់',
+
+  //From Old
+  'splashText': 'ចូលកម្មវិធី',
+  'appName': 'ប្រព័ន្ធគ្រប់គ្រងស៊ីមកាត',
+  'checkBack': 'ចុចម្តងទៀតដើម្បីចាកចេញ',
+  'signOutTitle': "តើអ្នកពិតជាចង់ចាកចេញមែនទេ?",
+  'deleteTitle': "តើអ្នកប្រាកដទេថាអ្នកចង់លុប",
+  'noInternetTitle': 'មិនមានការតភ្ជាប់អ៊ីនធឺណិត',
+  'noInternetSubtitle':
+      'សូមពិនិត្យមើលការតភ្ជាប់អ៊ីនធឺណិតរបស់អ្នក ហើយព្យាយាមម្តងទៀត',
+  'okButtonText': 'បាទ/ចាស',
+
+  //SETTING PAGE
+
+  'setBiometric': 'កំណត់ការផ្ទៀងផ្ទាត់ជីវមាត្រ',
+  'turnOffBiometric': 'បញ្ជាក់ដើម្បីបិទការផ្ទៀងផ្ទាត់ជីវមាត្រ',
+  'turnOnBiometric': 'បញ្ជាក់ដើម្បីបើកការផ្ទៀងផ្ទាត់ជីវមាត្រ',
+
+  //BUTTON TEXT
+
 
   //CREATE ACCOUNT TITLE TEXT
   'createAccount': 'បង្កើតគណនី',
@@ -56,9 +72,7 @@ const Map<String, String> kmKH = {
   'createAccountNotificationBodyFailed': 'គណនីរបស់អ្នកត្រូវបានបដិសេធ',
 
   //FORM TEXT
-  'gender': 'ភេទ',
-  'male': 'ប្រុស',
-  'female': 'ស្រី',
+
   'addPhoto': "បញ្ចូលរូបថត",
   'phoneNumber': 'លេខទូរស័ព្ទ',
   'confirmPhoneNumber': 'បញ្ជាក់លេខទូរស័ព្ទ',
@@ -97,12 +111,6 @@ const Map<String, String> kmKH = {
   'soldSimCard': 'ស៊ីមកាតបានលក់',
   'today': 'ថ្ងៃនេះ',
   'otherDay': 'ថ្ងៃមុន',
-
-  //SIM REGISTRATION
-  'simRegister': 'ចុះឈ្មោះស៊ីមកាត',
-  'simRegisterSuccess': 'ការចុះឈ្មោះសុីមកាតបានសម្រេច',
-  'simFailSuccess': 'ការចុះឈ្មោះសុីមកាតមិនបានសម្រេច',
-  'simImageEmpty': 'សូមបញ្ចូលរូបភាពស៊ីមកាត',
 
   //MY SHOP
   'myShop': 'ហាងខ្ញុំ',

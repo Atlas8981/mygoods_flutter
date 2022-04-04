@@ -44,8 +44,13 @@ class ViewAllPage extends StatelessWidget {
         top: 10,
         bottom: 10,
       ),
-      child: ListView.builder(
+      child: ListView.separated(
         itemCount: items.length,
+        separatorBuilder: (context, index){
+          return Divider(
+            thickness: 1,
+          );
+        },
         itemBuilder: (context, index) {
           return ListItemRow(item: items[index]);
         },

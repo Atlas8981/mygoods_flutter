@@ -1,4 +1,8 @@
 const Map<String, String> enUS = {
+  //For MyGoods
+
+
+  //From Old
   'splashText': 'Enter app',
   'appName': 'Sim Card System',
   'checkBack': 'Press again to exit',
