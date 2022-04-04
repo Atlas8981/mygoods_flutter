@@ -26,23 +26,6 @@ class _HomePageState extends State<HomePage> {
   final homePageController = Get.put(HomePageController());
   final functions = FirebaseFunctions.instance;
 
-  Future<void> callCloudFunction() async {
-    final HttpsCallable callable =
-        functions.httpsCallable('sendHttpCallablePushNotification');
-
-    try {
-      final results = await callable();
-      if (kDebugMode) {
-        print(results);
-      }
-    } on FirebaseFunctionsException catch (e) {
-      if (kDebugMode) {
-        print(e.message);
-        print(e.code);
-      }
-    }
-  }
-
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -127,6 +110,22 @@ class _HomePageState extends State<HomePage> {
         ),
       ),
     );
+  }
+
+  Future<void> callCloudFunction() async {
+    final HttpsCallable callable =
+    functions.httpsCallable('sendHttpCallablePushNotification');
+    try {
+      final results = await callable();
+      if (kDebugMode) {
+        print(results);
+      }
+    } on FirebaseFunctionsException catch (e) {
+      if (kDebugMode) {
+        print(e.message);
+        print(e.code);
+      }
+    }
   }
 
   Widget homePageListView(
