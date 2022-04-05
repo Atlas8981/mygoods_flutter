@@ -1,6 +1,9 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
+import 'package:firebase_messaging/firebase_messaging.dart';
 import 'package:firebase_storage/firebase_storage.dart';
+import 'package:get/get.dart';
+import 'package:mygoods_flutter/controllers/UserController.dart';
 
 import '../utils/constant.dart';
 
@@ -8,6 +11,7 @@ class AuthenticationService {
   final auth = FirebaseAuth.instance;
   final firestore = FirebaseFirestore.instance;
   final storage = FirebaseStorage.instance;
+  final fcm = FirebaseMessaging.instance;
 
   Future<UserCredential?> loginWithEmailPassword(
       String email, String password) async {
@@ -39,18 +43,27 @@ class AuthenticationService {
   }
 
   Future<bool> signOut() async {
-    //TODO:remove device token from database
-    bool isSignOut = false;
+    final user = Get.find<UserController>().user?.value;
     try {
-      await auth.signOut().then((value) => isSignOut = true);
-      return isSignOut;
+      if (user != null) {
+        final currentDevices = user.devices ?? [];
+        final currentToken = await fcm.getToken();
+        currentDevices.removeWhere((device) => device.token == currentToken);
+        await firestore.collection(userCollection).doc(user.userId).update({
+          "devices": currentDevices.map((e) => e.toJson()).toList(),
+        });
+        await auth.signOut();
+        return true;
+      } else {
+        return false;
+      }
     } on FirebaseAuthException catch (e) {
       if (e.code == 'user-not-found') {
         showToast('No user found for that email.');
       } else if (e.code == 'wrong-password') {
         showToast('Wrong password provided for that user.');
       }
-      return isSignOut;
+      return false;
     }
   }
 }
