@@ -47,7 +47,7 @@ class ViewAllPage extends StatelessWidget {
       child: ListView.separated(
         itemCount: items.length,
         separatorBuilder: (context, index){
-          return Divider(
+          return const Divider(
             thickness: 1,
           );
         },

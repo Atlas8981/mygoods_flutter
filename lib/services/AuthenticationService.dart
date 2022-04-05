@@ -66,4 +66,5 @@ class AuthenticationService {
       return false;
     }
   }
+
 }

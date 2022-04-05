@@ -8,6 +8,8 @@ import 'package:rxdart/rxdart.dart';
 class NotificationService {
   static final localNotifications = FlutterLocalNotificationsPlugin();
   static final onNotifications = BehaviorSubject<String>();
+  final FirebaseMessaging fcm = FirebaseMessaging.instance;
+  final FirebaseFirestore db = FirebaseFirestore.instance;
 
   static Future showNotification({
     int id = 0,
@@ -15,7 +17,6 @@ class NotificationService {
     String? body,
     String? payload,
   }) async {
-
     await localNotifications.show(
       id,
       title,
@@ -56,13 +57,10 @@ class NotificationService {
     );
   }
 
-  final FirebaseMessaging _fcm = FirebaseMessaging.instance;
-  final FirebaseFirestore _db = FirebaseFirestore.instance;
-
   Future<void> saveDeviceToken(
       String userId, List<Device> devices, String? deviceToken) async {
     if (deviceToken != null) {
-      var userRef = _db.collection("users").doc(userId);
+      var userRef = db.collection("users").doc(userId);
       await userRef.update({
         "devices": devices.map((e) => e.toJson()).toList(),
       });
@@ -70,7 +68,7 @@ class NotificationService {
   }
 
   Future<void> setupInteractedMessage() async {
-    RemoteMessage? initialMessage = await _fcm.getInitialMessage();
+    final RemoteMessage? initialMessage = await fcm.getInitialMessage();
 
     if (initialMessage != null) {
       _handleMessage(initialMessage);
