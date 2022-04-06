@@ -14,12 +14,12 @@ import 'package:mygoods_flutter/models/user.dart';
 import 'package:mygoods_flutter/services/AuthenticationService.dart';
 import 'package:mygoods_flutter/utils/constant.dart';
 import 'package:mygoods_flutter/views/utils/CropImagePage.dart';
-import 'package:mygoods_flutter/views/EditProfilePage.dart';
+import 'package:mygoods_flutter/views/user/EditProfilePage.dart';
 import 'package:mygoods_flutter/views/utils/ImagePreviewerPage.dart';
-import 'package:mygoods_flutter/views/SavedItemsPage.dart';
+import 'package:mygoods_flutter/views/user/SavedItemsPage.dart';
 import 'package:mygoods_flutter/views/authentication/ResetPasswordPage.dart';
 import 'package:mygoods_flutter/views/cells/CategoryItemRow.dart';
-import 'package:mygoods_flutter/views/MyItemPage.dart';
+import 'package:mygoods_flutter/views/item/MyItemPage.dart';
 import 'package:mygoods_flutter/views/utils/ImageViewerPage.dart';
 import 'package:mygoods_flutter/views/utils/SettingPage.dart';
 

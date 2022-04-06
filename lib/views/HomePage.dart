@@ -4,12 +4,14 @@ import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:mygoods_flutter/controllers/HomePageController.dart';
+import 'package:mygoods_flutter/main.dart';
 import 'package:mygoods_flutter/models/item.dart';
 import 'package:mygoods_flutter/services/HomePageService.dart';
 import 'package:mygoods_flutter/utils/constant.dart';
-import 'package:mygoods_flutter/views/ItemDetailPage.dart';
+import 'package:mygoods_flutter/views/item/ItemDetailPage.dart';
 import 'package:mygoods_flutter/views/ViewAllPage.dart';
 import 'package:mygoods_flutter/views/cells/HomePageCell.dart';
+import 'package:mygoods_flutter/views/search/ItemSearchDelegate.dart';
 
 class HomePage extends StatefulWidget {
   const HomePage({
@@ -41,7 +43,10 @@ class _HomePageState extends State<HomePage> {
             ),
           IconButton(
             onPressed: () {
-              showToast("In Development");
+              showSearch(
+                context: context,
+                delegate: ItemSearchDelegate(),
+              );
             },
             icon: const Icon(Icons.search),
           ),
@@ -61,50 +66,52 @@ class _HomePageState extends State<HomePage> {
                 height: 125,
                 width: double.infinity,
               ),
-              GetBuilder<HomePageController>(
-                builder: (controller) {
-                  if (controller.trendingItems == null) {
-                    return const Center(
-                      child: CircularProgressIndicator(),
-                    );
-                  }
-                  final List<Item> trendingItems =
-                      controller.trendingItems!.cast();
-                  if (trendingItems.isNotEmpty) {
-                    return homePageListView(
-                      "Trending",
-                      items: trendingItems,
-                      onTap: () {
-                        showToast("In Development");
-                      },
-                    );
-                  } else {
-                    return Container();
-                  }
-                },
-              ),
-              GetBuilder<HomePageController>(
-                builder: (controller) {
-                  if (controller.recentViewItems == null) {
-                    return const Center(
-                      child: CircularProgressIndicator(),
-                    );
-                  }
-                  final List<Item> recentViewItems =
-                      controller.recentViewItems!.cast();
-                  if (recentViewItems.isNotEmpty) {
-                    return homePageListView(
-                      "Recently View",
-                      items: recentViewItems,
-                      onTap: () {
-                        showToast("In Development");
-                      },
-                    );
-                  } else {
-                    return Container();
-                  }
-                },
-              ),
+              if (!kDebugMode)
+                GetBuilder<HomePageController>(
+                  builder: (controller) {
+                    if (controller.trendingItems == null) {
+                      return const Center(
+                        child: CircularProgressIndicator(),
+                      );
+                    }
+                    final List<Item> trendingItems =
+                        controller.trendingItems!.cast();
+                    if (trendingItems.isNotEmpty) {
+                      return homePageListView(
+                        "Trending",
+                        items: trendingItems,
+                        onTap: () {
+                          showToast("In Development");
+                        },
+                      );
+                    } else {
+                      return Container();
+                    }
+                  },
+                ),
+              if (!kDebugMode)
+                GetBuilder<HomePageController>(
+                  builder: (controller) {
+                    if (controller.recentViewItems == null) {
+                      return const Center(
+                        child: CircularProgressIndicator(),
+                      );
+                    }
+                    final List<Item> recentViewItems =
+                        controller.recentViewItems!.cast();
+                    if (recentViewItems.isNotEmpty) {
+                      return homePageListView(
+                        "Recently View",
+                        items: recentViewItems,
+                        onTap: () {
+                          showToast("In Development");
+                        },
+                      );
+                    } else {
+                      return Container();
+                    }
+                  },
+                ),
             ],
           ),
         ),
@@ -114,7 +121,7 @@ class _HomePageState extends State<HomePage> {
 
   Future<void> callCloudFunction() async {
     final HttpsCallable callable =
-    functions.httpsCallable('sendHttpCallablePushNotification');
+        functions.httpsCallable('sendHttpCallablePushNotification');
     try {
       final results = await callable();
       if (kDebugMode) {

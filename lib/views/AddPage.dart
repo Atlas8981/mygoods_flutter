@@ -73,11 +73,11 @@ class _AddPageState extends State<AddPage> {
         item.subCategory: currentCategoryCount + 1,
       });
 
-      itemFormController.isVisible.value = true;
+      itemFormController.isVisible.value = false;
       showToast("Success");
       itemFormController.clearData();
     }).catchError((error) {
-      itemFormController.isVisible.value = true;
+      itemFormController.isVisible.value = false;
       if (kDebugMode) {
         print("Failed with error: $error");
       }
@@ -88,11 +88,6 @@ class _AddPageState extends State<AddPage> {
     itemFormController.isVisible.value = true;
     final images = await uploadFiles(itemFormController.getRawImageInFile());
     uploadData(images);
-  }
-
-  @override
-  void initState() {
-    super.initState();
   }
 
   @override

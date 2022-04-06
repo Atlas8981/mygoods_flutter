@@ -149,7 +149,8 @@ class _ListButtonSheetState extends State<ListButtonSheet> {
   @override
   Widget build(BuildContext context) {
     return Container(
-      padding: const EdgeInsets.all(20),
+      padding: const EdgeInsets.all(8),
+      color: Theme.of(context).scaffoldBackgroundColor,
       child: ListView.builder(
         shrinkWrap: true,
         itemCount: widget.items.length,
@@ -159,12 +160,9 @@ class _ListButtonSheetState extends State<ListButtonSheet> {
               widget.onItemClick(index);
               Get.back();
             },
-            child: Container(
-              padding: const EdgeInsets.all(10),
-              child: Text(
-                widget.items[index],
-                style: const TextStyle(fontSize: 16, height: 1.5),
-              ),
+            child: ListTile(
+
+              title: Text(widget.items[index]),
             ),
           );
         },

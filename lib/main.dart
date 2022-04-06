@@ -1,3 +1,4 @@
+import 'package:algolia/algolia.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:firebase_messaging/firebase_messaging.dart';
 import 'package:flutter/material.dart';
@@ -7,7 +8,7 @@ import 'package:flutter_localizations/flutter_localizations.dart';
 
 import 'package:get/get.dart';
 import 'package:get_storage/get_storage.dart';
-import 'package:mygoods_flutter/controllers/initial_binding.dart';
+import 'package:mygoods_flutter/controllers/InitialBinding.dart';
 import 'package:mygoods_flutter/services/LocalizationSerivce.dart';
 import 'package:mygoods_flutter/utils/constant.dart';
 import 'package:mygoods_flutter/views/LandingPage.dart';

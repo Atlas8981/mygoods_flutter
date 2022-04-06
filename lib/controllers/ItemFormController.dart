@@ -51,6 +51,7 @@ class ItemFormController extends GetxController {
     condition.value = "";
     tempImages.clear();
     formKey = GlobalKey<FormState>();
+    Get.find<ItemFormController>().isVisible.value = false;
     update();
   }
 

@@ -321,9 +321,7 @@ class _ItemFormState extends State<ItemForm> {
                   ),
                 ],
               ),
-              const SizedBox(
-                height: 10,
-              ),
+              const SizedBox(height: 10),
               ClickableTextField(
                 labelText: "Category",
                 controller: controller.categoryCon,
@@ -403,16 +401,12 @@ class _ItemFormState extends State<ItemForm> {
                   );
                 },
               ),
-              const SizedBox(
-                height: 10,
-              ),
+              const SizedBox(height: 10),
               TypeTextField(
                 labelText: "Address",
                 controller: controller.addressCon,
               ),
-              const SizedBox(
-                height: 10,
-              ),
+              const SizedBox(height: 10),
               TypeTextField(
                 labelText: "Phone Number",
                 controller: controller.phoneCon,
@@ -437,16 +431,13 @@ class _ItemFormState extends State<ItemForm> {
                   return null;
                 },
               ),
-              const SizedBox(
-                height: 10,
-              ),
+              const SizedBox(height: 10),
               TextField(
                 controller: controller.descriptionCon,
                 maxLength: 200,
                 textAlign: TextAlign.start,
                 style: const TextStyle(
                   fontSize: 16,
-                  color: Colors.black,
                 ),
                 keyboardType: TextInputType.multiline,
                 maxLines: 5,
@@ -458,12 +449,13 @@ class _ItemFormState extends State<ItemForm> {
                   ),
                   labelText: "Description",
                   border: OutlineInputBorder(),
-                  counterStyle: TextStyle(fontSize: 12, height: 1),
+                  counterStyle: TextStyle(
+                    fontSize: 12,
+                    height: 1,
+                  ),
                 ),
               ),
-              const SizedBox(
-                height: 10,
-              ),
+              const SizedBox(height: 10),
             ],
           ),
         );

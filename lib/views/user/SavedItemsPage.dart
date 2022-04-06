@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:mygoods_flutter/controllers/SavedItemsController.dart';
 import 'package:mygoods_flutter/models/item.dart';
-import 'package:mygoods_flutter/views/ItemDetailPage.dart';
+import 'package:mygoods_flutter/views/item/ItemDetailPage.dart';
 import 'package:mygoods_flutter/views/cells/ListItemRow.dart';
 
 class SavedItemsPage extends StatelessWidget {

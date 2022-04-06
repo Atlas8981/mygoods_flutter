@@ -8,7 +8,7 @@ import 'package:mygoods_flutter/controllers/UserController.dart';
 import 'package:mygoods_flutter/services/AuthenticationService.dart';
 import 'package:mygoods_flutter/utils/constant.dart';
 import 'package:mygoods_flutter/views/LandingPage.dart';
-import 'package:mygoods_flutter/views/RegisterPage.dart';
+import 'package:mygoods_flutter/views/authentication/RegisterPage.dart';
 import 'package:mygoods_flutter/views/authentication/VerifyOtpPage.dart';
 
 class LoginWithPhoneNumberPage extends StatelessWidget {

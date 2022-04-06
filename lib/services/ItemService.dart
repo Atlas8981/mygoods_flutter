@@ -7,6 +7,7 @@ import 'package:mygoods_flutter/utils/constant.dart';
 
 class ItemService {
   final firestore = FirebaseFirestore.instance;
+  final auth = FirebaseAuth.instance;
 
   Future<List<Item>> getItemsByCategory(String mainCat, String subCat) async {
     List<Item> response = [];
@@ -104,16 +105,14 @@ class ItemService {
   }
 
   Future<void> addViewToItem(String itemId, List<String> viewers) async {
-    final auth = FirebaseAuth.instance;
     if (auth.currentUser == null) {
       return;
     }
     viewers.add(auth.currentUser!.uid);
     final List<String> newViewers = viewers.toSet().toList();
-    await firestore
-        .collection(itemCollection)
-        .doc(itemId)
-        .update({'viewers': newViewers});
+    await firestore.collection(itemCollection).doc(itemId).update({
+      'viewers': newViewers,
+    });
   }
 
   Future<Item?> getItemById(String itemId) async {
@@ -127,7 +126,5 @@ class ItemService {
 
   Future<void> getPopularCategory() async {}
 
-  void setPopularCategory() {
-
-  }
+  void setPopularCategory() {}
 }

@@ -34,10 +34,7 @@ class _ClickableTextFieldState extends State<ClickableTextField> {
       autovalidateMode: AutovalidateMode.onUserInteraction,
       controller: widget.controller,
       maxLength: (widget.maxLength != null) ? widget.maxLength : null,
-      style: const TextStyle(
-        fontSize: 16,
-        color: Colors.black,
-      ),
+      style: const TextStyle(fontSize: 16),
       onTap: widget.onTap,
       focusNode: AlwaysDisabledFocusNode(),
       decoration: InputDecoration(

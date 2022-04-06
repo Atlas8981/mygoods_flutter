@@ -6,8 +6,8 @@ import 'package:mygoods_flutter/controllers/MyItemsController.dart';
 import 'package:mygoods_flutter/models/item.dart';
 import 'package:mygoods_flutter/services/ItemService.dart';
 import 'package:mygoods_flutter/services/UserService.dart';
-import 'package:mygoods_flutter/views/EditItemPage.dart';
-import 'package:mygoods_flutter/views/OwnerItemDetailPage.dart';
+import 'package:mygoods_flutter/views/item/EditItemPage.dart';
+import 'package:mygoods_flutter/views/user/OwnerItemDetailPage.dart';
 
 class MyItemsPage extends StatelessWidget {
   MyItemsPage({Key? key}) : super(key: key);

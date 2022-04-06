@@ -60,6 +60,7 @@ dependencies:
   marquee: ^2.2.0
   flutter_local_notifications: ^9.0.2
   bottom_navy_bar: ^6.0.0
+  algolia: ^1.0.5
 
 dev_dependencies:
   flutter_test:

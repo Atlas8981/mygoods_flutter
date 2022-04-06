@@ -32,7 +32,7 @@ class Item {
   final Timestamp date;
   final String subCategory;
   final List<Image> images;
-  final int amount;
+  final int? amount;
   final String address;
   final String description;
   final String userid;
@@ -45,7 +45,11 @@ class Item {
   final int views;
 
   factory Item.fromJson(Map<String, dynamic> json) => Item(
-        date: json["date"],
+        date: (json["date"] is int)
+            ? Timestamp.fromDate(
+                DateTime.fromMillisecondsSinceEpoch(json["date"]),
+              )
+            : json["date"],
         subCategory: json["subCategory"],
         images: List<Image>.from(json["images"].map((x) => Image.fromJson(x))),
         amount: json["amount"],
@@ -53,7 +57,9 @@ class Item {
         description: json["description"],
         userid: json["userid"],
         itemid: json["itemid"],
-        viewers: (json["viewers"] != null) ? List<String>.from(json["viewers"].map((x) => x)) : [],
+        viewers: (json["viewers"] != null)
+            ? List<String>.from(json["viewers"].map((x) => x))
+            : [],
         phone: json["phone"],
         price: json["price"].toDouble(),
         name: json["name"],

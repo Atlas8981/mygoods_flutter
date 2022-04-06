@@ -7,7 +7,7 @@ import 'package:mygoods_flutter/services/AuthenticationService.dart';
 import 'package:mygoods_flutter/services/UserService.dart';
 import 'package:mygoods_flutter/utils/constant.dart';
 import 'package:mygoods_flutter/views/LandingPage.dart';
-import 'package:mygoods_flutter/views/RegisterPage.dart';
+import 'package:mygoods_flutter/views/authentication/RegisterPage.dart';
 import 'package:mygoods_flutter/views/authentication/LoginWithPhoneNumberPage.dart';
 
 class LoginWithEmailPage extends StatefulWidget {

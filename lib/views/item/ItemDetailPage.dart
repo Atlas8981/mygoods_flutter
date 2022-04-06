@@ -291,9 +291,11 @@ class _ItemDetailPageState extends State<ItemDetailPage> {
                         height: 20,
                       ),
                       Text(
-                        "Views ${item.views}",
+                        "Views: ${item.viewers.length}",
                         style: const TextStyle(
-                            fontSize: 14, fontWeight: FontWeight.w600),
+                          fontSize: 14,
+                          fontWeight: FontWeight.w600,
+                        ),
                       ),
                       const Divider(
                         height: 20,

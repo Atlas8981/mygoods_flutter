@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:mygoods_flutter/models/category.dart';
 import 'package:mygoods_flutter/utils/constant.dart';
-import 'package:mygoods_flutter/views/ListItemByCategoryPage.dart';
+import 'package:mygoods_flutter/views/item/ListItemByCategoryPage.dart';
 import 'package:mygoods_flutter/views/cells/CategoryItemRow.dart';
 
 class SubCategoryPage extends StatelessWidget {

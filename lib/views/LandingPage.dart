@@ -3,9 +3,9 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:mygoods_flutter/controllers/BottomNavigationViewController.dart';
 import 'package:mygoods_flutter/services/NotificationService.dart';
-import 'package:mygoods_flutter/views/AboutMePage.dart';
+import 'package:mygoods_flutter/views/user/AboutMePage.dart';
 import 'package:mygoods_flutter/views/AddPage.dart';
-import 'package:mygoods_flutter/views/CategoryPage.dart';
+import 'package:mygoods_flutter/views/category/CategoryPage.dart';
 import 'package:mygoods_flutter/views/chat/ChatListPage.dart';
 
 import 'HomePage.dart';
@@ -68,6 +68,7 @@ class _LandingPageState extends State<LandingPage> {
         itemCornerRadius: 8,
         containerHeight: Get.height / 12,
         showElevation: true,
+        animationDuration: const Duration(milliseconds: 250),
         items: [
           BottomNavyBarItem(
             icon: const Icon(Icons.home),
