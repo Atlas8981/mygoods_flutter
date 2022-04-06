@@ -192,6 +192,7 @@ final List<Category> furnitureSubCategories = [
   Category(name: "Other", image: "${imageDir}other.png"),
 ];
 
+
 const redColor = Color.fromARGB(255, 236, 0, 0);
 
 const String dummyNetworkImage =

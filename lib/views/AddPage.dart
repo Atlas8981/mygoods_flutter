@@ -13,7 +13,9 @@ import 'package:mygoods_flutter/models/item.dart';
 import 'package:mygoods_flutter/utils/constant.dart';
 
 class AddPage extends StatefulWidget {
-  const AddPage({Key? key}) : super(key: key);
+  const AddPage({
+    Key? key,
+  }) : super(key: key);
 
   @override
   _AddPageState createState() => _AddPageState();
@@ -40,7 +42,7 @@ class _AddPageState extends State<AddPage> {
   }
 
   void uploadData(List<myImageClass.Image> images) {
-    final CollectionReference reference = firestore.collection(itemCollection);
+    final reference = firestore.collection(itemCollection);
 
     final String id =
         reference.doc().path.toString().replaceAll("$itemCollection/", "");
@@ -62,7 +64,15 @@ class _AddPageState extends State<AddPage> {
       views: 0,
     );
 
-    reference.doc(id).set(item.toJson()).then((value) {
+    reference.doc(id).set(item.toJson()).then((value) async {
+      final docRef = firestore.collection("category").doc("popularCategory");
+
+      final docSnapshot = await docRef.get();
+      final currentCategoryCount = docSnapshot.data()?[item.subCategory] as int;
+      docRef.update({
+        item.subCategory: currentCategoryCount + 1,
+      });
+
       itemFormController.isVisible.value = true;
       showToast("Success");
       itemFormController.clearData();

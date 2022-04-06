@@ -1,4 +1,3 @@
-import 'package:animations/animations.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:mygoods_flutter/controllers/SavedItemsController.dart';
@@ -7,7 +6,9 @@ import 'package:mygoods_flutter/views/ItemDetailPage.dart';
 import 'package:mygoods_flutter/views/cells/ListItemRow.dart';
 
 class SavedItemsPage extends StatelessWidget {
-  const SavedItemsPage({Key? key}) : super(key: key);
+  const SavedItemsPage({
+    Key? key,
+  }) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
@@ -42,16 +43,11 @@ class SavedItemsPage extends StatelessWidget {
                   );
                 },
                 itemBuilder: (context, index) {
-                  return OpenContainer(
-                    closedElevation: 0,
-                    closedBuilder: (context, action) =>
-                        ListItemRow(item: items[index]),
-                    openBuilder: (context, action) {
-                      return ItemDetailPage(
-                        item: items[index],
-                      );
-                    },
-                    closedColor: Theme.of(context).scaffoldBackgroundColor,
+                  return ListItemRow(
+                    item: items[index],
+                    destination: ItemDetailPage(
+                      item: items[index],
+                    ),
                   );
                 },
               ),

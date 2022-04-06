@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:mygoods_flutter/models/item.dart';
 import 'package:mygoods_flutter/services/HomePageService.dart';
+import 'package:mygoods_flutter/views/ItemDetailPage.dart';
 import 'package:mygoods_flutter/views/cells/ListItemRow.dart';
 
 class ViewAllPage extends StatelessWidget {
@@ -46,13 +47,18 @@ class ViewAllPage extends StatelessWidget {
       ),
       child: ListView.separated(
         itemCount: items.length,
-        separatorBuilder: (context, index){
+        separatorBuilder: (context, index) {
           return const Divider(
             thickness: 1,
           );
         },
         itemBuilder: (context, index) {
-          return ListItemRow(item: items[index]);
+          return ListItemRow(
+            item: items[index],
+            destination: ItemDetailPage(
+              item: items[index],
+            ),
+          );
         },
       ),
     );

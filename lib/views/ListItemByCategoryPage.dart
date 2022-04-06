@@ -1,12 +1,11 @@
-import 'package:animations/animations.dart';
 import 'package:flutter/material.dart';
 import 'package:mygoods_flutter/models/item.dart';
 import 'package:mygoods_flutter/services/ItemService.dart';
 import 'package:mygoods_flutter/views/ItemDetailPage.dart';
 import 'package:mygoods_flutter/views/cells/ListItemRow.dart';
 
-class ListItem extends StatefulWidget {
-  const ListItem({
+class ListItemByCategoryPage extends StatefulWidget {
+  const ListItemByCategoryPage({
     Key? key,
     required this.mainCat,
     required this.subCat,
@@ -15,10 +14,10 @@ class ListItem extends StatefulWidget {
   final String mainCat, subCat;
 
   @override
-  _ListItemState createState() => _ListItemState();
+  _ListItemByCategoryPageState createState() => _ListItemByCategoryPageState();
 }
 
-class _ListItemState extends State<ListItem> {
+class _ListItemByCategoryPageState extends State<ListItemByCategoryPage> {
   final ItemService databaseService = ItemService();
 
   @override
@@ -29,7 +28,7 @@ class _ListItemState extends State<ListItem> {
       ),
       body: SafeArea(
         child: FutureBuilder<List<Item>>(
-          future: databaseService.getItems(
+          future: databaseService.getItemsByCategory(
             widget.mainCat,
             widget.subCat,
           ),
@@ -45,23 +44,18 @@ class _ListItemState extends State<ListItem> {
                   child: ListView.separated(
                     physics: const BouncingScrollPhysics(),
                     itemCount: snapshot.data!.length,
-                    separatorBuilder: (context,index){
+                    separatorBuilder: (context, index) {
                       return const Divider(
                         thickness: 1,
                         color: Colors.transparent,
                       );
                     },
                     itemBuilder: (context, index) {
-                      return OpenContainer(
-                        closedBuilder: (context, action) =>
-                            ListItemRow(item: snapshot.data![index]),
-                        openBuilder: (context, action) {
-                          return ItemDetailPage(
-                            item: snapshot.data![index],
-                          );
-                        },
-                        transitionType: ContainerTransitionType.fade,
-                        closedColor: Theme.of(context).scaffoldBackgroundColor,
+                      return ListItemRow(
+                        item: snapshot.data![index],
+                        destination: ItemDetailPage(
+                          item: snapshot.data![index],
+                        ),
                       );
                     },
                   ),

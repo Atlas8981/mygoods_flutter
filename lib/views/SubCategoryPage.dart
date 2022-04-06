@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:mygoods_flutter/models/category.dart';
 import 'package:mygoods_flutter/utils/constant.dart';
-import 'package:mygoods_flutter/views/ListItems.dart';
+import 'package:mygoods_flutter/views/ListItemByCategoryPage.dart';
 import 'package:mygoods_flutter/views/cells/CategoryItemRow.dart';
 
 class SubCategoryPage extends StatelessWidget {
@@ -45,7 +45,7 @@ class SubCategoryPage extends StatelessWidget {
                   return InkWell(
                     onTap: () {
                       Get.to(
-                        () => ListItem(
+                        () => ListItemByCategoryPage(
                           mainCat: title,
                           subCat: decideSubCategory()[index].name,
                         ),

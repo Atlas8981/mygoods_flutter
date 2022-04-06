@@ -2,16 +2,22 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:mygoods_flutter/models/category.dart';
 import 'package:mygoods_flutter/utils/constant.dart';
+import 'package:mygoods_flutter/views/ListItemByPopularCategoryPage.dart';
 import 'package:mygoods_flutter/views/cells/CategoryItemRow.dart';
 import 'package:mygoods_flutter/views/cells/PopularCategoryCell.dart';
 
 import 'SubCategoryPage.dart';
 
-class CategoryPage extends StatelessWidget {
-  CategoryPage({
+class CategoryPage extends StatefulWidget {
+  const CategoryPage({
     Key? key,
   }) : super(key: key);
 
+  @override
+  State<CategoryPage> createState() => _CategoryPageState();
+}
+
+class _CategoryPageState extends State<CategoryPage> {
   final List<Category> popularCategory = [
     Category(name: "Phone", image: "${imageDir}phonepicture.jpg"),
     Category(name: "Bicycle", image: "${imageDir}bikepicture.jpg"),
@@ -47,9 +53,7 @@ class CategoryPage extends StatelessWidget {
                           fontWeight: FontWeight.bold,
                         ),
                       ),
-                      const SizedBox(
-                        height: 8,
-                      ),
+                      const SizedBox(height: 8),
                       GridView.count(
                         scrollDirection: Axis.vertical,
                         childAspectRatio: (85 / 90),
@@ -59,7 +63,12 @@ class CategoryPage extends StatelessWidget {
                         children: List.generate(
                           popularCategory.length,
                           (index) {
-                            return PopularCategoryCell(popularCategory[index]);
+                            return PopularCategoryCell(
+                              popularCategory[index],
+                              destination: ListItemByPopularSubCategoryPage(
+                                subCat: popularCategory[index].name,
+                              ),
+                            );
                           },
                         ),
                       ),

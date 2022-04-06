@@ -39,7 +39,7 @@ class _LandingPageState extends State<LandingPage> {
           index: bottomNavigationController.tabIndex.value,
           children: [
             const HomePage(),
-            CategoryPage(),
+            const CategoryPage(),
             const AddPage(),
             const ChatListPage(),
             const AboutMePage(),
