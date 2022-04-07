@@ -1,3 +1,4 @@
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:mygoods_flutter/components/CustomErrorWidget.dart';
@@ -17,9 +18,9 @@ class ItemSearchDelegate extends SearchDelegate<String> {
     return [
       IconButton(
         onPressed: () {
-          query = "";
+          showResults(context);
         },
-        icon: const Icon(Icons.clear),
+        icon: const Icon(Icons.search),
       ),
     ];
   }
@@ -115,40 +116,59 @@ class _RecentSearchListState extends State<RecentSearchList> {
 
   @override
   Widget build(BuildContext context) {
-    return FutureBuilder<List<String>?>(
-      future: searchService.getRecentSearches(),
-      builder: (context, snapshot) {
-        if (snapshot.connectionState == ConnectionState.waiting) {
-          return LoadingWidget();
-        }
-        final recentSearches = snapshot.data;
-        if (snapshot.hasError ||
-            recentSearches == null ||
-            recentSearches.isEmpty) {
-          return CustomErrorWidget();
-        }
+    return Column(
+      children: [
+        ListTile(
+          title: Text("Recent Search"),
+          trailing: TextButton(
+            onPressed: () async {
+              await searchService.clearRecentSearches();
+              setState(() {});
+            },
+            child: Text("CLEAR"),
+          ),
+        ),
+        FutureBuilder<List<String>?>(
+          future: searchService.getRecentSearches(),
+          builder: (context, snapshot) {
+            if (snapshot.connectionState == ConnectionState.waiting) {
+              return LoadingWidget();
+            }
 
-        return ListView.builder(
-          itemCount: recentSearches.length,
-          itemBuilder: (context, index) {
-            return ListTile(
-              title: Text(
-                recentSearches[index],
-              ),
-              onTap: () {
-                widget.onTap(recentSearches[index]);
+            final recentSearches = snapshot.data;
+            if ((snapshot.hasError ||
+                recentSearches == null ||
+                recentSearches.isEmpty)) {
+              return CustomErrorWidget(
+                text: "No Recent Search",
+              );
+            }
+
+            return ListView.builder(
+              shrinkWrap: true,
+              itemCount: recentSearches.length,
+              itemBuilder: (context, index) {
+                return ListTile(
+                  title: Text(
+                    recentSearches[index],
+                  ),
+                  onTap: () {
+                    widget.onTap(recentSearches[index]);
+                  },
+                  trailing: IconButton(
+                    onPressed: () async {
+                      await searchService
+                          .deleteRecentSearch(recentSearches[index]);
+                      setState(() {});
+                    },
+                    icon: Icon(Icons.clear),
+                  ),
+                );
               },
-              trailing: IconButton(
-                onPressed: () async {
-                  await searchService.deleteRecentSearch(recentSearches[index]);
-                  setState(() {});
-                },
-                icon: Icon(Icons.clear),
-              ),
             );
           },
-        );
-      },
+        ),
+      ],
     );
   }
 }

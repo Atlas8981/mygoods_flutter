@@ -109,4 +109,35 @@ class SearchService {
       }
     }
   }
+
+  Future<void> clearRecentSearches() async {
+    final authUser = auth.currentUser;
+    try {
+      if (user != null) {
+        final querySnapshot = await firestore
+            .collection(userCollection)
+            .doc(user?.userId)
+            .collection("recentSearch")
+            .get();
+        await Future.wait(
+          querySnapshot.docs.map(
+            (element) {
+              return element.reference.delete();
+            },
+          ),
+        );
+      } else if (authUser != null) {
+        await firestore
+            .collection(userCollection)
+            .doc(authUser.uid)
+            .collection("recentSearch")
+            .doc()
+            .delete();
+      }
+    } on FirebaseException catch (e) {
+      if (kDebugMode) {
+        print(e.message);
+      }
+    }
+  }
 }
