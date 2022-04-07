@@ -2,6 +2,7 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:extended_image/extended_image.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
+import 'package:get/get.dart';
 import 'package:mygoods_flutter/components/ImageViews.dart';
 import 'package:mygoods_flutter/models/additionalInfo.dart';
 import 'package:mygoods_flutter/models/item.dart';
@@ -9,6 +10,9 @@ import 'package:mygoods_flutter/models/user.dart' as myUser;
 import 'package:mygoods_flutter/services/ItemService.dart';
 import 'package:mygoods_flutter/services/UserService.dart';
 import 'package:mygoods_flutter/utils/constant.dart';
+import 'package:mygoods_flutter/views/SellerProfilePage.dart';
+import 'package:mygoods_flutter/views/utils/ImagePreviewerPage.dart';
+import 'package:mygoods_flutter/views/utils/ImageViewerPage.dart';
 
 class ItemDetailPage extends StatefulWidget {
   const ItemDetailPage({
@@ -31,7 +35,7 @@ class _ItemDetailPageState extends State<ItemDetailPage> {
   final itemService = ItemService();
   final userService = UserService();
 
-  late final Item item = widget.item;
+  late final item = widget.item;
 
   bool isSaved = false;
 
@@ -75,7 +79,12 @@ class _ItemDetailPageState extends State<ItemDetailPage> {
               const SizedBox(
                 height: 20,
               ),
-              Text(additionalInfoText)
+              Text(additionalInfoText),
+              const Divider(
+                height: 20,
+                thickness: 1.5,
+                color: Colors.grey,
+              ),
             ],
           );
         }
@@ -102,6 +111,7 @@ class _ItemDetailPageState extends State<ItemDetailPage> {
           );
         }
         final myUser.User user = snapshot.data!;
+        final tag = "${user.image!.imageUrl} ${DateTime.now()}";
         return Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
@@ -119,13 +129,26 @@ class _ItemDetailPageState extends State<ItemDetailPage> {
               crossAxisAlignment: CrossAxisAlignment.center,
               mainAxisAlignment: MainAxisAlignment.start,
               children: [
-                CircleAvatar(
-                  radius: 35,
-                  backgroundImage: ExtendedNetworkImageProvider(
-                    user.image!.imageUrl,
-                    cache: true,
-                    cacheRawData: true,
-                    scale: 1 / 2,
+                InkWell(
+                  onTap: () {
+                    Get.to(
+                      () => ImageViewerPage(
+                        image: user.image!.imageUrl,
+                        tag: tag,
+                      ),
+                    );
+                  },
+                  child: Hero(
+                    tag: tag,
+                    child: CircleAvatar(
+                      radius: 35,
+                      backgroundImage: ExtendedNetworkImageProvider(
+                        user.image!.imageUrl,
+                        cache: true,
+                        cacheRawData: true,
+                        scale: 1 / 2,
+                      ),
+                    ),
                   ),
                 ),
                 const SizedBox(width: 10),
@@ -140,10 +163,80 @@ class _ItemDetailPageState extends State<ItemDetailPage> {
             ),
             Text("Tel: ${user.phoneNumber}"),
             const SizedBox(height: 5),
-            Text("Address: ${user.address}")
+            Text("Address: ${user.address}"),
+            const SizedBox(height: 10),
+            Container(
+              padding: EdgeInsets.symmetric(horizontal: 20),
+              width: double.infinity,
+              height: 50,
+              child: ElevatedButton(
+                onPressed: () {
+                  onViewSellerProfile(user);
+                },
+                child: Text(
+                  "View Seller Profile".toUpperCase(),
+                  style: const TextStyle(
+                    fontSize: 16,
+                    letterSpacing: 1.5,
+                  ),
+                ),
+              ),
+            ),
           ],
         );
       },
+    );
+  }
+
+  Widget saveButton() {
+    return Container(
+      padding: const EdgeInsets.all(20),
+      child: Column(
+        children: [
+          Visibility(
+            visible: (FirebaseAuth.instance.currentUser != null),
+            child: SizedBox(
+              width: double.infinity,
+              height: 50,
+              child: FutureBuilder<bool>(
+                future: userService.checkSaveItem(item.itemid),
+                builder: (context, snapshot) {
+                  if (!snapshot.hasData) {
+                    return OutlinedButton(
+                      onPressed: () {},
+                      child: const Text("SAVE"),
+                    );
+                  }
+                  isSaved = snapshot.data!;
+                  return OutlinedButton(
+                    style: OutlinedButton.styleFrom(
+                      side: const BorderSide(
+                        width: 1.5,
+                        color: Colors.blue,
+                      ),
+                    ),
+                    onPressed: onClickSaveItemButton,
+                    child: Text(
+                      (isSaved) ? "Saved".toUpperCase() : "Save".toUpperCase(),
+                      style: const TextStyle(
+                        fontSize: 16,
+                      ),
+                    ),
+                  );
+                },
+              ),
+            ),
+          ),
+        ],
+      ),
+    );
+  }
+
+  void onViewSellerProfile(myUser.User seller) {
+    Get.to(
+      () => SellerProfilePage(
+        seller: seller,
+      ),
     );
   }
 
@@ -169,62 +262,6 @@ class _ItemDetailPageState extends State<ItemDetailPage> {
         isSaved = false;
       });
     });
-  }
-
-  Widget bottomTwoButtons() {
-    return Container(
-      padding: const EdgeInsets.all(20),
-      child: Column(
-        children: [
-          SizedBox(
-            width: double.infinity,
-            height: 50,
-            child: ElevatedButton(
-              onPressed: () {},
-              child: Text(
-                "View Seller Profile".toUpperCase(),
-                style: const TextStyle(fontSize: 16, letterSpacing: 1.5),
-              ),
-            ),
-          ),
-          const SizedBox(
-            height: 10,
-          ),
-          Visibility(
-            visible: (FirebaseAuth.instance.currentUser != null),
-            child: SizedBox(
-              width: double.infinity,
-              height: 50,
-              child: FutureBuilder<bool>(
-                future: userService.checkSaveItem(item.itemid),
-                builder: (context, snapshot) {
-                  if (!snapshot.hasData) {
-                    return OutlinedButton(
-                      onPressed: () {},
-                      child: const Text("SAVE"),
-                    );
-                  }
-                  isSaved = snapshot.data!;
-                  // print("Future Builder $isSaved");
-                  return OutlinedButton(
-                    style: OutlinedButton.styleFrom(
-                      side: const BorderSide(width: 1.5, color: Colors.blue),
-                    ),
-                    onPressed: onClickSaveItemButton,
-                    child: Text(
-                      (isSaved) ? "Saved".toUpperCase() : "Save".toUpperCase(),
-                      style: const TextStyle(
-                        fontSize: 16,
-                      ),
-                    ),
-                  );
-                },
-              ),
-            ),
-          ),
-        ],
-      ),
-    );
   }
 
   void addView() {
@@ -253,13 +290,16 @@ class _ItemDetailPageState extends State<ItemDetailPage> {
           width: double.maxFinite,
           height: double.maxFinite,
           child: SingleChildScrollView(
-            physics: const BouncingScrollPhysics(),
             child: Column(
               children: [
                 ImagesView(images: item.images),
                 Container(
                   width: double.infinity,
-                  padding: const EdgeInsets.only(left: 20, right: 20, top: 20),
+                  padding: const EdgeInsets.only(
+                    left: 20,
+                    right: 20,
+                    top: 20,
+                  ),
                   margin: const EdgeInsets.only(bottom: 50),
                   child: Column(
                     crossAxisAlignment: CrossAxisAlignment.start,
@@ -267,25 +307,26 @@ class _ItemDetailPageState extends State<ItemDetailPage> {
                       Text(
                         item.name,
                         style: const TextStyle(
-                            fontSize: 18, fontWeight: FontWeight.w600),
+                          fontSize: 18,
+                          fontWeight: FontWeight.w600,
+                        ),
                       ),
-                      const SizedBox(
-                        height: 20,
-                      ),
+                      const SizedBox(height: 20),
                       Text(
                         "USD: ${item.price.toString()}",
                         style: const TextStyle(
-                            color: Colors.red,
-                            fontSize: 16,
-                            fontWeight: FontWeight.w600),
+                          color: Colors.red,
+                          fontSize: 16,
+                          fontWeight: FontWeight.w600,
+                        ),
                       ),
-                      const SizedBox(
-                        height: 10,
-                      ),
+                      const SizedBox(height: 10),
                       const Text(
                         "Item Detail",
                         style: TextStyle(
-                            fontSize: 14, fontWeight: FontWeight.w600),
+                          fontSize: 14,
+                          fontWeight: FontWeight.w600,
+                        ),
                       ),
                       const SizedBox(
                         height: 20,
@@ -323,13 +364,8 @@ class _ItemDetailPageState extends State<ItemDetailPage> {
                         color: Colors.grey,
                       ),
                       additionalInfoView(),
-                      const Divider(
-                        height: 20,
-                        thickness: 1.5,
-                        color: Colors.grey,
-                      ),
                       sellerInfoView(),
-                      bottomTwoButtons(),
+                      saveButton(),
                     ],
                   ),
                 ),

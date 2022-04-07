@@ -124,7 +124,7 @@ class LoginWithPhoneNumberPage extends StatelessWidget {
         } else {
           Get.offAll(
             () => RegisterPage(
-              userId: credential.user!.uid,
+              userId: credential.seller!.uid,
               phoneNumber: authCredential.user!.phoneNumber!,
             ),
           );

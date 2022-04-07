@@ -2,6 +2,7 @@ import 'dart:io';
 
 import 'package:avatars/avatars.dart';
 import 'package:extended_image/extended_image.dart';
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:image_picker/image_picker.dart';
@@ -214,40 +215,52 @@ class _AboutMePageState extends State<AboutMePage> {
   }
 
   Widget centerProfile() {
-    return Center(
-      child: GetBuilder<UserController>(
-        builder: (controller) {
-          if (controller.user == null) {
-            return const Center(
-              child: CircularProgressIndicator(),
-            );
-          }
-          user = controller.user!.value;
-          return Column(
-            children: [
-              userImage(controller, user),
-              const SizedBox(
-                height: 10,
-              ),
-              Text(
-                "${user.firstname} ${user.lastname}",
-                style: const TextStyle(
-                  fontSize: 16,
-                  fontWeight: FontWeight.bold,
-                ),
-              ),
-              const SizedBox(
-                height: 10,
-              ),
-              Text(user.address),
-              const SizedBox(
-                height: 10,
-              ),
-              Text(user.phoneNumber),
-            ],
+    return GetBuilder<UserController>(
+      builder: (controller) {
+        if (controller.user == null) {
+          return const Center(
+            child: CircularProgressIndicator(),
           );
-        },
-      ),
+        }
+        user = controller.user!.value;
+        return Stack(
+          children: [
+            // Positioned.fill(
+            //   bottom: 100,
+            //   child: Image.network(
+            //     networkBackgroundImage,
+            //     fit: BoxFit.cover,
+            //
+            //   ),
+            // ),
+            SizedBox(
+              width: double.maxFinite,
+              child: Column(
+                crossAxisAlignment: CrossAxisAlignment.center,
+                children: [
+                  userImage(controller, user),
+                  const SizedBox(height: 10),
+                  Text(
+                    "${user.firstname} ${user.lastname}",
+                    style: const TextStyle(
+                      fontSize: 16,
+                      fontWeight: FontWeight.bold,
+                    ),
+                  ),
+                  const SizedBox(
+                    height: 10,
+                  ),
+                  Text(user.address),
+                  const SizedBox(
+                    height: 10,
+                  ),
+                  Text(user.phoneNumber),
+                ],
+              ),
+            ),
+          ],
+        );
+      },
     );
   }
 

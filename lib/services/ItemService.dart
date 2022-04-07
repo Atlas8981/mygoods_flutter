@@ -112,6 +112,7 @@ class ItemService {
     final List<String> newViewers = viewers.toSet().toList();
     await firestore.collection(itemCollection).doc(itemId).update({
       'viewers': newViewers,
+      'views': newViewers.length,
     });
   }
 
@@ -120,6 +121,26 @@ class ItemService {
     if (value.exists) {
       final Item saveItem = Item.fromJson(value.data()!);
       return saveItem;
+    }
+    return null;
+  }
+
+  Future<List<Item>?> getSellerItems(String sellerId) async {
+    try {
+      final querySnapshot = await firestore
+          .collection(itemCollection)
+          .where("userid", isEqualTo: sellerId)
+          .get();
+      if (querySnapshot.size > 0) {
+        final items = querySnapshot.docs.map((e) {
+          return Item.fromJson(e.data());
+        }).toList();
+        return items;
+      }
+    } catch (e) {
+      if (kDebugMode) {
+        print(e.toString());
+      }
     }
     return null;
   }

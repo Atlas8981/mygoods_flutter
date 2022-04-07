@@ -24,6 +24,7 @@ class ImageViewerPage extends StatelessWidget {
         appBar: AppBar(
           backgroundColor: Colors.transparent,
           shadowColor: Colors.transparent,
+          elevation: 0,
         ),
         body: Container(
           color: Colors.black,
