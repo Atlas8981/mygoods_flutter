@@ -4,7 +4,7 @@ description: A new Flutter project.
 publish_to: 'none'
 
 
-version: 1.0.0+1
+version: 2.0.0
 
 environment:
   sdk: ">=2.12.0 <3.0.0"
@@ -61,6 +61,7 @@ dependencies:
   flutter_local_notifications: ^9.0.2
   bottom_navy_bar: ^6.0.0
   algolia: ^1.0.5
+  package_info_plus: ^1.4.2
 
 dev_dependencies:
   flutter_test:

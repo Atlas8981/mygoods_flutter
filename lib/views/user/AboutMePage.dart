@@ -14,6 +14,7 @@ import 'package:mygoods_flutter/models/user.dart' as myUser;
 import 'package:mygoods_flutter/models/user.dart';
 import 'package:mygoods_flutter/services/AuthenticationService.dart';
 import 'package:mygoods_flutter/utils/constant.dart';
+import 'package:mygoods_flutter/views/utils/AboutOurAppPage.dart';
 import 'package:mygoods_flutter/views/utils/CropImagePage.dart';
 import 'package:mygoods_flutter/views/user/EditProfilePage.dart';
 import 'package:mygoods_flutter/views/utils/ImagePreviewerPage.dart';
@@ -23,6 +24,7 @@ import 'package:mygoods_flutter/views/cells/CategoryItemRow.dart';
 import 'package:mygoods_flutter/views/item/MyItemPage.dart';
 import 'package:mygoods_flutter/views/utils/ImageViewerPage.dart';
 import 'package:mygoods_flutter/views/utils/SettingPage.dart';
+import 'package:mygoods_flutter/views/utils/TermAndConditionPage.dart';
 
 class AboutMePage extends StatefulWidget {
   const AboutMePage({
@@ -116,12 +118,12 @@ class _AboutMePageState extends State<AboutMePage> {
       onSelected: (AccountMenuItems value) {
         switch (value) {
           case AccountMenuItems.editProfile:
-            Get.to(EditProfilePage(
-              user: user,
-            ));
+            Get.to(() => EditProfilePage(
+                  user: user,
+                ));
             break;
           case AccountMenuItems.resetPassword:
-            Get.to(const ResetPasswordPage());
+            Get.to(() => const ResetPasswordPage());
             break;
         }
       },
@@ -281,12 +283,12 @@ class _AboutMePageState extends State<AboutMePage> {
                 case 1:
                   Get.to(() => const SavedItemsPage());
                   break;
-                // case 2:
-                //   Get.to(()=>MyItemsPage());
-                //   break;
-                // case 3:
-                //   Get.to(()=>MyItemsPage());
-                //   break;
+                case 2:
+                  Get.to(() => AboutOurAppPage());
+                  break;
+                case 3:
+                  Get.to(() => TermAndConditionPage());
+                  break;
               }
             },
             child: CategoryItemRow(
