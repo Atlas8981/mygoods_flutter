@@ -15,12 +15,19 @@ class ItemSearchDelegate extends SearchDelegate<String> {
   @override
   List<Widget>? buildActions(BuildContext context) {
     return [
-      IconButton(
-        onPressed: () {
-          showResults(context);
-        },
-        icon: const Icon(Icons.search),
-      ),
+      (query.isEmpty)
+          ? IconButton(
+              onPressed: () {
+                showResults(context);
+              },
+              icon: const Icon(Icons.search),
+            )
+          : IconButton(
+              onPressed: () {
+                query = "";
+              },
+              icon: const Icon(Icons.clear),
+            ),
     ];
   }
 
@@ -199,19 +206,19 @@ class _SuggestionListState extends State<SuggestionList> {
         final List<Item> suggestions = snapshot.data ?? [];
         return Container(
           padding: const EdgeInsets.all(10),
-          child: ListView.builder(
+          child: ListView.separated(
             itemCount: suggestions.length,
+            separatorBuilder: (context, index) {
+              return const Divider(
+                thickness: 1.5,
+              );
+            },
             itemBuilder: (context, index) {
-              return ListTile(
-                title: Text(suggestions[index].name),
-                onTap: () {
-                  searchService.setRecentSearch(widget.query);
-                  Get.to(
-                    () => ItemDetailPage(
-                      item: suggestions[index],
-                    ),
-                  );
-                },
+              return ListItemRow(
+                item: suggestions[index],
+                destination: ItemDetailPage(
+                  item: suggestions[index],
+                ),
               );
             },
           ),
