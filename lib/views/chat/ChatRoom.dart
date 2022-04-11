@@ -1,5 +1,4 @@
 import 'dart:io';
-import 'dart:ui';
 
 import 'package:file_picker/file_picker.dart';
 import 'package:firebase_auth/firebase_auth.dart';
@@ -13,7 +12,6 @@ import 'package:http/http.dart' as http;
 import 'package:image_picker/image_picker.dart';
 import 'package:marquee/marquee.dart';
 import 'package:mime/mime.dart';
-import 'package:mygoods_flutter/views/utils/ImagePreviewerPage.dart';
 import 'package:mygoods_flutter/views/utils/ImageViewerPage.dart';
 import 'package:open_file/open_file.dart';
 import 'package:path_provider/path_provider.dart';
@@ -172,7 +170,6 @@ class _ChatRoomState extends State<ChatRoom> {
     types.TextMessage message,
     types.PreviewData previewData,
   ) {
-    print("_handlePreviewDataFetched");
     final updatedMessage = message.copyWith(previewData: previewData);
 
     firebaseChatCore.updateMessage(
