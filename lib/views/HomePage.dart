@@ -1,158 +1,189 @@
-
+import 'package:cloud_functions/cloud_functions.dart';
+import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
-import 'package:mygoods_flutter/models/product.dart';
-import 'package:mygoods_flutter/views/cells/homepage_cell.dart';
+import 'package:get/get.dart';
+import 'package:mygoods_flutter/controllers/HomePageController.dart';
+import 'package:mygoods_flutter/models/item.dart';
+import 'package:mygoods_flutter/services/HomePageService.dart';
+import 'package:mygoods_flutter/utils/constant.dart';
+import 'package:mygoods_flutter/views/item/ItemDetailPage.dart';
+import 'package:mygoods_flutter/views/ViewAllPage.dart';
+import 'package:mygoods_flutter/views/cells/HomePageCell.dart';
+import 'package:mygoods_flutter/views/search/ItemSearchDelegate.dart';
 
-class HomePage extends StatelessWidget {
-  final productList = [
-    Product(
-        id: 012,
-        title: "iPhone XL",
-        price: 0.0,
-        description: "description",
-        image:
-            "https://firebasestorage.googleapis.com/v0/b/mygoods-e042f.appspot.com/o/images%2F05411168-1699-4119-a7af-b9017e2df1bd?alt=media&token=b4677321-c035-4cb4-9fc1-7cd869ebc017",
-        rating: Rating(rate: 0.0,count: 0)),
-    Product(
-        id: 013,
-        title: "title",
-        price: 0.0,
-        description: "description",
-        image:
-            "https://firebasestorage.googleapis.com/v0/b/mygoods-e042f.appspot.com/o/images%2F05411168-1699-4119-a7af-b9017e2df1bd?alt=media&token=b4677321-c035-4cb4-9fc1-7cd869ebc017",
-        rating: Rating(rate: 0.0,count: 0)),
-  ];
+class HomePage extends StatefulWidget {
+  const HomePage({
+    Key? key,
+  }) : super(key: key);
+
+  @override
+  State<HomePage> createState() => _HomePageState();
+}
+
+class _HomePageState extends State<HomePage> {
+  final homePageService = HomePageService();
+
+  final homePageController = Get.put(HomePageController());
+  final functions = FirebaseFunctions.instance;
 
   @override
   Widget build(BuildContext context) {
-    return Container(
-      padding: EdgeInsets.all(10),
-      child: SingleChildScrollView(
-        child: Column(children: [
-          Container(
-            color: Colors.blue,
-            height: 125,
-            width: double.infinity,
-            child: Image.asset(
-                "assets/images/banner1.png",
-              fit: BoxFit.cover,
+    return Scaffold(
+      appBar: AppBar(
+        title: const Text("Home"),
+        actions: [
+          if (kDebugMode)
+            IconButton(
+              onPressed: () {
+                callCloudFunction();
+              },
+              icon: const Icon(Icons.send),
             ),
+          IconButton(
+            onPressed: () {
+              showSearch(
+                context: context,
+                delegate: ItemSearchDelegate(),
+              );
+            },
+            icon: const Icon(Icons.search),
           ),
-          Column(
+        ],
+      ),
+      body: SafeArea(
+        child: Container(
+          height: double.infinity,
+          width: double.infinity,
+          padding: const EdgeInsets.symmetric(horizontal: 8),
+          child: ListView(
             children: [
-              Row(
-                mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                children: [
-                  Text(
-                    "Trending",
-                    style:
-                        TextStyle(fontSize: 18, fontWeight: FontWeight.bold),
-                  ),
-                  TextButton(
-                    onPressed: () {},
-                    child: Text("View All"),
-                  ),
-                ],
+              const SizedBox(height: 10),
+              Image.asset(
+                "assets/images/banner1.png",
+                fit: BoxFit.cover,
+                height: 125,
+                width: double.infinity,
               ),
-              SizedBox(
-                // width: double.infinity,
-                height: 175,
-                child: ListView.builder(
-                  scrollDirection: Axis.horizontal,
-                  itemCount: productList.length,
-                  itemBuilder: (BuildContext context, int index) {
-                    // return ProductTile(productList[index]);
-                    return HomepageCell(productList[index]);
+              if (!kDebugMode)
+                GetBuilder<HomePageController>(
+                  builder: (controller) {
+                    if (controller.trendingItems == null) {
+                      return const Center(
+                        child: CircularProgressIndicator(),
+                      );
+                    }
+                    final List<Item> trendingItems =
+                        controller.trendingItems!.cast();
+                    if (trendingItems.isNotEmpty) {
+                      return homePageListView(
+                        "Trending",
+                        items: trendingItems,
+                        onTap: () {
+                          showToast("In Development");
+                        },
+                      );
+                    } else {
+                      return Container();
+                    }
                   },
                 ),
-              ),
-            ],
-          ),
-          Column(
-            children: [
-              Row(
-                mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                children: [
-                  Text(
-                    "Recently View",
-                    style:
-                    TextStyle(fontSize: 18, fontWeight: FontWeight.bold),
-                  ),
-                  TextButton(
-                    onPressed: () {},
-                    child: Text("View All"),
-                  ),
-                ],
-              ),
-              SizedBox(
-                // width: double.infinity,
-                height: 175,
-                child: ListView.builder(
-                  scrollDirection: Axis.horizontal,
-                  itemCount: productList.length,
-                  itemBuilder: (BuildContext context, int index) {
-                    // return ProductTile(productList[index]);
-                    return HomepageCell(productList[index]);
+              if (!kDebugMode)
+                GetBuilder<HomePageController>(
+                  builder: (controller) {
+                    if (controller.recentViewItems == null) {
+                      return const Center(
+                        child: CircularProgressIndicator(),
+                      );
+                    }
+                    final List<Item> recentViewItems =
+                        controller.recentViewItems!.cast();
+                    if (recentViewItems.isNotEmpty) {
+                      return homePageListView(
+                        "Recently View",
+                        items: recentViewItems,
+                        onTap: () {
+                          showToast("In Development");
+                        },
+                      );
+                    } else {
+                      return Container();
+                    }
                   },
                 ),
-              ),
             ],
           ),
-          Column(
-            children: [
-              Row(
-                mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                children: [
-                  Text(
-                    "You May Like",
-                    style:
-                    TextStyle(fontSize: 18, fontWeight: FontWeight.bold),
-                  ),
-                  TextButton(
-                    onPressed: () {},
-                    child: Text("View All"),
-                  ),
-                ],
-              ),
-              SizedBox(
-                // width: double.infinity,
-                height: 175,
-                child: ListView.builder(
-                  scrollDirection: Axis.horizontal,
-                  itemCount: productList.length,
-                  itemBuilder: (BuildContext context, int index) {
-                    // return ProductTile(productList[index]);
-                    return HomepageCell(productList[index]);
-                  },
-                ),
-              ),
-            ],
-          ),
-
-        ]),
+        ),
       ),
     );
   }
-// const HomePage({ Key? key }) : super(key: key);
 
-// final productController = Get.put(ProductController());
-//
-// @override
-// Widget build(BuildContext context) {
-//   return Scaffold(
-//
-//     body: Obx(() => StaggeredGridView.countBuilder(
-//         crossAxisCount: 2,
-//         itemCount: productController.productList.length,
-//         mainAxisSpacing: 16,
-//         crossAxisSpacing: 16,
-//         itemBuilder: (context, index) {
-//           return ProductTile(productController.productList[index]);
-//         },
-//         staggeredTileBuilder: (index) => StaggeredTile.fit(1))),
-//     // body: Obx(() {
-//     //   return Text("Something is herer ${productController.productList.length}");
-//     // }),
-//   );
-// }
+  Future<void> callCloudFunction() async {
+    final HttpsCallable callable =
+        functions.httpsCallable('sendHttpCallablePushNotification');
+    try {
+      final results = await callable();
+      if (kDebugMode) {
+        print(results);
+      }
+    } on FirebaseFunctionsException catch (e) {
+      if (kDebugMode) {
+        print(e.message);
+        print(e.code);
+      }
+    }
+  }
+
+  Widget homePageListView(
+    String title, {
+    required Function() onTap,
+    required List<Item> items,
+  }) {
+    return Column(
+      children: [
+        Row(
+          mainAxisAlignment: MainAxisAlignment.spaceBetween,
+          children: [
+            Text(
+              title,
+              style: const TextStyle(
+                fontSize: 18,
+                fontWeight: FontWeight.bold,
+              ),
+            ),
+            TextButton(
+              onPressed: () {
+                Get.to(
+                  () => ViewAllPage(
+                    title: title,
+                    smallListItem: items,
+                  ),
+                );
+              },
+              child: const Text("View All"),
+            ),
+          ],
+        ),
+        SingleChildScrollView(
+          scrollDirection: Axis.horizontal,
+          child: SizedBox(
+            width: (items.length <= 3) ? Get.width : null,
+            child: Row(
+              children: items
+                  .map((Item i) {
+                    return Padding(
+                      padding: const EdgeInsets.only(right: 16),
+                      child: HomePageCell(
+                        item: i,
+                        destination: ItemDetailPage(item: i),
+                      ),
+                    );
+                  })
+                  .toList()
+                  .cast(),
+            ),
+          ),
+        ),
+      ],
+    );
+  }
 }

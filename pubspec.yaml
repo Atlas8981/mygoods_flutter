@@ -1,21 +1,10 @@
 name: mygoods_flutter
 description: A new Flutter project.
 
-# The following line prevents the package from being accidentally published to
-# pub.dev using `pub publish`. This is preferred for private packages.
-publish_to: 'none' # Remove this line if you wish to publish to pub.dev
+publish_to: 'none'
 
-# The following defines the version and build number for your application.
-# A version number is three numbers separated by dots, like 1.2.43
-# followed by an optional build number separated by a +.
-# Both the version and the builder number may be overridden in flutter
-# build by specifying --build-name and --build-number, respectively.
-# In Android, build-name is used as versionName while build-number used as versionCode.
-# Read more about Android versioning at https://developer.android.com/studio/publish/versioning
-# In iOS, build-name is used as CFBundleShortVersionString while build-number used as CFBundleVersion.
-# Read more about iOS versioning at
-# https://developer.apple.com/library/archive/documentation/General/Reference/InfoPlistKeyReference/Articles/CoreFoundationKeys.html
-version: 1.0.0+1
+
+version: 2.0.0
 
 environment:
   sdk: ">=2.12.0 <3.0.0"
@@ -26,92 +15,146 @@ dependencies:
   flutter_localizations:
     sdk: flutter
 
-  # The following adds the Cupertino Icons font to your application.
-  # Use with the CupertinoIcons class for iOS style icons.
-  cupertino_icons: ^1.0.2
+  #  GetX
+  get_storage: ^2.0.3
   get: ^4.3.8
-  http: ^0.13.3
-  flutter_staggered_grid_view: ^0.4.0
-  cloud_firestore: ^2.5.3
-  firebase_core: ^1.6.0
-  firebase_auth: ^3.1.1
-  intl: ^0.17.0
+
+  #  Enhancing UI/UX
+#  animations: ^2.0.2
+#  bottom_navy_bar: ^6.0.0
+  circular_widgets: ^2.0.0
+  flutter_staggered_grid_view: ^0.6.1
+  avatars: ^3.0.2
+  cupertino_icons: ^1.0.2
+  otp_text_field: ^1.1.1
+  flutter_countdown_timer: ^4.1.0
+  flutter_local_notifications: ^9.0.2
+
+
+  #  Image and File
+  extended_image: ^6.0.2+1
+  flutter_native_image: ^0.0.6+1
+  open_file: ^3.2.1
+  file_picker: ^4.2.7
   image_picker: ^0.8.3+2
+  carousel_slider: ^4.0.0
+  dots_indicator: ^2.0.0
+  photo_view: ^0.13.0
+  flutter_svg: ^1.0.0
+
+  # Firebase dependency
+  cloud_firestore: ^3.1.4
+  firebase_core: ^1.10.5
+  firebase_auth: ^3.3.3
+  firebase_storage: ^10.2.10
+  firebase_messaging: ^11.2.4
+  cloud_functions: ^3.2.4
+  firebase_analytics: ^9.1.2
+  flutter_firebase_chat_core: ^1.5.0
+  flutter_chat_ui: ^1.5.3
+
+  #  Utilities
+  http: ^0.13.3
+  intl: ^0.17.0
   fluttertoast: ^8.0.8
+  json_annotation: ^4.4.0
+  sms_autofill: ^2.2.0
+  mime: ^1.0.1
+  marquee: ^2.2.0
+  algolia: ^1.0.5
+  package_info_plus: ^1.4.2
+
 
 dev_dependencies:
   flutter_test:
     sdk: flutter
+  flutter_lints: ^1.0.0
+  flutter_native_splash: ^2.1.1
+  build_runner: ^2.1.8
+  json_serializable: ^6.1.5
+  flutter_launcher_icons: ^0.9.2
 
-# For information on the generic Dart part of this file, see the
-# following page: https://dart.dev/tools/pub/pubspec
+flutter_icons:
+  android: "launcher_icon"
+  ios: true
+  image_path: "assets/images/appicon.png"
 
-# The following section is specific to Flutter.
 flutter:
 
-  # The following line ensures that the Material Icons font is
-  # included with your application, so that you can use the icons in
-  # the material Icons class.
   uses-material-design: true
-  generate: true
-  # To add assets to your application, add an assets section, like this:
   assets:
-    - assets/images/banner1.png
-    - assets/images/aboutus.png
-    - assets/images/accessory.png
-    - assets/images/account.png
-    - assets/images/add.png
-    - assets/images/appicon.png
-    - assets/images/bike.png
-    - assets/images/bikeicon.png
-    - assets/images/bikepicture.jpg
-    - assets/images/car.png
-    - assets/images/caricon.png
-    - assets/images/carpic.png
-    - assets/images/desk.jpg
-    - assets/images/deskicon.png
-    - assets/images/desktoppic.png
-    - assets/images/electronic.png
-    - assets/images/electronicicon.png
-    - assets/images/electronicpic.png
-    - assets/images/emailverification.png
-    - assets/images/furniture.png
-    - assets/images/furnitureicon.png
-    - assets/images/furnitures.jpg
-    - assets/images/home.png
-    - assets/images/household.png
-    - assets/images/householdicon.png
-    - assets/images/householdpic.png
-    - assets/images/laptop.png
-    - assets/images/laptoppicture.jpg
-    - assets/images/list.png
-    - assets/images/loading.jpg
-    - assets/images/manitou.jpg
-    - assets/images/minus_box.png
-    - assets/images/moto.png
-    - assets/images/motoicon.png
-    - assets/images/motopic.png
-    - assets/images/nointernet.jpg
-    - assets/images/other.png
-    - assets/images/othericon.png
-    - assets/images/particon.png
-    - assets/images/pc.jpg
-    - assets/images/pccom.png
-    - assets/images/phone.png
-    - assets/images/phoneicon.png
-    - assets/images/phonepicture.jpg
-    - assets/images/plastic.jpg
-    - assets/images/poster.png
-    - assets/images/saved.png
-    - assets/images/seller.png
-    - assets/images/sofa.png
-    - assets/images/sofaicon.png
-    - assets/images/sofapic.png
-    - assets/images/synchronize.png
-    - assets/images/table.png
-    - assets/images/term.png
-    - assets/images/watch.png
-    - assets/images/watches.jpg
+    - assets/images/
+    #    - assets/images/aboutus.png
+    #    - assets/images/accessory.png
+    #    - assets/images/account.png
+    #    - assets/images/add.png
+    #    - assets/images/appicon.png
+    #    - assets/images/appicon3x.png
+    #    - assets/images/bike.png
+    #    - assets/images/bikeicon.png
+    #    - assets/images/bikepicture.jpg
+    #    - assets/images/car.png
+    #    - assets/images/caricon.png
+    #    - assets/images/carpic.png
+    #    - assets/images/desk.jpg
+    #    - assets/images/deskicon.png
+    #    - assets/images/desktoppic.png
+    #    - assets/images/electronic.png
+    #    - assets/images/electronicicon.png
+    #    - assets/images/electronicpic.png
+    #    - assets/images/emailverification.png
+    #    - assets/images/furniture.png
+    #    - assets/images/furnitureicon.png
+    #    - assets/images/furnitures.jpg
+    #    - assets/images/home.png
+    #    - assets/images/household.png
+    #    - assets/images/householdicon.png
+    #    - assets/images/householdpic.png
+    #    - assets/images/laptop.png
+    #    - assets/images/laptoppicture.jpg
+    #    - assets/images/list.png
+    #    - assets/images/loading.jpg
+    #    - assets/images/manitou.jpg
+    #    - assets/images/minus_box.png
+    #    - assets/images/moto.png
+    #    - assets/images/motoicon.png
+    #    - assets/images/myitem.png
+    #    - assets/images/motopic.png
+    #    - assets/images/nointernet.jpg
+    #    - assets/images/other.png
+    #    - assets/images/othericon.png
+    #    - assets/images/particon.png
+    #    - assets/images/pc.jpg
+    #    - assets/images/pccom.png
+    #    - assets/images/phone.png
+    #    - assets/images/phoneicon.png
+    #    - assets/images/phonepicture.jpg
+    #    - assets/images/plastic.jpg
+    #    - assets/images/poster.png
+    #    - assets/images/saved.png
+    #    - assets/images/seller.png
+    #    - assets/images/sofa.png
+    #    - assets/images/sofaicon.png
+    #    - assets/images/sofapic.png
+    #    - assets/images/synchronize.png
+    #    - assets/images/table.png
+    #    - assets/images/term.png
+    #    - assets/images/watch.png
+    #    - assets/images/watches.jpg
+    - assets/messages.json
+  fonts:
+    - family: Moul
+      fonts:
+        - asset: assets/fonts/Moul-Regular.ttf
+    - family: KhmerOSBattambang
+      fonts:
+        - asset: assets/fonts/KhmerOS_battambang.ttf
+    - family: Roboto
+      fonts:
+        - asset: assets/fonts/Roboto-Bold.ttf
+        - asset: assets/fonts/Roboto-Light.ttf
+        - asset: assets/fonts/Roboto-Medium.ttf
+        - asset: assets/fonts/Roboto-Regular.ttf
 
   # An image asset can refer to one or more resolution-specific "variants", see
   # https://flutter.dev/assets-and-images/#resolution-aware.
