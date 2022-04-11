@@ -77,10 +77,7 @@ class _SettingPageState extends State<SettingPage> {
                 ),
                 Text(
                   value,
-                  style: const TextStyle(
-                    color: Colors.black,
-                    fontSize: 14,
-                  ),
+                  style: const TextStyle(fontSize: 14),
                 ),
               ],
             ),

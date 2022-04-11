@@ -1,4 +1,5 @@
 import 'dart:io';
+import 'dart:ui';
 
 import 'package:file_picker/file_picker.dart';
 import 'package:firebase_auth/firebase_auth.dart';
@@ -7,10 +8,13 @@ import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_chat_ui/flutter_chat_ui.dart';
 import 'package:flutter_firebase_chat_core/flutter_firebase_chat_core.dart';
+import 'package:get/get.dart';
 import 'package:http/http.dart' as http;
 import 'package:image_picker/image_picker.dart';
 import 'package:marquee/marquee.dart';
 import 'package:mime/mime.dart';
+import 'package:mygoods_flutter/views/utils/ImagePreviewerPage.dart';
+import 'package:mygoods_flutter/views/utils/ImageViewerPage.dart';
 import 'package:open_file/open_file.dart';
 import 'package:path_provider/path_provider.dart';
 import 'package:flutter_chat_types/flutter_chat_types.dart' as types;
@@ -28,46 +32,39 @@ class ChatRoom extends StatefulWidget {
 }
 
 class _ChatRoomState extends State<ChatRoom> {
+  final auth = FirebaseAuth.instance;
+  final firebaseChatCore = FirebaseChatCore.instance;
   bool _isAttachmentUploading = false;
 
-  final firebaseChatCore = FirebaseChatCore.instance;
-
   void _handleAttachmentPressed() {
+    FocusScope.of(context).requestFocus(FocusNode());
     showModalBottomSheet<void>(
+      isDismissible: true,
       context: context,
       builder: (BuildContext context) {
         return SafeArea(
-          child: SizedBox(
-            height: 144,
+          child: Padding(
+            padding: const EdgeInsets.only(left: 8),
             child: Column(
-              crossAxisAlignment: CrossAxisAlignment.stretch,
+              mainAxisSize: MainAxisSize.min,
               children: <Widget>[
-                TextButton(
-                  onPressed: () {
-                    Navigator.pop(context);
+                ListTile(
+                  onTap: () {
+                    Get.back(closeOverlays: true);
                     _handleImageSelection();
                   },
-                  child: const Align(
-                    alignment: Alignment.centerLeft,
-                    child: Text('Photo'),
-                  ),
+                  horizontalTitleGap: 0,
+                  leading: const Icon(Icons.photo),
+                  title: const Text('Photo'),
                 ),
-                TextButton(
-                  onPressed: () {
-                    Navigator.pop(context);
+                ListTile(
+                  onTap: () {
+                    Get.back(closeOverlays: true);
                     _handleFileSelection();
                   },
-                  child: const Align(
-                    alignment: Alignment.centerLeft,
-                    child: Text('File'),
-                  ),
-                ),
-                TextButton(
-                  onPressed: () => Navigator.pop(context),
-                  child: const Align(
-                    alignment: Alignment.centerLeft,
-                    child: Text('Cancel'),
-                  ),
+                  horizontalTitleGap: 0,
+                  leading: const Icon(Icons.folder),
+                  title: const Text('File'),
                 ),
               ],
             ),
@@ -165,13 +162,17 @@ class _ChatRoomState extends State<ChatRoom> {
       }
 
       await OpenFile.open(localPath);
+    } else if (message is types.ImageMessage) {
+      Get.to(() => ImageViewerPage(image: message.uri, tag: ""));
     }
+    // MessageType.image
   }
 
   void _handlePreviewDataFetched(
     types.TextMessage message,
     types.PreviewData previewData,
   ) {
+    print("_handlePreviewDataFetched");
     final updatedMessage = message.copyWith(previewData: previewData);
 
     firebaseChatCore.updateMessage(
@@ -179,8 +180,6 @@ class _ChatRoomState extends State<ChatRoom> {
       widget.room.id,
     );
   }
-
-  final auth = FirebaseAuth.instance;
 
   void _handleSendPressed(types.PartialText message) {
     final currentRoom = widget.room;
@@ -236,8 +235,14 @@ class _ChatRoomState extends State<ChatRoom> {
                   isAttachmentUploading: _isAttachmentUploading,
                   messages: snapshot.data ?? [],
                   onAvatarTap: (user) {
-                    // print(user);
+                    Get.to(
+                      () => ImageViewerPage(
+                        image: user.imageUrl,
+                        tag: "",
+                      ),
+                    );
                   },
+                  disableImageGallery: true,
                   showUserAvatars: true,
                   showUserNames: true,
                   sendButtonVisibilityMode: SendButtonVisibilityMode.editing,
@@ -248,9 +253,18 @@ class _ChatRoomState extends State<ChatRoom> {
                   user: types.User(
                     id: firebaseChatCore.firebaseUser?.uid ?? '',
                   ),
-                  theme: const DarkChatTheme(
-                    primaryColor: Colors.blue,
-                  ),
+                  theme: (Get.isDarkMode)
+                      ? DarkChatTheme(
+                          primaryColor: Colors.blue,
+                          backgroundColor:
+                              Theme.of(context).scaffoldBackgroundColor,
+                          inputBackgroundColor: Colors.black54,
+                        )
+                      : DefaultChatTheme(
+                          primaryColor: Colors.blue,
+                          backgroundColor:
+                              Theme.of(context).scaffoldBackgroundColor,
+                        ),
                 ),
               );
             },
