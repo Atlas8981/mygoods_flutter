@@ -1,4 +1,3 @@
-import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:mygoods_flutter/components/CustomErrorWidget.dart';
@@ -34,7 +33,7 @@ class ItemSearchDelegate extends SearchDelegate<String> {
       onPressed: () {
         close(context, "result");
       },
-      icon: Icon(Icons.arrow_back),
+      icon: const Icon(Icons.arrow_back),
     );
   }
 
@@ -44,10 +43,10 @@ class ItemSearchDelegate extends SearchDelegate<String> {
       future: searchService.querySearch(query),
       builder: (context, snapshot) {
         if (snapshot.connectionState == ConnectionState.waiting) {
-          return LoadingWidget();
+          return const LoadingWidget();
         }
         if (snapshot.hasError || !snapshot.hasData || snapshot.data == null) {
-          return CustomErrorWidget();
+          return const CustomErrorWidget();
         }
         final List<Item> items = snapshot.data ?? [];
         return Container(
@@ -67,7 +66,6 @@ class ItemSearchDelegate extends SearchDelegate<String> {
                 destination: ItemDetailPage(
                   item: items[index],
                 ),
-                useAnimation: false,
               );
             },
           ),
@@ -119,27 +117,27 @@ class _RecentSearchListState extends State<RecentSearchList> {
     return Column(
       children: [
         ListTile(
-          title: Text("Recent Search"),
+          title: const Text("Recent Search"),
           trailing: TextButton(
             onPressed: () async {
               await searchService.clearRecentSearches();
               setState(() {});
             },
-            child: Text("CLEAR"),
+            child: const Text("CLEAR"),
           ),
         ),
         FutureBuilder<List<String>?>(
           future: searchService.getRecentSearches(),
           builder: (context, snapshot) {
             if (snapshot.connectionState == ConnectionState.waiting) {
-              return LoadingWidget();
+              return const LoadingWidget();
             }
 
             final recentSearches = snapshot.data;
             if ((snapshot.hasError ||
                 recentSearches == null ||
                 recentSearches.isEmpty)) {
-              return CustomErrorWidget(
+              return const CustomErrorWidget(
                 text: "No Recent Search",
               );
             }
@@ -161,7 +159,7 @@ class _RecentSearchListState extends State<RecentSearchList> {
                           .deleteRecentSearch(recentSearches[index]);
                       setState(() {});
                     },
-                    icon: Icon(Icons.clear),
+                    icon: const Icon(Icons.clear),
                   ),
                 );
               },
@@ -193,10 +191,10 @@ class _SuggestionListState extends State<SuggestionList> {
       future: searchService.querySearch(widget.query),
       builder: (context, snapshot) {
         if (snapshot.connectionState == ConnectionState.waiting) {
-          return LoadingWidget();
+          return const LoadingWidget();
         }
         if (snapshot.hasError || !snapshot.hasData || snapshot.data == null) {
-          return CustomErrorWidget();
+          return const CustomErrorWidget();
         }
         final List<Item> suggestions = snapshot.data ?? [];
         return Container(

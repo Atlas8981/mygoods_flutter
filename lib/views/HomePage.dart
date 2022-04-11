@@ -1,10 +1,8 @@
-import 'package:animations/animations.dart';
 import 'package:cloud_functions/cloud_functions.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:mygoods_flutter/controllers/HomePageController.dart';
-import 'package:mygoods_flutter/main.dart';
 import 'package:mygoods_flutter/models/item.dart';
 import 'package:mygoods_flutter/services/HomePageService.dart';
 import 'package:mygoods_flutter/utils/constant.dart';
@@ -174,15 +172,9 @@ class _HomePageState extends State<HomePage> {
                   .map((Item i) {
                     return Padding(
                       padding: const EdgeInsets.only(right: 16),
-                      child: OpenContainer(
-                        closedBuilder: (context, action) {
-                          return HomePageCell(i);
-                        },
-                        openBuilder: (context, action) {
-                          return ItemDetailPage(item: i);
-                        },
-                        closedElevation: 3,
-                        closedColor: Theme.of(context).scaffoldBackgroundColor,
+                      child: HomePageCell(
+                        item: i,
+                        destination: ItemDetailPage(item: i),
                       ),
                     );
                   })

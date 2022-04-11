@@ -7,7 +7,7 @@ class TermAndConditionPage extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
+    return const Scaffold(
       body: Center(
         child: Text("Term And Condition Page"),
       ),

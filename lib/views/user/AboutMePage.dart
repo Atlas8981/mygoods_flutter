@@ -2,7 +2,6 @@ import 'dart:io';
 
 import 'package:avatars/avatars.dart';
 import 'package:extended_image/extended_image.dart';
-import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:image_picker/image_picker.dart';
@@ -284,10 +283,10 @@ class _AboutMePageState extends State<AboutMePage> {
                   Get.to(() => const SavedItemsPage());
                   break;
                 case 2:
-                  Get.to(() => AboutOurAppPage());
+                  Get.to(() => const AboutOurAppPage());
                   break;
                 case 3:
-                  Get.to(() => TermAndConditionPage());
+                  Get.to(() => const TermAndConditionPage());
                   break;
               }
             },

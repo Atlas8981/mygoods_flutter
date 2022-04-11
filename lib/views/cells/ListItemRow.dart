@@ -1,4 +1,4 @@
-import 'package:animations/animations.dart';
+
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:extended_image/extended_image.dart';
 import 'package:flutter/material.dart';
@@ -11,11 +11,9 @@ class ListItemRow extends StatefulWidget {
     Key? key,
     required this.item,
     required this.destination,
-    this.useAnimation = true,
   }) : super(key: key);
   final Item item;
   final Widget destination;
-  final bool useAnimation;
 
   @override
   _ListItemRowState createState() => _ListItemRowState();
@@ -60,25 +58,12 @@ class _ListItemRowState extends State<ListItemRow> {
   @override
   Widget build(BuildContext context) {
     final item = widget.item;
-    if (widget.useAnimation) {
-      return OpenContainer(
-        transitionType: ContainerTransitionType.fade,
-        closedColor: Theme.of(context).scaffoldBackgroundColor,
-        openBuilder: (context, action) {
-          return widget.destination;
-        },
-        closedBuilder: (context, action) {
-          return mainItemRow(item);
-        },
-      );
-    } else {
-      return InkWell(
-        onTap: () {
-          Get.to(() => widget.destination);
-        },
-        child: mainItemRow(item),
-      );
-    }
+    return InkWell(
+      onTap: () {
+        Get.to(() => widget.destination);
+      },
+      child: mainItemRow(item),
+    );
   }
 
   Widget mainItemRow(Item item) {

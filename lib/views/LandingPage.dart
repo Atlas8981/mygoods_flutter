@@ -1,4 +1,4 @@
-import 'package:bottom_navy_bar/bottom_navy_bar.dart';
+
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:mygoods_flutter/controllers/BottomNavigationViewController.dart';
@@ -37,12 +37,12 @@ class _LandingPageState extends State<LandingPage> {
       body: Obx(
         () => IndexedStack(
           index: bottomNavigationController.tabIndex.value,
-          children: [
-            const HomePage(),
-            const CategoryPage(),
-            const AddPage(),
-            const ChatListPage(),
-            const AboutMePage(),
+          children: const [
+            HomePage(),
+            CategoryPage(),
+            AddPage(),
+            ChatListPage(),
+            AboutMePage(),
           ],
         ),
       ),
@@ -55,45 +55,34 @@ class _LandingPageState extends State<LandingPage> {
 
   Widget buildBottomNavigationMenu(context, landingPageController) {
     return Obx(
-      () => BottomNavyBar(
-        // type: BottomNavigationBarType.fixed,
-        // showUnselectedLabels: false,
-        // showSelectedLabels: true,
-        // onTap: landingPageController.changeTabIndex,
-        // currentIndex: landingPageController.tabIndex.value,
-        // unselectedItemColor: Colors.black54,
-        // selectedItemColor: Colors.blue,
-        selectedIndex: landingPageController.tabIndex.value,
-        onItemSelected: landingPageController.changeTabIndex,
-        itemCornerRadius: 8,
-        containerHeight: Get.height / 12,
-        showElevation: true,
-        animationDuration: const Duration(milliseconds: 250),
-        items: [
-          BottomNavyBarItem(
-            icon: const Icon(Icons.home),
-            title: const Text('Home'),
-            activeColor: Colors.blue,
+      () => BottomNavigationBar(
+        type: BottomNavigationBarType.fixed,
+        showUnselectedLabels: false,
+        showSelectedLabels: true,
+        onTap: landingPageController.changeTabIndex,
+        currentIndex: landingPageController.tabIndex.value,
+        unselectedItemColor: Colors.black54,
+        selectedItemColor: Colors.blue,
+        items: const [
+          BottomNavigationBarItem(
+            icon: Icon(Icons.home),
+            label: 'Home',
           ),
-          BottomNavyBarItem(
-            icon: const Icon(Icons.format_list_bulleted),
-            title: const Text('Category'),
-            activeColor: Colors.amber,
+          BottomNavigationBarItem(
+            icon: Icon(Icons.format_list_bulleted),
+            label: 'Category',
           ),
-          BottomNavyBarItem(
-            icon: const Icon(Icons.add_box_outlined),
-            title: const Text('Add'),
-            activeColor: Colors.red,
+          BottomNavigationBarItem(
+            icon: Icon(Icons.add_box_outlined),
+            label: 'Add',
           ),
-          BottomNavyBarItem(
-            icon: const Icon(Icons.chat_outlined),
-            title: const Text('Message'),
-            activeColor: Colors.indigo,
+          BottomNavigationBarItem(
+            icon: Icon(Icons.chat_outlined),
+            label: 'Message',
           ),
-          BottomNavyBarItem(
-            icon: const Icon(Icons.person_outline),
-            title: const Text('Account'),
-            activeColor: Colors.cyan,
+          BottomNavigationBarItem(
+            icon: Icon(Icons.person_outline),
+            label: 'Account',
           ),
         ],
       ),

@@ -40,9 +40,7 @@ class _SellerProfilePageState extends State<SellerProfilePage> {
           child: Column(
             children: [
               sellerProfile(),
-              SizedBox(
-                height: 8,
-              ),
+              const SizedBox(height: 8),
               sellerItems(),
             ],
           ),
@@ -63,20 +61,19 @@ class _SellerProfilePageState extends State<SellerProfilePage> {
           );
         }
         if (snapshot.hasError || !snapshot.hasData || snapshot.data == null) {
-          return CustomErrorWidget(
+          return const CustomErrorWidget(
             text: "No Data",
           );
         }
 
         final items = snapshot.data!;
-        print(items.toString());
         return ListView.separated(
-          padding: EdgeInsets.symmetric(horizontal: 16),
+          padding: const EdgeInsets.symmetric(horizontal: 16),
           shrinkWrap: true,
-          physics: NeverScrollableScrollPhysics(),
+          physics: const NeverScrollableScrollPhysics(),
           itemCount: items.length,
           separatorBuilder: (context, index) {
-            return Divider(
+            return const Divider(
               thickness: 1.5,
             );
           },
@@ -98,7 +95,7 @@ class _SellerProfilePageState extends State<SellerProfilePage> {
     return Column(
       crossAxisAlignment: CrossAxisAlignment.center,
       children: [
-        SizedBox(
+        const SizedBox(
           height: 40,
         ),
         sellerImage(seller),
@@ -179,7 +176,7 @@ class _SellerProfilePageState extends State<SellerProfilePage> {
           actions: [
             IconButton(
               onPressed: () {},
-              icon: Icon(Icons.height),
+              icon: const Icon(Icons.height),
             ),
           ],
           flexibleSpace: LayoutBuilder(
@@ -187,13 +184,13 @@ class _SellerProfilePageState extends State<SellerProfilePage> {
               top = constraints.biggest.height;
               return FlexibleSpaceBar(
                 title: AnimatedOpacity(
-                  duration: Duration(milliseconds: 300),
+                  duration: const Duration(milliseconds: 300),
                   opacity:
                       top == MediaQuery.of(context).padding.top + kToolbarHeight
                           ? 1.0
                           : 0.0,
                   // opacity: 1.0,
-                  child: Text("Seller NAme"),
+                  child: const Text("Seller NAme"),
                 ),
                 background: Image.network(
                   "https://images.unsplash.com/photo-1542601098-3adb3baeb1ec?ixlib=rb-0.3.5&ixid=eyJhcHBfaWQiOjEyMDd9&s=5bb9a9747954cdd6eabe54e3688a407e&auto=format&fit=crop&w=500&q=60",
@@ -220,18 +217,18 @@ class _SellerProfilePageState extends State<SellerProfilePage> {
           actions: [
             IconButton(
               onPressed: () {},
-              icon: Icon(Icons.height),
+              icon: const Icon(Icons.height),
             ),
           ],
           flexibleSpace: FlexibleSpaceBar(
             centerTitle: true,
-            titlePadding: EdgeInsets.only(
+            titlePadding: const EdgeInsets.only(
               left: 65,
               bottom: 4,
             ),
             title: Row(
               crossAxisAlignment: CrossAxisAlignment.center,
-              children: [
+              children: const [
                 CircleAvatar(
                   backgroundImage: NetworkImage(
                     dummyNetworkImage,
@@ -260,7 +257,7 @@ class _SellerProfilePageState extends State<SellerProfilePage> {
     return ListView.builder(
       itemCount: 100,
       shrinkWrap: true,
-      physics: NeverScrollableScrollPhysics(),
+      physics: const NeverScrollableScrollPhysics(),
       itemBuilder: (context, index) {
         return ListTile(
           title: Text("Something $index"),

@@ -11,7 +11,6 @@ import 'package:mygoods_flutter/services/ItemService.dart';
 import 'package:mygoods_flutter/services/UserService.dart';
 import 'package:mygoods_flutter/utils/constant.dart';
 import 'package:mygoods_flutter/views/SellerProfilePage.dart';
-import 'package:mygoods_flutter/views/utils/ImagePreviewerPage.dart';
 import 'package:mygoods_flutter/views/utils/ImageViewerPage.dart';
 
 class ItemDetailPage extends StatefulWidget {
@@ -166,7 +165,7 @@ class _ItemDetailPageState extends State<ItemDetailPage> {
             Text("Address: ${user.address}"),
             const SizedBox(height: 10),
             Container(
-              padding: EdgeInsets.symmetric(horizontal: 20),
+              padding: const EdgeInsets.symmetric(horizontal: 20),
               width: double.infinity,
               height: 50,
               child: ElevatedButton(

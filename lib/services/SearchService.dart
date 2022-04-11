@@ -11,7 +11,7 @@ class SearchService {
   final firestore = FirebaseFirestore.instance;
   final auth = FirebaseAuth.instance;
   final user = Get.find<UserController>().user?.value;
-  final algolia = Algolia.init(
+  final algolia = const Algolia.init(
     applicationId: 'JDHJ10O9QM',
     apiKey: 'dab2357b76fa3541e56a37e638879665',
   ).instance;
