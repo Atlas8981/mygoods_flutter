@@ -193,6 +193,7 @@ final List<Category> furnitureSubCategories = [
 ];
 
 const redColor = Color.fromARGB(255, 236, 0, 0);
+const defaultColor = Color(0xFF34568B);
 
 const String dummyNetworkImage =
     "https://firebasestorage.googleapis.com/v0/b/mygoods-e042f.appspot.com/o/flutter%2F2021-10-31%2021%3A58%3A15.282499?alt=media&token=f492b829-e106-467e-b3f1-6c05122a0969";
@@ -215,6 +216,38 @@ String getFont() {
   } else {
     return 'KhmerOSBattambang';
   }
+}
+String calDate(Timestamp itemDate) {
+  //Convert to second
+  double date = (Timestamp.now().seconds - itemDate.seconds).toDouble();
+  String timeEnd = " second(s)";
+  if (date > 0) {
+    if (date >= 60) {
+      date = date / 60;
+      timeEnd = " minutes(s) ";
+      if (date >= 60) {
+        date = date / 60;
+        timeEnd = " hours(s) ";
+        if (date >= 24) {
+          date = date / 24;
+          timeEnd = " day(s) ";
+          if (date > 7) {
+            date = date / 7;
+            timeEnd = " week(s)";
+            if (date > 4) {
+              date = date / 4;
+              timeEnd = " month(s)";
+              // if(date>12){
+              //   date = date/12.roundToDouble();
+              //   timeEnd = " year(s)";
+              // }
+            }
+          }
+        }
+      }
+    }
+  }
+  return "${date.toInt()}" + timeEnd;
 }
 
 checkImageProvider(DualImage image) {
