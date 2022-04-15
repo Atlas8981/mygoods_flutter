@@ -2,7 +2,9 @@ import 'package:carousel_slider/carousel_slider.dart';
 import 'package:dots_indicator/dots_indicator.dart';
 import 'package:extended_image/extended_image.dart';
 import 'package:flutter/material.dart';
+import 'package:get/get.dart';
 import 'package:mygoods_flutter/models/image.dart' as image;
+import 'package:mygoods_flutter/views/utils/ImageViewerPage.dart';
 
 class ImagesView extends StatefulWidget {
   const ImagesView({
@@ -44,22 +46,23 @@ class _ImagesViewState extends State<ImagesView> {
           carouselController: carouselController,
           itemCount: images.length,
           itemBuilder: (context, index, realIndex) {
-            return ExtendedImage.network(
-              images[index].imageUrl,
-              fit: BoxFit.cover,
-              // fadeInDuration: const Duration(milliseconds: 100),
-              // fadeOutDuration: const Duration(milliseconds: 100),
-              width: double.infinity,
-              clearMemoryCacheIfFailed: true,
-              // progressIndicatorBuilder: (context, url, progress) {
-              //   if (progress.progress == null) {
-              //     return Container();
-              //   }
-              //   return const Center(
-              //     child: CircularProgressIndicator(),
-              //   );
-              // },
-              // errorWidget: (context, url, error) => const Icon(Icons.error),
+            return GestureDetector(
+              onTap: () {
+                Get.to(
+                  () => ImageViewerPage(
+                    image: images[index].imageUrl,
+                    tag: "",
+                  ),
+                );
+              },
+              child: ExtendedImage.network(
+                images[index].imageUrl,
+                fit: BoxFit.cover,
+                width: double.infinity,
+                clearMemoryCacheIfFailed: true,
+                handleLoadingProgress: true,
+                enableLoadState: true,
+              ),
             );
           },
         ),

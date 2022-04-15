@@ -108,6 +108,7 @@ class _ChatRoomState extends State<ChatRoom> {
       imageQuality: 70,
       maxWidth: 1440,
       source: ImageSource.gallery,
+
     );
 
     if (result != null) {
