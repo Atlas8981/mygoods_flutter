@@ -19,12 +19,13 @@ Future<void> main() async {
       statusBarColor: Colors.transparent,
     ),
   );
-  SystemChrome.setPreferredOrientations([
-    DeviceOrientation.portraitUp,
-  ]);
+
   WidgetsFlutterBinding.ensureInitialized();
   await GetStorage.init();
   if (!kIsWeb) {
+    SystemChrome.setPreferredOrientations([
+      DeviceOrientation.portraitUp,
+    ]);
     await Firebase.initializeApp();
   } else {
     await Firebase.initializeApp(

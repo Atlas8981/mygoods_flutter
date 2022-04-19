@@ -12,6 +12,11 @@ class HomePageController extends GetxController {
     getRecentViewItems();
     getTrendingItems();
   }
+  void clearRecentViewItem(){
+    recentViewItems?.clear();
+    update();
+  }
+
   void getTrendingItems() {
     homePageService.getTrendingItems().then((value) {
       if (value.isEmpty) {

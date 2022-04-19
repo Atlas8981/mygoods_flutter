@@ -7,6 +7,8 @@ import 'package:get/get.dart';
 import 'package:image_picker/image_picker.dart';
 import 'package:mygoods_flutter/components/CustomAlertDialog.dart';
 import 'package:mygoods_flutter/controllers/BottomNavigationViewController.dart';
+import 'package:mygoods_flutter/controllers/HomePageController.dart';
+import 'package:mygoods_flutter/controllers/ItemFormController.dart';
 import 'package:mygoods_flutter/controllers/UserController.dart';
 import 'package:mygoods_flutter/models/category.dart';
 import 'package:mygoods_flutter/models/user.dart' as myUser;
@@ -314,11 +316,16 @@ class _AboutMePageState extends State<AboutMePage> {
       context,
       title: "Are your sure you want to sign out ?",
       onConfirm: () {
-        authService.signOut().then((value) {
+        authService.signOut().then((value) async {
           if (value) {
-            showToast("Sign Out Successfully");
+            await Get.delete<UserController>();
+            await Get.delete<ItemFormController>();
+            final homePageController = Get.find<HomePageController>();
+            homePageController.clearRecentViewItem();
+
             Get.back();
             Get.find<LandingPageController>().changeTabIndex(0);
+            showToast("Sign Out Successfully");
           } else {
             showToast("Sign Out Unsuccessfully");
           }

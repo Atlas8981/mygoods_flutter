@@ -87,29 +87,31 @@ class _HomePageState extends State<HomePage> {
                     }
                   },
                 ),
-              if (!kDebugMode)
-                GetBuilder<HomePageController>(
-                  builder: (controller) {
-                    if (controller.recentViewItems == null) {
-                      return const Center(
-                        child: CircularProgressIndicator(),
-                      );
-                    }
-                    final List<Item> recentViewItems =
-                        controller.recentViewItems!.cast();
-                    if (recentViewItems.isNotEmpty) {
-                      return homePageListView(
-                        "Recently View",
-                        items: recentViewItems,
-                        onTap: () {
-                          showToast("In Development");
-                        },
-                      );
-                    } else {
-                      return Container();
-                    }
-                  },
-                ),
+              // if (!kDebugMode)
+              GetBuilder<HomePageController>(
+                builder: (controller) {
+                  if (controller.recentViewItems == null) {
+                    return const Center(
+                      child: CircularProgressIndicator(),
+                    );
+                  }
+                  final List<Item> recentViewItems =
+                      controller.recentViewItems!.cast();
+                  print(
+                      "There is this amount of item: ${recentViewItems.length}");
+                  if (recentViewItems.isNotEmpty) {
+                    return homePageListView(
+                      "Recently View",
+                      items: recentViewItems,
+                      onTap: () {
+                        showToast("In Development");
+                      },
+                    );
+                  } else {
+                    return Container();
+                  }
+                },
+              ),
             ],
           ),
         ),

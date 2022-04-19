@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:mygoods_flutter/components/TypeTextField.dart';
+import 'package:mygoods_flutter/controllers/HomePageController.dart';
 import 'package:mygoods_flutter/controllers/ItemFormController.dart';
 import 'package:mygoods_flutter/controllers/UserController.dart';
 import 'package:mygoods_flutter/services/AuthenticationService.dart';
@@ -171,6 +172,8 @@ class _LoginWithEmailPageState extends State<LoginWithEmailPage> {
             Get.lazyPut(() => UserController(), fenix: true);
             Get.delete<ItemFormController>();
             Get.lazyPut(() => ItemFormController(), fenix: true);
+            Get.delete<HomePageController>();
+            Get.lazyPut(() => HomePageController(), fenix: true);
             Get.offAll(() => const LandingPage());
           } else {
             Get.offAll(
