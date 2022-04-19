@@ -25,7 +25,6 @@ Future<void> main() async {
   WidgetsFlutterBinding.ensureInitialized();
   await GetStorage.init();
   if (!kIsWeb) {
-
     await Firebase.initializeApp();
   } else {
     await Firebase.initializeApp(
@@ -58,7 +57,7 @@ Future<void> main() async {
     sound: true,
   );
 
-  await FirebaseMessaging.instance.requestPermission(
+  FirebaseMessaging.instance.requestPermission(
     alert: true,
     announcement: false,
     badge: true,
