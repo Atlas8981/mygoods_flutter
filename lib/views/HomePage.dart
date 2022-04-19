@@ -97,8 +97,6 @@ class _HomePageState extends State<HomePage> {
                   }
                   final List<Item> recentViewItems =
                       controller.recentViewItems!.cast();
-                  print(
-                      "There is this amount of item: ${recentViewItems.length}");
                   if (recentViewItems.isNotEmpty) {
                     return homePageListView(
                       "Recently View",
