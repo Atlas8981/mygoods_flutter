@@ -22,7 +22,7 @@ class _BigImageCellState extends State<BigImageCell> {
   Widget build(BuildContext context) {
     return Card(
       elevation: 5,
-      shape: RoundedRectangleBorder(
+      shape: const RoundedRectangleBorder(
         borderRadius: BorderRadius.all(
           Radius.circular(8),
         ),
@@ -49,7 +49,7 @@ class _BigImageCellState extends State<BigImageCell> {
               ),
             ),
             Container(
-              padding: EdgeInsets.all(8),
+              padding: const EdgeInsets.all(8),
               width: double.maxFinite,
               child: Column(
                 mainAxisSize: MainAxisSize.max,
@@ -62,7 +62,7 @@ class _BigImageCellState extends State<BigImageCell> {
                       fontSize: 24,
                     ),
                   ),
-                  Divider(
+                  const Divider(
                     height: 4,
                     color: Colors.transparent,
                   ),
@@ -74,7 +74,7 @@ class _BigImageCellState extends State<BigImageCell> {
                       fontWeight: FontWeight.bold,
                     ),
                   ),
-                  Divider(height: 4, color: Colors.transparent),
+                  const Divider(height: 4, color: Colors.transparent),
                   Text(
                     "Posted ${calDate(widget.item.date)}",
                     style: const TextStyle(fontSize: 16),

@@ -109,13 +109,13 @@ class _ListItemByCategoryPageState extends State<ListItemByCategoryPage> {
 
   Widget gridView(List<Item> items) {
     return GridView.builder(
-      gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
+      gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
         crossAxisCount: 2,
         crossAxisSpacing: 8,
         mainAxisSpacing: 8,
         childAspectRatio: 6.9 / 10,
       ),
-      padding: EdgeInsets.all(8),
+      padding: const EdgeInsets.all(8),
       itemCount: items.length,
       itemBuilder: (context, index) {
         return ItemGridCell(
