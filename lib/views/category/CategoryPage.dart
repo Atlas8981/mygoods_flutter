@@ -58,6 +58,7 @@ class _CategoryPageState extends State<CategoryPage> {
                         scrollDirection: Axis.vertical,
                         childAspectRatio: (85 / 90),
                         shrinkWrap: true,
+                        physics: const NeverScrollableScrollPhysics(),
                         crossAxisCount: 3,
                         crossAxisSpacing: 4.0,
                         children: List.generate(
