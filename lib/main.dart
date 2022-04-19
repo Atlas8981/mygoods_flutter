@@ -1,5 +1,6 @@
 import 'package:firebase_core/firebase_core.dart';
 import 'package:firebase_messaging/firebase_messaging.dart';
+import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_firebase_chat_core/flutter_firebase_chat_core.dart';
@@ -23,7 +24,22 @@ Future<void> main() async {
   ]);
   WidgetsFlutterBinding.ensureInitialized();
   await GetStorage.init();
-  await Firebase.initializeApp();
+  if (!kIsWeb) {
+
+    await Firebase.initializeApp();
+  } else {
+    await Firebase.initializeApp(
+      options: const FirebaseOptions(
+        apiKey: "AIzaSyDbRZ5V1cJsazLowG31_-dGFyxR-LSnO0o",
+        authDomain: "mygoods-e042f.firebaseapp.com",
+        projectId: "mygoods-e042f",
+        storageBucket: "mygoods-e042f.appspot.com",
+        messagingSenderId: "226282342113",
+        appId: "1:226282342113:web:30625a1a7e8fd8a36859a0",
+        databaseURL: "https://mygoods-e042f.firebaseio.com",
+      ),
+    );
+  }
   // if (kDebugMode) {
   // FirebaseFunctions.instance.useFunctionsEmulator(
   //   'localhost',

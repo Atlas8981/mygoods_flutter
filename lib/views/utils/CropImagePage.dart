@@ -1,10 +1,14 @@
 import 'dart:io';
+import 'dart:typed_data';
 
 import 'package:extended_image/extended_image.dart';
+import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_native_image/flutter_native_image.dart';
 import 'package:get/get.dart';
 import 'package:image_picker/image_picker.dart';
+import 'package:mygoods_flutter/components/CustomErrorWidget.dart';
+import 'package:mygoods_flutter/components/LoadingWidget.dart';
 
 class CropImagePage extends StatefulWidget {
   const CropImagePage({
@@ -23,6 +27,20 @@ class _CropImagePageState extends State<CropImagePage> {
 
   @override
   Widget build(BuildContext context) {
+    if (kIsWeb) {
+      return Scaffold(
+        appBar: AppBar(
+          title: const Text("Crop Image"),
+        ),
+        body: Center(
+          child: Column(
+            children: const [
+              Text("No available on web"),
+            ],
+          ),
+        ),
+      );
+    }
     return Scaffold(
       appBar: AppBar(
         title: const Text("Crop Image"),
@@ -52,18 +70,30 @@ class _CropImagePageState extends State<CropImagePage> {
         ],
       ),
       body: SafeArea(
-        child: ExtendedImage.file(
-          File(widget.userImage.path),
-          fit: BoxFit.contain,
-          mode: ExtendedImageMode.editor,
-          extendedImageEditorKey: editorKey,
-          initEditorConfigHandler: (state) {
-            return EditorConfig(
-              maxScale: 8.0,
-              cropRectPadding: const EdgeInsets.all(20.0),
-              hitTestSize: 20.0,
-              cropAspectRatio: 1.0,
-            );
+        child: FutureBuilder<Uint8List>(
+          future: widget.userImage.readAsBytes(),
+          builder: (context, snapshot) {
+            if (snapshot.connectionState == ConnectionState.waiting) {
+              return const LoadingWidget();
+            }
+            if (snapshot.hasData && snapshot.data != null) {
+              final byte = snapshot.data!;
+              return ExtendedImage(
+                image: ExtendedMemoryImageProvider(byte),
+                fit: BoxFit.contain,
+                mode: ExtendedImageMode.editor,
+                extendedImageEditorKey: editorKey,
+                initEditorConfigHandler: (state) {
+                  return EditorConfig(
+                    maxScale: 8.0,
+                    cropRectPadding: const EdgeInsets.all(20.0),
+                    hitTestSize: 20.0,
+                    cropAspectRatio: 1.0,
+                  );
+                },
+              );
+            }
+            return const CustomErrorWidget();
           },
         ),
       ),
