@@ -26,7 +26,7 @@ class ItemDetailPage extends StatefulWidget {
 }
 
 class _ItemDetailPageState extends State<ItemDetailPage> {
-  final PageController pageController = PageController(
+  final pageController = PageController(
     initialPage: 0,
     viewportFraction: 1,
   );

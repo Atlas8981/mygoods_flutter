@@ -5,6 +5,7 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:mygoods_flutter/models/image.dart' as image;
 import 'package:mygoods_flutter/views/utils/ImageViewerPage.dart';
+import 'package:mygoods_flutter/views/utils/ImagesViewerPage.dart';
 
 class ImagesView extends StatefulWidget {
   const ImagesView({
@@ -49,9 +50,9 @@ class _ImagesViewState extends State<ImagesView> {
             return GestureDetector(
               onTap: () {
                 Get.to(
-                  () => ImageViewerPage(
-                    image: images[index].imageUrl,
-                    tag: "",
+                  () => ImagesViewerPage(
+                    images: images.map((e) => e.imageUrl).toList(),
+                    selectedIndex: realIndex,
                   ),
                 );
               },
@@ -71,11 +72,14 @@ class _ImagesViewState extends State<ImagesView> {
           child: DotsIndicator(
             dotsCount: images.length,
             position: currentPage.toDouble(),
+            decorator: DotsDecorator(
+              activeColor: Colors.blue,
+            ),
             onTap: (position) {
               carouselController.animateToPage(position.toInt());
             },
           ),
-        )
+        ),
       ],
     );
   }
