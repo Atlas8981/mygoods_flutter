@@ -3,6 +3,7 @@ import 'package:mygoods_flutter/models/item.dart';
 import 'package:mygoods_flutter/services/HomePageService.dart';
 import 'package:mygoods_flutter/views/item/ItemDetailPage.dart';
 import 'package:mygoods_flutter/views/cells/ListItemRow.dart';
+import 'package:mygoods_flutter/views/item/ListItemPage.dart';
 
 class ViewAllPage extends StatelessWidget {
   ViewAllPage({
@@ -18,16 +19,16 @@ class ViewAllPage extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(
-        title: Text(title ?? "View All Page"),
-      ),
       body: FutureBuilder<List<Item>>(
         future: homePageService.getAllTrendingItems(),
         initialData: smallListItem ?? [],
         builder: (context, snapshot) {
           if (snapshot.hasData) {
             final List<Item> items = snapshot.data!;
-            return buildViewAllList(items);
+            return ListItemPage(
+              items: items,
+              title: title ?? "View All Page",
+            );
           }
           return const Center(
             child: CircularProgressIndicator(),

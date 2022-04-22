@@ -282,7 +282,7 @@ class _AboutMePageState extends State<AboutMePage> {
                   Get.to(() => MyItemsPage());
                   break;
                 case 1:
-                  Get.to(() => const SavedItemsPage());
+                  Get.to(() => SavedItemsPage());
                   break;
                 case 2:
                   Get.to(() => const AboutOurAppPage());

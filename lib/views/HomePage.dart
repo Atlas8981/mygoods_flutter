@@ -7,7 +7,7 @@ import 'package:mygoods_flutter/models/item.dart';
 import 'package:mygoods_flutter/services/HomePageService.dart';
 import 'package:mygoods_flutter/utils/constant.dart';
 import 'package:mygoods_flutter/views/item/ItemDetailPage.dart';
-import 'package:mygoods_flutter/views/ViewAllPage.dart';
+import 'package:mygoods_flutter/views/item/ViewAllPage.dart';
 import 'package:mygoods_flutter/views/cells/HomePageCell.dart';
 import 'package:mygoods_flutter/views/search/ItemSearchDelegate.dart';
 
