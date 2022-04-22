@@ -3,7 +3,7 @@ import 'package:get/get.dart';
 import 'package:mygoods_flutter/models/category.dart';
 import 'package:mygoods_flutter/utils/constant.dart';
 import 'package:mygoods_flutter/views/item/ListItemByCategoryPage.dart';
-import 'package:mygoods_flutter/views/cells/CategoryItemRow.dart';
+import 'package:mygoods_flutter/views/cells/MenuItemRow.dart';
 
 class SubCategoryPage extends StatelessWidget {
   const SubCategoryPage({
@@ -42,7 +42,7 @@ class SubCategoryPage extends StatelessWidget {
                 primary: true,
                 itemCount: decideSubCategory().length,
                 itemBuilder: (context, index) {
-                  return InkWell(
+                  return MenuItemRow(
                     onTap: () {
                       Get.to(
                         () => ListItemByCategoryPage(
@@ -51,10 +51,8 @@ class SubCategoryPage extends StatelessWidget {
                         ),
                       );
                     },
-                    child: CategoryItemRow(
-                      name: decideSubCategory()[index].name,
-                      assetImage: decideSubCategory()[index].image,
-                    ),
+                    name: decideSubCategory()[index].name,
+                    assetImage: decideSubCategory()[index].image,
                   );
                 },
               ),

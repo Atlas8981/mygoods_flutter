@@ -3,7 +3,7 @@ import 'package:get/get.dart';
 import 'package:mygoods_flutter/models/category.dart';
 import 'package:mygoods_flutter/utils/constant.dart';
 import 'package:mygoods_flutter/views/item/ListItemByPopularCategoryPage.dart';
-import 'package:mygoods_flutter/views/cells/CategoryItemRow.dart';
+import 'package:mygoods_flutter/views/cells/MenuItemRow.dart';
 import 'package:mygoods_flutter/views/cells/PopularCategoryCell.dart';
 
 import 'SubCategoryPage.dart';
@@ -31,7 +31,7 @@ class _CategoryPageState extends State<CategoryPage> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: const Text("Category"),
+        title: Text("category".tr),
       ),
       body: SafeArea(
         child: SizedBox(
@@ -46,8 +46,8 @@ class _CategoryPageState extends State<CategoryPage> {
                   child: Column(
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
-                      const Text(
-                        "Popular Category",
+                      Text(
+                        "${"category".tr}${"popular".tr}",
                         style: TextStyle(
                           fontSize: 18,
                           fontWeight: FontWeight.bold,
@@ -76,14 +76,9 @@ class _CategoryPageState extends State<CategoryPage> {
                     ],
                   ),
                 ),
-                Container(
-                  width: double.maxFinite,
-                  height: 5,
+                Divider(
+                  thickness: 5,
                   color: Colors.black.withOpacity(0.2),
-                ),
-                const SizedBox(
-                  width: double.maxFinite,
-                  height: 10,
                 ),
                 Padding(
                   padding: const EdgeInsets.all(20),
@@ -91,34 +86,36 @@ class _CategoryPageState extends State<CategoryPage> {
                     crossAxisAlignment: CrossAxisAlignment.stretch,
                     mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                     children: [
-                      const Text(
-                        "More Categories",
+                      Text(
+                        "${"more".tr} ${"category".tr}",
                         style: TextStyle(
                           fontSize: 18,
                           fontWeight: FontWeight.bold,
                         ),
                       ),
-                      const SizedBox(
-                        width: double.infinity,
-                        height: 20,
-                      ),
-                      ListView.builder(
+                      const SizedBox(height: 20),
+                      ListView.separated(
                         physics: const NeverScrollableScrollPhysics(),
                         shrinkWrap: true,
+                        separatorBuilder: (context, index) {
+                          return Divider(
+                            height: 0,
+                            thickness: 2,
+                          );
+                        },
+                        padding: EdgeInsets.zero,
                         itemCount: mainCategories.length,
                         itemBuilder: (context, index) {
-                          return InkWell(
-                            onTap: () {
+                          return MenuItemRow(
+                            onTap: (){
                               Get.to(
-                                () => SubCategoryPage(
+                                    () => SubCategoryPage(
                                   title: mainCategories[index].name,
                                 ),
                               );
                             },
-                            child: CategoryItemRow(
-                              name: mainCategories[index].name,
-                              assetImage: mainCategories[index].image,
-                            ),
+                            name: mainCategories[index].name,
+                            assetImage: mainCategories[index].image,
                           );
                         },
                       )

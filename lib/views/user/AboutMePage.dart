@@ -21,7 +21,7 @@ import 'package:mygoods_flutter/views/user/EditProfilePage.dart';
 import 'package:mygoods_flutter/views/utils/ImagePreviewerPage.dart';
 import 'package:mygoods_flutter/views/user/SavedItemsPage.dart';
 import 'package:mygoods_flutter/views/authentication/ResetPasswordPage.dart';
-import 'package:mygoods_flutter/views/cells/CategoryItemRow.dart';
+import 'package:mygoods_flutter/views/cells/MenuItemRow.dart';
 import 'package:mygoods_flutter/views/item/MyItemPage.dart';
 import 'package:mygoods_flutter/views/utils/ImageViewerPage.dart';
 import 'package:mygoods_flutter/views/utils/SettingPage.dart';
@@ -270,12 +270,18 @@ class _AboutMePageState extends State<AboutMePage> {
   Widget bottomListWidgets() {
     return Padding(
       padding: const EdgeInsets.only(left: 20, right: 20),
-      child: ListView.builder(
+      child: ListView.separated(
+        separatorBuilder: (context, index) {
+          return Divider(
+            height: 0,
+            thickness: 2,
+          );
+        },
         shrinkWrap: true,
         physics: const NeverScrollableScrollPhysics(),
         itemCount: bottomListItems.length,
         itemBuilder: (context, index) {
-          return InkWell(
+          return MenuItemRow(
             onTap: () {
               switch (index) {
                 case 0:
@@ -292,10 +298,8 @@ class _AboutMePageState extends State<AboutMePage> {
                   break;
               }
             },
-            child: CategoryItemRow(
-              assetImage: bottomListItems[index].image,
-              name: bottomListItems[index].name,
-            ),
+            assetImage: bottomListItems[index].image,
+            name: bottomListItems[index].name,
           );
         },
       ),

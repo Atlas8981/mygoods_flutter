@@ -37,7 +37,7 @@ class PopularCategoryCell extends StatelessWidget {
             child: Align(
               alignment: Alignment.center,
               child: Text(
-                category.name,
+                category.name.tr,
                 maxLines: 2,
                 textAlign: TextAlign.center,
                 overflow: TextOverflow.ellipsis,
