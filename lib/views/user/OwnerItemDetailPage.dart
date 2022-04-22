@@ -88,8 +88,9 @@ class _OwnerItemDetailPageState extends State<OwnerItemDetailPage> {
             .indexWhere((element) => element.itemid == widget.item!.itemid);
         final Item item = controller.items![index];
         return Scaffold(
+          extendBodyBehindAppBar: true,
+          extendBody: true,
           appBar: AppBar(
-            title: Text("Item Detail: ${item.itemid}"),
             actions: [
               PopupMenuButton<OwnerItemMenu>(
                 icon: const Icon(Icons.more_vert),

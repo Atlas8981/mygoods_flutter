@@ -197,7 +197,9 @@ const defaultColor = Color(0xFF34568B);
 
 const String dummyNetworkImage =
     "https://firebasestorage.googleapis.com/v0/b/mygoods-e042f.appspot.com/o/flutter%2F2021-10-31%2021%3A58%3A15.282499?alt=media&token=f492b829-e106-467e-b3f1-6c05122a0969";
-const String networkBackgroundImage = "https://firebasestorage.googleapis.com/v0/b/project-shotgun.appspot.com/o/IMG_2086-EFFECTS.jpg?alt=media&token=fcd87303-09e6-4ec7-9620-211f240fc85f";
+const String networkBackgroundImage =
+    "https://firebasestorage.googleapis.com/v0/b/project-shotgun.appspot.com/o/IMG_2086-EFFECTS.jpg?alt=media&token=fcd87303-09e6-4ec7-9620-211f240fc85f";
+
 String? validatePhoneNumber(String? value) {
   String pattern = r'^(?:[+0][1-9])?[0-9]{9,10}$';
   RegExp regExp = RegExp(pattern);
@@ -217,6 +219,7 @@ String getFont() {
     return 'KhmerOSBattambang';
   }
 }
+
 String calDate(Timestamp itemDate) {
   //Convert to second
   double date = (Timestamp.now().seconds - itemDate.seconds).toDouble();
@@ -252,7 +255,7 @@ String calDate(Timestamp itemDate) {
 
 checkImageProvider(DualImage image) {
   if (image.isNetworkImage) {
-    return ExtendedImage.network(
+    return NetworkImage(
       image.itemImage!.imageUrl,
     );
   } else {

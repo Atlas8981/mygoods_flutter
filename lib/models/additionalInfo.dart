@@ -9,13 +9,14 @@ AdditionalInfo additionalInfoFromFirestore(Map<String, dynamic> json) =>
     AdditionalInfo.fromJson(json);
 
 class AdditionalInfo {
-  AdditionalInfo(
-      {this.car,
-      this.phone,
-      this.motoType,
-      this.computerParts,
-      this.condition,
-      this.bikeType});
+  AdditionalInfo({
+    this.car,
+    this.phone,
+    this.motoType,
+    this.computerParts,
+    this.condition,
+    this.bikeType,
+  });
 
   Car? car;
   Phone? phone;

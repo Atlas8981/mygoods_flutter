@@ -92,8 +92,8 @@ class _LandingPageState extends State<LandingPage> {
               label: 'Message',
             ),
             NavigationDestination(
-              icon: Icon(Icons.person),
-              selectedIcon: Icon(Icons.person_outline),
+              selectedIcon: Icon(Icons.person),
+              icon: Icon(Icons.person_outline),
               label: 'Account',
             ),
           ],

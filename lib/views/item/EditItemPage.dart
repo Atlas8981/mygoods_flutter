@@ -28,8 +28,8 @@ class EditItemPage extends StatefulWidget {
 
 class _EditItemPageState extends State<EditItemPage> {
   late final ItemFormController itemFormController;
-  final FirebaseStorage storage = FirebaseStorage.instance;
-  final FirebaseFirestore firestore = FirebaseFirestore.instance;
+  final storage = FirebaseStorage.instance;
+  final firestore = FirebaseFirestore.instance;
   final auth = FirebaseAuth.instance;
 
   Future<List<myImageClass.Image>> uploadFiles(List<DualImage> _images) async {
@@ -41,7 +41,7 @@ class _EditItemPageState extends State<EditItemPage> {
     if (_image.isNetworkImage) {
       return _image.itemImage!;
     }
-    final imageName = "${DateTime.now()}";
+    final imageName = "${DateTime.now()}/${_image.imagePath}";
     final Reference storageReference = storage.ref('flutter/').child(imageName);
     await storageReference.putFile(File(_image.imagePath!));
     final imageUrl = await storageReference.getDownloadURL();
@@ -53,20 +53,21 @@ class _EditItemPageState extends State<EditItemPage> {
     final CollectionReference reference = firestore.collection(itemCollection);
 
     final Item newItem = Item(
-        date: preItem.date,
-        subCategory: itemFormController.subCat.value,
-        images: images,
-        amount: 0,
-        address: itemFormController.addressCon.text,
-        description: itemFormController.descriptionCon.text,
-        userid: preItem.userid,
-        itemid: preItem.itemid,
-        viewers: preItem.viewers,
-        phone: "0${itemFormController.phoneCon.text}",
-        price: double.parse(itemFormController.priceCon.text),
-        name: itemFormController.nameCon.text,
-        mainCategory: itemFormController.mainCat.value,
-        views: preItem.views);
+      date: preItem.date,
+      subCategory: itemFormController.subCat.value,
+      images: images,
+      amount: 0,
+      address: itemFormController.addressCon.text,
+      description: itemFormController.descriptionCon.text,
+      userid: preItem.userid,
+      itemid: preItem.itemid,
+      viewers: preItem.viewers,
+      phone: "0${itemFormController.phoneCon.text}",
+      price: double.parse(itemFormController.priceCon.text),
+      name: itemFormController.nameCon.text,
+      mainCategory: itemFormController.mainCat.value,
+      views: preItem.views,
+    );
     //
     reference.doc(preItem.itemid).update(newItem.toJson()).then((value) {
       showToast("Success");
@@ -121,12 +122,13 @@ class _EditItemPageState extends State<EditItemPage> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-        body: ItemForm(
-      titleText: const Text("Edit Item"),
-      padding: const EdgeInsets.all(10),
-      onConfirm: () {
-        uploadItemInformation();
-      },
-    ));
+      body: ItemForm(
+        titleText: const Text("Edit Item"),
+        padding: const EdgeInsets.all(10),
+        onConfirm: () {
+          uploadItemInformation();
+        },
+      ),
+    );
   }
 }

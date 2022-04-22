@@ -5,7 +5,6 @@ import 'package:get/get.dart';
 import 'package:mygoods_flutter/models/item.dart';
 import 'package:mygoods_flutter/services/ItemService.dart';
 
-
 class ListItemRow extends StatefulWidget {
   const ListItemRow({
     Key? key,
@@ -67,7 +66,8 @@ class _ListItemRowState extends State<ListItemRow> {
   }
 
   Widget mainItemRow(Item item) {
-    return SizedBox(
+    return Container(
+      color: Colors.transparent,
       width: double.maxFinite,
       child: Column(
         children: [

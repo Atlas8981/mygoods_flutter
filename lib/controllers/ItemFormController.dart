@@ -81,6 +81,7 @@ class ItemFormController extends GetxController {
 
       conditionCon.text = "${additionalInfo.condition}";
       additionalInfoCon.text = getAdditionInfo(additionalInfo);
+      update();
     });
   }
 
