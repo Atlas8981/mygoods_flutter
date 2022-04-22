@@ -14,11 +14,14 @@ class AdditionalDataService {
     const String url =
         "https://parseapi.back4app.com/classes/Car_Model_List?limit=$limit&order=$order";
     var uri = Uri.parse(url);
-    var response = await http.get(uri, headers: headers);
+    var response = await http.get(
+      uri,
+      headers: headers,
+    );
     final responseBody = response.body;
     final getCarData = jsonDecode(responseBody);
     if (response.statusCode == 200) {
-      List<Car> cars = List<Car>.from(
+      final List<Car> cars = List<Car>.from(
           getCarData['results'].map((x) => Car.fromBack4AppJson(x)));
       return cars;
     } else {

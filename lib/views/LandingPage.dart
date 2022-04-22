@@ -1,4 +1,3 @@
-
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:mygoods_flutter/controllers/BottomNavigationViewController.dart';
@@ -53,38 +52,52 @@ class _LandingPageState extends State<LandingPage> {
     );
   }
 
-  Widget buildBottomNavigationMenu(context, landingPageController) {
+  Widget buildBottomNavigationMenu(
+      context, LandingPageController landingPageController) {
     return Obx(
-      () => BottomNavigationBar(
-        type: BottomNavigationBarType.fixed,
-        showUnselectedLabels: false,
-        showSelectedLabels: true,
-        onTap: landingPageController.changeTabIndex,
-        currentIndex: landingPageController.tabIndex.value,
-        unselectedItemColor: Colors.black54,
-        selectedItemColor: Colors.blue,
-        items: const [
-          BottomNavigationBarItem(
-            icon: Icon(Icons.home),
-            label: 'Home',
-          ),
-          BottomNavigationBarItem(
-            icon: Icon(Icons.format_list_bulleted),
-            label: 'Category',
-          ),
-          BottomNavigationBarItem(
-            icon: Icon(Icons.add_box_outlined),
-            label: 'Add',
-          ),
-          BottomNavigationBarItem(
-            icon: Icon(Icons.chat_outlined),
-            label: 'Message',
-          ),
-          BottomNavigationBarItem(
-            icon: Icon(Icons.person_outline),
-            label: 'Account',
-          ),
-        ],
+      () => NavigationBarTheme(
+        data: const NavigationBarThemeData(
+          indicatorColor: Colors.blue,
+        ),
+        child: NavigationBar(
+          // type: BottomNavigationBarType.fixed,
+          // showUnselectedLabels: false,
+          // showSelectedLabels: true,
+          // onTap: landingPageController.changeTabIndex,
+          // currentIndex: landingPageController.tabIndex.value,
+          // unselectedItemColor: Colors.black54,
+          // selectedItemColor: Colors.blue,
+          selectedIndex: landingPageController.tabIndex.value,
+          onDestinationSelected: landingPageController.changeTabIndex,
+          labelBehavior: NavigationDestinationLabelBehavior.onlyShowSelected,
+          destinations: const [
+            NavigationDestination(
+              selectedIcon: Icon(Icons.home),
+              icon: Icon(Icons.home_outlined),
+              label: 'Home',
+            ),
+            NavigationDestination(
+              selectedIcon: Icon(Icons.format_list_bulleted),
+              icon: Icon(Icons.format_list_bulleted_outlined),
+              label: 'Category',
+            ),
+            NavigationDestination(
+              selectedIcon: Icon(Icons.add_box),
+              icon: Icon(Icons.add_box_outlined),
+              label: 'Add',
+            ),
+            NavigationDestination(
+              selectedIcon: Icon(Icons.chat),
+              icon: Icon(Icons.chat_outlined),
+              label: 'Message',
+            ),
+            NavigationDestination(
+              icon: Icon(Icons.person),
+              selectedIcon: Icon(Icons.person_outline),
+              label: 'Account',
+            ),
+          ],
+        ),
       ),
     );
   }

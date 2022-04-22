@@ -1,3 +1,4 @@
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:firebase_messaging/firebase_messaging.dart';
 import 'package:flutter/foundation.dart';
@@ -119,6 +120,7 @@ class _MyGoodsState extends State<MyGoods> {
       defaultTransition: Transition.cupertino,
       themeMode: determineThemeMode(storage.read("themeMode")),
       darkTheme: ThemeData.dark().copyWith(
+        useMaterial3: true,
         appBarTheme: AppBarTheme(
           color: Colors.blue.shade600,
         ),
@@ -147,6 +149,7 @@ class _MyGoodsState extends State<MyGoods> {
         ),
       ),
       theme: ThemeData.light().copyWith(
+        useMaterial3: true,
         colorScheme: const ColorScheme.light(
           primary: Colors.blue,
           secondary: Colors.blue,
