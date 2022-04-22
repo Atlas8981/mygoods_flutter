@@ -37,7 +37,13 @@ class SubCategoryPage extends StatelessWidget {
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.stretch,
             children: [
-              ListView.builder(
+              ListView.separated(
+                separatorBuilder: (context, index) {
+                  return Divider(
+                    height: 0,
+                    thickness: 2,
+                  );
+                },
                 shrinkWrap: true,
                 primary: true,
                 itemCount: decideSubCategory().length,
