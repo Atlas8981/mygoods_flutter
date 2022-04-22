@@ -91,7 +91,6 @@ class ItemSearchDelegate extends SearchDelegate<String> {
 
   @override
   Widget buildSuggestions(BuildContext context) {
-    onQueryTextChange();
     return (query == "" || query.isEmpty)
         ? RecentSearchList(
             onTap: (value) {
@@ -104,7 +103,6 @@ class ItemSearchDelegate extends SearchDelegate<String> {
           );
   }
 
-  void onQueryTextChange() {}
 }
 
 

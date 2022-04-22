@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:get/get.dart';
 import 'package:mygoods_flutter/components/CustomErrorWidget.dart';
 import 'package:mygoods_flutter/components/LoadingWidget.dart';
 import 'package:mygoods_flutter/services/SearchService.dart';
@@ -22,13 +23,13 @@ class _RecentSearchListState extends State<RecentSearchList> {
     return Column(
       children: [
         ListTile(
-          title: const Text("Recent Search"),
+          title: Text("recentSearch".tr),
           trailing: TextButton(
             onPressed: () async {
               await searchService.clearRecentSearches();
               setState(() {});
             },
-            child: const Text("CLEAR"),
+            child: Text("clear".tr),
           ),
         ),
         FutureBuilder<List<String>?>(

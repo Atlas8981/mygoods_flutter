@@ -60,41 +60,34 @@ class _LandingPageState extends State<LandingPage> {
           indicatorColor: Colors.blue,
         ),
         child: NavigationBar(
-          // type: BottomNavigationBarType.fixed,
-          // showUnselectedLabels: false,
-          // showSelectedLabels: true,
-          // onTap: landingPageController.changeTabIndex,
-          // currentIndex: landingPageController.tabIndex.value,
-          // unselectedItemColor: Colors.black54,
-          // selectedItemColor: Colors.blue,
           selectedIndex: landingPageController.tabIndex.value,
           onDestinationSelected: landingPageController.changeTabIndex,
           labelBehavior: NavigationDestinationLabelBehavior.onlyShowSelected,
-          destinations: const [
+          destinations:  [
             NavigationDestination(
               selectedIcon: Icon(Icons.home),
               icon: Icon(Icons.home_outlined),
-              label: 'Home',
+              label: 'home'.tr,
             ),
             NavigationDestination(
               selectedIcon: Icon(Icons.format_list_bulleted),
               icon: Icon(Icons.format_list_bulleted_outlined),
-              label: 'Category',
+              label: 'category'.tr,
             ),
             NavigationDestination(
               selectedIcon: Icon(Icons.add_box),
               icon: Icon(Icons.add_box_outlined),
-              label: 'Add',
+              label: 'add'.tr,
             ),
             NavigationDestination(
               selectedIcon: Icon(Icons.chat),
               icon: Icon(Icons.chat_outlined),
-              label: 'Message',
+              label: 'message'.tr,
             ),
             NavigationDestination(
               selectedIcon: Icon(Icons.person),
               icon: Icon(Icons.person_outline),
-              label: 'Account',
+              label: 'account'.tr,
             ),
           ],
         ),
@@ -102,16 +95,4 @@ class _LandingPageState extends State<LandingPage> {
     );
   }
 
-  String appTitle(landingPageController) {
-    final index = landingPageController.tabIndex.value;
-    if (index == 0) {
-      return "Home";
-    } else if (index == 1) {
-      return "Category";
-    } else if (index == 2) {
-      return "Add Item";
-    } else {
-      return "Account";
-    }
-  }
 }

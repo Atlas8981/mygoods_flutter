@@ -30,7 +30,7 @@ class _HomePageState extends State<HomePage> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: const Text("Home"),
+        title: Text("home".tr),
         actions: [
           if (kDebugMode)
             IconButton(
@@ -79,7 +79,7 @@ class _HomePageState extends State<HomePage> {
                         controller.trendingItems!.cast();
                     if (trendingItems.isNotEmpty) {
                       return homePageListView(
-                        "Trending",
+                        "trending".tr,
                         items: trendingItems,
                         onTap: () {
                           showToast("In Development");
@@ -102,7 +102,7 @@ class _HomePageState extends State<HomePage> {
                       controller.recentViewItems!.cast();
                   if (recentViewItems.isNotEmpty) {
                     return homePageListView(
-                      "Recently View",
+                      "recentlyView".tr,
                       items: recentViewItems,
                       onTap: () {
                         showToast("In Development");
@@ -162,7 +162,7 @@ class _HomePageState extends State<HomePage> {
                   ),
                 );
               },
-              child: const Text("View All"),
+              child: Text("more".tr),
             ),
           ],
         ),

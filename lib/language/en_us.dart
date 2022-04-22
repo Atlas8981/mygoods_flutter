@@ -1,6 +1,24 @@
 const Map<String, String> enUS = {
   //For MyGoods
 
+  'seller': 'Seller',
+  'buyer': 'Buyer',
+  'gender': 'Gender',
+  'male': 'Male',
+  'female': 'Female',
+
+  //MENUS LABELS
+  'home': "Home",
+  'trending': "Trending",
+  'recentlyView': "Recently View",
+  'recommendation': 'Recommendation',
+  'viewAll': "View All",
+
+  //CATEGORY
+  'category': 'Category',
+  'mainCategory': 'Main Category',
+  'subCategory': 'Sub Category',
+
 
   //From Old
   'splashText': 'Enter app',
@@ -56,8 +74,6 @@ const Map<String, String> enUS = {
   'createAccountNotificationBodyFailed': 'Your account has been rejected',
 
   //FORM TEXT
-  'male': 'Male',
-  'female': 'Female',
   'addPhoto': "Add Photo",
   'phoneNumber': 'Phone Number',
   'confirmPhoneNumber': 'Confirm Phone Number',
@@ -73,7 +89,6 @@ const Map<String, String> enUS = {
   'agent': 'Agent',
   'company': 'Company',
   'birthday': 'Birthday',
-  'gender': 'Gender',
   'idCard': 'National Id',
   'passport': 'Passport',
   'or': 'Or',

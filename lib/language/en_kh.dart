@@ -2,20 +2,93 @@
 //Language Code: km
 
 const Map<String, String> kmKH = {
-  //For MyGoods
+//For MyGoods
 
-  'home':"ទំព័រដើម",
-  'trending':"ផលិតផលពេញនិយម",
-  'recentlyView':"បានមើលនាពេលថ្មីៗនេះ",
-  'recommendation':'ផលិតផលអ្នកនឹងចូលចិត្ត',
-  'viewAll':"មើលទាំងអស់",
   'seller': 'អ្នកលក់',
-  'buyer':'អ្នកទិញ',
+  'buyer': 'អ្នកទិញ',
   'gender': 'ភេទ',
   'male': 'ប្រុស',
   'female': 'ស្រី',
+  'item': 'វត្ថុ',
+  'name': 'ឈ្មោះ',
+  'price': 'តម្លៃ',
+  'condition': 'លក្ខខណ្ឌ',
+  'address': 'អាសយដ្ឋាន',
+  'number': 'លេខ',
+  'description': 'ការពណ៌នា',
+  'add': 'បន្ថែម',
+  'new': 'ថ្មី',
+  'used': 'បានប្រើហើយ',
+  'enter': 'បញ្ចូល',
+  'information': 'ព័ត៌មាន',
+  'message': 'សារ',
+  'account': 'គណនី',
+  'popular': 'ពេញនិយម',
+  'more':'បន្ថែម',
+  'sell':'លក់',
+  'clear':'លុបចេាល',
 
-  //Common Phrase
+  //MENUS LABELS
+  'home': "ទំព័រដើម",
+  'trending': "ផលិតផលពេញនិយម",
+  'recentlyView': "បានមើលនាពេលថ្មីៗនេះ",
+  'recommendation': 'ផលិតផលអ្នកនឹងចូលចិត្ត',
+  'viewAll': "មើលទាំងអស់",
+  'upload': 'បង្ហោះ',
+  'photo': 'រូបថត',
+  'recentSearch':'ការស្វែងរកថ្មីៗ',
+
+  //CATEGORY
+  'category': 'ប្រភេទ',
+  'select': 'ជ្រើសរើស',
+  'mainCategory': 'ប្រភេទចម្បង',
+  'subCategory': 'ប្រភេទរង',
+  'Car & Vehicle': "យានជំនិះ",
+  'Electronic': 'អេឡិចត្រូនិក',
+  'Furniture & Decors': "គ្រឿងសង្ហារិម",
+  'Phone': 'ទូរស័ព្ទ',
+  'other': 'ផ្សែង',
+  'Desktop': 'កុំព្យូទ័រលើតុ',
+  'Laptop': 'កុំព្យូទ័រយួរដៃ',
+  'Parts & Accessories': 'គ្រឿងបន្លាស់ និងគ្រឿងប្រើប្រាស់ កុំព្យូទ័រ',
+  'Cars': 'រថយន្ត',
+  'Motorbikes': "ម៉ូតូ",
+  'Bicycle': 'កង់',
+  'Table & Desk': 'តុ',
+  'Chair & Sofa': 'កៅអី',
+  'Household Item': 'របស់របរប្រើប្រាស់ក្នុងផ្ទះ',
+
+// final List<Category> mainCategories = [
+//   Category(name: "Electronic", image: "${imageDir}electronic.png"),
+//   Category(name: "Car & Vehicle", image: "${imageDir}car.png"),
+//   Category(name: "Furniture & Decors", image: "${imageDir}furniture.png"),
+// ];
+// final List<Category> electronicSubCategories = [
+//   Category(name: "Phone", image: "${imageDir}phone.png"),
+//   Category(name: "Desktop", image: "${imageDir}electronic.png"),
+//   Category(name: "Laptop", image: "${imageDir}laptop.png"),
+//   Category(name: "Parts & Accessories", image: "${imageDir}accessory.png"),
+//   Category(name: "Other", image: "${imageDir}other.png"),
+// ];
+//
+// final List<Category> carSubCategories = [
+//   Category(name: "Cars", image: "${imageDir}car.png"),
+//   Category(name: "Motorbikes", image: "${imageDir}moto.png"),
+//   Category(name: "Bicycle", image: "${imageDir}bike.png"),
+//   Category(name: "Other", image: "${imageDir}other.png"),
+// ];
+// final List<Category> furnitureSubCategories = [
+//   Category(name: "Table & Desk", image: "${imageDir}table.png"),
+//   Category(name: "Chair & Sofa", image: "${imageDir}sofa.png"),
+//   Category(name: "Household Item", image: "${imageDir}household.png"),
+//   Category(name: "Other", image: "${imageDir}other.png"),
+// ];
+
+  //MESSAGE
+  'errorOccurred': 'កំហុសបានកើតឡើង',
+  'notANumber': 'មិនមែនលេខទេ',
+
+  //
   'second': 'វិនាទី',
   'minute': 'នាទី',
   'hour': 'ម៉ោង',
@@ -40,7 +113,7 @@ const Map<String, String> kmKH = {
   'confirm': 'យល់ព្រម',
   'cancel': 'បោះបង់',
 
-  //From Old
+//From Old
   'splashText': 'ចូលកម្មវិធី',
   'appName': 'ប្រព័ន្ធគ្រប់គ្រងស៊ីមកាត',
   'checkBack': 'ចុចម្តងទៀតដើម្បីចាកចេញ',
@@ -51,16 +124,15 @@ const Map<String, String> kmKH = {
       'សូមពិនិត្យមើលការតភ្ជាប់អ៊ីនធឺណិតរបស់អ្នក ហើយព្យាយាមម្តងទៀត',
   'okButtonText': 'បាទ/ចាស',
 
-  //SETTING PAGE
+//SETTING PAGE
 
   'setBiometric': 'កំណត់ការផ្ទៀងផ្ទាត់ជីវមាត្រ',
   'turnOffBiometric': 'បញ្ជាក់ដើម្បីបិទការផ្ទៀងផ្ទាត់ជីវមាត្រ',
   'turnOnBiometric': 'បញ្ជាក់ដើម្បីបើកការផ្ទៀងផ្ទាត់ជីវមាត្រ',
 
-  //BUTTON TEXT
+//BUTTON TEXT
 
-
-  //CREATE ACCOUNT TITLE TEXT
+//CREATE ACCOUNT TITLE TEXT
   'createAccount': 'បង្កើតគណនី',
   'accountAndPassword': ' គណនី & ពាក្យសម្ងាត់',
   'personalInformation': 'ព័ត៌មានផ្ទាល់ខ្លួន',
@@ -71,7 +143,7 @@ const Map<String, String> kmKH = {
   'createAccountNotificationBodySuccess': 'គណនីរបស់អ្នកត្រូវបានអនុម័ត',
   'createAccountNotificationBodyFailed': 'គណនីរបស់អ្នកត្រូវបានបដិសេធ',
 
-  //FORM TEXT
+//FORM TEXT
 
   'addPhoto': "បញ្ចូលរូបថត",
   'phoneNumber': 'លេខទូរស័ព្ទ',
@@ -101,18 +173,17 @@ const Map<String, String> kmKH = {
   'shopName': 'ឈ្មោះហាង',
   'shopLocation': 'អាសយដ្ឋានហាង',
   'nationality': 'សញ្ជាតិ',
-  'address': 'អាសយដ្ឋានផ្ទាល់ខ្លួន',
   'arrivalDate': 'កាលបរិច្ឆេទមកដល់',
   'idImageEmpty': 'សូមបញ្ចូលរូបភាពលេខប័ណ្ណសម្គាល់',
   'documentImageEmpty': 'សូមបញ្ចូលរូបភាព',
   'freeTextAddress': "លេខផ្លូវ / ឈ្មោះផ្លូវ, លេខផ្ទះ, ល។",
 
-  //SIM HISTORY
+//SIM HISTORY
   'soldSimCard': 'ស៊ីមកាតបានលក់',
   'today': 'ថ្ងៃនេះ',
   'otherDay': 'ថ្ងៃមុន',
 
-  //MY SHOP
+//MY SHOP
   'myShop': 'ហាងខ្ញុំ',
   'addShop': 'បន្ថែមហាងថ្មី',
   'shopAddSuccess': 'យើងនឹងជូនដំណឹងដល់អ្នកនៅពេលព័ត៌មានត្រូវបានអនុម័ត',
@@ -141,7 +212,7 @@ const Map<String, String> kmKH = {
   'editShopNotificationBodyFailed':
       'ការកែសម្រួលព័ត៌មានហាងរបស់អ្នកត្រូវបានបដិសេធ',
 
-  //SWAP SIM
+//SWAP SIM
   'swapSim': 'កាត់ឈ្មោះស៊ីមកាត',
   'phoneNumberTransferTitle': 'បញ្ចូលលេខទូរសព្ទត្រូវផ្ទេរ',
   'currentOwnerTitle': 'បញ្ចូលលព័ត៌មានអ្នកផ្ទេរកម្មសិទ្ឌ',
@@ -149,8 +220,8 @@ const Map<String, String> kmKH = {
   'simTransferSuccess': 'ការផ្ទេរភាពកម្មសិទ្ឌស៊ីមកាតបានសម្រេច',
   'simTransferFail': 'ការផ្ទេរភាពកម្មសិទ្ឌស៊ីមមកាតមិនបានសម្រេច',
 
-  //ACCOUNT
-  'account': 'គណនី',
+//ACCOUNT
+
   'editProfile': 'កែប្រែគណនី',
   'resetPassword': 'កែប្រែពាក្យសម្ងាត់',
   'resetPasswordTitle': 'បញ្ចូលពាក្យសម្ងាត់ចាស់និងពាក្យសម្ងាត់ថ្មី',
@@ -164,10 +235,10 @@ const Map<String, String> kmKH = {
   'scanToEdit': 'សូមបញ្ជាក់ដើម្បីកែសម្រួលប្រវត្តិរូប',
   'failedAuth': 'ការបញ្ជាក់មិនបានសម្រេច',
 
-  //NOTIFICATION PAGE
+//NOTIFICATION PAGE
   'notification': 'សេចក្តីជូនដំណឹង',
 
-  //MONTH
+//MONTH
   'January': 'មករា',
   'February': 'កុម្ភៈ',
   'March': 'មីនា',
