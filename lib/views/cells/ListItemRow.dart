@@ -4,6 +4,7 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:mygoods_flutter/models/item.dart';
 import 'package:mygoods_flutter/services/ItemService.dart';
+import 'package:mygoods_flutter/utils/constant.dart';
 
 class ListItemRow extends StatefulWidget {
   const ListItemRow({
@@ -84,7 +85,7 @@ class _ListItemRowState extends State<ListItemRow> {
                   fit: BoxFit.cover,
                 ),
               ),
-              const SizedBox(width: 15),
+              const SizedBox(width: 16),
               Column(
                 mainAxisSize: MainAxisSize.min,
                 crossAxisAlignment: CrossAxisAlignment.start,
@@ -96,9 +97,6 @@ class _ListItemRowState extends State<ListItemRow> {
                       fontWeight: FontWeight.bold,
                     ),
                   ),
-                  const Divider(
-                    height: 12,
-                  ),
                   Text(
                     "USD \$${item.price}",
                     style: const TextStyle(
@@ -106,9 +104,6 @@ class _ListItemRowState extends State<ListItemRow> {
                       fontSize: 16,
                       fontWeight: FontWeight.bold,
                     ),
-                  ),
-                  const Divider(
-                    height: 12,
                   ),
                   FutureBuilder<String>(
                     future: itemService.getItemOwnerName(item.userid),
@@ -126,14 +121,10 @@ class _ListItemRowState extends State<ListItemRow> {
                       }
                     },
                   ),
-                  const Divider(
-                    height: 2,
-                  ),
                   Text(
                     "Posted ${calDate(item.date)}",
                     style: const TextStyle(fontSize: 12),
                   ),
-                  const Divider(height: 2),
                   Text(
                     "Views: ${item.viewers.length}",
                     style: const TextStyle(fontSize: 12),

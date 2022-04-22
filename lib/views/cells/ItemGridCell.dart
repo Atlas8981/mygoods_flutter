@@ -39,7 +39,7 @@ class _ItemGridCellState extends State<ItemGridCell> {
       children: [
         ClipRRect(
           borderRadius: const BorderRadius.all(
-            Radius.circular(10),
+            Radius.circular(8),
           ),
           child: AspectRatio(
             aspectRatio: 1 / 1,
@@ -71,6 +71,7 @@ class _ItemGridCellState extends State<ItemGridCell> {
                 style: const TextStyle(
                   color: Colors.red,
                   fontSize: 16,
+                  height: 1.5,
                   fontWeight: FontWeight.bold,
                 ),
               ),
@@ -81,22 +82,34 @@ class _ItemGridCellState extends State<ItemGridCell> {
                   if (snapshot.hasData) {
                     return Text(
                       "Post By ${snapshot.data}",
-                      style: const TextStyle(fontSize: 12),
+                      style: const TextStyle(
+                        fontSize: 12,
+                        height: 1.5,
+                      ),
                     );
                   }
                   return const Text(
                     "Post By someone",
-                    style: TextStyle(fontSize: 12),
+                    style: TextStyle(
+                      fontSize: 12,
+                      height: 1.5,
+                    ),
                   );
                 },
               ),
               Text(
                 "Posted ${calDate(item.date)}",
-                style: const TextStyle(fontSize: 12),
+                style: const TextStyle(
+                  fontSize: 12,
+                  height: 1.5,
+                ),
               ),
               Text(
                 "Views: ${item.viewers.length}",
-                style: const TextStyle(fontSize: 12),
+                style: const TextStyle(
+                  fontSize: 12,
+                  height: 1.5,
+                ),
               ),
             ],
           ),

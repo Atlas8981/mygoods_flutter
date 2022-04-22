@@ -95,7 +95,7 @@ class _ListItemByPopularCategoryPAgeState extends State<ListItemPage> {
         crossAxisCount: 2,
         crossAxisSpacing: 16,
         mainAxisSpacing: 16,
-        childAspectRatio: 6.9 / 10,
+        childAspectRatio: 6.5 / 10,
       ),
       padding: const EdgeInsets.all(8),
       itemCount: items.length,
@@ -112,7 +112,7 @@ class _ListItemByPopularCategoryPAgeState extends State<ListItemPage> {
 
   Widget listView(List<Item> items) {
     return Container(
-      padding: const EdgeInsets.all(10),
+      padding: const EdgeInsets.symmetric(horizontal: 8),
       child: ListView.separated(
         itemCount: items.length,
         separatorBuilder: (context, index) {
