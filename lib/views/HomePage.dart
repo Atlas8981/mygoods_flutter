@@ -58,11 +58,14 @@ class _HomePageState extends State<HomePage> {
           child: ListView(
             children: [
               const SizedBox(height: 10),
-              Image.asset(
-                "assets/images/banner1.png",
-                fit: BoxFit.cover,
-                height: 125,
-                width: double.infinity,
+              ClipRRect(
+                borderRadius: const BorderRadius.all(Radius.circular(8)),
+                child: Image.asset(
+                  "assets/images/banner1.png",
+                  fit: BoxFit.cover,
+                  height: 125,
+                  width: double.infinity,
+                ),
               ),
               if (!kDebugMode)
                 GetBuilder<HomePageController>(
