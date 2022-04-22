@@ -27,7 +27,7 @@ class SubCategoryPage extends StatelessWidget {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: Text(title),
+        title: Text(title.tr),
       ),
       body: SizedBox(
         width: double.maxFinite,

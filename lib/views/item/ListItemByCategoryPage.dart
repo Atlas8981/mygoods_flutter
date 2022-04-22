@@ -1,4 +1,8 @@
 import 'package:flutter/material.dart';
+import 'package:get/get.dart';
+import 'package:mygoods_flutter/components/CustomErrorWidget.dart';
+import 'package:mygoods_flutter/components/CustomFutureBuilder.dart';
+import 'package:mygoods_flutter/components/LoadingWidget.dart';
 import 'package:mygoods_flutter/models/item.dart';
 import 'package:mygoods_flutter/services/ItemService.dart';
 import 'package:mygoods_flutter/views/cells/BigImageCell.dart';
@@ -26,33 +30,43 @@ class _ListItemByCategoryPageState extends State<ListItemByCategoryPage> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      body: FutureBuilder<List<Item>>(
+      body: CustomFutureBuilder<List<Item>>(
         future: databaseService.getItemsByCategory(
           widget.mainCat,
           widget.subCat,
         ),
-        builder: (context, snapshot) {
-          if (snapshot.hasError) {
-            return const Center(
-              child: Text('An error has occurred!'),
-            );
-          } else if (snapshot.hasData) {
-            if (snapshot.data != null) {
-              final items = snapshot.data!;
-
-              return ListItemPage(
-                items: items,
-                title: widget.subCat,
-              );
-            }
-            return const Text("an error has occurred");
-          } else {
-            return const Center(
-              child: CircularProgressIndicator(),
-            );
-          }
+        onDataRetrieved: (context, data) {
+          return ListItemPage(
+            items: data,
+            title: widget.subCat.tr,
+          );
         },
       ),
+      // body: FutureBuilder<List<Item>>(
+      //   future: databaseService.getItemsByCategory(
+      //     widget.mainCat,
+      //     widget.subCat,
+      //   ),
+      //   builder: (context, snapshot) {
+      //     if (snapshot.hasError) {
+      //       return const CustomErrorWidget(
+      //         text: "An error has occurred!",
+      //       );
+      //     } else if (snapshot.hasData) {
+      //       if (snapshot.data != null) {
+      //         final items = snapshot.data!;
+      //
+      //         return ListItemPage(
+      //           items: items,
+      //           title: widget.subCat.tr,
+      //         );
+      //       }
+      //       return Text("errorOccurred".tr);
+      //     } else {
+      //       return LoadingWidget();
+      //     }
+      //   },
+      // ),
     );
   }
 }

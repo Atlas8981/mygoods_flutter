@@ -200,6 +200,9 @@ const String dummyNetworkImage =
 const String networkBackgroundImage =
     "https://firebasestorage.googleapis.com/v0/b/project-shotgun.appspot.com/o/IMG_2086-EFFECTS.jpg?alt=media&token=fcd87303-09e6-4ec7-9620-211f240fc85f";
 
+const commonHeightPadding = SizedBox(height: 8);
+const commonWidthPadding = SizedBox(width: 8);
+
 String? validatePhoneNumber(String? value) {
   String pattern = r'^(?:[+0][1-9])?[0-9]{9,10}$';
   RegExp regExp = RegExp(pattern);
