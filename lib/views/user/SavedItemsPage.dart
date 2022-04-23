@@ -1,14 +1,20 @@
 import 'package:flutter/material.dart';
+import 'package:get/get.dart';
 import 'package:mygoods_flutter/components/CustomErrorWidget.dart';
 import 'package:mygoods_flutter/models/item.dart';
 import 'package:mygoods_flutter/services/UserService.dart';
 import 'package:mygoods_flutter/views/item/ListItemPage.dart';
 
-class SavedItemsPage extends StatelessWidget {
-  SavedItemsPage({
+class SavedItemsPage extends StatefulWidget {
+  const SavedItemsPage({
     Key? key,
   }) : super(key: key);
 
+  @override
+  State<SavedItemsPage> createState() => _SavedItemsPageState();
+}
+
+class _SavedItemsPageState extends State<SavedItemsPage> {
   final userService = UserService();
 
   @override
@@ -27,16 +33,14 @@ class SavedItemsPage extends StatelessWidget {
 
             if (items.isNotEmpty) {
               return ListItemPage(
-                title: "Saved Item",
+                title: "savedItem".tr,
                 items: items,
               );
             }
-            return CustomErrorWidget(text: "No saved items");
+            return CustomErrorWidget(text: "noSavedItem".tr);
           }
 
-          return const Center(
-            child: Text('An error has occurred!'),
-          );
+          return CustomErrorWidget();
         },
       ),
     );

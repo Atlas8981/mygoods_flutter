@@ -7,6 +7,7 @@ import 'package:flutter_chat_ui/flutter_chat_ui.dart';
 import 'package:fluttertoast/fluttertoast.dart';
 import 'package:get/get.dart';
 import 'package:intl/intl.dart';
+import 'package:khmer_date/khmer_date.dart';
 import 'package:mygoods_flutter/models/DualImage.dart';
 import 'package:mygoods_flutter/models/additionalInfo.dart';
 import 'package:mygoods_flutter/models/category.dart';
@@ -277,6 +278,12 @@ String formatPrice(double price) {
   return priceNumberFormat.format(price.toInt());
 }
 
+String formatLocaleNumber(String number){
+  if(Get.locale == const Locale('en', 'US')){
+    return number;
+  }
+  return KhmerDate.khmerNumber(number);
+}
 
 String formatDate(int millisecond) {
   final dateTime = DateTime.fromMillisecondsSinceEpoch(millisecond);

@@ -11,7 +11,7 @@ class ResetPasswordPage extends StatefulWidget {
 }
 
 class _ResetPasswordPageState extends State<ResetPasswordPage> {
-  TextEditingController currentPasswordController = TextEditingController(),
+  final currentPasswordController = TextEditingController(),
       newPasswordController = TextEditingController(),
       confirmNewPasswordController = TextEditingController();
 
@@ -40,7 +40,7 @@ class _ResetPasswordPageState extends State<ResetPasswordPage> {
         ],
       ),
       body: Container(
-        padding: const EdgeInsets.all(20),
+        padding: const EdgeInsets.all(16),
         child: Form(
           key: resetPasswordFormKey,
           child: Column(
@@ -52,14 +52,11 @@ class _ResetPasswordPageState extends State<ResetPasswordPage> {
                   // "Something",
                   style: const TextStyle(
                     fontSize: 24,
-                    color: Colors.black,
                     height: 1.5,
                   ),
                 ),
               ),
-              const SizedBox(
-                height: 20,
-              ),
+              commonHeightSpacing(height: 16),
               TypeTextField(
                 controller: currentPasswordController,
                 prefixIcon: const Icon(Icons.password),
@@ -67,18 +64,14 @@ class _ResetPasswordPageState extends State<ResetPasswordPage> {
                 obscureText: true,
               ),
               const Padding(padding: EdgeInsets.only(right: 10)),
-              const SizedBox(
-                height: 20,
-              ),
+              commonHeightSpacing(height: 16),
               TypeTextField(
                 controller: newPasswordController,
                 prefixIcon: const Icon(Icons.password),
                 labelText: "newPassword".tr,
                 obscureText: true,
               ),
-              const SizedBox(
-                height: 20,
-              ),
+              commonHeightSpacing(height: 16),
               TypeTextField(
                 controller: confirmNewPasswordController,
                 prefixIcon: const Icon(Icons.password),

@@ -22,7 +22,7 @@ class LoginWithPhoneNumberPage extends StatelessWidget {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: const Text("Login With Phone Number"),
+        title: Text("logInWithPhoneNumber".tr),
       ),
       body: Container(
         padding: const EdgeInsets.all(20),
@@ -30,7 +30,7 @@ class LoginWithPhoneNumberPage extends StatelessWidget {
           mainAxisAlignment: MainAxisAlignment.center,
           children: [
             TypeTextField(
-              labelText: "Phone Number",
+              labelText: "phoneNumber".tr,
               controller: phoneCon,
               inputType: TextInputType.phone,
               prefix: "0",
@@ -49,10 +49,10 @@ class LoginWithPhoneNumberPage extends StatelessWidget {
               },
               validator: (value) {
                 if (value == null || value.isEmpty) {
-                  return "Field Empty";
+                  return "emptyField".tr;
                 }
                 if (!GetUtils.isPhoneNumber("0$value")) {
-                  return "Wrong Phone Format";
+                  return "invalidPhoneNumber".tr;
                 }
                 return null;
               },
@@ -61,7 +61,7 @@ class LoginWithPhoneNumberPage extends StatelessWidget {
               onPressed: () {
                 loginWithPhoneNumber();
               },
-              child: const Text("Confirm"),
+              child:  Text("confirm".tr),
             )
           ],
         ),

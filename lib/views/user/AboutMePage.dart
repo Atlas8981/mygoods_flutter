@@ -40,10 +40,10 @@ class _AboutMePageState extends State<AboutMePage> {
   final authService = AuthenticationService();
 
   late final List<Category> bottomListItems = [
-    Category(name: "My Item", image: "${imageDir}myitem.png"),
-    Category(name: "Saved", image: "${imageDir}saved.png"),
-    Category(name: "About Our App", image: "${imageDir}aboutus.png"),
-    Category(name: "Terms & Conditions", image: "${imageDir}term.png"),
+    Category(name: "myItem", image: "${imageDir}myitem.png"),
+    Category(name: "saved", image: "${imageDir}saved.png"),
+    Category(name: "aboutOurApp", image: "${imageDir}aboutus.png"),
+    Category(name: "termsAndConditions".tr, image: "${imageDir}term.png"),
   ];
 
   late myUser.User user;
@@ -53,7 +53,7 @@ class _AboutMePageState extends State<AboutMePage> {
     return Scaffold(
       resizeToAvoidBottomInset: false,
       appBar: AppBar(
-        title: const Text("About Me"),
+        title: Text("account".tr),
         actions: [
           IconButton(
             onPressed: () {
@@ -97,7 +97,7 @@ class _AboutMePageState extends State<AboutMePage> {
                       onSignOutButtonClick(context);
                     },
                     child: Text(
-                      "Sign Out".toUpperCase(),
+                      "signOut".tr.toUpperCase(),
                       style: const TextStyle(letterSpacing: 1.1),
                     ),
                     style: ButtonStyle(
@@ -129,13 +129,13 @@ class _AboutMePageState extends State<AboutMePage> {
         }
       },
       itemBuilder: (BuildContext context) => [
-        const PopupMenuItem<AccountMenuItems>(
+        PopupMenuItem<AccountMenuItems>(
           value: AccountMenuItems.editProfile,
-          child: Text("Edit Profile"),
+          child: Text("editProfile".tr),
         ),
-        const PopupMenuItem<AccountMenuItems>(
+        PopupMenuItem<AccountMenuItems>(
           value: AccountMenuItems.resetPassword,
-          child: Text('Reset Password'),
+          child: Text('resetPassword'.tr),
         ),
       ],
     );
@@ -306,7 +306,7 @@ class _AboutMePageState extends State<AboutMePage> {
   void onSignOutButtonClick(context) {
     showCustomDialog(
       context,
-      title: "Are your sure you want to sign out ?",
+      title: "signOutTitle".tr,
       onConfirm: () {
         authService.signOut().then((value) async {
           if (value) {
@@ -317,9 +317,9 @@ class _AboutMePageState extends State<AboutMePage> {
 
             Get.back();
             Get.find<LandingPageController>().changeTabIndex(0);
-            showToast("Sign Out Successfully");
+            showToast("success".tr);
           } else {
-            showToast("Sign Out Unsuccessfully");
+            showToast("fail".tr);
           }
         });
       },

@@ -34,7 +34,7 @@ class _LoginWithEmailPageState extends State<LoginWithEmailPage> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: const Text("Log In"),
+        title: Text("login".tr),
       ),
       body: SafeArea(
         child: Center(
@@ -46,8 +46,8 @@ class _LoginWithEmailPageState extends State<LoginWithEmailPage> {
                 mainAxisAlignment: MainAxisAlignment.center,
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
-                  const Text(
-                    "Welcome Back",
+                  Text(
+                    "welcomeBack".tr,
                     textAlign: TextAlign.start,
                     style: TextStyle(
                       fontSize: 24,
@@ -61,7 +61,7 @@ class _LoginWithEmailPageState extends State<LoginWithEmailPage> {
                       child: Column(
                         children: [
                           TypeTextField(
-                            labelText: "Email",
+                            labelText: "email".tr,
                             controller: emailCon,
                             prefixIcon: const Icon(Icons.email_outlined),
                             inputType: TextInputType.emailAddress,
@@ -71,7 +71,7 @@ class _LoginWithEmailPageState extends State<LoginWithEmailPage> {
                             height: 40,
                           ),
                           TypeTextField(
-                            labelText: "Password",
+                            labelText: "password".tr,
                             controller: passwordCon,
                             autoFillHints: const [AutofillHints.password],
                             inputType: TextInputType.visiblePassword,
@@ -100,7 +100,7 @@ class _LoginWithEmailPageState extends State<LoginWithEmailPage> {
                       height: 50,
                       child: TextButton(
                         onPressed: forgotPasswordButtonClick,
-                        child: Text("Forgot Password".toUpperCase()),
+                        child: Text("forgotPassword".tr),
                       ),
                     ),
                   ),
@@ -111,7 +111,7 @@ class _LoginWithEmailPageState extends State<LoginWithEmailPage> {
                         height: 50,
                         child: ElevatedButton(
                           onPressed: signInButtonClick,
-                          child: Text("Sign In".toUpperCase()),
+                          child: Text("signIn".tr.toUpperCase()),
                         ),
                       ),
                       const SizedBox(
@@ -119,9 +119,9 @@ class _LoginWithEmailPageState extends State<LoginWithEmailPage> {
                       ),
                     ],
                   ),
-                  const Center(
+                   Center(
                     child: Text(
-                      "Or",
+                      "or".tr,
                       style: TextStyle(fontSize: 18),
                     ),
                   ),
@@ -136,7 +136,7 @@ class _LoginWithEmailPageState extends State<LoginWithEmailPage> {
                         child: TextButton(
                           onPressed: signInWithPhoneNumberButtonClick,
                           child:
-                              Text("Sign In With Phone Number".toUpperCase()),
+                              Text("logInWithPhoneNumber".tr),
                         ),
                       ),
                       const SizedBox(

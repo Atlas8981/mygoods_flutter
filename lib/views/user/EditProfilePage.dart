@@ -66,10 +66,10 @@ class _EditProfilePageState extends State<EditProfilePage> {
         isVisible = false;
       });
       if (value) {
-        showToast("User Information update successfully");
+        showToast("success".tr);
         Get.back();
       } else {
-        showToast("User Information update unsuccessfully");
+        showToast("fail".tr);
       }
     });
   }
@@ -78,7 +78,7 @@ class _EditProfilePageState extends State<EditProfilePage> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: const Text("Edit Profile"),
+        title:  Text("editProfile".tr),
       ),
       body: Stack(
         children: [
@@ -90,37 +90,29 @@ class _EditProfilePageState extends State<EditProfilePage> {
                 child: Column(
                   children: [
                     TypeTextField(
-                      labelText: "Firstname",
+                      labelText: "firstName".tr,
                       controller: firstnameCon,
                       inputType: TextInputType.name,
                     ),
-                    const Divider(
-                      height: 20,
-                    ),
+                    commonHeightSpacing(height: 18),
                     TypeTextField(
-                      labelText: "Lastname",
+                      labelText: "lastName".tr,
                       controller: lastnameCon,
                       inputType: TextInputType.name,
                     ),
-                    const Divider(
-                      height: 20,
-                    ),
+                    commonHeightSpacing(height: 18),
                     TypeTextField(
-                      labelText: "Username",
+                      labelText: "userName",
                       controller: usernameCon,
                     ),
-                    const Divider(
-                      height: 20,
-                    ),
+                    commonHeightSpacing(height: 18),
                     TypeTextField(
-                      labelText: "Address",
+                      labelText: "address".tr,
                       controller: addressCon,
                     ),
-                    const Divider(
-                      height: 20,
-                    ),
+                    commonHeightSpacing(height: 18),
                     TypeTextField(
-                      labelText: "Phone Number",
+                      labelText: "phoneNumber".tr,
                       controller: phoneNumberCon,
                       inputType: TextInputType.phone,
                       prefix: "0",
@@ -129,15 +121,13 @@ class _EditProfilePageState extends State<EditProfilePage> {
                         return validatePhoneNumber(value);
                       },
                     ),
-                    const Divider(
-                      height: 20,
-                    ),
+                    commonHeightSpacing(height: 18),
                     SizedBox(
                       width: double.infinity,
                       height: 50,
                       child: ElevatedButton(
                         onPressed: updateUserInfo,
-                        child: Text("Save".toUpperCase()),
+                        child: Text("save".tr.toUpperCase()),
                       ),
                     ),
                   ],

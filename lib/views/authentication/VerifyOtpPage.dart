@@ -33,7 +33,7 @@ class _VerifyOTPPageState extends State<VerifyOTPPage> with CodeAutoFill {
 
   final otpCon = TextEditingController();
 
-  String messageText = "Waiting for SMS Code";
+  String messageText = "waitingForSMSCode".tr;
   final int endTime = DateTime.now().millisecondsSinceEpoch + 1000 * 60;
   bool isTimerEnd = false;
   final auth = FirebaseAuth.instance;
@@ -43,7 +43,6 @@ class _VerifyOTPPageState extends State<VerifyOTPPage> with CodeAutoFill {
     setState(() {
       smsCode = code;
       messageText = "$code";
-      // print(code);
     });
   }
 
@@ -69,7 +68,7 @@ class _VerifyOTPPageState extends State<VerifyOTPPage> with CodeAutoFill {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: Text("Verify OTP : ${widget.phoneNumber}"),
+        title: Text("${"verifyOTP".tr} : ${widget.phoneNumber}"),
       ),
       body: SizedBox(
         height: double.maxFinite,
@@ -94,17 +93,20 @@ class _VerifyOTPPageState extends State<VerifyOTPPage> with CodeAutoFill {
                   const SizedBox(
                     height: 20,
                   ),
-                  ElevatedButton(
-                    onPressed: () {
-                      resendCode();
-                    },
-                    child: const Text("Resend Code"),
+                  SizedBox(
+                    height: 40,
+                    child: ElevatedButton(
+                      onPressed: () {
+                        resendCode();
+                      },
+                      child:  Text("resendCode".tr),
+                    ),
                   ),
                   const SizedBox(
                     height: 20,
                   ),
                   Text(
-                    "Tap Below".toUpperCase(),
+                    "tapBelow".tr.toUpperCase(),
                     style: const TextStyle(fontSize: 14),
                   ),
                   const SizedBox(
@@ -124,11 +126,11 @@ class _VerifyOTPPageState extends State<VerifyOTPPage> with CodeAutoFill {
                         if (smsCode != null) {
                           signInWithPhoneNumber(smsCode!);
                         } else {
-                          showToast("No Code");
+                          showToast("noCode".tr);
                         }
                       },
                       child: Text(
-                        "From Message\n$messageText",
+                        "${"fromMessage".tr}\n$messageText",
                         maxLines: 2,
                         textAlign: TextAlign.center,
                         style: TextStyle(

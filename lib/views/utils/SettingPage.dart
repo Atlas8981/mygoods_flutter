@@ -1,3 +1,4 @@
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:get_storage/get_storage.dart';
@@ -29,7 +30,7 @@ class _SettingPageState extends State<SettingPage> {
 
     return Scaffold(
       appBar: AppBar(
-        title: const Text("Setting"),
+        title: Text("setting".tr),
       ),
       body: SafeArea(
         child: Container(
@@ -53,9 +54,8 @@ class _SettingPageState extends State<SettingPage> {
       trailing: DropdownButton(
         isDense: true,
         value: selectedLanguage,
-        hint: Text(
-          selectedLanguage,
-        ),
+        underline: Container(),
+        hint: Text(selectedLanguage),
         items: LocalizationService.langs.map((String value) {
           return DropdownMenuItem<String>(
             value: value,
@@ -63,13 +63,16 @@ class _SettingPageState extends State<SettingPage> {
               crossAxisAlignment: CrossAxisAlignment.center,
               children: [
                 ClipRRect(
-                  child: Image.asset(
-                    (value == "English")
-                        ? "assets/images/english_flag.jpg"
-                        : "assets/images/khmer_flag.jpg",
-                    width: 25,
-                    height: 16,
-                    fit: BoxFit.cover,
+                  borderRadius: BorderRadius.all(Radius.circular(4)),
+                  child: ClipRRect(
+                    child: Image.asset(
+                      (value == "English")
+                          ? "assets/images/english_flag.jpg"
+                          : "assets/images/khmer_flag.jpg",
+                      width: 25,
+                      height: 18,
+                      fit: BoxFit.contain,
+                    ),
                   ),
                 ),
                 const SizedBox(
@@ -93,9 +96,10 @@ class _SettingPageState extends State<SettingPage> {
 
   Widget themeSetting() {
     return ListTile(
-      title: const Text("Theme"),
+      title: Text("theme".tr),
       trailing: DropdownButton(
         isDense: true,
+        underline: Container(),
         value: selectedThemeMode,
         hint: Text(selectedThemeMode),
         items: appThemModeValues.map((String value) {
@@ -106,8 +110,11 @@ class _SettingPageState extends State<SettingPage> {
               children: [
                 const SizedBox(width: 10),
                 Text(
-                  value,
-                  style: const TextStyle(fontSize: 16),
+                  value.tr,
+                  style: const TextStyle(
+                    fontSize: 16,
+                    height: 1.5,
+                  ),
                 ),
               ],
             ),

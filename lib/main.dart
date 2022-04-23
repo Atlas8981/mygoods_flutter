@@ -13,6 +13,7 @@ import 'package:mygoods_flutter/controllers/InitialBinding.dart';
 import 'package:mygoods_flutter/services/LocalizationSerivce.dart';
 import 'package:mygoods_flutter/utils/constant.dart';
 import 'package:mygoods_flutter/views/LandingPage.dart';
+import 'package:mygoods_flutter/views/authentication/VerifyOtpPage.dart';
 
 Future<void> main() async {
   SystemChrome.setSystemUIOverlayStyle(

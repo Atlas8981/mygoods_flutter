@@ -1,6 +1,6 @@
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:get/get.dart';
-import 'package:mygoods_flutter/views/WelcomePage.dart';
+import 'package:mygoods_flutter/views/authentication/WelcomePage.dart';
 
 class LandingPageController extends GetxController {
   var tabIndex = 0.obs;

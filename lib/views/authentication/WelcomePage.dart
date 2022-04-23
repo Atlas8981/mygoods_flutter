@@ -19,7 +19,7 @@ class WelcomePage extends StatelessWidget {
       },
       child: Scaffold(
         appBar: AppBar(
-          title: const Text("Welcome"),
+          title: Text("welcome".tr),
         ),
         body: SafeArea(
           child: Center(
@@ -59,7 +59,7 @@ class WelcomePage extends StatelessWidget {
                         height: 50,
                         child: ElevatedButton(
                           onPressed: signUpButtonClick,
-                          child: Text("Sign Up".toUpperCase()),
+                          child: Text("signUp".tr),
                         ),
                       ),
                       const SizedBox(
@@ -70,7 +70,7 @@ class WelcomePage extends StatelessWidget {
                         height: 50,
                         child: ElevatedButton(
                           onPressed: loginButtonClick,
-                          child: Text("Log In With Email".toUpperCase()),
+                          child: Text("logInWithEmail".tr),
                         ),
                       ),
                       const SizedBox(
@@ -81,7 +81,7 @@ class WelcomePage extends StatelessWidget {
                         height: 50,
                         child: TextButton(
                           onPressed: loginWithPhoneButtonClick,
-                          child: Text("Log In With Phone Number".toUpperCase()),
+                          child: Text("logInWithPhoneNumber".tr),
                         ),
                       ),
                     ],

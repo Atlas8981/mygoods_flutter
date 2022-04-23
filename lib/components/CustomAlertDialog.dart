@@ -17,9 +17,8 @@ Future<void> showCustomDialog(
         color: Colors.transparent,
         child: Container(
           margin: const EdgeInsets.only(top: 20, left: 20, right: 20),
-          // color: Colors.transparent,
-          decoration: const BoxDecoration(
-            color: Colors.white,
+          decoration: BoxDecoration(
+            color: Theme.of(context).scaffoldBackgroundColor,
             borderRadius: BorderRadius.all(Radius.circular(5)),
           ),
           width: double.infinity,
@@ -38,7 +37,6 @@ Future<void> showCustomDialog(
                     title ?? "Do you want to that ?",
                     style: const TextStyle(
                       fontSize: 16,
-                      color: Colors.black,
                       fontWeight: FontWeight.w500,
                     ),
                   ),
@@ -49,11 +47,11 @@ Future<void> showCustomDialog(
                 children: [
                   TextButton(
                     onPressed: onCancel ?? () => Get.back(),
-                    child: const Text("No"),
+                    child: Text("no".tr),
                   ),
                   TextButton(
                     onPressed: onConfirm ?? () => Get.back(),
-                    child: const Text("Yes"),
+                    child: Text("yes".tr),
                   ),
                 ],
               ),

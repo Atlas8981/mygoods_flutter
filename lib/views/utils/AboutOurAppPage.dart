@@ -1,4 +1,7 @@
 import 'package:flutter/material.dart';
+import 'package:get/get.dart';
+import 'package:khmer_date/khmer_date.dart';
+import 'package:mygoods_flutter/utils/constant.dart';
 import 'package:package_info_plus/package_info_plus.dart';
 
 class AboutOurAppPage extends StatelessWidget {
@@ -23,9 +26,10 @@ class AboutOurAppPage extends StatelessWidget {
             // final String packageName = packageInfo.packageName;
             final String version = packageInfo.version;
             // final String buildNumber = packageInfo.buildNumber;
+
             return Center(
               child: Text(
-                "Version: $version",
+                "${"version".tr}: ${formatLocaleNumber(version)}",
                 style: const TextStyle(
                   fontSize: 24,
                 ),
