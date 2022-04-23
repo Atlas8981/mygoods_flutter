@@ -60,4 +60,6 @@ class LocalizationService extends Translations {
       return langs[1];
     }
   }
+
+
 }

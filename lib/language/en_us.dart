@@ -1,5 +1,19 @@
 const Map<String, String> enUS = {
   //For MyGoods
+
+  //ADDITIONAL INFO
+  'carBrand': 'Car Brand',
+  'carModel': 'Car Model',
+  'carType': 'Car Type',
+  'carYear': 'Car Year',
+  "phoneBrand": 'Phone Brand',
+  "phoneModel": 'Phone Model',
+
+  //CATEGORY
+  'category': 'Category',
+  'mainCategory': 'Main Category',
+  'subCategory': 'Sub Category',
+
   //COMMON PHRASES/WORDS
   'seller': 'Seller',
   'buyer': 'Buyer',
@@ -22,6 +36,7 @@ const Map<String, String> enUS = {
   'account': 'account',
   'popular': 'Popular',
   'more': 'More',
+  'buy':'Buy',
   'sell': 'Sell',
   'clear': 'Clear',
   'by': 'By',
@@ -45,6 +60,13 @@ const Map<String, String> enUS = {
   'type': 'Type',
   'upload': 'Upload',
   'photo': 'Photo',
+  'all':'All',
+  'unread':'Unread',
+  'blockUser':'Blocked User',
+  'inbox':'Inbox',
+  'chat':'Chat',
+  'with':'with',
+
 
   //MENUS LABELS
   'home': "Home",
@@ -72,20 +94,8 @@ const Map<String, String> enUS = {
   'save':'SAVE',
   'saved':'SAVED',
   'sellItem':'Sell Item',
+  'chatWith':'Chat with',
 
-
-  //ADDITIONAL INFO
-  'carBrand': 'Car Brand',
-  'carModel': 'Car Model',
-  'carType': 'Car Type',
-  'carYear': 'Car Year',
-  "phoneBrand": 'Phone Brand',
-  "phoneModel": 'Phone Model',
-
-  //CATEGORY
-  'category': 'Category',
-  'mainCategory': 'Main Category',
-  'subCategory': 'Sub Category',
 
   // MESSAGE
   'errorOccurred': 'Error Occurred',
@@ -95,7 +105,8 @@ const Map<String, String> enUS = {
   'emptyField': "Field is empty",
   'incorrectPhone': 'Incorrect Phone Format',
   'longPressToClearData':'Long Press to Clear Data',
-
+  'invalidPhoneNumber': "Invalid Phone Number",
+  'noMessage':'No Message',
 
   //From Old
   'splashText': 'Enter app',
@@ -236,5 +247,5 @@ const Map<String, String> enUS = {
   'fromMessage': "From Message",
   'invalidCode': 'Invalid Code',
   'tooManyRequest': 'Too Many Request',
-  'invalidPhoneNumber': "Invalid Phone Number",
+
 };

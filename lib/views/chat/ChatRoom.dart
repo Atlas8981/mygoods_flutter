@@ -10,8 +10,10 @@ import 'package:flutter_firebase_chat_core/flutter_firebase_chat_core.dart';
 import 'package:get/get.dart';
 import 'package:http/http.dart' as http;
 import 'package:image_picker/image_picker.dart';
+import 'package:intl/intl.dart';
 import 'package:marquee/marquee.dart';
 import 'package:mime/mime.dart';
+import 'package:mygoods_flutter/utils/constant.dart';
 import 'package:mygoods_flutter/views/utils/ImageViewerPage.dart';
 import 'package:open_file/open_file.dart';
 import 'package:path_provider/path_provider.dart';
@@ -108,7 +110,6 @@ class _ChatRoomState extends State<ChatRoom> {
       imageQuality: 70,
       maxWidth: 1440,
       source: ImageSource.gallery,
-
     );
 
     if (result != null) {
@@ -213,11 +214,11 @@ class _ChatRoomState extends State<ChatRoom> {
             ? SizedBox(
                 height: 100,
                 child: Marquee(
-                  text: 'Chat with ${widget.room.name}',
+                  text: '${"chatWith".tr} ${widget.room.name}',
                   blankSpace: 100,
                 ),
               )
-            : Text('Chat with ${widget.room.name}'),
+            : Text('${"chatWith".tr} ${widget.room.name}'),
       ),
       body: StreamBuilder<types.Room>(
         initialData: widget.room,
@@ -240,6 +241,8 @@ class _ChatRoomState extends State<ChatRoom> {
                       ),
                     );
                   },
+                  dateFormat: DateFormat('E MM', getLanguageCode()),
+                  timeFormat: DateFormat('hh:mm', getLanguageCode()),
                   disableImageGallery: true,
                   showUserAvatars: true,
                   showUserNames: true,
@@ -257,11 +260,15 @@ class _ChatRoomState extends State<ChatRoom> {
                           backgroundColor:
                               Theme.of(context).scaffoldBackgroundColor,
                           inputBackgroundColor: Colors.black54,
+                          secondaryColor: Colors.grey.shade900,
+                          userAvatarNameColors: [Colors.blue],
                         )
                       : DefaultChatTheme(
                           primaryColor: Colors.blue,
                           backgroundColor:
                               Theme.of(context).scaffoldBackgroundColor,
+                          userAvatarNameColors: [Colors.blue],
+                          secondaryColor: Colors.grey.shade300,
                         ),
                 ),
               );

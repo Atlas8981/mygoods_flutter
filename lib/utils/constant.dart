@@ -223,18 +223,18 @@ String? validatePhoneNumber(String? value) {
   RegExp regExp = RegExp(pattern);
 
   if (value == null || value.isEmpty) {
-    return 'Empty Field';
+    return 'emptyField'.tr;
   } else if (!regExp.hasMatch("0" + value)) {
-    return 'Incorrect Phone Format';
+    return 'invalidPhoneNumber'.tr;
   }
   return null;
 }
 
 String getFont() {
   if (Get.locale == const Locale('en', 'US')) {
-    return 'Roboto';
+    return englishFontFamily;
   } else {
-    return 'KhmerOSBattambang';
+    return khmerFontFamily;
   }
 }
 
@@ -275,6 +275,21 @@ final priceNumberFormat = NumberFormat("###,###.0#");
 
 String formatPrice(double price) {
   return priceNumberFormat.format(price.toInt());
+}
+
+
+String formatDate(int millisecond) {
+  final dateTime = DateTime.fromMillisecondsSinceEpoch(millisecond);
+  final chatDateFormat = DateFormat('E MM, hh:mm', getLanguageCode());
+  return chatDateFormat.format(dateTime);
+}
+
+String getLanguageCode() {
+  if (Get.locale == const Locale('en', 'US')) {
+    return "en";
+  } else {
+    return 'km';
+  }
 }
 
 checkImageProvider(DualImage image) {
@@ -348,6 +363,10 @@ Color getUserAvatarNameColor(types.User user) {
 
 String getUserName(types.User user) =>
     '${user.firstName ?? ''} ${user.lastName ?? ''}'.trim();
+
+void requestFocus(BuildContext context){
+  return FocusScope.of(context).requestFocus(FocusNode());
+}
 
 void showToast(String message) {
   Fluttertoast.showToast(
