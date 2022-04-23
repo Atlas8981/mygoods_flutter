@@ -48,6 +48,8 @@ const Map<String, String> kmKH = {
   'birthday': 'ថ្ងៃ ខែ ឆ្នាំកំណើត',
   'view': 'មើល',
   'type': 'ប្រភេទ',
+  'upload': 'បង្ហោះ',
+  'photo': 'រូបថត',
 
   //MENUS LABELS
   'home': "ទំព័រដើម",
@@ -55,8 +57,7 @@ const Map<String, String> kmKH = {
   'recentlyView': "បានមើលនាពេលថ្មីៗនេះ",
   'recommendation': 'ផលិតផលអ្នកនឹងចូលចិត្ត',
   'viewAll': "មើលទាំងអស់",
-  'upload': 'បង្ហោះ',
-  'photo': 'រូបថត',
+  'uploadPhoto':'បង្ហោះរូបភាព',
   'recentSearch': 'ការស្វែងរកថ្មីៗ',
   'itemDetail': 'ព័ត៌មានវត្ថុលម្អិត',
   'postBy': 'លក់ដោយ',
@@ -75,6 +76,7 @@ const Map<String, String> kmKH = {
   'viewSellerProfile':'មើលព័ត៌មានរបស់អ្នកលក់',
   'save':'រក្សាទុក',
   'saved':'បានរក្សាទុក',
+  'sellItem':'ដាក់លក់',
 
   //ADDITIONAL INFO
   'carBrand': 'ម៉ាករថយន្ត',
@@ -105,14 +107,16 @@ const Map<String, String> kmKH = {
   'Chair & Sofa': 'កៅអី',
   'Household Item': 'របស់របរប្រើប្រាស់ក្នុងផ្ទះ',
 
-  //ERROR MESSAGE
+  //MESSAGE
   'errorOccurred': 'កំហុសបានកើតឡើង',
   'noData':'មិនមានព័ត៌មាន',
   'noInformation':'មិនមានព័ត៌មាន',
   'notANumber': 'មិនមែនលេខទេ',
-
   'emptyField': "សូមបំពេញវាលនេះ",
   'incorrectPhone': 'បញ្ចូលលេខទូរស័ព្ទមិនត្រឹមត្រូវ',
+  'longPressToClearData':'ចុចឱ្យយូរដើម្បីជម្រះទិន្នន័យ',
+
+
 
   'openCamera': 'បើកកាមេរ៉ា',
   'openGallery': 'បើកវិចិត្រសាល',

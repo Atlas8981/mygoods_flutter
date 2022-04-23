@@ -84,7 +84,7 @@ class OwnerItemRow extends StatelessWidget {
                           child: Icon(Icons.camera),
                         ),
                 ),
-                commonWidthPadding(padding: 16),
+                commonWidthSpacing(width: 16),
                 Expanded(
                   child: Column(
                     mainAxisSize: MainAxisSize.min,
@@ -97,7 +97,7 @@ class OwnerItemRow extends StatelessWidget {
                           fontWeight: FontWeight.bold,
                         ),
                       ),
-                      commonHeightPadding(),
+                      adaptiveHeightSpacing(),
                       Text(
                         "USD \$${item.price}",
                         style: const TextStyle(
@@ -106,7 +106,7 @@ class OwnerItemRow extends StatelessWidget {
                           fontWeight: FontWeight.bold,
                         ),
                       ),
-                      commonHeightPadding(),
+                      adaptiveHeightSpacing(),
                       FutureBuilder<String>(
                         future: database.getItemOwnerName(item.userid),
                         builder: (context, snapshot) {
@@ -123,12 +123,12 @@ class OwnerItemRow extends StatelessWidget {
                           }
                         },
                       ),
-                      commonHeightPadding(),
+                      adaptiveHeightSpacing(),
                       Text(
                         "Posted ${calDate(item.date)}",
                         style: const TextStyle(fontSize: 12),
                       ),
-                      commonHeightPadding(),
+                      adaptiveHeightSpacing(),
                       Text(
                         "Views: ${item.views}",
                         style: const TextStyle(fontSize: 12),

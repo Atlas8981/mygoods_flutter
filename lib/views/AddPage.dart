@@ -94,7 +94,7 @@ class _AddPageState extends State<AddPage> {
   Widget build(BuildContext context) {
     return Scaffold(
       body: ItemForm(
-        titleText: const Text("Add Item"),
+        titleText: Text("sellItem".tr),
         padding: const EdgeInsets.all(10),
         onConfirm: () {
           uploadItemInformation();

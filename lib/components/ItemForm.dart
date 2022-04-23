@@ -289,16 +289,14 @@ class _ItemFormState extends State<ItemForm> {
                 children: [
                   Expanded(
                     child: TypeTextField(
-                      labelText: "Item Name",
+                      labelText: "${"name".tr}${"item".tr}",
                       controller: controller.nameCon,
                     ),
                   ),
-                  const SizedBox(
-                    width: 5,
-                  ),
+                  commonWidthSpacing(),
                   Expanded(
                     child: TypeTextField(
-                      labelText: "Price",
+                      labelText: "price".tr,
                       controller: controller.priceCon,
                       inputType: const TextInputType.numberWithOptions(
                         decimal: true,
@@ -310,10 +308,10 @@ class _ItemFormState extends State<ItemForm> {
                       ),
                       validator: (value) {
                         if (value == null || value.isEmpty) {
-                          return "Empty Field";
+                          return "emptyField".tr;
                         }
                         if (!GetUtils.isNum(value)) {
-                          return "Not a Number";
+                          return "notANumber".tr;
                         }
                         return null;
                       },
@@ -321,9 +319,9 @@ class _ItemFormState extends State<ItemForm> {
                   ),
                 ],
               ),
-              const SizedBox(height: 10),
+              const SizedBox(height: 16),
               ClickableTextField(
-                labelText: "Category",
+                labelText: "category".tr,
                 controller: controller.categoryCon,
                 suffixIcon: Icon(
                   Icons.arrow_forward_ios,
@@ -335,13 +333,14 @@ class _ItemFormState extends State<ItemForm> {
                     context: context,
                     builder: (context) {
                       return AlertDialog(
-                        titlePadding: const EdgeInsets.all(10),
-                        contentPadding: const EdgeInsets.all(10),
-                        actionsPadding: const EdgeInsets.all(10),
-                        title: const Text("Select Category"),
+                        titlePadding: const EdgeInsets.all(16),
+                        actionsPadding: const EdgeInsets.all(0),
+                        contentPadding: const EdgeInsets.all(0),
+                        title: Text("${"select".tr} ${"category".tr}"),
                         content: CategoryDropdownMenu(
                           onConfirm: (main, sub) {
-                            controller.categoryCon.text = "$main , $sub";
+                            controller.categoryCon.text =
+                                "${main.tr} , ${sub.tr}";
                             itemFormCon.mainCat.value = main;
                             itemFormCon.subCat.value = sub;
                             setState(() {});
@@ -352,9 +351,7 @@ class _ItemFormState extends State<ItemForm> {
                   );
                 },
               ),
-              const SizedBox(
-                height: 10,
-              ),
+              commonHeightSpacing(height: 16),
               Visibility(
                 visible: showAdditionInfoForm(controller.subCat.value),
                 maintainSize: false,
@@ -362,7 +359,7 @@ class _ItemFormState extends State<ItemForm> {
                   children: [
                     ClickableTextField(
                       labelText:
-                          "Enter ${itemFormCon.subCat.value.capitalize} Information",
+                          "${"enter".tr} ${itemFormCon.subCat.value.tr} ${"information".tr}",
                       controller: controller.additionalInfoCon,
                       suffixIcon: Icon(
                         Icons.arrow_forward_ios,
@@ -373,14 +370,12 @@ class _ItemFormState extends State<ItemForm> {
                         processAdditionalInformation();
                       },
                     ),
-                    const SizedBox(
-                      height: 10,
-                    ),
+                    commonHeightSpacing(height: 16),
                   ],
                 ),
               ),
               ClickableTextField(
-                labelText: "Condition",
+                labelText: "condition".tr,
                 controller: controller.conditionCon,
                 suffixIcon: Icon(
                   Icons.arrow_forward_ios,
@@ -401,37 +396,40 @@ class _ItemFormState extends State<ItemForm> {
                   );
                 },
               ),
-              const SizedBox(height: 10),
+              commonHeightSpacing(height: 16),
               TypeTextField(
-                labelText: "Address",
+                labelText: "address".tr,
                 controller: controller.addressCon,
               ),
-              const SizedBox(height: 10),
+              const SizedBox(height: 16),
               TypeTextField(
-                labelText: "Phone Number",
+                labelText: "phoneNumber".tr,
                 controller: controller.phoneCon,
                 inputType: TextInputType.phone,
                 prefix: "0",
                 maxLength: 9,
-                buildCounter: (context,
-                    {required currentLength, required isFocused, maxLength}) {
+                buildCounter: (
+                  context, {
+                  required currentLength,
+                  required isFocused,
+                  maxLength,
+                }) {
                   return Text(
                     '${currentLength + 1}/${maxLength! + 1}',
-                    semanticsLabel: 'character count',
                     style: const TextStyle(fontSize: 12, height: 1),
                   );
                 },
                 validator: (value) {
                   if (value == null || value.isEmpty) {
-                    return "Field Empty";
+                    return "emptyField".tr;
                   }
                   if (!GetUtils.isPhoneNumber("0$value")) {
-                    return "Wrong Phone Format";
+                    return "invalidPhoneNumber".tr;
                   }
                   return null;
                 },
               ),
-              const SizedBox(height: 10),
+              commonHeightSpacing(height: 16),
               TextField(
                 controller: controller.descriptionCon,
                 maxLength: 200,
@@ -441,13 +439,13 @@ class _ItemFormState extends State<ItemForm> {
                 ),
                 keyboardType: TextInputType.multiline,
                 maxLines: 5,
-                decoration: const InputDecoration(
+                decoration: InputDecoration(
                   alignLabelWithHint: true,
                   contentPadding: EdgeInsets.all(10),
                   labelStyle: TextStyle(
                     fontSize: 16,
                   ),
-                  labelText: "Description",
+                  labelText: "description".tr,
                   border: OutlineInputBorder(),
                   counterStyle: TextStyle(
                     fontSize: 12,
@@ -455,7 +453,7 @@ class _ItemFormState extends State<ItemForm> {
                   ),
                 ),
               ),
-              const SizedBox(height: 10),
+              commonHeightSpacing(height: 16),
             ],
           ),
         );
@@ -481,7 +479,7 @@ class _ItemFormState extends State<ItemForm> {
             },
             child: IconButton(
               onPressed: () {
-                showToast("Long Press to Clear Data");
+                showToast("longPressToClearData".tr);
               },
               icon: const Icon(
                 Icons.refresh,
@@ -514,8 +512,8 @@ class _ItemFormState extends State<ItemForm> {
                     crossAxisAlignment: CrossAxisAlignment.start,
                     mainAxisSize: MainAxisSize.max,
                     children: [
-                      const Text(
-                        "Upload Photos",
+                      Text(
+                        "uploadPhoto".tr,
                         style: TextStyle(
                           fontSize: 18,
                           fontWeight: FontWeight.bold,
@@ -549,9 +547,7 @@ class _ItemFormState extends State<ItemForm> {
                       );
                     }),
                   ),
-                  const SizedBox(
-                    height: 10,
-                  ),
+                  commonHeightSpacing(),
                   //Forms
                   buildTextInputForm(),
                 ],

@@ -69,7 +69,7 @@ class _BigImageCellState extends State<BigImageCell> {
                       fontSize: 24,
                     ),
                   ),
-                  commonHeightPadding(),
+                  adaptiveHeightSpacing(),
                   Text(
                     "USD \$${item.price}",
                     style: const TextStyle(
@@ -78,7 +78,7 @@ class _BigImageCellState extends State<BigImageCell> {
                       fontWeight: FontWeight.bold,
                     ),
                   ),
-                  commonHeightPadding(),
+                  adaptiveHeightSpacing(),
                   FutureBuilder<String>(
                     initialData: "Someone",
                     future: itemService.getItemOwnerName(item.userid),
@@ -95,13 +95,13 @@ class _BigImageCellState extends State<BigImageCell> {
                       return Container();
                     },
                   ),
-                  commonHeightPadding(),
+                  adaptiveHeightSpacing(),
 
                   Text(
                     "Posted ${calDate(item.date)}",
                     style: const TextStyle(fontSize: 16),
                   ),
-                  commonHeightPadding(),
+                  adaptiveHeightSpacing(),
                   Text(
                     "Views: ${item.viewers.length}",
                     style: const TextStyle(fontSize: 16),

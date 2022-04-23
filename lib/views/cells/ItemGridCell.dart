@@ -78,7 +78,7 @@ class _ItemGridCellState extends State<ItemGridCell> {
                   height: 1.5,
                 ),
               ),
-              commonHeightPadding(),
+              adaptiveHeightSpacing(),
               Text(
                 "USD \$${item.price}",
                 style: const TextStyle(
@@ -88,7 +88,7 @@ class _ItemGridCellState extends State<ItemGridCell> {
                   fontWeight: FontWeight.bold,
                 ),
               ),
-              commonHeightPadding(),
+              adaptiveHeightSpacing(),
               FutureBuilder<String>(
                 initialData: "Someone",
                 future: itemService.getItemOwnerName(item.userid),
@@ -105,7 +105,7 @@ class _ItemGridCellState extends State<ItemGridCell> {
                   return Container();
                 },
               ),
-              commonHeightPadding(),
+              adaptiveHeightSpacing(),
               Text(
                 "Posted ${calDate(item.date)}",
                 style: const TextStyle(
@@ -113,7 +113,7 @@ class _ItemGridCellState extends State<ItemGridCell> {
                   height: 1.5,
                 ),
               ),
-              commonHeightPadding(),
+              adaptiveHeightSpacing(),
               Text(
                 "Views: ${item.viewers.length}",
                 style: const TextStyle(

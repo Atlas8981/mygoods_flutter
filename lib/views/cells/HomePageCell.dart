@@ -46,14 +46,14 @@ class HomePageCell extends StatelessWidget {
                   cacheHeight: 150,
                 ),
               ),
-              commonHeightPadding(),
+              adaptiveHeightSpacing(),
               Text(
                 item.name,
                 maxLines: 1,
                 overflow: TextOverflow.ellipsis,
                 style: TextStyle(fontSize: 16),
               ),
-              commonHeightPadding(),
+              adaptiveHeightSpacing(),
               Text(
                 "USD \$${formatPrice(item.price)}",
                 overflow: TextOverflow.ellipsis,

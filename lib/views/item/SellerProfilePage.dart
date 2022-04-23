@@ -39,7 +39,7 @@ class _SellerProfilePageState extends State<SellerProfilePage> {
           child: Column(
             children: [
               sellerProfile(),
-              commonHeightPadding(padding: 16),
+              adaptiveHeightSpacing(height: 16),
               sellerItems(),
             ],
           ),
@@ -96,7 +96,7 @@ class _SellerProfilePageState extends State<SellerProfilePage> {
           height: 40,
         ),
         sellerImage(seller),
-        commonHeightPadding(),
+        adaptiveHeightSpacing(),
         Text(
           "${seller.firstname} ${seller.lastname}",
           style: const TextStyle(
@@ -104,9 +104,9 @@ class _SellerProfilePageState extends State<SellerProfilePage> {
             fontWeight: FontWeight.bold,
           ),
         ),
-        commonHeightPadding(),
+        adaptiveHeightSpacing(),
         Text(seller.address),
-        commonHeightPadding(),
+        adaptiveHeightSpacing(),
         Text(seller.phoneNumber),
       ],
     );

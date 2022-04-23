@@ -37,68 +37,78 @@ class _CategoryDropdownMenuState extends State<CategoryDropdownMenu> {
   Widget build(BuildContext context) {
     subCategories ??= electronicSubCategories;
     subCategory ??= electronicSubCategories[0].name;
-    return Column(
-      crossAxisAlignment: CrossAxisAlignment.start,
-      mainAxisSize: MainAxisSize.min,
-      children: [
-        const Text("Main Category"),
-        DropdownButton<String>(
-          value: mainCategory,
-          isExpanded: true,
-          items: mainCategories.map((value) {
-            return DropdownMenuItem<String>(
-              value: value.name,
-              child: Text(value.name),
-            );
-          }).toList(),
-          onChanged: (value) {
-            setState(() {
-              mainCategory = value!;
-              findSubCategory();
-            });
-          },
-        ),
-        const Text("Sub Category"),
-        DropdownButton<String>(
-          value: subCategory,
-          isExpanded: true,
-          items: subCategories!.map((value) {
-            return DropdownMenuItem<String>(
-              value: value.name,
-              child: Text(value.name),
-            );
-          }).toList(),
-          onChanged: (value) {
-            if (value != null) {
-              setState(() {
-                subCategory = value;
-              });
-            }
-          },
-        ),
-        Row(
-          mainAxisAlignment: MainAxisAlignment.end,
-          children: [
-            TextButton(
-              onPressed: () {
-                Get.back();
+    return Container(
+      width: Get.width,
+      padding: EdgeInsets.symmetric(horizontal: 16),
+      child: Column(
+        crossAxisAlignment: CrossAxisAlignment.start,
+        mainAxisSize: MainAxisSize.min,
+        children: [
+          Text("mainCategory".tr),
+          Padding(
+            padding: EdgeInsets.only(left: 8),
+            child: DropdownButton<String>(
+              value: mainCategory,
+              isExpanded: true,
+              items: mainCategories.map((value) {
+                return DropdownMenuItem<String>(
+                  value: value.name,
+                  child: Text(value.name.tr),
+                );
+              }).toList(),
+              onChanged: (value) {
+                setState(() {
+                  mainCategory = value!;
+                  findSubCategory();
+                });
               },
-              child: const Text("Cancel"),
             ),
-            TextButton(
-              onPressed: () {
-                Get.back();
-                if (widget.onConfirm != null) {
-                  if (subCategory != null) {
-                    widget.onConfirm!(mainCategory, subCategory!);
-                  }
+          ),
+          Text("subCategory".tr),
+          Padding(
+            padding: EdgeInsets.only(left: 8),
+            child: DropdownButton<String>(
+              value: subCategory,
+              isExpanded: true,
+              items: subCategories!.map((value) {
+                return DropdownMenuItem<String>(
+                  value: value.name,
+                  child: Text(value.name.tr),
+                );
+              }).toList(),
+              onChanged: (value) {
+                if (value != null) {
+                  setState(() {
+                    subCategory = value;
+                  });
                 }
               },
-              child: const Text("Confirm"),
             ),
-          ],
-        )
-      ],
+          ),
+          Row(
+            mainAxisAlignment: MainAxisAlignment.end,
+            children: [
+              TextButton(
+                onPressed: () {
+                  Get.back(closeOverlays: true);
+                },
+                child:  Text("cancel".tr),
+              ),
+              TextButton(
+                onPressed: () {
+                  Get.back();
+                  if (widget.onConfirm != null) {
+                    if (subCategory != null) {
+                      widget.onConfirm!(mainCategory, subCategory!);
+                    }
+                  }
+                },
+                child:  Text("confirm".tr),
+              ),
+            ],
+          )
+        ],
+      ),
     );
   }
 }

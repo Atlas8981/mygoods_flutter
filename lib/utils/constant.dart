@@ -203,15 +203,19 @@ const String dummyNetworkImage =
 const String networkBackgroundImage =
     "https://firebasestorage.googleapis.com/v0/b/project-shotgun.appspot.com/o/IMG_2086-EFFECTS.jpg?alt=media&token=fcd87303-09e6-4ec7-9620-211f240fc85f";
 
-Widget commonHeightPadding({double? padding}) {
+Widget adaptiveHeightSpacing({double? height}) {
   if (Get.locale == const Locale('en', 'US')) {
-    return SizedBox(height: padding ?? 8);
+    return SizedBox(height: height ?? 8);
   }
-  return SizedBox(height: (padding != null && padding > 8) ? padding - 8 : 0);
+  return SizedBox(height: (height != null && height > 8) ? height - 8 : 0);
 }
 
-Widget commonWidthPadding({double? padding}) {
-  return SizedBox(width: padding ?? 8);
+Widget commonHeightSpacing({double? height}) {
+  return SizedBox(height: height ?? 8);
+}
+
+Widget commonWidthSpacing({double? width}) {
+  return SizedBox(width: width ?? 8);
 }
 
 String? validatePhoneNumber(String? value) {

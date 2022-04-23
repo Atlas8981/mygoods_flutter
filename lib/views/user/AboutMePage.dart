@@ -234,7 +234,7 @@ class _AboutMePageState extends State<AboutMePage> {
                 crossAxisAlignment: CrossAxisAlignment.center,
                 children: [
                   userImage(controller, user),
-                  commonHeightPadding(padding: 16),
+                  adaptiveHeightSpacing(height: 16),
                   Text(
                     "${user.firstname} ${user.lastname}",
                     style: const TextStyle(
@@ -242,9 +242,9 @@ class _AboutMePageState extends State<AboutMePage> {
                       fontWeight: FontWeight.bold,
                     ),
                   ),
-                  commonHeightPadding(),
+                  adaptiveHeightSpacing(),
                   Text(user.address),
-                  commonHeightPadding(),
+                  adaptiveHeightSpacing(),
                   Text(user.phoneNumber),
                 ],
               ),

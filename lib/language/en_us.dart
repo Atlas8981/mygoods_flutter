@@ -43,6 +43,8 @@ const Map<String, String> enUS = {
   'birthday': 'Birthday',
   'view': 'View',
   'type': 'Type',
+  'upload': 'Upload',
+  'photo': 'Photo',
 
   //MENUS LABELS
   'home': "Home",
@@ -50,8 +52,7 @@ const Map<String, String> enUS = {
   'recentlyView': "Recently View",
   'recommendation': 'Recommendation',
   'viewAll': "View All",
-  'upload': 'Upload',
-  'photo': 'Photo(s)',
+  'uploadPhoto':'Upload Photo(s)',
   'recentSearch': 'Recent Search',
   'itemDetail': 'Item Detail',
   'postBy': 'Post By',
@@ -70,6 +71,8 @@ const Map<String, String> enUS = {
   'viewSellerProfile':'VIEW SELLER PROFILE',
   'save':'SAVE',
   'saved':'SAVED',
+  'sellItem':'Sell Item',
+
 
   //ADDITIONAL INFO
   'carBrand': 'Car Brand',
@@ -84,13 +87,14 @@ const Map<String, String> enUS = {
   'mainCategory': 'Main Category',
   'subCategory': 'Sub Category',
 
-  //ERROR MESSAGE
+  // MESSAGE
   'errorOccurred': 'Error Occurred',
   'noData':'No Data',
   'noInformation':'No information available',
   'notANumber': 'Not A Number',
   'emptyField': "Field is empty",
   'incorrectPhone': 'Incorrect Phone Format',
+  'longPressToClearData':'Long Press to Clear Data',
 
 
   //From Old

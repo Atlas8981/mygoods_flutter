@@ -77,7 +77,7 @@ class _LandingPageState extends State<LandingPage> {
             NavigationDestination(
               selectedIcon: Icon(Icons.add_box),
               icon: Icon(Icons.add_box_outlined),
-              label: 'add'.tr,
+              label: 'sellItem'.tr,
             ),
             NavigationDestination(
               selectedIcon: Icon(Icons.chat),

@@ -110,7 +110,7 @@ class _ItemDetailPageState extends State<ItemDetailPage> {
             fontFamily: englishFontFamily,
           ),
         ),
-        commonHeightPadding(padding: 18),
+        adaptiveHeightSpacing(height: 18),
         Text(
           "description".tr,
           style: TextStyle(
@@ -118,21 +118,21 @@ class _ItemDetailPageState extends State<ItemDetailPage> {
             fontWeight: FontWeight.w600,
           ),
         ),
-        commonHeightPadding(),
+        adaptiveHeightSpacing(),
         Text(
           item.description,
           style: const TextStyle(
             fontSize: 14,
           ),
         ),
-        commonHeightPadding(),
+        adaptiveHeightSpacing(),
         Text(
           "${"view".tr}: ${item.viewers.length}",
           style: const TextStyle(
             fontSize: 14,
           ),
         ),
-        commonHeightPadding(),
+        adaptiveHeightSpacing(),
       ],
     );
   }
@@ -211,7 +211,7 @@ class _ItemDetailPageState extends State<ItemDetailPage> {
                 fontWeight: FontWeight.w600,
               ),
             ),
-            commonHeightPadding(padding: 18),
+            adaptiveHeightSpacing(height: 18),
             Row(
               crossAxisAlignment: CrossAxisAlignment.center,
               mainAxisAlignment: MainAxisAlignment.start,
@@ -237,7 +237,7 @@ class _ItemDetailPageState extends State<ItemDetailPage> {
                     ),
                   ),
                 ),
-                commonWidthPadding(),
+                commonWidthSpacing(),
                 Text(
                   user.username,
                   style: const TextStyle(
@@ -247,11 +247,11 @@ class _ItemDetailPageState extends State<ItemDetailPage> {
                 )
               ],
             ),
-            commonHeightPadding(padding: 16),
+            adaptiveHeightSpacing(height: 16),
             Text("${"phoneNumber".tr}: ${user.phoneNumber}"),
             const SizedBox(height: 5),
             Text("${"address".tr}: ${user.address}"),
-            commonHeightPadding(padding: 16),
+            adaptiveHeightSpacing(height: 16),
             Container(
               padding: const EdgeInsets.symmetric(horizontal: 20),
               width: double.infinity,

@@ -59,7 +59,7 @@ class _MyItemDetailPageState extends State<MyItemDetailPage> {
                   fontWeight: FontWeight.w600,
                 ),
               ),
-              commonHeightPadding(padding: 18),
+              adaptiveHeightSpacing(height: 18),
               Text(additionalInfoText),
               const Divider(
                 height: 20,
@@ -151,7 +151,7 @@ class _MyItemDetailPageState extends State<MyItemDetailPage> {
                               fontWeight: FontWeight.w600,
                             ),
                           ),
-                          commonHeightPadding(padding: 16),
+                          adaptiveHeightSpacing(height: 16),
                           Text(
                             "USD: ${item.price.toString()}",
                             style: const TextStyle(
@@ -160,7 +160,7 @@ class _MyItemDetailPageState extends State<MyItemDetailPage> {
                               fontWeight: FontWeight.w600,
                             ),
                           ),
-                          commonHeightPadding(padding: 8),
+                          adaptiveHeightSpacing(height: 8),
                           const Text(
                             "Item Detail",
                             style: TextStyle(
@@ -168,7 +168,7 @@ class _MyItemDetailPageState extends State<MyItemDetailPage> {
                               fontWeight: FontWeight.w600,
                             ),
                           ),
-                          commonHeightPadding(),
+                          adaptiveHeightSpacing(),
                           Text(
                             "Views ${item.views}",
                             style: const TextStyle(
@@ -188,7 +188,7 @@ class _MyItemDetailPageState extends State<MyItemDetailPage> {
                               fontWeight: FontWeight.w600,
                             ),
                           ),
-                          commonHeightPadding(padding: 18),
+                          adaptiveHeightSpacing(height: 18),
                           Text(
                             item.description,
                             style: const TextStyle(

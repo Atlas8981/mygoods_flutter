@@ -74,7 +74,7 @@ class _ListItemRowState extends State<ListItemRow> {
                 fontWeight: FontWeight.bold,
               ),
             ),
-            commonHeightPadding(),
+            adaptiveHeightSpacing(),
             Text(
               "USD \$${formatPrice(item.price)}",
               style: const TextStyle(
@@ -83,7 +83,7 @@ class _ListItemRowState extends State<ListItemRow> {
                 fontWeight: FontWeight.bold,
               ),
             ),
-            commonHeightPadding(),
+            adaptiveHeightSpacing(),
             FutureBuilder<String>(
               future: itemService.getItemOwnerName(item.userid),
               builder: (context, snapshot) {
@@ -97,12 +97,12 @@ class _ListItemRowState extends State<ListItemRow> {
                 }
               },
             ),
-            commonHeightPadding(),
+            adaptiveHeightSpacing(),
             Text(
               calDate(item.date),
               style: const TextStyle(fontSize: 12),
             ),
-            commonHeightPadding(),
+            adaptiveHeightSpacing(),
             Text(
               "${"view".tr}: ${item.viewers.length}",
               style: const TextStyle(fontSize: 12),
