@@ -1,7 +1,7 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-import 'package:mygoods_flutter/components/ImageViews.dart';
+import 'package:mygoods_flutter/components/CustomImageCarouselWidget.dart';
 import 'package:mygoods_flutter/controllers/MyItemsController.dart';
 import 'package:mygoods_flutter/models/additionalInfo.dart';
 import 'package:mygoods_flutter/models/item.dart';
@@ -132,7 +132,7 @@ class _MyItemDetailPageState extends State<MyItemDetailPage> {
               child: SingleChildScrollView(
                 child: Column(
                   children: [
-                    ImagesView(images: item.images),
+                    CustomImageCarouselWidget(images: item.images),
                     Container(
                       width: double.infinity,
                       padding: const EdgeInsets.only(

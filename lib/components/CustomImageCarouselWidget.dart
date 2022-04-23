@@ -4,11 +4,10 @@ import 'package:extended_image/extended_image.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:mygoods_flutter/models/image.dart' as image;
-import 'package:mygoods_flutter/views/utils/ImageViewerPage.dart';
 import 'package:mygoods_flutter/views/utils/ImagesViewerPage.dart';
 
-class ImagesView extends StatefulWidget {
-  const ImagesView({
+class CustomImageCarouselWidget extends StatefulWidget {
+  const CustomImageCarouselWidget({
     Key? key,
     required this.images,
   }) : super(key: key);
@@ -16,10 +15,10 @@ class ImagesView extends StatefulWidget {
   final List<image.Image> images;
 
   @override
-  _ImagesViewState createState() => _ImagesViewState();
+  _CustomImageCarouselWidgetState createState() => _CustomImageCarouselWidgetState();
 }
 
-class _ImagesViewState extends State<ImagesView> {
+class _CustomImageCarouselWidgetState extends State<CustomImageCarouselWidget> {
   final carouselController = CarouselControllerImpl();
   int currentPage = 0;
 

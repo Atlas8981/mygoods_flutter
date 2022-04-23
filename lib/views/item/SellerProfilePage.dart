@@ -9,7 +9,7 @@ import 'package:mygoods_flutter/services/ItemService.dart';
 import 'package:mygoods_flutter/utils/constant.dart';
 import 'package:mygoods_flutter/views/cells/ListItemRow.dart';
 
-import 'utils/ImageViewerPage.dart';
+import '../utils/ImageViewerPage.dart';
 
 class SellerProfilePage extends StatefulWidget {
   const SellerProfilePage({
@@ -39,7 +39,7 @@ class _SellerProfilePageState extends State<SellerProfilePage> {
           child: Column(
             children: [
               sellerProfile(),
-              const SizedBox(height: 8),
+              commonHeightPadding(padding: 16),
               sellerItems(),
             ],
           ),
@@ -74,6 +74,7 @@ class _SellerProfilePageState extends State<SellerProfilePage> {
           separatorBuilder: (context, index) {
             return const Divider(
               thickness: 1.5,
+              color: Colors.transparent,
             );
           },
           itemBuilder: (context, index) {
@@ -95,7 +96,7 @@ class _SellerProfilePageState extends State<SellerProfilePage> {
           height: 40,
         ),
         sellerImage(seller),
-        const SizedBox(height: 10),
+        commonHeightPadding(),
         Text(
           "${seller.firstname} ${seller.lastname}",
           style: const TextStyle(
@@ -103,13 +104,9 @@ class _SellerProfilePageState extends State<SellerProfilePage> {
             fontWeight: FontWeight.bold,
           ),
         ),
-        const SizedBox(
-          height: 10,
-        ),
+        commonHeightPadding(),
         Text(seller.address),
-        const SizedBox(
-          height: 10,
-        ),
+        commonHeightPadding(),
         Text(seller.phoneNumber),
       ],
     );

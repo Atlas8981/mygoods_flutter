@@ -3,14 +3,14 @@ import 'package:extended_image/extended_image.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-import 'package:mygoods_flutter/components/ImageViews.dart';
+import 'package:mygoods_flutter/components/CustomImageCarouselWidget.dart';
 import 'package:mygoods_flutter/models/additionalInfo.dart';
 import 'package:mygoods_flutter/models/item.dart';
 import 'package:mygoods_flutter/models/user.dart' as myUser;
 import 'package:mygoods_flutter/services/ItemService.dart';
 import 'package:mygoods_flutter/services/UserService.dart';
 import 'package:mygoods_flutter/utils/constant.dart';
-import 'package:mygoods_flutter/views/SellerProfilePage.dart';
+import 'package:mygoods_flutter/views/item/SellerProfilePage.dart';
 import 'package:mygoods_flutter/views/utils/ImageViewerPage.dart';
 
 class ItemDetailPage extends StatefulWidget {
@@ -37,6 +37,148 @@ class _ItemDetailPageState extends State<ItemDetailPage> {
   late final item = widget.item;
 
   bool isSaved = false;
+
+  @override
+  void initState() {
+    super.initState();
+    addRecentView();
+    addView();
+  }
+
+  @override
+  Widget build(BuildContext context) {
+    return Scaffold(
+      appBar: AppBar(
+        title: Text("itemDetail".tr),
+      ),
+      body: SafeArea(
+        child: SizedBox(
+          width: double.maxFinite,
+          height: double.maxFinite,
+          child: SingleChildScrollView(
+            child: Column(
+              children: [
+                CustomImageCarouselWidget(images: item.images),
+                Container(
+                  width: double.infinity,
+                  padding: const EdgeInsets.only(
+                    left: 20,
+                    right: 20,
+                    top: 20,
+                  ),
+                  child: Column(
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    children: [
+                      Text(
+                        item.name,
+                        style: const TextStyle(
+                          fontSize: 18,
+                          fontWeight: FontWeight.w600,
+                        ),
+                      ),
+                      commonHeightPadding(padding: 18),
+                      Text(
+                        "USD: ${item.price.toString()}",
+                        style: const TextStyle(
+                          color: Colors.red,
+                          fontSize: 16,
+                          fontWeight: FontWeight.w600,
+                        ),
+                      ),
+                      commonHeightPadding(),
+                      const Text(
+                        "Item Detail",
+                        style: TextStyle(
+                          fontSize: 14,
+                          fontWeight: FontWeight.w600,
+                        ),
+                      ),
+                      commonHeightPadding(padding: 18),
+                      Text(
+                        "Views: ${item.viewers.length}",
+                        style: const TextStyle(
+                          fontSize: 14,
+                          fontWeight: FontWeight.w600,
+                        ),
+                      ),
+                      const Divider(
+                        height: 20,
+                        thickness: 1.5,
+                        color: Colors.grey,
+                      ),
+                      const Text(
+                        "Description",
+                        style: TextStyle(
+                          fontSize: 14,
+                          fontWeight: FontWeight.w600,
+                        ),
+                      ),
+                      commonHeightPadding(padding: 18),
+                      Text(
+                        item.description,
+                        style: const TextStyle(
+                          fontSize: 14,
+                          fontWeight: FontWeight.w600,
+                        ),
+                      ),
+                      const Divider(
+                        height: 20,
+                        thickness: 1.5,
+                        color: Colors.grey,
+                      ),
+                      additionalInfoView(),
+                      sellerInfoView(),
+                      saveButton(),
+                    ],
+                  ),
+                ),
+              ],
+            ),
+          ),
+        ),
+      ),
+    );
+  }
+
+  void onViewSellerProfile(myUser.User seller) {
+    Get.to(
+      () => SellerProfilePage(
+        seller: seller,
+      ),
+    );
+  }
+
+  void onClickSaveItemButton() {
+    if (isSaved) {
+      unSaveItem();
+    } else {
+      savedItem();
+    }
+  }
+
+  void savedItem() {
+    userService.saveItem(item.itemid).then((value) {
+      setState(() {
+        isSaved = true;
+      });
+    });
+  }
+
+  void unSaveItem() {
+    userService.unsaveItem(item.itemid).then((value) {
+      setState(() {
+        isSaved = false;
+      });
+    });
+  }
+
+  void addView() {
+    itemService.addViewToItem(item.itemid, item.viewers);
+  }
+
+  void addRecentView() {
+    userService.addToRecentView(item.itemid);
+  }
 
   Widget additionalInfoView() {
     final hasAdditionInfo = hasAdditionalInfoList.contains(item.subCategory);
@@ -121,9 +263,7 @@ class _ItemDetailPageState extends State<ItemDetailPage> {
                 fontWeight: FontWeight.w600,
               ),
             ),
-            const SizedBox(
-              height: 20,
-            ),
+            commonHeightPadding(padding: 18),
             Row(
               crossAxisAlignment: CrossAxisAlignment.center,
               mainAxisAlignment: MainAxisAlignment.start,
@@ -150,20 +290,18 @@ class _ItemDetailPageState extends State<ItemDetailPage> {
                     ),
                   ),
                 ),
-                const SizedBox(width: 10),
+                commonWidthPadding(),
                 Text(
                   user.username,
                   style: const TextStyle(fontSize: 14),
                 )
               ],
             ),
-            const SizedBox(
-              height: 10,
-            ),
+            commonHeightPadding(),
             Text("Tel: ${user.phoneNumber}"),
             const SizedBox(height: 5),
             Text("Address: ${user.address}"),
-            const SizedBox(height: 10),
+            commonHeightPadding(padding: 16),
             Container(
               padding: const EdgeInsets.symmetric(horizontal: 20),
               width: double.infinity,
@@ -227,150 +365,6 @@ class _ItemDetailPageState extends State<ItemDetailPage> {
             ),
           ),
         ],
-      ),
-    );
-  }
-
-  void onViewSellerProfile(myUser.User seller) {
-    Get.to(
-      () => SellerProfilePage(
-        seller: seller,
-      ),
-    );
-  }
-
-  void onClickSaveItemButton() {
-    if (isSaved) {
-      unSaveItem();
-    } else {
-      savedItem();
-    }
-  }
-
-  void savedItem() {
-    userService.saveItem(item.itemid).then((value) {
-      setState(() {
-        isSaved = true;
-      });
-    });
-  }
-
-  void unSaveItem() {
-    userService.unsaveItem(item.itemid).then((value) {
-      setState(() {
-        isSaved = false;
-      });
-    });
-  }
-
-  void addView() {
-    itemService.addViewToItem(item.itemid, item.viewers);
-  }
-
-  void addRecentView() {
-    userService.addToRecentView(item.itemid);
-  }
-
-  @override
-  void initState() {
-    super.initState();
-    addRecentView();
-    addView();
-  }
-
-  @override
-  Widget build(BuildContext context) {
-    return Scaffold(
-      appBar: AppBar(
-        title: const Text("Item Detail"),
-      ),
-      body: SafeArea(
-        child: SizedBox(
-          width: double.maxFinite,
-          height: double.maxFinite,
-          child: SingleChildScrollView(
-            child: Column(
-              children: [
-                ImagesView(images: item.images),
-                Container(
-                  width: double.infinity,
-                  padding: const EdgeInsets.only(
-                    left: 20,
-                    right: 20,
-                    top: 20,
-                  ),
-                  child: Column(
-                    crossAxisAlignment: CrossAxisAlignment.start,
-                    children: [
-                      Text(
-                        item.name,
-                        style: const TextStyle(
-                          fontSize: 18,
-                          fontWeight: FontWeight.w600,
-                        ),
-                      ),
-                      const SizedBox(height: 20),
-                      Text(
-                        "USD: ${item.price.toString()}",
-                        style: const TextStyle(
-                          color: Colors.red,
-                          fontSize: 16,
-                          fontWeight: FontWeight.w600,
-                        ),
-                      ),
-                      const SizedBox(height: 10),
-                      const Text(
-                        "Item Detail",
-                        style: TextStyle(
-                          fontSize: 14,
-                          fontWeight: FontWeight.w600,
-                        ),
-                      ),
-                      const SizedBox(
-                        height: 20,
-                      ),
-                      Text(
-                        "Views: ${item.viewers.length}",
-                        style: const TextStyle(
-                          fontSize: 14,
-                          fontWeight: FontWeight.w600,
-                        ),
-                      ),
-                      const Divider(
-                        height: 20,
-                        thickness: 1.5,
-                        color: Colors.grey,
-                      ),
-                      const Text(
-                        "Description",
-                        style: TextStyle(
-                          fontSize: 14,
-                          fontWeight: FontWeight.w600,
-                        ),
-                      ),
-                      const SizedBox(height: 20),
-                      Text(
-                        item.description,
-                        style: const TextStyle(
-                          fontSize: 14,
-                          fontWeight: FontWeight.w600,
-                        ),
-                      ),
-                      const Divider(
-                        height: 20,
-                        thickness: 1.5,
-                        color: Colors.grey,
-                      ),
-                      additionalInfoView(),
-                      sellerInfoView(),
-                      saveButton(),
-                    ],
-                  ),
-                ),
-              ],
-            ),
-          ),
-        ),
       ),
     );
   }
