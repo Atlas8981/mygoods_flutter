@@ -3,8 +3,8 @@ import 'package:get/get.dart';
 import 'package:mygoods_flutter/components/CustomErrorWidget.dart';
 import 'package:mygoods_flutter/components/LoadingWidget.dart';
 
-class CustomFutureBuilder<T> extends StatelessWidget {
-  CustomFutureBuilder({
+class CustomFutureBuilder<T> extends StatefulWidget {
+  const CustomFutureBuilder({
     Key? key,
     required this.future,
     this.onLoading,
@@ -17,23 +17,28 @@ class CustomFutureBuilder<T> extends StatelessWidget {
   final Widget Function(BuildContext context, T result) onDataRetrieved;
 
   @override
+  State<CustomFutureBuilder<T>> createState() => _CustomFutureBuilderState<T>();
+}
+
+class _CustomFutureBuilderState<T> extends State<CustomFutureBuilder<T>> {
+  @override
   Widget build(BuildContext context) {
     return FutureBuilder<T>(
-      future: future,
+      future: widget.future,
       builder: (context, snapshot) {
         if (snapshot.hasError) {
-          return onError ??
-              const CustomErrorWidget(
-                text: "An error has occurred!",
+          return widget.onError ??
+              CustomErrorWidget(
+                text: "errorOccurred".tr,
               );
         } else if (snapshot.hasData) {
           if (snapshot.data != null) {
-            return onDataRetrieved(context, snapshot.data!);
+            return widget.onDataRetrieved(context, snapshot.data!);
           }
 
           return Text("errorOccurred".tr);
         } else {
-          return onLoading ?? LoadingWidget();
+          return widget.onLoading ?? const LoadingWidget();
         }
       },
     );

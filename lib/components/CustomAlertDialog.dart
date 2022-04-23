@@ -19,7 +19,7 @@ Future<void> showCustomDialog(
           margin: const EdgeInsets.only(top: 20, left: 20, right: 20),
           decoration: BoxDecoration(
             color: Theme.of(context).scaffoldBackgroundColor,
-            borderRadius: BorderRadius.all(Radius.circular(5)),
+            borderRadius: const BorderRadius.all(Radius.circular(5)),
           ),
           width: double.infinity,
           height: 120,

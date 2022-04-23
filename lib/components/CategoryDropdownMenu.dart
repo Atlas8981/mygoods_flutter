@@ -39,14 +39,14 @@ class _CategoryDropdownMenuState extends State<CategoryDropdownMenu> {
     subCategory ??= electronicSubCategories[0].name;
     return Container(
       width: Get.width,
-      padding: EdgeInsets.symmetric(horizontal: 16),
+      padding: const EdgeInsets.symmetric(horizontal: 16),
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         mainAxisSize: MainAxisSize.min,
         children: [
           Text("mainCategory".tr),
           Padding(
-            padding: EdgeInsets.only(left: 8),
+            padding: const EdgeInsets.only(left: 8),
             child: DropdownButton<String>(
               value: mainCategory,
               isExpanded: true,
@@ -66,7 +66,7 @@ class _CategoryDropdownMenuState extends State<CategoryDropdownMenu> {
           ),
           Text("subCategory".tr),
           Padding(
-            padding: EdgeInsets.only(left: 8),
+            padding: const EdgeInsets.only(left: 8),
             child: DropdownButton<String>(
               value: subCategory,
               isExpanded: true,
@@ -92,7 +92,7 @@ class _CategoryDropdownMenuState extends State<CategoryDropdownMenu> {
                 onPressed: () {
                   Get.back(closeOverlays: true);
                 },
-                child:  Text("cancel".tr),
+                child: Text("cancel".tr),
               ),
               TextButton(
                 onPressed: () {
@@ -103,7 +103,7 @@ class _CategoryDropdownMenuState extends State<CategoryDropdownMenu> {
                     }
                   }
                 },
-                child:  Text("confirm".tr),
+                child: Text("confirm".tr),
               ),
             ],
           )

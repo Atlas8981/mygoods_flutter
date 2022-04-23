@@ -260,7 +260,7 @@ class _AboutMePageState extends State<AboutMePage> {
       padding: const EdgeInsets.only(left: 20, right: 20),
       child: ListView.separated(
         separatorBuilder: (context, index) {
-          return Divider(
+          return const Divider(
             height: 0,
             thickness: 2,
           );
@@ -273,10 +273,10 @@ class _AboutMePageState extends State<AboutMePage> {
             onTap: () {
               switch (index) {
                 case 0:
-                  Get.to(() => MyItemsPage());
+                  Get.to(() => const MyItemsPage());
                   break;
                 case 1:
-                  Get.to(() => SavedItemsPage());
+                  Get.to(() => const SavedItemsPage());
                   break;
                 case 2:
                   Get.to(() => const AboutOurAppPage());

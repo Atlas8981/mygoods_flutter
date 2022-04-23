@@ -10,7 +10,6 @@ import 'package:mygoods_flutter/models/additionalInfo.dart';
 import 'package:mygoods_flutter/models/item.dart';
 import 'package:mygoods_flutter/models/user.dart' as myUser;
 import 'package:mygoods_flutter/services/ItemService.dart';
-import 'package:mygoods_flutter/services/LocalizationSerivce.dart';
 import 'package:mygoods_flutter/services/UserService.dart';
 import 'package:mygoods_flutter/utils/constant.dart';
 import 'package:mygoods_flutter/views/item/SellerProfilePage.dart';
@@ -98,9 +97,7 @@ class _ItemDetailPageState extends State<ItemDetailPage> {
             fontFamily: englishFontFamily,
           ),
         ),
-        SizedBox(
-          height: 8,
-        ),
+        const SizedBox(height: 8),
         Text(
           "\$${formatPrice(item.price)}",
           style: const TextStyle(
@@ -113,7 +110,7 @@ class _ItemDetailPageState extends State<ItemDetailPage> {
         adaptiveHeightSpacing(height: 18),
         Text(
           "description".tr,
-          style: TextStyle(
+          style: const TextStyle(
             fontSize: 14,
             fontWeight: FontWeight.w600,
           ),
@@ -206,7 +203,7 @@ class _ItemDetailPageState extends State<ItemDetailPage> {
           children: [
             Text(
               "aboutThisSeller".tr,
-              style: TextStyle(
+              style: const TextStyle(
                 fontSize: 14,
                 fontWeight: FontWeight.w600,
               ),

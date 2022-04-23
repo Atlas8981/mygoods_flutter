@@ -49,7 +49,7 @@ class _LoginWithEmailPageState extends State<LoginWithEmailPage> {
                   Text(
                     "welcomeBack".tr,
                     textAlign: TextAlign.start,
-                    style: TextStyle(
+                    style: const TextStyle(
                       fontSize: 24,
                       fontWeight: FontWeight.bold,
                     ),
@@ -119,10 +119,10 @@ class _LoginWithEmailPageState extends State<LoginWithEmailPage> {
                       ),
                     ],
                   ),
-                   Center(
+                  Center(
                     child: Text(
                       "or".tr,
-                      style: TextStyle(fontSize: 18),
+                      style: const TextStyle(fontSize: 18),
                     ),
                   ),
                   const SizedBox(
@@ -135,8 +135,7 @@ class _LoginWithEmailPageState extends State<LoginWithEmailPage> {
                         height: 50,
                         child: TextButton(
                           onPressed: signInWithPhoneNumberButtonClick,
-                          child:
-                              Text("logInWithPhoneNumber".tr),
+                          child: Text("logInWithPhoneNumber".tr),
                         ),
                       ),
                       const SizedBox(

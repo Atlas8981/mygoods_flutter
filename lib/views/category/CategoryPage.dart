@@ -48,12 +48,12 @@ class _CategoryPageState extends State<CategoryPage> {
                     children: [
                       Text(
                         "${"category".tr}${"popular".tr}",
-                        style: TextStyle(
+                        style: const TextStyle(
                           fontSize: 18,
                           fontWeight: FontWeight.bold,
                         ),
                       ),
-                      const SizedBox(height: 8),
+                      commonHeightSpacing(height: 8),
                       GridView.count(
                         scrollDirection: Axis.vertical,
                         childAspectRatio: (8 / 9),
@@ -89,7 +89,7 @@ class _CategoryPageState extends State<CategoryPage> {
                     children: [
                       Text(
                         'moreCategory'.tr,
-                        style: TextStyle(
+                        style: const TextStyle(
                           fontSize: 18,
                           fontWeight: FontWeight.bold,
                         ),
@@ -98,7 +98,7 @@ class _CategoryPageState extends State<CategoryPage> {
                         physics: const NeverScrollableScrollPhysics(),
                         shrinkWrap: true,
                         separatorBuilder: (context, index) {
-                          return Divider(
+                          return const Divider(
                             height: 0,
                             thickness: 2,
                           );

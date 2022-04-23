@@ -1,4 +1,3 @@
-import 'package:firebase_auth/firebase_auth.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:firebase_messaging/firebase_messaging.dart';
 import 'package:flutter/foundation.dart';
@@ -13,7 +12,6 @@ import 'package:mygoods_flutter/controllers/InitialBinding.dart';
 import 'package:mygoods_flutter/services/LocalizationSerivce.dart';
 import 'package:mygoods_flutter/utils/constant.dart';
 import 'package:mygoods_flutter/views/LandingPage.dart';
-import 'package:mygoods_flutter/views/authentication/VerifyOtpPage.dart';
 
 Future<void> main() async {
   SystemChrome.setSystemUIOverlayStyle(

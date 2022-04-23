@@ -5,7 +5,6 @@ import 'package:mygoods_flutter/components/LoadingWidget.dart';
 import 'package:mygoods_flutter/models/item.dart';
 import 'package:mygoods_flutter/services/SearchService.dart';
 import 'package:mygoods_flutter/views/cells/ListItemRow.dart';
-import 'package:mygoods_flutter/views/item/ItemDetailPage.dart';
 import 'package:mygoods_flutter/views/search/RecentSearchList.dart';
 import 'package:mygoods_flutter/views/search/SuggestionList.dart';
 
@@ -99,7 +98,4 @@ class ItemSearchDelegate extends SearchDelegate<String> {
             query: query,
           );
   }
-
 }
-
-

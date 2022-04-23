@@ -1,4 +1,3 @@
-import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:mygoods_flutter/components/CustomAlertDialog.dart';
@@ -6,11 +5,9 @@ import 'package:mygoods_flutter/components/CustomErrorWidget.dart';
 import 'package:mygoods_flutter/components/LoadingWidget.dart';
 import 'package:mygoods_flutter/controllers/MyItemsController.dart';
 import 'package:mygoods_flutter/models/item.dart';
-import 'package:mygoods_flutter/services/ItemService.dart';
 import 'package:mygoods_flutter/services/UserService.dart';
 import 'package:mygoods_flutter/views/cells/OwnerItemRow.dart';
 import 'package:mygoods_flutter/views/item/EditItemPage.dart';
-import 'package:mygoods_flutter/views/user/MyItemDetailPage.dart';
 
 class MyItemsPage extends StatefulWidget {
   const MyItemsPage({Key? key}) : super(key: key);

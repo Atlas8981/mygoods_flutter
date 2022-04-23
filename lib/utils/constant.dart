@@ -1,7 +1,6 @@
 import 'dart:io';
 
 import 'package:cloud_firestore/cloud_firestore.dart';
-import 'package:extended_image/extended_image.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_chat_ui/flutter_chat_ui.dart';
 import 'package:fluttertoast/fluttertoast.dart';
@@ -278,8 +277,8 @@ String formatPrice(double price) {
   return priceNumberFormat.format(price.toInt());
 }
 
-String formatLocaleNumber(String number){
-  if(Get.locale == const Locale('en', 'US')){
+String formatLocaleNumber(String number) {
+  if (Get.locale == const Locale('en', 'US')) {
     return number;
   }
   return KhmerDate.khmerNumber(number);
@@ -371,7 +370,7 @@ Color getUserAvatarNameColor(types.User user) {
 String getUserName(types.User user) =>
     '${user.firstName ?? ''} ${user.lastName ?? ''}'.trim();
 
-void requestFocus(BuildContext context){
+void requestFocus(BuildContext context) {
   return FocusScope.of(context).requestFocus(FocusNode());
 }
 

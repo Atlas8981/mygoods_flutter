@@ -15,7 +15,8 @@ class CustomImageCarouselWidget extends StatefulWidget {
   final List<image.Image> images;
 
   @override
-  _CustomImageCarouselWidgetState createState() => _CustomImageCarouselWidgetState();
+  _CustomImageCarouselWidgetState createState() =>
+      _CustomImageCarouselWidgetState();
 }
 
 class _CustomImageCarouselWidgetState extends State<CustomImageCarouselWidget> {
@@ -71,7 +72,7 @@ class _CustomImageCarouselWidgetState extends State<CustomImageCarouselWidget> {
           child: DotsIndicator(
             dotsCount: images.length,
             position: currentPage.toDouble(),
-            decorator: DotsDecorator(
+            decorator: const DotsDecorator(
               activeColor: Colors.blue,
             ),
             onTap: (position) {

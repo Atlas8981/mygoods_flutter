@@ -39,7 +39,7 @@ class SubCategoryPage extends StatelessWidget {
             children: [
               ListView.separated(
                 separatorBuilder: (context, index) {
-                  return Divider(
+                  return const Divider(
                     height: 0,
                     thickness: 2,
                   );

@@ -441,13 +441,13 @@ class _ItemFormState extends State<ItemForm> {
                 maxLines: 5,
                 decoration: InputDecoration(
                   alignLabelWithHint: true,
-                  contentPadding: EdgeInsets.all(10),
-                  labelStyle: TextStyle(
+                  contentPadding: const EdgeInsets.all(10),
+                  labelStyle: const TextStyle(
                     fontSize: 16,
                   ),
                   labelText: "description".tr,
-                  border: OutlineInputBorder(),
-                  counterStyle: TextStyle(
+                  border: const OutlineInputBorder(),
+                  counterStyle: const TextStyle(
                     fontSize: 12,
                     height: 1,
                   ),
@@ -514,7 +514,7 @@ class _ItemFormState extends State<ItemForm> {
                     children: [
                       Text(
                         "uploadPhoto".tr,
-                        style: TextStyle(
+                        style: const TextStyle(
                           fontSize: 18,
                           fontWeight: FontWeight.bold,
                         ),

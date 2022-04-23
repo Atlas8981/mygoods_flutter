@@ -6,7 +6,6 @@ import 'package:mygoods_flutter/controllers/HomePageController.dart';
 import 'package:mygoods_flutter/models/item.dart';
 import 'package:mygoods_flutter/services/HomePageService.dart';
 import 'package:mygoods_flutter/utils/constant.dart';
-import 'package:mygoods_flutter/views/cells/ItemGridCell.dart';
 import 'package:mygoods_flutter/views/item/ItemDetailPage.dart';
 import 'package:mygoods_flutter/views/item/ViewAllPage.dart';
 import 'package:mygoods_flutter/views/cells/HomePageCell.dart';

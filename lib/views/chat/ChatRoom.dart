@@ -261,13 +261,13 @@ class _ChatRoomState extends State<ChatRoom> {
                               Theme.of(context).scaffoldBackgroundColor,
                           inputBackgroundColor: Colors.black54,
                           secondaryColor: Colors.grey.shade900,
-                          userAvatarNameColors: [Colors.blue],
+                          userAvatarNameColors: const [Colors.blue],
                         )
                       : DefaultChatTheme(
                           primaryColor: Colors.blue,
                           backgroundColor:
                               Theme.of(context).scaffoldBackgroundColor,
-                          userAvatarNameColors: [Colors.blue],
+                          userAvatarNameColors: const [Colors.blue],
                           secondaryColor: Colors.grey.shade300,
                         ),
                 ),

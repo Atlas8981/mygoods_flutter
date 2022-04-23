@@ -49,7 +49,7 @@ class PopularCategoryCell extends StatelessWidget {
                 overflow: TextOverflow.ellipsis,
                 style: TextStyle(
                   fontSize: 14,
-                  height: (Get.locale == Locale('en', 'US')) ? 1.5 : 2,
+                  height: (Get.locale == const Locale('en', 'US')) ? 1.5 : 2,
                 ),
               ),
             ),

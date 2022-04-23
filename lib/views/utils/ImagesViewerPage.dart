@@ -86,13 +86,13 @@ class _ImagesViewerPageState extends State<ImagesViewerPage> {
                   width: double.maxFinite,
                   height: double.maxFinite,
                   alignment: Alignment.bottomCenter,
-                  padding: EdgeInsets.only(bottom: 16),
+                  padding: const EdgeInsets.only(bottom: 16),
                   child: Positioned(
                     bottom: 10,
                     child: DotsIndicator(
                       dotsCount: widget.images.length,
                       position: currentPage.toDouble(),
-                      decorator: DotsDecorator(
+                      decorator: const DotsDecorator(
                         activeColor: Colors.blue,
                       ),
                       onTap: (position) {

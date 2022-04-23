@@ -63,30 +63,30 @@ class _LandingPageState extends State<LandingPage> {
           selectedIndex: landingPageController.tabIndex.value,
           onDestinationSelected: landingPageController.changeTabIndex,
           labelBehavior: NavigationDestinationLabelBehavior.onlyShowSelected,
-          destinations:  [
+          destinations: [
             NavigationDestination(
-              selectedIcon: Icon(Icons.home),
-              icon: Icon(Icons.home_outlined),
+              selectedIcon: const Icon(Icons.home),
+              icon: const Icon(Icons.home_outlined),
               label: 'home'.tr,
             ),
             NavigationDestination(
-              selectedIcon: Icon(Icons.format_list_bulleted),
-              icon: Icon(Icons.format_list_bulleted_outlined),
+              selectedIcon: const Icon(Icons.format_list_bulleted),
+              icon: const Icon(Icons.format_list_bulleted_outlined),
               label: 'category'.tr,
             ),
             NavigationDestination(
-              selectedIcon: Icon(Icons.add_box),
-              icon: Icon(Icons.add_box_outlined),
+              selectedIcon: const Icon(Icons.add_box),
+              icon: const Icon(Icons.add_box_outlined),
               label: 'sellItem'.tr,
             ),
             NavigationDestination(
-              selectedIcon: Icon(Icons.chat),
-              icon: Icon(Icons.chat_outlined),
+              selectedIcon: const Icon(Icons.chat),
+              icon: const Icon(Icons.chat_outlined),
               label: 'message'.tr,
             ),
             NavigationDestination(
-              selectedIcon: Icon(Icons.person),
-              icon: Icon(Icons.person_outline),
+              selectedIcon: const Icon(Icons.person),
+              icon: const Icon(Icons.person_outline),
               label: 'account'.tr,
             ),
           ],
@@ -94,5 +94,4 @@ class _LandingPageState extends State<LandingPage> {
       ),
     );
   }
-
 }

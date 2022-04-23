@@ -17,7 +17,7 @@ class MenuItemRow extends StatelessWidget {
   Widget build(BuildContext context) {
     return ListTile(
       onTap: onTap,
-      contentPadding: EdgeInsets.all(0),
+      contentPadding: const EdgeInsets.all(0),
       leading: Image.asset(
         assetImage,
         width: 25,

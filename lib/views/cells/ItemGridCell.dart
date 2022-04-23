@@ -1,5 +1,4 @@
 import 'package:extended_image/extended_image.dart';
-import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:mygoods_flutter/models/item.dart';
@@ -47,7 +46,7 @@ class _ItemGridCellState extends State<ItemGridCell> {
     return Column(
       children: [
         Padding(
-          padding: EdgeInsets.all(8),
+          padding: const EdgeInsets.all(8),
           child: ClipRRect(
             borderRadius: const BorderRadius.all(
               Radius.circular(8),
@@ -62,7 +61,7 @@ class _ItemGridCellState extends State<ItemGridCell> {
           ),
         ),
         Container(
-          padding: EdgeInsets.only(left: 8,bottom: 4),
+          padding: const EdgeInsets.only(left: 8, bottom: 4),
           width: double.maxFinite,
           child: Column(
             mainAxisAlignment: MainAxisAlignment.start,

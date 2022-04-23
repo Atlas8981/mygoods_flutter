@@ -40,7 +40,7 @@ class _SavedItemsPageState extends State<SavedItemsPage> {
             return CustomErrorWidget(text: "noSavedItem".tr);
           }
 
-          return CustomErrorWidget();
+          return const CustomErrorWidget();
         },
       ),
     );

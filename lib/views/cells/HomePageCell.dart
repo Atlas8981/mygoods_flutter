@@ -25,7 +25,7 @@ class HomePageCell extends StatelessWidget {
       ),
       color: Theme.of(context).scaffoldBackgroundColor,
       child: Container(
-        padding: EdgeInsets.fromLTRB(8, 0, 8, 8),
+        padding: const EdgeInsets.fromLTRB(8, 0, 8, 8),
         width: 145,
         child: InkWell(
           onTap: () {
@@ -51,7 +51,7 @@ class HomePageCell extends StatelessWidget {
                 item.name,
                 maxLines: 1,
                 overflow: TextOverflow.ellipsis,
-                style: TextStyle(fontSize: 16),
+                style: const TextStyle(fontSize: 16),
               ),
               adaptiveHeightSpacing(),
               Text(
