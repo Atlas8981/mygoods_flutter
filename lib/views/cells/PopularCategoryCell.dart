@@ -19,20 +19,26 @@ class PopularCategoryCell extends StatelessWidget {
       },
       child: Column(
         children: [
-          Container(
-            padding: const EdgeInsets.all(10),
-            width: 85,
-            height: 85,
-            decoration: BoxDecoration(
-              image: DecorationImage(
-                image: AssetImage(category.image),
-                fit: BoxFit.cover,
-              ),
-              borderRadius: const BorderRadius.all(
-                Radius.circular(100),
-              ),
+          CircleAvatar(
+            backgroundImage: AssetImage(
+              category.image,
             ),
+            radius: 40,
           ),
+          // const SizedBox(height: 8),
+          // Container(
+          //   width: 85,
+          //   height: 85,
+          //   decoration: BoxDecoration(
+          //     image: DecorationImage(
+          //       image: AssetImage(category.image),
+          //       fit: BoxFit.cover,
+          //     ),
+          //     borderRadius: const BorderRadius.all(
+          //       Radius.circular(100),
+          //     ),
+          //   ),
+          // ),
           Expanded(
             child: Align(
               alignment: Alignment.center,
@@ -41,7 +47,10 @@ class PopularCategoryCell extends StatelessWidget {
                 maxLines: 2,
                 textAlign: TextAlign.center,
                 overflow: TextOverflow.ellipsis,
-                style: const TextStyle(fontSize: 14),
+                style: TextStyle(
+                  fontSize: 14,
+                  height: (Get.locale == Locale('en', 'US')) ? 1.5 : 2,
+                ),
               ),
             ),
           ),

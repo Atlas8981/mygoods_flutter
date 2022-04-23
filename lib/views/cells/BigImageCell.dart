@@ -2,6 +2,7 @@ import 'package:extended_image/extended_image.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:mygoods_flutter/models/item.dart';
+import 'package:mygoods_flutter/services/ItemService.dart';
 import 'package:mygoods_flutter/utils/constant.dart';
 import 'package:mygoods_flutter/views/item/ItemDetailPage.dart';
 
@@ -19,6 +20,7 @@ class BigImageCell extends StatefulWidget {
 }
 
 class _BigImageCellState extends State<BigImageCell> {
+  final itemService = ItemService();
   @override
   Widget build(BuildContext context) {
     final item = widget.item;
@@ -32,26 +34,29 @@ class _BigImageCellState extends State<BigImageCell> {
       color: Theme.of(context).scaffoldBackgroundColor,
       child: InkWell(
         onTap: () {
-          Get.to((() => ItemDetailPage(item: item)));
+          Get.to(() => ItemDetailPage(item: item));
         },
         child: Column(
           mainAxisSize: MainAxisSize.min,
           children: [
-            ClipRRect(
-              borderRadius: const BorderRadius.only(
-                topLeft: Radius.circular(8),
-                topRight: Radius.circular(8),
-              ),
-              child: AspectRatio(
-                aspectRatio: 16 / 10,
-                child: ExtendedImage.network(
-                  item.images[0].imageUrl,
-                  fit: BoxFit.cover,
+            Padding(
+              padding: EdgeInsets.all(8),
+              child: ClipRRect(
+                borderRadius: const BorderRadius.only(
+                  topLeft: Radius.circular(8),
+                  topRight: Radius.circular(8),
+                ),
+                child: AspectRatio(
+                  aspectRatio: 16 / 10,
+                  child: ExtendedImage.network(
+                    item.images[0].imageUrl,
+                    fit: BoxFit.cover,
+                  ),
                 ),
               ),
             ),
             Container(
-              padding: const EdgeInsets.all(8),
+              padding: const EdgeInsets.only(left: 8,bottom: 8),
               width: double.maxFinite,
               child: Column(
                 mainAxisSize: MainAxisSize.max,
@@ -74,6 +79,24 @@ class _BigImageCellState extends State<BigImageCell> {
                     ),
                   ),
                   commonHeightPadding(),
+                  FutureBuilder<String>(
+                    initialData: "Someone",
+                    future: itemService.getItemOwnerName(item.userid),
+                    builder: (context, snapshot) {
+                      if (snapshot.hasData) {
+                        return Text(
+                          "Post By ${snapshot.data}",
+                          style: const TextStyle(
+                            fontSize: 16,
+                            height: 1.5,
+                          ),
+                        );
+                      }
+                      return Container();
+                    },
+                  ),
+                  commonHeightPadding(),
+
                   Text(
                     "Posted ${calDate(item.date)}",
                     style: const TextStyle(fontSize: 16),

@@ -42,7 +42,7 @@ class _CategoryPageState extends State<CategoryPage> {
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
                 Container(
-                  padding: const EdgeInsets.all(20),
+                  padding: const EdgeInsets.all(16),
                   child: Column(
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
@@ -56,11 +56,12 @@ class _CategoryPageState extends State<CategoryPage> {
                       const SizedBox(height: 8),
                       GridView.count(
                         scrollDirection: Axis.vertical,
-                        childAspectRatio: (85 / 90),
+                        childAspectRatio: (8 / 9),
                         shrinkWrap: true,
                         physics: const NeverScrollableScrollPhysics(),
                         crossAxisCount: 3,
                         crossAxisSpacing: 4.0,
+                        mainAxisSpacing: 0,
                         children: List.generate(
                           popularCategory.length,
                           (index) {
@@ -93,7 +94,6 @@ class _CategoryPageState extends State<CategoryPage> {
                           fontWeight: FontWeight.bold,
                         ),
                       ),
-                      const SizedBox(height: 20),
                       ListView.separated(
                         physics: const NeverScrollableScrollPhysics(),
                         shrinkWrap: true,
@@ -107,9 +107,9 @@ class _CategoryPageState extends State<CategoryPage> {
                         itemCount: mainCategories.length,
                         itemBuilder: (context, index) {
                           return MenuItemRow(
-                            onTap: (){
+                            onTap: () {
                               Get.to(
-                                    () => SubCategoryPage(
+                                () => SubCategoryPage(
                                   title: mainCategories[index].name,
                                 ),
                               );

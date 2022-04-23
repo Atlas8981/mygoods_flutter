@@ -1,6 +1,7 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:extended_image/extended_image.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter/widgets.dart';
 import 'package:get/get.dart';
 import 'package:mygoods_flutter/models/item.dart';
 import 'package:mygoods_flutter/services/ItemService.dart';
@@ -23,39 +24,6 @@ class ListItemRow extends StatefulWidget {
 class _ListItemRowState extends State<ListItemRow> {
   final itemService = ItemService();
 
-  String calDate(Timestamp itemDate) {
-    //Convert to second
-    double date = (Timestamp.now().seconds - itemDate.seconds).toDouble();
-    String timeEnd = " second(s)";
-    if (date > 0) {
-      if (date >= 60) {
-        date = date / 60;
-        timeEnd = " minutes(s) ";
-        if (date >= 60) {
-          date = date / 60;
-          timeEnd = " hours(s) ";
-          if (date >= 24) {
-            date = date / 24;
-            timeEnd = " day(s) ";
-            if (date > 7) {
-              date = date / 7;
-              timeEnd = " week(s)";
-              if (date > 4) {
-                date = date / 4;
-                timeEnd = " month(s)";
-                // if(date>12){
-                //   date = date/12.roundToDouble();
-                //   timeEnd = " year(s)";
-                // }
-              }
-            }
-          }
-        }
-      }
-    }
-    return "${date.toInt()}" + timeEnd;
-  }
-
   @override
   Widget build(BuildContext context) {
     final item = widget.item;
@@ -66,6 +34,7 @@ class _ListItemRowState extends State<ListItemRow> {
           Radius.circular(8),
         ),
       ),
+      shadowColor: Colors.black,
       color: Theme.of(context).scaffoldBackgroundColor,
       child: InkWell(
         onTap: () {
@@ -77,70 +46,70 @@ class _ListItemRowState extends State<ListItemRow> {
   }
 
   Widget mainItemRow(Item item) {
-    return Column(
+    return Row(
       children: [
-        Row(
+        Padding(
+          padding: EdgeInsets.all(8),
+          child: ClipRRect(
+            borderRadius: const BorderRadius.all(
+              Radius.circular(10),
+            ),
+            child: ExtendedImage.network(
+              item.images[0].imageUrl,
+              width: 125,
+              height: 125,
+              fit: BoxFit.cover,
+            ),
+          ),
+        ),
+        const SizedBox(width: 8),
+        Column(
+          mainAxisSize: MainAxisSize.max,
+          crossAxisAlignment: CrossAxisAlignment.start,
           children: [
-            ClipRRect(
-              borderRadius: const BorderRadius.all(
-                Radius.circular(10),
-              ),
-              child: ExtendedImage.network(
-                item.images[0].imageUrl,
-                width: 125,
-                height: 125,
-                fit: BoxFit.cover,
+            Text(
+              item.name,
+              style: const TextStyle(
+                fontSize: 13,
+                fontWeight: FontWeight.bold,
               ),
             ),
-            const SizedBox(width: 16),
-            Column(
-              mainAxisSize: MainAxisSize.min,
-              crossAxisAlignment: CrossAxisAlignment.start,
-              children: [
-                Text(
-                  item.name,
-                  style: const TextStyle(
-                    fontSize: 13,
-                    fontWeight: FontWeight.bold,
-                  ),
-                ),
-                commonHeightPadding(),
-                Text(
-                  "USD \$${item.price}",
-                  style: const TextStyle(
-                    color: Colors.red,
-                    fontSize: 16,
-                    fontWeight: FontWeight.bold,
-                  ),
-                ),
-                commonHeightPadding(),
-                FutureBuilder<String>(
-                  future: itemService.getItemOwnerName(item.userid),
-                  builder: (context, snapshot) {
-                    if (snapshot.hasData) {
-                      return Text(
-                        "Post By ${snapshot.data}",
-                        style: const TextStyle(fontSize: 12),
-                      );
-                    } else {
-                      return const Text(
-                        "Post By someone",
-                        style: TextStyle(fontSize: 12),
-                      );
-                    }
-                  },
-                ),
-                commonHeightPadding(),
-                Text(
-                  "Posted ${calDate(item.date)}",
-                  style: const TextStyle(fontSize: 12),
-                ),
-                commonHeightPadding(),
-                Text(
-                  "Views: ${item.viewers.length}",
-                  style: const TextStyle(fontSize: 12),
-                ),
-              ],
+            commonHeightPadding(),
+            Text(
+              "USD \$${item.price}",
+              style: const TextStyle(
+                color: Colors.red,
+                fontSize: 16,
+                fontWeight: FontWeight.bold,
+              ),
+            ),
+            commonHeightPadding(),
+            FutureBuilder<String>(
+              future: itemService.getItemOwnerName(item.userid),
+              builder: (context, snapshot) {
+
+                if (snapshot.hasData) {
+                  return Text(
+                    "Post By ${snapshot.data}",
+                    style: const TextStyle(fontSize: 12),
+                  );
+                } else {
+                  return const Text(
+                    "Post By someone",
+                    style: TextStyle(fontSize: 12),
+                  );
+                }
+              },
+            ),
+            commonHeightPadding(),
+            Text(
+              "Posted ${calDate(item.date)}",
+              style: const TextStyle(fontSize: 12),
+            ),
+            commonHeightPadding(),
+            Text(
+              "Views: ${item.viewers.length}",
+              style: const TextStyle(fontSize: 12),
             ),
           ],
         ),

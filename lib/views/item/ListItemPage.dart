@@ -93,9 +93,10 @@ class _ListItemByPopularCategoryPAgeState extends State<ListItemPage> {
     return GridView.builder(
       gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
         crossAxisCount: 2,
-        crossAxisSpacing: 16,
+        crossAxisSpacing: 8,
         mainAxisSpacing: 16,
-        childAspectRatio: 6.5 / 10,
+        childAspectRatio: 6.25 / 10,
+
       ),
       padding: const EdgeInsets.all(8),
       itemCount: items.length,

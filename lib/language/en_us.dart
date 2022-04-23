@@ -1,11 +1,31 @@
 const Map<String, String> enUS = {
   //For MyGoods
-
+  //COMMON PHRASES/WORDS
   'seller': 'Seller',
   'buyer': 'Buyer',
   'gender': 'Gender',
   'male': 'Male',
   'female': 'Female',
+  'item': 'Item',
+  'name': 'Name',
+  'price': 'Price',
+  'condition': 'Condition',
+  'address': 'Address',
+  'number': 'Number',
+  'description': 'Description',
+  'add': 'Add',
+  'new': 'New',
+  'used': 'Used',
+  'enter': 'Enter',
+  'information': 'Information',
+  'message': 'Message',
+  'account': 'account',
+  'popular': 'Popular',
+  'more': 'More',
+  'sell': 'Sell',
+  'clear': 'Clear',
+  'by': 'By',
+
 
   //MENUS LABELS
   'home': "Home",
@@ -13,6 +33,7 @@ const Map<String, String> enUS = {
   'recentlyView': "Recently View",
   'recommendation': 'Recommendation',
   'viewAll': "View All",
+
 
   //CATEGORY
   'category': 'Category',
@@ -100,7 +121,6 @@ const Map<String, String> enUS = {
   'shopName': 'Shop Name',
   'shopLocation': 'Shop Address',
   'nationality': 'Nationality',
-  'address': 'My Address',
   'arrivalDate': 'Arrival Date',
   'idImageEmpty': 'Please enter id card or passport image',
   'documentImageEmpty': 'Please enter your shop document',
@@ -158,7 +178,6 @@ const Map<String, String> enUS = {
   'simTransferFail': 'Failed to transfer sim card ownership',
 
   //ACCOUNT
-  'account': 'Account',
   'editProfile': 'Edit Profile',
   'resetPassword': 'Reset Password',
   'resetPasswordTitle': 'Enter your old password and new password',

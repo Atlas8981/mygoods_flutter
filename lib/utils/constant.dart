@@ -6,6 +6,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_chat_ui/flutter_chat_ui.dart';
 import 'package:fluttertoast/fluttertoast.dart';
 import 'package:get/get.dart';
+import 'package:intl/intl.dart';
 import 'package:mygoods_flutter/models/DualImage.dart';
 import 'package:mygoods_flutter/models/additionalInfo.dart';
 import 'package:mygoods_flutter/models/category.dart';
@@ -264,6 +265,13 @@ String calDate(Timestamp itemDate) {
   return "${date.toInt()}" + timeEnd;
 }
 
+final priceNumberFormat = NumberFormat("###,###.0#");
+
+String formatPrice(double price) {
+  return priceNumberFormat.format(price.toInt());
+}
+// print(f.format(int.parse("1000300")));
+
 checkImageProvider(DualImage image) {
   if (image.isNetworkImage) {
     return NetworkImage(
@@ -292,11 +300,11 @@ String? processAdditionalInfo(AdditionalInfo additionalInfo) {
         "\n\n" +
         "Car Brand : " +
         tempCar.brand +
-        "\nCar Model : " +
+        "\n\nCar Model : " +
         tempCar.model +
-        "\nCar Type : " +
+        "\n\nCar Type : " +
         tempCar.category +
-        "\nCar Year : " +
+        "\n\nCar Year : " +
         tempCar.year;
   }
   if (additionalInfo.phone != null) {

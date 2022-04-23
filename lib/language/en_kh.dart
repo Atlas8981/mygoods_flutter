@@ -4,6 +4,7 @@
 const Map<String, String> kmKH = {
 //For MyGoods
 
+  //COMMON PHRASES/WORDS
   'seller': 'អ្នកលក់',
   'buyer': 'អ្នកទិញ',
   'gender': 'ភេទ',
@@ -27,6 +28,32 @@ const Map<String, String> kmKH = {
   'more': 'បន្ថែម',
   'sell': 'លក់',
   'clear': 'លុបចេាល',
+  'delete': 'លុបចេាល',
+  'by': 'ដោយ',
+  'second': 'វិនាទី',
+  'minute': 'នាទី',
+  'hour': 'ម៉ោង',
+  'day': 'ថ្ងៃ',
+  'week': 'សប្តាហ៍',
+  'month': 'ខែ',
+  'year': 'ឆ្នាំ',
+  'yes': 'បាទ/ចាស',
+  'no': 'ទេ',
+  'setting': 'ការកំណត់',
+  'language': 'ភាសា',
+  'login': 'ចូល',
+  'next': 'បន្ទាប់',
+  'back': 'ត្រលប់ក្រោយ',
+  'verify': 'ផ្ទៀងផ្ទាត់',
+  'confirm': 'យល់ព្រម',
+  'cancel': 'បោះបង់',
+  'password': 'ពាក្យសម្ងាត់',
+  'firstName': 'នាមត្រកូល',
+  'lastName': 'នាម',
+  'roles': "មុខងារ",
+  'agent': 'ភ្នាក់ងារលក់ស៊ីម',
+  'company': 'ក្រុមហ៊ុន',
+  'birthday': 'ថ្ងៃ ខែ ឆ្នាំកំណើត',
 
   //MENUS LABELS
   'home': "ទំព័រដើម",
@@ -37,6 +64,10 @@ const Map<String, String> kmKH = {
   'upload': 'បង្ហោះ',
   'photo': 'រូបថត',
   'recentSearch': 'ការស្វែងរកថ្មីៗ',
+  'itemDetail': 'ព័ត៌មានវត្ថុលម្អិត',
+  'postBy': 'លក់ដោយ',
+  'sellBy': 'លក់ដោយ',
+
 
   //CATEGORY
   'category': 'ប្រភេទ',
@@ -47,6 +78,7 @@ const Map<String, String> kmKH = {
   'Electronic': 'អេឡិចត្រូនិក',
   'Furniture & Decors': "គ្រឿងសង្ហារិម",
   'Phone': 'ទូរស័ព្ទ',
+  'Other': 'ផ្សែង',
   'other': 'ផ្សែង',
   'Desktop': 'កុំព្យូទ័រលើតុ',
   'Laptop': 'កុំព្យូទ័រយួរដៃ',
@@ -62,32 +94,15 @@ const Map<String, String> kmKH = {
   'errorOccurred': 'កំហុសបានកើតឡើង',
   'notANumber': 'មិនមែនលេខទេ',
 
-  //
-  'second': 'វិនាទី',
-  'minute': 'នាទី',
-  'hour': 'ម៉ោង',
-  'day': 'ថ្ងៃ',
-  'week': 'សប្តាហ៍',
-  'month': 'ខែ',
-  'year': 'ឆ្នាំ',
   'emptyField': "សូមបំពេញវាលនេះ",
   'incorrectPhone': 'បញ្ចូលលេខទូរស័ព្ទមិនត្រឹមត្រូវ',
-  'yes': 'បាទ/ចាស',
-  'no': 'ទេ',
+
   'openCamera': 'បើកកាមេរ៉ា',
   'openGallery': 'បើកវិចិត្រសាល',
   'signOut': 'ចាកចេញ',
-  'delete': "លុបចេាល",
-  'setting': 'ការកំណត់',
-  'language': 'ភាសា',
-  'login': 'ចូល',
-  'next': 'បន្ទាប់',
-  'back': 'ត្រលប់ក្រោយ',
-  'verify': 'ផ្ទៀងផ្ទាត់',
-  'confirm': 'យល់ព្រម',
-  'cancel': 'បោះបង់',
 
-//From Old
+
+// From Old
   'splashText': 'ចូលកម្មវិធី',
   'appName': 'ប្រព័ន្ធគ្រប់គ្រងស៊ីមកាត',
   'checkBack': 'ចុចម្តងទៀតដើម្បីចាកចេញ',
@@ -98,15 +113,10 @@ const Map<String, String> kmKH = {
       'សូមពិនិត្យមើលការតភ្ជាប់អ៊ីនធឺណិតរបស់អ្នក ហើយព្យាយាមម្តងទៀត',
   'okButtonText': 'បាទ/ចាស',
 
-//SETTING PAGE
-
   'setBiometric': 'កំណត់ការផ្ទៀងផ្ទាត់ជីវមាត្រ',
   'turnOffBiometric': 'បញ្ជាក់ដើម្បីបិទការផ្ទៀងផ្ទាត់ជីវមាត្រ',
   'turnOnBiometric': 'បញ្ជាក់ដើម្បីបើកការផ្ទៀងផ្ទាត់ជីវមាត្រ',
 
-//BUTTON TEXT
-
-//CREATE ACCOUNT TITLE TEXT
   'createAccount': 'បង្កើតគណនី',
   'accountAndPassword': ' គណនី & ពាក្យសម្ងាត់',
   'personalInformation': 'ព័ត៌មានផ្ទាល់ខ្លួន',
@@ -117,23 +127,17 @@ const Map<String, String> kmKH = {
   'createAccountNotificationBodySuccess': 'គណនីរបស់អ្នកត្រូវបានអនុម័ត',
   'createAccountNotificationBodyFailed': 'គណនីរបស់អ្នកត្រូវបានបដិសេធ',
 
-//FORM TEXT
 
   'addPhoto': "បញ្ចូលរូបថត",
   'phoneNumber': 'លេខទូរស័ព្ទ',
   'confirmPhoneNumber': 'បញ្ជាក់លេខទូរស័ព្ទ',
   'simSerial': 'លេខសម្គាល់ស៊ីម',
-  'password': 'ពាក្យសម្ងាត់',
+
   'confirmPassword': 'បញ្ជាក់លពាក្យសម្ងាត់',
   'currentPassword': 'ពាក្យសម្ងាត់ចាស់',
   'newPassword': 'ពាក្យសម្ងាត់ថ្មី',
   'confirmNewPassword': 'បញ្ជាក់ពាក្យសម្ងាត់ថ្មី',
-  'firstName': 'នាមត្រកូល',
-  'lastName': 'នាម',
-  'roles': "មុខងារ",
-  'agent': 'ភ្នាក់ងារលក់ស៊ីម',
-  'company': 'ក្រុមហ៊ុន',
-  'birthday': 'ថ្ងៃ ខែ ឆ្នាំកំណើត',
+
   'idOrPassport': 'លេខប័ណ្ណសម្គាល់ខ្លួន / លេខលិខិតឆ្លងដែន',
   'idCard': 'លេខប័ណ្ណសម្គាល់ខ្លួន',
   'passport': 'លេខលិខិតឆ្លងដែន',

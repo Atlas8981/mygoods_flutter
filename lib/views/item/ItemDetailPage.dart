@@ -76,36 +76,23 @@ class _ItemDetailPageState extends State<ItemDetailPage> {
                           fontWeight: FontWeight.w600,
                         ),
                       ),
-                      commonHeightPadding(padding: 18),
+                      commonHeightPadding(padding: 8),
                       Text(
-                        "USD: ${item.price.toString()}",
+                        "\$${formatPrice(item.price)}",
                         style: const TextStyle(
                           color: Colors.red,
                           fontSize: 16,
                           fontWeight: FontWeight.w600,
                         ),
                       ),
-                      commonHeightPadding(),
-                      const Text(
-                        "Item Detail",
-                        style: TextStyle(
-                          fontSize: 14,
-                          fontWeight: FontWeight.w600,
-                        ),
-                      ),
+                      // const Text(
+                      //   "Item Detail",
+                      //   style: TextStyle(
+                      //     fontSize: 14,
+                      //     fontWeight: FontWeight.w600,
+                      //   ),
+                      // ),
                       commonHeightPadding(padding: 18),
-                      Text(
-                        "Views: ${item.viewers.length}",
-                        style: const TextStyle(
-                          fontSize: 14,
-                          fontWeight: FontWeight.w600,
-                        ),
-                      ),
-                      const Divider(
-                        height: 20,
-                        thickness: 1.5,
-                        color: Colors.grey,
-                      ),
                       const Text(
                         "Description",
                         style: TextStyle(
@@ -113,7 +100,7 @@ class _ItemDetailPageState extends State<ItemDetailPage> {
                           fontWeight: FontWeight.w600,
                         ),
                       ),
-                      commonHeightPadding(padding: 18),
+                      commonHeightPadding(),
                       Text(
                         item.description,
                         style: const TextStyle(
@@ -121,11 +108,26 @@ class _ItemDetailPageState extends State<ItemDetailPage> {
                           fontWeight: FontWeight.w600,
                         ),
                       ),
-                      const Divider(
-                        height: 20,
-                        thickness: 1.5,
-                        color: Colors.grey,
+                      commonHeightPadding(),
+                      Text(
+                        "Views: ${item.viewers.length}",
+                        style: const TextStyle(
+                          fontSize: 14,
+                          fontWeight: FontWeight.w600,
+                        ),
                       ),
+                      // const Divider(
+                      //   height: 20,
+                      //   thickness: 1.5,
+                      //   color: Colors.grey,
+                      // ),
+
+                      commonHeightPadding(),
+                      // const Divider(
+                      //   height: 20,
+                      //   thickness: 1.5,
+                      //   color: Colors.grey,
+                      // ),
                       additionalInfoView(),
                       sellerInfoView(),
                       saveButton(),
@@ -213,13 +215,13 @@ class _ItemDetailPageState extends State<ItemDetailPage> {
           return Column(
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
-              const Text(
-                "Additional Information",
-                style: TextStyle(fontSize: 14, fontWeight: FontWeight.w600),
-              ),
-              const SizedBox(
-                height: 20,
-              ),
+              // const Text(
+              //   "Additional Information",
+              //   style: TextStyle(fontSize: 14, fontWeight: FontWeight.w600),
+              // ),
+              // const SizedBox(
+              //   height: 20,
+              // ),
               Text(additionalInfoText),
               const Divider(
                 height: 20,

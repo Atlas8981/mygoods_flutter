@@ -46,22 +46,25 @@ class _ItemGridCellState extends State<ItemGridCell> {
   Widget mainItemCell(Item item) {
     return Column(
       children: [
-        ClipRRect(
-          borderRadius: const BorderRadius.all(
-            Radius.circular(8),
-          ),
-          child: AspectRatio(
-            aspectRatio: 1 / 1,
-            child: ExtendedImage.network(
-              item.images[0].imageUrl,
-              fit: BoxFit.cover,
+        Padding(
+          padding: EdgeInsets.all(8),
+          child: ClipRRect(
+            borderRadius: const BorderRadius.all(
+              Radius.circular(8),
+            ),
+            child: AspectRatio(
+              aspectRatio: 1 / 1,
+              child: ExtendedImage.network(
+                item.images[0].imageUrl,
+                fit: BoxFit.cover,
+              ),
             ),
           ),
         ),
-        SizedBox(
+        Container(
+          padding: EdgeInsets.only(left: 8,bottom: 4),
           width: double.maxFinite,
           child: Column(
-            mainAxisSize: MainAxisSize.max,
             mainAxisAlignment: MainAxisAlignment.start,
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
@@ -99,13 +102,7 @@ class _ItemGridCellState extends State<ItemGridCell> {
                       ),
                     );
                   }
-                  return const Text(
-                    "Post By someone",
-                    style: TextStyle(
-                      fontSize: 12,
-                      height: 1.5,
-                    ),
-                  );
+                  return Container();
                 },
               ),
               commonHeightPadding(),

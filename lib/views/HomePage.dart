@@ -6,6 +6,7 @@ import 'package:mygoods_flutter/controllers/HomePageController.dart';
 import 'package:mygoods_flutter/models/item.dart';
 import 'package:mygoods_flutter/services/HomePageService.dart';
 import 'package:mygoods_flutter/utils/constant.dart';
+import 'package:mygoods_flutter/views/cells/ItemGridCell.dart';
 import 'package:mygoods_flutter/views/item/ItemDetailPage.dart';
 import 'package:mygoods_flutter/views/item/ViewAllPage.dart';
 import 'package:mygoods_flutter/views/cells/HomePageCell.dart';
@@ -173,12 +174,9 @@ class _HomePageState extends State<HomePage> {
             child: Row(
               children: items
                   .map((Item i) {
-                    return Padding(
-                      padding: const EdgeInsets.only(right: 16),
-                      child: HomePageCell(
-                        item: i,
-                        destination: ItemDetailPage(item: i),
-                      ),
+                    return HomePageCell(
+                      item: i,
+                      destination: ItemDetailPage(item: i),
                     );
                   })
                   .toList()
