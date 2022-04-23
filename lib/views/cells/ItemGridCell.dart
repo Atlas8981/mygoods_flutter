@@ -5,16 +5,16 @@ import 'package:get/get.dart';
 import 'package:mygoods_flutter/models/item.dart';
 import 'package:mygoods_flutter/services/ItemService.dart';
 import 'package:mygoods_flutter/utils/constant.dart';
+import 'package:mygoods_flutter/views/item/ItemDetailPage.dart';
 
 class ItemGridCell extends StatefulWidget {
   const ItemGridCell({
     Key? key,
     required this.item,
-    required this.destination,
+    this.destination,
   }) : super(key: key);
-
   final Item item;
-  final Widget destination;
+  final dynamic destination;
 
   @override
   State<ItemGridCell> createState() => _ItemGridCellState();
@@ -26,11 +26,20 @@ class _ItemGridCellState extends State<ItemGridCell> {
   @override
   Widget build(BuildContext context) {
     final item = widget.item;
-    return InkWell(
-      onTap: () {
-        Get.to(() => widget.destination);
-      },
-      child: mainItemCell(item),
+    return Card(
+      elevation: 8,
+      shape: const RoundedRectangleBorder(
+        borderRadius: BorderRadius.all(
+          Radius.circular(8),
+        ),
+      ),
+      color: Theme.of(context).scaffoldBackgroundColor,
+      child: InkWell(
+        onTap: () {
+          Get.to(() => ItemDetailPage(item: item));
+        },
+        child: mainItemCell(item),
+      ),
     );
   }
 
@@ -66,6 +75,7 @@ class _ItemGridCellState extends State<ItemGridCell> {
                   height: 1.5,
                 ),
               ),
+              commonHeightPadding(),
               Text(
                 "USD \$${item.price}",
                 style: const TextStyle(
@@ -75,6 +85,7 @@ class _ItemGridCellState extends State<ItemGridCell> {
                   fontWeight: FontWeight.bold,
                 ),
               ),
+              commonHeightPadding(),
               FutureBuilder<String>(
                 initialData: "Someone",
                 future: itemService.getItemOwnerName(item.userid),
@@ -97,6 +108,7 @@ class _ItemGridCellState extends State<ItemGridCell> {
                   );
                 },
               ),
+              commonHeightPadding(),
               Text(
                 "Posted ${calDate(item.date)}",
                 style: const TextStyle(
@@ -104,6 +116,7 @@ class _ItemGridCellState extends State<ItemGridCell> {
                   height: 1.5,
                 ),
               ),
+              commonHeightPadding(),
               Text(
                 "Views: ${item.viewers.length}",
                 style: const TextStyle(

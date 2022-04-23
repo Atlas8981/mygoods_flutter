@@ -9,21 +9,23 @@ import 'package:mygoods_flutter/services/ItemService.dart';
 import 'package:mygoods_flutter/utils/constant.dart';
 import 'package:mygoods_flutter/views/item/EditItemPage.dart';
 
-class OwnerItemDetailPage extends StatefulWidget {
-  const OwnerItemDetailPage({
+class MyItemDetailPage extends StatefulWidget {
+  const MyItemDetailPage({
     Key? key,
     required this.item,
   }) : super(key: key);
   final Item? item;
 
   @override
-  State<OwnerItemDetailPage> createState() => _OwnerItemDetailPageState();
+  State<MyItemDetailPage> createState() => _MyItemDetailPageState();
 }
 
-class _OwnerItemDetailPageState extends State<OwnerItemDetailPage> {
+class _MyItemDetailPageState extends State<MyItemDetailPage> {
   final firestoreService = ItemService();
-  final PageController pageController =
-      PageController(initialPage: 0, viewportFraction: 1);
+  final PageController pageController = PageController(
+    initialPage: 0,
+    viewportFraction: 1,
+  );
 
   Widget additionalInfoView(Item item) {
     final hasAdditionInfo = hasAdditionalInfoList.contains(item.subCategory);
@@ -46,18 +48,18 @@ class _OwnerItemDetailPageState extends State<OwnerItemDetailPage> {
           additionalInfoText = "Condition: ${additionalInfo.condition}";
           additionalInfoText =
               additionalInfoText + "${processAdditionalInfo(additionalInfo)}";
-          // print(additionalInfo.toString());
 
           return Column(
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
               const Text(
                 "Additional Information",
-                style: TextStyle(fontSize: 14, fontWeight: FontWeight.w600),
+                style: TextStyle(
+                  fontSize: 14,
+                  fontWeight: FontWeight.w600,
+                ),
               ),
-              const SizedBox(
-                height: 20,
-              ),
+              commonHeightPadding(padding: 18),
               Text(additionalInfoText),
               const Divider(
                 height: 20,
@@ -73,11 +75,6 @@ class _OwnerItemDetailPageState extends State<OwnerItemDetailPage> {
         }
       },
     );
-  }
-
-  @override
-  void initState() {
-    super.initState();
   }
 
   @override
@@ -101,7 +98,7 @@ class _OwnerItemDetailPageState extends State<OwnerItemDetailPage> {
                       break;
                     case OwnerItemMenu.deleteItem:
                       {
-                        Get.find<MyItemsController>().deleteItems(item).then(
+                        controller.deleteItems(item).then(
                           (value) {
                             if (value) {
                               Get.back();
@@ -133,15 +130,17 @@ class _OwnerItemDetailPageState extends State<OwnerItemDetailPage> {
               width: double.maxFinite,
               height: double.maxFinite,
               child: SingleChildScrollView(
-                physics: const BouncingScrollPhysics(),
                 child: Column(
                   children: [
                     ImagesView(images: item.images),
                     Container(
                       width: double.infinity,
-                      padding:
-                          const EdgeInsets.only(left: 20, right: 20, top: 20),
-                      margin: const EdgeInsets.only(bottom: 50),
+                      padding: const EdgeInsets.only(
+                        left: 20,
+                        right: 20,
+                        top: 20,
+                      ),
+                      // margin: const EdgeInsets.only(bottom: 50),
                       child: Column(
                         crossAxisAlignment: CrossAxisAlignment.start,
                         children: [
@@ -152,9 +151,7 @@ class _OwnerItemDetailPageState extends State<OwnerItemDetailPage> {
                               fontWeight: FontWeight.w600,
                             ),
                           ),
-                          const SizedBox(
-                            height: 20,
-                          ),
+                          commonHeightPadding(padding: 16),
                           Text(
                             "USD: ${item.price.toString()}",
                             style: const TextStyle(
@@ -163,9 +160,7 @@ class _OwnerItemDetailPageState extends State<OwnerItemDetailPage> {
                               fontWeight: FontWeight.w600,
                             ),
                           ),
-                          const SizedBox(
-                            height: 10,
-                          ),
+                          commonHeightPadding(padding: 8),
                           const Text(
                             "Item Detail",
                             style: TextStyle(
@@ -173,9 +168,7 @@ class _OwnerItemDetailPageState extends State<OwnerItemDetailPage> {
                               fontWeight: FontWeight.w600,
                             ),
                           ),
-                          const SizedBox(
-                            height: 20,
-                          ),
+                          commonHeightPadding(),
                           Text(
                             "Views ${item.views}",
                             style: const TextStyle(
@@ -195,9 +188,7 @@ class _OwnerItemDetailPageState extends State<OwnerItemDetailPage> {
                               fontWeight: FontWeight.w600,
                             ),
                           ),
-                          const SizedBox(
-                            height: 20,
-                          ),
+                          commonHeightPadding(padding: 18),
                           Text(
                             item.description,
                             style: const TextStyle(

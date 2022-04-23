@@ -22,7 +22,7 @@ import 'package:mygoods_flutter/views/utils/ImagePreviewerPage.dart';
 import 'package:mygoods_flutter/views/user/SavedItemsPage.dart';
 import 'package:mygoods_flutter/views/authentication/ResetPasswordPage.dart';
 import 'package:mygoods_flutter/views/cells/MenuItemRow.dart';
-import 'package:mygoods_flutter/views/item/MyItemPage.dart';
+import 'package:mygoods_flutter/views/user/MyItemPage.dart';
 import 'package:mygoods_flutter/views/utils/ImageViewerPage.dart';
 import 'package:mygoods_flutter/views/utils/SettingPage.dart';
 import 'package:mygoods_flutter/views/utils/TermAndConditionPage.dart';
@@ -228,21 +228,13 @@ class _AboutMePageState extends State<AboutMePage> {
         user = controller.user!.value;
         return Stack(
           children: [
-            // Positioned.fill(
-            //   bottom: 100,
-            //   child: Image.network(
-            //     networkBackgroundImage,
-            //     fit: BoxFit.cover,
-            //
-            //   ),
-            // ),
             SizedBox(
               width: double.maxFinite,
               child: Column(
                 crossAxisAlignment: CrossAxisAlignment.center,
                 children: [
                   userImage(controller, user),
-                  const SizedBox(height: 10),
+                  commonHeightPadding(padding: 16),
                   Text(
                     "${user.firstname} ${user.lastname}",
                     style: const TextStyle(
@@ -250,13 +242,9 @@ class _AboutMePageState extends State<AboutMePage> {
                       fontWeight: FontWeight.bold,
                     ),
                   ),
-                  const SizedBox(
-                    height: 10,
-                  ),
+                  commonHeightPadding(),
                   Text(user.address),
-                  const SizedBox(
-                    height: 10,
-                  ),
+                  commonHeightPadding(),
                   Text(user.phoneNumber),
                 ],
               ),

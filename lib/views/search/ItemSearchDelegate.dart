@@ -72,9 +72,6 @@ class ItemSearchDelegate extends SearchDelegate<String> {
             itemBuilder: (context, index) {
               return ListItemRow(
                 item: items[index],
-                destination: ItemDetailPage(
-                  item: items[index],
-                ),
               );
             },
           ),

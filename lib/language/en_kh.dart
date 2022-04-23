@@ -24,9 +24,9 @@ const Map<String, String> kmKH = {
   'message': 'សារ',
   'account': 'គណនី',
   'popular': 'ពេញនិយម',
-  'more':'បន្ថែម',
-  'sell':'លក់',
-  'clear':'លុបចេាល',
+  'more': 'បន្ថែម',
+  'sell': 'លក់',
+  'clear': 'លុបចេាល',
 
   //MENUS LABELS
   'home': "ទំព័រដើម",
@@ -36,7 +36,7 @@ const Map<String, String> kmKH = {
   'viewAll': "មើលទាំងអស់",
   'upload': 'បង្ហោះ',
   'photo': 'រូបថត',
-  'recentSearch':'ការស្វែងរកថ្មីៗ',
+  'recentSearch': 'ការស្វែងរកថ្មីៗ',
 
   //CATEGORY
   'category': 'ប្រភេទ',

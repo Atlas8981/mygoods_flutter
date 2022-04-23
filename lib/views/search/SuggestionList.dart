@@ -44,9 +44,6 @@ class _SuggestionListState extends State<SuggestionList> {
             itemBuilder: (context, index) {
               return ListItemRow(
                 item: suggestions[index],
-                destination: ItemDetailPage(
-                  item: suggestions[index],
-                ),
               );
             },
           ),

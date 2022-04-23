@@ -5,15 +5,16 @@ import 'package:get/get.dart';
 import 'package:mygoods_flutter/models/item.dart';
 import 'package:mygoods_flutter/services/ItemService.dart';
 import 'package:mygoods_flutter/utils/constant.dart';
+import 'package:mygoods_flutter/views/item/ItemDetailPage.dart';
 
 class ListItemRow extends StatefulWidget {
   const ListItemRow({
     Key? key,
     required this.item,
-    required this.destination,
+    this.destination,
   }) : super(key: key);
   final Item item;
-  final Widget destination;
+  final dynamic destination;
 
   @override
   _ListItemRowState createState() => _ListItemRowState();
@@ -58,83 +59,92 @@ class _ListItemRowState extends State<ListItemRow> {
   @override
   Widget build(BuildContext context) {
     final item = widget.item;
-    return InkWell(
-      onTap: () {
-        Get.to(() => widget.destination);
-      },
-      child: mainItemRow(item),
+    return Card(
+      elevation: 8,
+      shape: const RoundedRectangleBorder(
+        borderRadius: BorderRadius.all(
+          Radius.circular(8),
+        ),
+      ),
+      color: Theme.of(context).scaffoldBackgroundColor,
+      child: InkWell(
+        onTap: () {
+          Get.to(widget.destination ?? () => ItemDetailPage(item: item));
+        },
+        child: mainItemRow(item),
+      ),
     );
   }
 
   Widget mainItemRow(Item item) {
-    return Container(
-      color: Colors.transparent,
-      width: double.maxFinite,
-      child: Column(
-        children: [
-          Row(
-            children: [
-              ClipRRect(
-                borderRadius: const BorderRadius.all(
-                  Radius.circular(10),
-                ),
-                child: ExtendedImage.network(
-                  item.images[0].imageUrl,
-                  width: 125,
-                  height: 125,
-                  fit: BoxFit.cover,
-                ),
+    return Column(
+      children: [
+        Row(
+          children: [
+            ClipRRect(
+              borderRadius: const BorderRadius.all(
+                Radius.circular(10),
               ),
-              const SizedBox(width: 16),
-              Column(
-                mainAxisSize: MainAxisSize.min,
-                crossAxisAlignment: CrossAxisAlignment.start,
-                children: [
-                  Text(
-                    item.name,
-                    style: const TextStyle(
-                      fontSize: 13,
-                      fontWeight: FontWeight.bold,
-                    ),
-                  ),
-                  Text(
-                    "USD \$${item.price}",
-                    style: const TextStyle(
-                      color: Colors.red,
-                      fontSize: 16,
-                      fontWeight: FontWeight.bold,
-                    ),
-                  ),
-                  FutureBuilder<String>(
-                    future: itemService.getItemOwnerName(item.userid),
-                    builder: (context, snapshot) {
-                      if (snapshot.hasData) {
-                        return Text(
-                          "Post By ${snapshot.data}",
-                          style: const TextStyle(fontSize: 12),
-                        );
-                      } else {
-                        return const Text(
-                          "Post By someone",
-                          style: TextStyle(fontSize: 12),
-                        );
-                      }
-                    },
-                  ),
-                  Text(
-                    "Posted ${calDate(item.date)}",
-                    style: const TextStyle(fontSize: 12),
-                  ),
-                  Text(
-                    "Views: ${item.viewers.length}",
-                    style: const TextStyle(fontSize: 12),
-                  ),
-                ],
+              child: ExtendedImage.network(
+                item.images[0].imageUrl,
+                width: 125,
+                height: 125,
+                fit: BoxFit.cover,
               ),
-            ],
-          ),
-        ],
-      ),
+            ),
+            const SizedBox(width: 16),
+            Column(
+              mainAxisSize: MainAxisSize.min,
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: [
+                Text(
+                  item.name,
+                  style: const TextStyle(
+                    fontSize: 13,
+                    fontWeight: FontWeight.bold,
+                  ),
+                ),
+                commonHeightPadding(),
+                Text(
+                  "USD \$${item.price}",
+                  style: const TextStyle(
+                    color: Colors.red,
+                    fontSize: 16,
+                    fontWeight: FontWeight.bold,
+                  ),
+                ),
+                commonHeightPadding(),
+                FutureBuilder<String>(
+                  future: itemService.getItemOwnerName(item.userid),
+                  builder: (context, snapshot) {
+                    if (snapshot.hasData) {
+                      return Text(
+                        "Post By ${snapshot.data}",
+                        style: const TextStyle(fontSize: 12),
+                      );
+                    } else {
+                      return const Text(
+                        "Post By someone",
+                        style: TextStyle(fontSize: 12),
+                      );
+                    }
+                  },
+                ),
+                commonHeightPadding(),
+                Text(
+                  "Posted ${calDate(item.date)}",
+                  style: const TextStyle(fontSize: 12),
+                ),
+                commonHeightPadding(),
+                Text(
+                  "Views: ${item.viewers.length}",
+                  style: const TextStyle(fontSize: 12),
+                ),
+              ],
+            ),
+          ],
+        ),
+      ],
     );
   }
 }

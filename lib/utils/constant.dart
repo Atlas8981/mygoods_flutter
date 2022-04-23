@@ -200,8 +200,16 @@ const String dummyNetworkImage =
 const String networkBackgroundImage =
     "https://firebasestorage.googleapis.com/v0/b/project-shotgun.appspot.com/o/IMG_2086-EFFECTS.jpg?alt=media&token=fcd87303-09e6-4ec7-9620-211f240fc85f";
 
-const commonHeightPadding = SizedBox(height: 8);
-const commonWidthPadding = SizedBox(width: 8);
+Widget commonHeightPadding({double? padding}) {
+  if (Get.locale == const Locale('en', 'US')) {
+    return SizedBox(height: padding ?? 8);
+  }
+  return SizedBox(height: (padding != null && padding > 8) ? padding - 8 : 0);
+}
+
+Widget commonWidthPadding({double? padding}) {
+  return SizedBox(width: padding ?? 8);
+}
 
 String? validatePhoneNumber(String? value) {
   String pattern = r'^(?:[+0][1-9])?[0-9]{9,10}$';
@@ -224,7 +232,7 @@ String getFont() {
 }
 
 String calDate(Timestamp itemDate) {
-  //Convert to second
+//Convert to second
   double date = (Timestamp.now().seconds - itemDate.seconds).toDouble();
   String timeEnd = " second(s)";
   if (date > 0) {
@@ -243,10 +251,10 @@ String calDate(Timestamp itemDate) {
             if (date > 4) {
               date = date / 4;
               timeEnd = " month(s)";
-              // if(date>12){
-              //   date = date/12.roundToDouble();
-              //   timeEnd = " year(s)";
-              // }
+// if(date>12){
+//   date = date/12.roundToDouble();
+//   timeEnd = " year(s)";
+// }
             }
           }
         }

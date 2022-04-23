@@ -3,15 +3,16 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:mygoods_flutter/models/item.dart';
 import 'package:mygoods_flutter/utils/constant.dart';
+import 'package:mygoods_flutter/views/item/ItemDetailPage.dart';
 
 class BigImageCell extends StatefulWidget {
   const BigImageCell({
     Key? key,
     required this.item,
-    required this.destination,
+    this.destination,
   }) : super(key: key);
   final Item item;
-  final Widget destination;
+  final dynamic destination;
 
   @override
   State<BigImageCell> createState() => _BigImageCellState();
@@ -20,8 +21,9 @@ class BigImageCell extends StatefulWidget {
 class _BigImageCellState extends State<BigImageCell> {
   @override
   Widget build(BuildContext context) {
+    final item = widget.item;
     return Card(
-      elevation: 5,
+      elevation: 8,
       shape: const RoundedRectangleBorder(
         borderRadius: BorderRadius.all(
           Radius.circular(8),
@@ -30,7 +32,7 @@ class _BigImageCellState extends State<BigImageCell> {
       color: Theme.of(context).scaffoldBackgroundColor,
       child: InkWell(
         onTap: () {
-          Get.to(() => widget.destination);
+          Get.to((() => ItemDetailPage(item: item)));
         },
         child: Column(
           mainAxisSize: MainAxisSize.min,
@@ -43,7 +45,7 @@ class _BigImageCellState extends State<BigImageCell> {
               child: AspectRatio(
                 aspectRatio: 16 / 10,
                 child: ExtendedImage.network(
-                  widget.item.images[0].imageUrl,
+                  item.images[0].imageUrl,
                   fit: BoxFit.cover,
                 ),
               ),
@@ -57,30 +59,28 @@ class _BigImageCellState extends State<BigImageCell> {
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
                   Text(
-                    widget.item.name,
+                    item.name,
                     style: const TextStyle(
                       fontSize: 24,
                     ),
                   ),
-                  const Divider(
-                    height: 4,
-                    color: Colors.transparent,
-                  ),
+                  commonHeightPadding(),
                   Text(
-                    "USD \$${widget.item.price}",
+                    "USD \$${item.price}",
                     style: const TextStyle(
                       color: Colors.red,
                       fontSize: 18,
                       fontWeight: FontWeight.bold,
                     ),
                   ),
-                  const Divider(height: 4, color: Colors.transparent),
+                  commonHeightPadding(),
                   Text(
-                    "Posted ${calDate(widget.item.date)}",
+                    "Posted ${calDate(item.date)}",
                     style: const TextStyle(fontSize: 16),
                   ),
+                  commonHeightPadding(),
                   Text(
-                    "Views: ${widget.item.viewers.length}",
+                    "Views: ${item.viewers.length}",
                     style: const TextStyle(fontSize: 16),
                   ),
                 ],

@@ -19,7 +19,6 @@ const Map<String, String> enUS = {
   'mainCategory': 'Main Category',
   'subCategory': 'Sub Category',
 
-
   //From Old
   'splashText': 'Enter app',
   'appName': 'Sim Card System',

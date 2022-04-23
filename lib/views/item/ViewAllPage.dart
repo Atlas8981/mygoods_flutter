@@ -56,9 +56,6 @@ class ViewAllPage extends StatelessWidget {
         itemBuilder: (context, index) {
           return ListItemRow(
             item: items[index],
-            destination: ItemDetailPage(
-              item: items[index],
-            ),
           );
         },
       ),

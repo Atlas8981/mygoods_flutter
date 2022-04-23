@@ -102,34 +102,26 @@ class _ListItemByPopularCategoryPAgeState extends State<ListItemPage> {
       itemBuilder: (context, index) {
         return ItemGridCell(
           item: items[index],
-          destination: ItemDetailPage(
-            item: items[index],
-          ),
         );
       },
     );
   }
 
   Widget listView(List<Item> items) {
-    return Container(
-      padding: const EdgeInsets.symmetric(horizontal: 8),
-      child: ListView.separated(
-        itemCount: items.length,
-        separatorBuilder: (context, index) {
-          return const Divider(
-            thickness: 1,
-            color: Colors.transparent,
-          );
-        },
-        itemBuilder: (context, index) {
-          return ListItemRow(
-            item: items[index],
-            destination: ItemDetailPage(
-              item: items[index],
-            ),
-          );
-        },
-      ),
+    return ListView.separated(
+      padding: const EdgeInsets.all(8),
+      itemCount: items.length,
+      separatorBuilder: (context, index) {
+        return const Divider(
+          thickness: 1,
+          color: Colors.transparent,
+        );
+      },
+      itemBuilder: (context, index) {
+        return ListItemRow(
+          item: items[index],
+        );
+      },
     );
   }
 
@@ -141,7 +133,6 @@ class _ListItemByPopularCategoryPAgeState extends State<ListItemPage> {
         itemBuilder: (context, index) {
           return BigImageCell(
             item: items[index],
-            destination: ItemDetailPage(item: items[index]),
           );
         },
       ),

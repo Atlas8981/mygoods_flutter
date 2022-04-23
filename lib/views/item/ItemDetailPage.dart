@@ -299,7 +299,6 @@ class _ItemDetailPageState extends State<ItemDetailPage> {
                     right: 20,
                     top: 20,
                   ),
-                  margin: const EdgeInsets.only(bottom: 50),
                   child: Column(
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: [

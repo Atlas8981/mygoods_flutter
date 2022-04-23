@@ -8,7 +8,6 @@ import 'package:mygoods_flutter/models/user.dart';
 import 'package:mygoods_flutter/services/ItemService.dart';
 import 'package:mygoods_flutter/utils/constant.dart';
 import 'package:mygoods_flutter/views/cells/ListItemRow.dart';
-import 'package:mygoods_flutter/views/item/ItemDetailPage.dart';
 
 import 'utils/ImageViewerPage.dart';
 
@@ -80,9 +79,6 @@ class _SellerProfilePageState extends State<SellerProfilePage> {
           itemBuilder: (context, index) {
             return ListItemRow(
               item: items[index],
-              destination: ItemDetailPage(
-                item: items[index],
-              ),
             );
           },
         );
