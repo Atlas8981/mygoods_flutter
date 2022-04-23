@@ -76,7 +76,7 @@ class _ListItemRowState extends State<ListItemRow> {
             ),
             commonHeightPadding(),
             Text(
-              "USD \$${item.price}",
+              "USD \$${formatPrice(item.price)}",
               style: const TextStyle(
                 color: Colors.red,
                 fontSize: 16,
@@ -87,28 +87,24 @@ class _ListItemRowState extends State<ListItemRow> {
             FutureBuilder<String>(
               future: itemService.getItemOwnerName(item.userid),
               builder: (context, snapshot) {
-
                 if (snapshot.hasData) {
                   return Text(
-                    "Post By ${snapshot.data}",
+                    "${"postBy".tr} ${snapshot.data}",
                     style: const TextStyle(fontSize: 12),
                   );
                 } else {
-                  return const Text(
-                    "Post By someone",
-                    style: TextStyle(fontSize: 12),
-                  );
+                  return Container();
                 }
               },
             ),
             commonHeightPadding(),
             Text(
-              "Posted ${calDate(item.date)}",
+              calDate(item.date),
               style: const TextStyle(fontSize: 12),
             ),
             commonHeightPadding(),
             Text(
-              "Views: ${item.viewers.length}",
+              "${"view".tr}: ${item.viewers.length}",
               style: const TextStyle(fontSize: 12),
             ),
           ],

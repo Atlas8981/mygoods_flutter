@@ -39,14 +39,6 @@ const Map<String, String> kmKH = {
   'year': 'ឆ្នាំ',
   'yes': 'បាទ/ចាស',
   'no': 'ទេ',
-  'setting': 'ការកំណត់',
-  'language': 'ភាសា',
-  'login': 'ចូល',
-  'next': 'បន្ទាប់',
-  'back': 'ត្រលប់ក្រោយ',
-  'verify': 'ផ្ទៀងផ្ទាត់',
-  'confirm': 'យល់ព្រម',
-  'cancel': 'បោះបង់',
   'password': 'ពាក្យសម្ងាត់',
   'firstName': 'នាមត្រកូល',
   'lastName': 'នាម',
@@ -54,6 +46,8 @@ const Map<String, String> kmKH = {
   'agent': 'ភ្នាក់ងារលក់ស៊ីម',
   'company': 'ក្រុមហ៊ុន',
   'birthday': 'ថ្ងៃ ខែ ឆ្នាំកំណើត',
+  'view': 'មើល',
+  'type': 'ប្រភេទ',
 
   //MENUS LABELS
   'home': "ទំព័រដើម",
@@ -67,7 +61,28 @@ const Map<String, String> kmKH = {
   'itemDetail': 'ព័ត៌មានវត្ថុលម្អិត',
   'postBy': 'លក់ដោយ',
   'sellBy': 'លក់ដោយ',
+  'moreCategory': 'ប្រភេទទាំងអស់',
+  'allCategory': 'ប្រភេទទាំងអស់',
+  'setting': 'ការកំណត់',
+  'language': 'ភាសា',
+  'login': 'ចូល',
+  'next': 'បន្ទាប់',
+  'back': 'ត្រលប់ក្រោយ',
+  'verify': 'ផ្ទៀងផ្ទាត់',
+  'confirm': 'យល់ព្រម',
+  'cancel': 'បោះបង់',
+  'aboutThisSeller':'អំពីអ្នកលក់',
+  'viewSellerProfile':'មើលព័ត៌មានរបស់អ្នកលក់',
+  'save':'រក្សាទុក',
+  'saved':'បានរក្សាទុក',
 
+  //ADDITIONAL INFO
+  'carBrand': 'ម៉ាករថយន្ត',
+  'carModel': 'ម៉ូដែលរថយន្ត',
+  'carType': 'ប្រភេទឡាន',
+  'carYear': 'ឆ្នាំរថយន្ត',
+  "phoneBrand": 'ម៉ាកទូរស័ព្ទ',
+  "phoneModel": 'ម៉ូដែលទូរស័ព្ទ',
 
   //CATEGORY
   'category': 'ប្រភេទ',
@@ -92,6 +107,8 @@ const Map<String, String> kmKH = {
 
   //ERROR MESSAGE
   'errorOccurred': 'កំហុសបានកើតឡើង',
+  'noData':'មិនមានព័ត៌មាន',
+  'noInformation':'មិនមានព័ត៌មាន',
   'notANumber': 'មិនមែនលេខទេ',
 
   'emptyField': "សូមបំពេញវាលនេះ",
@@ -100,7 +117,6 @@ const Map<String, String> kmKH = {
   'openCamera': 'បើកកាមេរ៉ា',
   'openGallery': 'បើកវិចិត្រសាល',
   'signOut': 'ចាកចេញ',
-
 
 // From Old
   'splashText': 'ចូលកម្មវិធី',
@@ -126,7 +142,6 @@ const Map<String, String> kmKH = {
   'createAccountNotificationTitleFailed': 'បដិសេធគណនី',
   'createAccountNotificationBodySuccess': 'គណនីរបស់អ្នកត្រូវបានអនុម័ត',
   'createAccountNotificationBodyFailed': 'គណនីរបស់អ្នកត្រូវបានបដិសេធ',
-
 
   'addPhoto': "បញ្ចូលរូបថត",
   'phoneNumber': 'លេខទូរស័ព្ទ',

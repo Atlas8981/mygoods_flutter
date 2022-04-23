@@ -195,6 +195,8 @@ final List<Category> furnitureSubCategories = [
 
 const redColor = Color.fromARGB(255, 236, 0, 0);
 const defaultColor = Color(0xFF34568B);
+const englishFontFamily = 'Roboto';
+const khmerFontFamily = 'KhmerOSBattambang';
 
 const String dummyNetworkImage =
     "https://firebasestorage.googleapis.com/v0/b/mygoods-e042f.appspot.com/o/flutter%2F2021-10-31%2021%3A58%3A15.282499?alt=media&token=f492b829-e106-467e-b3f1-6c05122a0969";
@@ -235,23 +237,23 @@ String getFont() {
 String calDate(Timestamp itemDate) {
 //Convert to second
   double date = (Timestamp.now().seconds - itemDate.seconds).toDouble();
-  String timeEnd = " second(s)";
+  String timeEnd = "second";
   if (date > 0) {
     if (date >= 60) {
       date = date / 60;
-      timeEnd = " minutes(s) ";
+      timeEnd = "minutes";
       if (date >= 60) {
         date = date / 60;
-        timeEnd = " hours(s) ";
+        timeEnd = "hours";
         if (date >= 24) {
           date = date / 24;
-          timeEnd = " day(s) ";
+          timeEnd = "day";
           if (date > 7) {
             date = date / 7;
-            timeEnd = " week(s)";
+            timeEnd = "week";
             if (date > 4) {
               date = date / 4;
-              timeEnd = " month(s)";
+              timeEnd = "month";
 // if(date>12){
 //   date = date/12.roundToDouble();
 //   timeEnd = " year(s)";
@@ -262,7 +264,7 @@ String calDate(Timestamp itemDate) {
       }
     }
   }
-  return "${date.toInt()}" + timeEnd;
+  return "${date.toInt()} ${timeEnd.tr}";
 }
 
 final priceNumberFormat = NumberFormat("###,###.0#");
@@ -270,7 +272,6 @@ final priceNumberFormat = NumberFormat("###,###.0#");
 String formatPrice(double price) {
   return priceNumberFormat.format(price.toInt());
 }
-// print(f.format(int.parse("1000300")));
 
 checkImageProvider(DualImage image) {
   if (image.isNetworkImage) {
@@ -297,23 +298,23 @@ String? processAdditionalInfo(AdditionalInfo additionalInfo) {
   if (additionalInfo.car != null) {
     final Car tempCar = additionalInfo.car!;
     processedData = processedData +
-        "\n\n" +
-        "Car Brand : " +
+        "\n" +
+        "${"carBrand".tr} : " +
         tempCar.brand +
-        "\n\nCar Model : " +
+        "\n${"carModel".tr} : " +
         tempCar.model +
-        "\n\nCar Type : " +
+        "\n${"carType".tr} : " +
         tempCar.category +
-        "\n\nCar Year : " +
+        "\n${"carYear".tr} : " +
         tempCar.year;
   }
   if (additionalInfo.phone != null) {
     final Phone tempPhone = additionalInfo.phone!;
     processedData = processedData +
-        "\n\n" +
-        "Phone Brand : " +
+        "\n" +
+        "${"phoneBrand".tr} : " +
         tempPhone.phoneBrand +
-        "\nPhone Model : " +
+        "\n${"phoneModel".tr} : " +
         tempPhone.phoneModel;
   }
   if (additionalInfo.motoType != null) {
