@@ -102,7 +102,7 @@ class _EditProfilePageState extends State<EditProfilePage> {
                     ),
                     commonHeightSpacing(height: 18),
                     TypeTextField(
-                      labelText: "userName",
+                      labelText: "userName".tr,
                       controller: usernameCon,
                     ),
                     commonHeightSpacing(height: 18),

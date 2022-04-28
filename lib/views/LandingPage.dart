@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:mygoods_flutter/colors/company_colors.dart';
 import 'package:mygoods_flutter/controllers/BottomNavigationViewController.dart';
 import 'package:mygoods_flutter/services/NotificationService.dart';
 import 'package:mygoods_flutter/views/user/AboutMePage.dart';
@@ -56,8 +57,8 @@ class _LandingPageState extends State<LandingPage> {
       context, LandingPageController landingPageController) {
     return Obx(
       () => NavigationBarTheme(
-        data: const NavigationBarThemeData(
-          indicatorColor: Colors.blue,
+        data: NavigationBarThemeData(
+          indicatorColor: CompanyColors.blue,
         ),
         child: NavigationBar(
           selectedIndex: landingPageController.tabIndex.value,

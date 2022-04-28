@@ -87,7 +87,7 @@ class Car {
   factory Car.fromJson(Map<String, dynamic> json) {
     return Car(
         brand: json["brand"],
-        model: json["model"],
+        model: json["models"],
         category: json["category"],
         year: json["year"]);
   }
@@ -103,7 +103,7 @@ class Car {
   Map<String, dynamic> toJson() {
     return {
       "brand": brand,
-      "model": model,
+      "models": model,
       "category": category,
       "year": year,
     };
@@ -111,7 +111,7 @@ class Car {
 
   @override
   String toString() {
-    return 'Car{brand: $brand, model: $model, category: $category, year: $year}';
+    return 'Car{brand: $brand, models: $model, category: $category, year: $year}';
   }
 }
 

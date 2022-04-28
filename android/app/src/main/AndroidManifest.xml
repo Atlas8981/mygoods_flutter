@@ -8,7 +8,9 @@
     <application
         android:icon="@mipmap/ic_launcher_foreground"
         android:roundIcon="@mipmap/ic_launcher_round"
-        android:label="MyGoods">
+        android:usesCleartextTraffic="true"
+        android:label="MyGoods"
+        tools:targetApi="m">
         <activity
             android:name=".MainActivity"
             android:configChanges="orientation|keyboardHidden|keyboard|screenSize|smallestScreenSize|locale|layoutDirection|fontScale|screenLayout|density|uiMode"

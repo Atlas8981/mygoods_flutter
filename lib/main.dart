@@ -8,6 +8,7 @@ import 'package:flutter_localizations/flutter_localizations.dart';
 
 import 'package:get/get.dart';
 import 'package:get_storage/get_storage.dart';
+import 'package:mygoods_flutter/colors/company_colors.dart';
 import 'package:mygoods_flutter/controllers/InitialBinding.dart';
 import 'package:mygoods_flutter/services/LocalizationSerivce.dart';
 import 'package:mygoods_flutter/utils/constant.dart';
@@ -101,7 +102,7 @@ class _MyGoodsState extends State<MyGoods> {
   Widget build(BuildContext context) {
     final storage = GetStorage();
     return GetMaterialApp(
-      title: 'MyGoods Flutter From Window @.20',
+      title: 'Extension of MyGoods to Something else',
       home: const LandingPage(),
       locale: Get.locale,
       fallbackLocale: LocalizationService.fallbackLocale,
@@ -121,11 +122,11 @@ class _MyGoodsState extends State<MyGoods> {
       darkTheme: ThemeData.dark().copyWith(
         useMaterial3: true,
         appBarTheme: AppBarTheme(
-          color: Colors.blue.shade600,
+          color: CompanyColors.blue,
         ),
-        colorScheme: const ColorScheme.dark(
-          primary: Colors.blue,
-          secondary: Colors.blue,
+        colorScheme: ColorScheme.dark(
+          primary: CompanyColors.blue,
+          secondary: CompanyColors.blue,
         ),
         iconTheme: IconTheme.of(context).copyWith(
           color: Colors.white,
@@ -149,9 +150,9 @@ class _MyGoodsState extends State<MyGoods> {
       ),
       theme: ThemeData.light().copyWith(
         useMaterial3: true,
-        colorScheme: const ColorScheme.light(
-          primary: Colors.blue,
-          secondary: Colors.blue,
+        colorScheme: ColorScheme.light(
+          primary: CompanyColors.blue,
+          secondary: CompanyColors.blue,
         ),
         iconTheme: IconTheme.of(context).copyWith(
           color: Colors.black,

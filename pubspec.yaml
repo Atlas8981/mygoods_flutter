@@ -20,8 +20,6 @@ dependencies:
   get: ^4.3.8
 
   #  Enhancing UI/UX
-#  animations: ^2.0.2
-#  bottom_navy_bar: ^6.0.0
   circular_widgets: ^2.0.0
   flutter_staggered_grid_view: ^0.6.1
   avatars: ^3.0.2
@@ -64,6 +62,8 @@ dependencies:
   algolia: ^1.0.5
   package_info_plus: ^1.4.2
   khmer_date: ^0.0.6
+  ar_flutter_plugin: ^0.6.3
+  model_viewer_plus: ^1.1.5
 
 
 dev_dependencies:
@@ -86,6 +86,7 @@ flutter:
   assets:
     - assets/images/
     - assets/messages.json
+    - assets/models/
   fonts:
     - family: Moul
       fonts:

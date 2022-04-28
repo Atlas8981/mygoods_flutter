@@ -28,7 +28,8 @@ class _AddPageState extends State<AddPage> {
   final itemFormController = Get.put(ItemFormController());
 
   Future<List<myImageClass.Image>> uploadFiles(List<File> _images) async {
-    var images = await Future.wait(_images.map((_image) => uploadFile(_image)));
+    final List<myImageClass.Image> images =
+        await Future.wait(_images.map((_image) => uploadFile(_image)));
     return images;
   }
 
