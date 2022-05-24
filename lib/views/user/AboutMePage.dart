@@ -41,9 +41,9 @@ class _AboutMePageState extends State<AboutMePage> {
 
   late final List<Category> bottomListItems = [
     Category(name: "myItem", image: "${imageDir}myitem.png"),
-    Category(name: "saved", image: "${imageDir}saved.png"),
+    Category(name: "savedItem", image: "${imageDir}saved.png"),
     Category(name: "aboutOurApp", image: "${imageDir}aboutus.png"),
-    Category(name: "termsAndConditions".tr, image: "${imageDir}term.png"),
+    Category(name: "termsAndConditions", image: "${imageDir}term.png"),
   ];
 
   late myUser.User user;
@@ -98,7 +98,10 @@ class _AboutMePageState extends State<AboutMePage> {
                     },
                     child: Text(
                       "signOut".tr.toUpperCase(),
-                      style: const TextStyle(letterSpacing: 1.1),
+                      style: const TextStyle(
+                        letterSpacing: 1.1,
+                        color: Colors.white,
+                      ),
                     ),
                     style: ButtonStyle(
                       backgroundColor: MaterialStateProperty.all(redColor),
@@ -135,7 +138,11 @@ class _AboutMePageState extends State<AboutMePage> {
         ),
         PopupMenuItem<AccountMenuItems>(
           value: AccountMenuItems.resetPassword,
-          child: Text('resetPassword'.tr),
+          child: Container(
+            width: double.infinity,
+            color: Colors.red,
+            child: Text('resetPassword'.tr),
+          ),
         ),
       ],
     );
@@ -287,7 +294,7 @@ class _AboutMePageState extends State<AboutMePage> {
               }
             },
             assetImage: bottomListItems[index].image,
-            name: bottomListItems[index].name,
+            name: bottomListItems[index].name.tr,
           );
         },
       ),

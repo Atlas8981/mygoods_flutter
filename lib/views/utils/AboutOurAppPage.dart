@@ -21,9 +21,9 @@ class AboutOurAppPage extends StatelessWidget {
         builder: (context, snapshot) {
           if (snapshot.hasData) {
             final packageInfo = snapshot.data!;
+            final String version = packageInfo.version;
             // final String appName = packageInfo.appName;
             // final String packageName = packageInfo.packageName;
-            final String version = packageInfo.version;
             // final String buildNumber = packageInfo.buildNumber;
 
             return Center(

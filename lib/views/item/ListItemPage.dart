@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:get/get.dart';
 import 'package:mygoods_flutter/models/item.dart';
 import 'package:mygoods_flutter/views/cells/BigImageCell.dart';
 import 'package:mygoods_flutter/views/cells/ItemGridCell.dart';
@@ -32,7 +33,7 @@ class _ListItemByPopularCategoryPAgeState extends State<ListItemPage> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: Text(widget.title),
+        title: Text(widget.title.tr),
         actions: [
           IconButton(
             onPressed: () {
@@ -94,7 +95,6 @@ class _ListItemByPopularCategoryPAgeState extends State<ListItemPage> {
         crossAxisSpacing: 8,
         mainAxisSpacing: 16,
         childAspectRatio: 6.25 / 10,
-
       ),
       padding: const EdgeInsets.all(8),
       itemCount: items.length,
