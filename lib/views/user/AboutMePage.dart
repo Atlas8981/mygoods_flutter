@@ -138,11 +138,7 @@ class _AboutMePageState extends State<AboutMePage> {
         ),
         PopupMenuItem<AccountMenuItems>(
           value: AccountMenuItems.resetPassword,
-          child: Container(
-            width: double.infinity,
-            color: Colors.red,
-            child: Text('resetPassword'.tr),
-          ),
+          child: Text('resetPassword'.tr),
         ),
       ],
     );

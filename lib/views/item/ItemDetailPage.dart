@@ -51,7 +51,9 @@ class _ItemDetailPageState extends State<ItemDetailPage> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: Text("itemDetail".tr),
+        title: Text(
+          "itemDetail".tr,
+        ),
       ),
       body: SafeArea(
         child: SizedBox(
